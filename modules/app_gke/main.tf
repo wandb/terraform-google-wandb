@@ -17,20 +17,20 @@ module "gke" {
 
   node_pools = [
     {
-      name                      = "default-node-pool"
-      machine_type              = "e2-medium"
-      node_locations            = "us-central1-b,us-central1-c"
-      min_count                 = 1
-      max_count                 = 100
-      local_ssd_count           = 0
-      disk_size_gb              = 100
-      disk_type                 = "pd-standard"
-      image_type                = "COS"
-      auto_repair               = true
-      auto_upgrade              = true
-      service_account           = "project-service-account@<PROJECT ID>.iam.gserviceaccount.com"
-      preemptible               = false
-      initial_node_count        = 80
+      name               = "default-node-pool"
+      machine_type       = "e2-medium"
+      node_locations     = "us-central1-b,us-central1-c"
+      min_count          = 1
+      max_count          = 100
+      local_ssd_count    = 0
+      disk_size_gb       = 100
+      disk_type          = "pd-standard"
+      image_type         = "COS"
+      auto_repair        = true
+      auto_upgrade       = true
+      service_account    = "project-service-account@<PROJECT ID>.iam.gserviceaccount.com"
+      preemptible        = false
+      initial_node_count = 80
     },
   ]
 

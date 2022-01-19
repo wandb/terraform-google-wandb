@@ -18,7 +18,7 @@ locals {
 }
 
 module "mysql" {
-  teir ="db-n1-standar-1"
+  teir = "db-n1-standar-1"
 
   deletion_protection = var.deletion_protection
 
@@ -50,6 +50,6 @@ module "mysql" {
   }
 
   read_replica_name_suffix = "-replica"
-  read_replicas = []
+  read_replicas            = []
 }
 
