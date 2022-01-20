@@ -3,9 +3,15 @@ variable "project_id" {
   default     = null
   description = "Project ID"
 }
+
 variable "namespace" {
   type        = string
   description = "The name prefix for all resources created."
+}
+
+variable "network" {
+  type        = string
+  description = "The private service networking connection that will connect the database to the network."
 }
 
 variable "deletion_protection" {
@@ -40,4 +46,10 @@ variable "maintenance_window_update_track" {
   description = "The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`."
   type        = string
   default     = "canary"
+}
+
+variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  type        = map(string)
+  default     = {}
 }

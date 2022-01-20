@@ -16,9 +16,18 @@ module "file_storage" {
   deletion_protection = var.deletion_protection
 }
 
+module "networking" {
+  source    = "./modules/networking"
+  namespace = var.namespace
+}
+
+
 module "database" {
   source    = "./modules/database"
   namespace = var.namespace
+  network   = module.networking.vpc.id
 
   deletion_protection = var.deletion_protection
+
+  depends_on = [module.networking]
 }

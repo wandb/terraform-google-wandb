@@ -18,37 +18,6 @@ locals {
   master_instance_name = "${var.namespace}-${random_pet.mysql.id}"
 }
 
-# module "mysql" {
-#   source  = "GoogleCloudPlatform/sql-db/google//modules/safer_mysql"
-#   version = "8.0.0"
-
-#   teir = "db-n1-standar-1"
-
-#   deletion_protection = var.deletion_protection
-
-#   type              = var.teir
-#   availability_type = var.availability_type
-
-#   maintenance_window_day          = 7
-#   maintenance_window_hour         = 12
-#   maintenance_window_update_track = "stable"
-
-#   user_labels = var.labels
-
-#   backup_configuration = {
-#     enabled                        = true
-#     binary_log_enabled             = true
-#     start_time                     = "20:55"
-#     location                       = null
-#     transaction_log_retention_days = null
-#     retained_backups               = 180
-#     retention_unit                 = "COUNT"
-#   }
-
-#   read_replica_name_suffix = "-replica"
-#   read_replicas            = []
-# }
-
 resource "google_sql_database_instance" "default" {
   # project = var.project_id
   name                = local.master_instance_name
@@ -58,6 +27,7 @@ resource "google_sql_database_instance" "default" {
   settings {
     tier              = var.tier
     availability_type = var.availability_type
+    user_labels       = var.labels
 
     backup_configuration {
       binary_log_enabled             = true
@@ -72,7 +42,8 @@ resource "google_sql_database_instance" "default" {
     }
 
     ip_configuration {
-      private_network = var.vpc_network_id
+      ipv4_enabled    = false
+      private_network = var.network_id
     }
 
     database_flags {
@@ -96,4 +67,15 @@ resource "google_sql_database_instance" "default" {
       value = 60000
     }
   }
+}
+
+resource "google_sql_database" "wandb" {
+  name     = var.database_name
+  instance = google_sql_database_instance.default.name
+}
+
+resource "google_sql_user" "wandb" {
+  instance = google_sql_database_instance.default.name
+  name     = local.master_username
+  password = local.master_password
 }

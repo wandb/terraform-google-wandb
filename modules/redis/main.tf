@@ -11,7 +11,7 @@ resource "google_redis_instance" "redis" {
   authorized_network = var.service_networking_connection.network
   connect_mode       = "PRIVATE_SERVICE_ACCESS"
 
-  redis_version = "REDIS_5_0"
+  redis_version = "REDIS_6_0"
   display_name  = "${var.namespace} Weights & Biases Instance"
 
   labels = var.labels
