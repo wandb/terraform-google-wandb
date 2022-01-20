@@ -1,12 +1,11 @@
+variable "project_id" {
+  type        = string
+  default     = null
+  description = "Project ID"
+}
 variable "namespace" {
   type        = string
   description = "The name prefix for all resources created."
-}
-
-variable "instance_class" {
-  description = "Instance type to use at master instance."
-  type        = string
-  default     = "db.r5.large"
 }
 
 variable "deletion_protection" {
@@ -15,7 +14,7 @@ variable "deletion_protection" {
   default     = true
 }
 
-variable "teir" {
+variable "tier" {
   type    = string
   default = "db-n1-standard-1"
 }
@@ -25,7 +24,20 @@ variable "availability_type" {
   default = "REGIONAL"
 }
 
-variable "labels" {
-  type        = map(string)
-  description = "Labels to apply to resources"
+variable "maintenance_window_day" {
+  description = "The day of week (1-7) for the master instance maintenance."
+  type        = number
+  default     = 1
+}
+
+variable "maintenance_window_hour" {
+  description = "The hour of day (0-23) maintenance window for the master instance maintenance."
+  type        = number
+  default     = 23
+}
+
+variable "maintenance_window_update_track" {
+  description = "The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`."
+  type        = string
+  default     = "canary"
 }

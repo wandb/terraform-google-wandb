@@ -17,3 +17,23 @@ variable "use_internal_queue" {
   default = false
 }
 
+##########################################
+# DNS                                    #
+##########################################
+variable "zone_name" {
+  type        = string
+  default     = null
+  description = "Name of the DNS zone set up in GCP"
+}
+
+variable "domain_name" {
+  type        = string
+  default     = null
+  description = "Domain for accessing the Weights & Biases UI."
+}
+
+variable "subdomain" {
+  type        = string
+  default     = null
+  description = "Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route."
+}

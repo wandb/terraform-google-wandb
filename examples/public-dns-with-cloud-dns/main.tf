@@ -6,7 +6,7 @@ provider "google" {
 module "wandb_infra" {
   source = "../../"
 
-  namespace     = var.namespace
+  namespace = var.namespace
 
   domain_name = var.domain
   subdomain   = var.subdomain
