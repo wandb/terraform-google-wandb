@@ -9,9 +9,9 @@ variable "namespace" {
   description = "The name prefix for all resources created."
 }
 
-variable "network" {
-  type        = string
-  description = "The private service networking connection that will connect the database to the network."
+variable "network_connection" {
+  description = "The private service networking connection that will connect MySQL to the network."
+  type        = object({ network = string })
 }
 
 variable "deletion_protection" {

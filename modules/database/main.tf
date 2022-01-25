@@ -9,7 +9,6 @@ resource "random_pet" "mysql" {
 }
 
 locals {
-  database_version = 5.7
   database_name    = "wandb_local"
 
   master_username = "wandb"
@@ -19,9 +18,8 @@ locals {
 }
 
 resource "google_sql_database_instance" "default" {
-  # project = var.project_id
   name                = local.master_instance_name
-  database_version    = local.database_version
+  database_version    = "MYSQL_5_7"
   deletion_protection = var.deletion_protection
 
   settings {
@@ -43,16 +41,17 @@ resource "google_sql_database_instance" "default" {
 
     ip_configuration {
       ipv4_enabled    = false
-      private_network = var.network_id
+      private_network = var.network_connection.network
     }
 
-    database_flags {
-      name  = "performance_schema"
-      value = 1
-    }
+    # requires minimum memory of 26624 MB
+    # database_flags {
+    #   name  = "performance_schema"
+    #   value = 1
+    # }
     database_flags {
       name  = "slow_query_log"
-      value = 1
+      value = "on"
     }
     database_flags {
       name  = "long_query_time"
@@ -70,7 +69,7 @@ resource "google_sql_database_instance" "default" {
 }
 
 resource "google_sql_database" "wandb" {
-  name     = var.database_name
+  name     = local.database_name
   instance = google_sql_database_instance.default.name
 }
 

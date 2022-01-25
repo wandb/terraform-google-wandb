@@ -12,6 +12,12 @@ variable "deletion_protection" {
   default     = true
 }
 
+variable "labels" {
+  type        = map(string)
+  description = "Labels to apply to resources"
+  default     = {}
+}
+
 variable "use_internal_queue" {
   type    = bool
   default = false

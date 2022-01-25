@@ -14,19 +14,19 @@ variable "deletion_protection" {
   default     = true
 }
 
+variable "labels" {
+  type        = map(string)
+  description = "Labels to apply to resources"
+  default     = {}
+}
+
 variable "bucket_location" {
   type    = string
   default = "US"
 }
 
 variable "create_queue" {
-  description = "Creates a SQS queue for the bucket"
-  type        = bool
-  default     = true
-}
-
-variable "create_queue_policy" {
-  description = "Create a SQS policy for bucket access."
+  description = "Creates a PubSub queue for the bucket"
   type        = bool
   default     = true
 }
