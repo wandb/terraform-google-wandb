@@ -18,13 +18,17 @@ module "project_factory_project_services" {
   disable_services_on_destroy = false
 }
 
+locals {
+  fqdn = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
+  url  = "https://${local.fqdn}"
+  internal_app_port = 32543
+}
+
 module "service_accounts" {
   source    = "./modules/service_accounts"
   namespace = var.namespace
 
-  depends_on = [
-    module.project_factory_project_services
-  ]
+  depends_on = [module.project_factory_project_services]
 }
 
 module "file_storage" {
@@ -39,32 +43,26 @@ module "file_storage" {
 
   deletion_protection = var.deletion_protection
 
-  depends_on = [
-    module.project_factory_project_services
-  ]
+  depends_on = [module.project_factory_project_services]
 }
 
 module "networking" {
   source    = "./modules/networking"
   namespace = var.namespace
 
-  depends_on = [
-    module.project_factory_project_services
-  ]
+  depends_on = [module.project_factory_project_services]
 }
 
-# module "gke" {
-#   source    = "./modules/app_gke"
-#   namespace = var.namespace
+module "app_gke" {
+  source    = "./modules/app_gke"
+  namespace = var.namespace
 
-#   network         = module.networking.network
-#   subnetwork      = module.networking.subnetwork
-#   service_account = module.service_accounts.service_account
+  network         = module.networking.network
+  subnetwork      = module.networking.subnetwork
+  service_account = module.service_accounts.service_account
 
-#   depends_on = [
-#     module.project_factory_project_services
-#   ]
-# }
+  depends_on = [module.project_factory_project_services]
+}
 
 module "database" {
   source    = "./modules/database"
@@ -72,4 +70,6 @@ module "database" {
 
   network_connection  = module.networking.connection
   deletion_protection = var.deletion_protection
+
+  depends_on = [module.project_factory_project_services]
 }

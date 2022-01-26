@@ -11,30 +11,49 @@ module "wandb_infra" {
 
   domain_name = var.domain
   subdomain   = var.subdomain
+
+  deletion_protection = false
 }
 
 
-# provider "kubernetes" {
-#   host                   = "https://${module.wandb_infra.cluster_endpoint}"
-#   cluster_ca_certificate = base64decode(google_container_cluster.default.master_auth.0.cluster_ca_certificate)
-#   token                  = data.google_client_config.current.access_token
-# }
+data "google_client_config" "current" {
+}
 
-# module "wandb_app" {
-#   source = "github.com/wandb/terraform-kubernetes-wandb"
+provider "kubernetes" {
+  host                   = "https://${module.wandb_infra.cluster_endpoint}"
+  cluster_ca_certificate = base64decode(module.wandb_infra.cluster_ca_certificate)
+  token                  = data.google_client_config.current.access_token
+}
 
-#   license = var.wandb_license
+module "wandb_app" {
+  source = "github.com/wandb/terraform-kubernetes-wandb"
 
-#   host                       = module.wandb_infra.url
-#   bucket                     = "s3://${module.wandb_infra.bucket_name}"
-#   bucket_aws_region          = module.wandb_infra.bucket_region
-#   bucket_queue               = "sqs://${module.wandb_infra.bucket_queue_name}"
-#   bucket_kms_key_arn         = module.wandb_infra.kms_key_arn
-#   database_connection_string = "mysql://${module.wandb_infra.database_connection_string}"
+  license = var.license
 
-#   service_port = module.wandb_infra.internal_app_port
+  host                       = module.wandb_infra.url
+  bucket                     = "gs://${module.wandb_infra.bucket_name}"
+  bucket_queue               = "pubsub://${module.wandb_infra.bucket_queue_name}"
+  database_connection_string = "mysql://${module.wandb_infra.database_connection_string}"
 
-#   # If we dont wait, tf will start trying to deploy while the work group is
-#   # still spinning up
-#   depends_on = [module.wandb_infra]
-# }
+  service_port = module.wandb_infra.internal_app_port
+
+  # If we dont wait, tf will start trying to deploy while the work group is
+  # still spinning up
+  depends_on = [module.wandb_infra]
+}
+
+output "service_account_email" {
+  value = module.wandb_infra.service_account.email
+}
+
+output "database_connection_string" {
+  value = nonsensitive(module.wandb_infra.database_connection_string)
+}
+
+output "bucket_name" {
+  value = module.wandb_infra.bucket_name
+}
+
+output "bucket_queue_name" {
+  value = module.wandb_infra.bucket_queue_name
+}

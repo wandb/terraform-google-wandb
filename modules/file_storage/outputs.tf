@@ -3,5 +3,5 @@ output "bucket_name" {
 }
 
 output "bucket_queue_name" {
-  value = google_pubsub_subscription.file_storage.name
+  value = google_pubsub_topic.file_storage.id
 }

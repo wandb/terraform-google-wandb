@@ -9,7 +9,7 @@ resource "random_pet" "mysql" {
 }
 
 locals {
-  database_name    = "wandb_local"
+  database_name = "wandb_local"
 
   master_username = "wandb"
   master_password = random_string.master_password.result

@@ -18,11 +18,11 @@ resource "google_container_cluster" "default" {
 resource "google_container_node_pool" "default" {
   name       = "default-node-pool"
   location   = "us-central1"
-  cluster    = google_container_cluster.default.name
+  cluster    = google_container_cluster.default.id
   node_count = 1
 
   node_config {
-    machine_type    = "e2-medium"
+    machine_type    = "n2-standard-4"
     service_account = var.service_account.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/bigtable.admin",
@@ -35,6 +35,14 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/pubsub",
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/sqlservice.admin",
+    ]
+  }
+
+  lifecycle {
+    ignore_changes = [
+      # GCP will select a zone within the region automically e.g "us-central1-c"
+      # -> "us-central1" this causes the pool to be destory on each apply
+      location,
     ]
   }
 }
