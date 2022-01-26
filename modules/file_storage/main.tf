@@ -38,6 +38,12 @@ resource "google_pubsub_topic" "file_storage" {
   name = "${var.namespace}-file-storage"
 }
 
+resource "google_pubsub_topic_iam_member" "file_storage_editor" {
+  topic  = google_pubsub_topic.file_storage.name
+  member = local.member
+  role   = "roles/editor"
+}
+
 resource "google_pubsub_subscription" "file_storage" {
   name                 = "${var.namespace}-file-storage"
   topic                = google_pubsub_topic.file_storage.name

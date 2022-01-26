@@ -1,8 +1,14 @@
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
-  network    = var.network.self_link
-  subnetwork = var.subnetwork.self_link
+  network         = var.network.self_link
+  subnetwork      = var.subnetwork.self_link
+  networking_mode = "VPC_NATIVE"
+
+  ip_allocation_policy {
+    cluster_ipv4_cidr_block  = "/14"
+    services_ipv4_cidr_block = "/19"
+  }
 
   release_channel {
     channel = "STABLE"
@@ -22,7 +28,7 @@ resource "google_container_node_pool" "default" {
   node_count = 2
 
   node_config {
-    machine_type    = "n2-standard-4"
+    machine_type    = "e2-standard-4"
     service_account = var.service_account.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/bigtable.admin",
