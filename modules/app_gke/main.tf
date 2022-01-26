@@ -19,7 +19,7 @@ resource "google_container_node_pool" "default" {
   name       = "default-node-pool"
   location   = "us-central1"
   cluster    = google_container_cluster.default.id
-  node_count = 1
+  node_count = 2
 
   node_config {
     machine_type    = "n2-standard-4"
