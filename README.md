@@ -67,3 +67,32 @@ resources that lack official modules.
 
 <!-- BEGIN_TF_DOCS -->
 <!-- END_TF_DOCS -->
+
+## FQA
+
+**Why do I need two different modules?**
+
+Weights & Biases uses 2 providers, one for the cloud platform and one for kubernetes.
+
+> A module intended to be called by one or more other modules must not contain
+> any provider blocks. A module containing its own provider configurations is
+> not compatible with the for_each, count, and depends_on arguments that were
+> introduced in Terraform v0.13. For more information, see Legacy Shared Modules
+> with Provider Configurations.
+>
+> Provider configurations are used for all operations on associated resources,
+> including destroying remote objects and refreshing state. Terraform retains, as
+> part of its state, a reference to the provider configuration that was most
+> recently used to apply changes to each resource. When a resource block is
+> removed from the configuration, this record in the state will be used to locate
+> the appropriate configuration because the resource's provider argument (if any)
+> will no longer be present in the configuration.
+>
+> As a consequence, you must ensure that all resources that belong to a
+> particular provider configuration are destroyed before you can remove that
+> provider configuration's block from your configuration. If Terraform finds a
+> resource instance tracked in the state whose provider configuration block is
+> no longer available then it will return an error during planning, prompting
+> you to reintroduce the provider configuration.
+
+https://www.terraform.io/language/modules/develop/providers

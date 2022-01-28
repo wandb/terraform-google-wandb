@@ -29,6 +29,10 @@ output "bucket_queue_name" {
   value = module.file_storage.bucket_queue_name
 }
 
+output "cluster_node_pool" {
+  value = module.app_gke.node_pool
+}
+
 output "cluster_id" {
   value = module.app_gke.cluster_id
 }
@@ -44,16 +48,4 @@ output "cluster_ca_certificate" {
 
 output "cluster_self_link" {
   value = module.app_gke.cluster_self_link
-}
-
-output "lb_ip_address" {
-  value = module.app_lb.ip_address
-}
-
-output "lb_ip_name" {
-  value = module.app_lb.ip_name
-}
-
-output "lb_certificate_name" {
-  value = module.app_lb.certificate_name
 }

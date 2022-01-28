@@ -24,13 +24,6 @@ locals {
   internal_app_port = 32543
 }
 
-module "app_lb" {
-  source    = "./modules/app_lb"
-  namespace = var.namespace
-
-  fqdn = local.fqdn
-}
-
 module "service_accounts" {
   source    = "./modules/service_accounts"
   namespace = var.namespace

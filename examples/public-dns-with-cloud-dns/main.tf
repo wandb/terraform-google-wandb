@@ -4,6 +4,7 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
+# Spin up all required services
 module "wandb_infra" {
   source = "../../"
 
@@ -16,8 +17,7 @@ module "wandb_infra" {
 }
 
 
-data "google_client_config" "current" {
-}
+data "google_client_config" "current" {}
 
 provider "kubernetes" {
   host                   = "https://${module.wandb_infra.cluster_endpoint}"
@@ -25,7 +25,7 @@ provider "kubernetes" {
   token                  = data.google_client_config.current.access_token
 }
 
-
+# Deploy application into kubernetes cluster that was just created
 module "wandb_app" {
   source = "github.com/wandb/terraform-kubernetes-wandb"
 
@@ -43,12 +43,47 @@ module "wandb_app" {
   depends_on = [module.wandb_infra]
 }
 
+# At this point terraform the instance is running in a private gke cluster Now
+# we will deploy an ingress and SSL certificate to expose it publicly. You'll
+# want to update your DNS with the provisioned API
+
+# Create public IP. This IP address is the one you need to set in your cloud DNS
+# as an A record. Make sure the domain and subdomain matchs the ones passed into
+# this terraform module
+resource "google_compute_global_address" "default" {
+  name = "${var.namespace}-address"
+}
+
+locals {
+  managed_certificate_name = "${var.namespace}-cert"
+}
+
+# Create SSL certificate for HTTPS connections. Note: it can take up to 2 hours
+# for these certificates be provisioned
+resource "kubernetes_manifest" "managed_certificate" {
+  manifest = {
+    apiVersion = "networking.gke.io/v1"
+    kind       = "ManagedCertificate"
+
+    metadata = {
+      name      = local.managed_certificate_name
+      namespace = "default"
+    }
+
+    spec = {
+      domains = [module.wandb_infra.fqdn]
+    }
+  }
+}
+
+# Create Loadbalancer
 resource "kubernetes_ingress" "ingress" {
   metadata {
-    name = var.namespace
+    name = "${var.namespace}-ingress"
     annotations = {
-      "kubernetes.io/ingress.global-static-ip-name" = module.wandb_infra.lb_ip_name,
-      "networking.gke.io/managed-certificates"      = "${var.namespace}-cert",
+      "kubernetes.io/ingress.allow-http"            = false
+      "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.default.name,
+      "networking.gke.io/managed-certificates"      = local.managed_certificate_name,
     }
   }
 
@@ -60,18 +95,10 @@ resource "kubernetes_ingress" "ingress" {
   }
 }
 
-resource "kubernetes_manifest" "managed_certificate" {
-  manifest = {
-    apiVersion = "networking.gke.io/v1beta1"
-    kind       = "ManagedCertificate"
+output "url" {
+  value = module.wandb_infra.url
+}
 
-    metadata = {
-      name      = "${var.namespace}-cert"
-      namespace = "default"
-    }
-
-    spec = {
-      domains = [module.wandb_infra.fqdn]
-    }
-  }
+output "ip_address" {
+  value = google_compute_global_address.default.address
 }
