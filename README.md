@@ -34,9 +34,6 @@ preparation, however it does have the following pre-requisites:
 ## How to Use This Module
 
 - Ensure account meets module pre-requisites from above.
-- Please note that while some resources are individually and uniquely tagged,
-  all common tags are expected to be configured within the AWS provider as shown
-  in the example code snippet below.
 - Create a Terraform configuration that pulls in this module and specifies
   values of the required variables:
 
@@ -49,7 +46,7 @@ provider "google" {
 
 module "wandb_infra" {
   source    = "<filepath to cloned module directory>"
-  namespace = "<prefix for naming AWS resources>"
+  namespace = "<prefix for naming google resources>"
 }
 ```
 
@@ -69,7 +66,7 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.6 |
 
 ## Providers
