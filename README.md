@@ -18,20 +18,18 @@ like audit logging and SAML single sign-on.
 This module is intended to run in an Google Cloud account with minimal
 preparation, however it does have the following pre-requisites:
 
-### Terrafom version >= 1h
+### Terrafom version >= 1
 
 ### Credentials / Permissions
 
-**AWS Services Used**
+**Google Services Used**
 
-- SQL Cloud (MySQL)
-- Kubernetes
-- Cloud DNS
-
-### Public Hosted Zone
-
-If you are managing DNS via Cloud DNS the hosted zone entry is created
-automatically as part of your domain management.
+- Google SQL Cloud (MySQL)
+- Google Kubernetes Engine
+- Google Storage Bucket
+- Google PubSub
+- Google Managed Certificates
+- Google Cloud DNS
 
 ## How to Use This Module
 
@@ -63,10 +61,16 @@ We have included documentation and reference examples for additional common
 installation scenarios for Weights & Biases, as well as examples for supporting
 resources that lack official modules.
 
+- [Public Instance with HTTPS using Cloud DNS](examples/public-dns-with-cloud-dns)
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.6 |
 
 ## Providers
 
