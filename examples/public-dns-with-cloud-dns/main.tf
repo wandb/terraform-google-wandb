@@ -4,10 +4,6 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-resource "google_compute_global_address" "ip" {
-  name = "${var.namespace}-global-address"
-}
-
 module "wandb_infra" {
   source = "../../"
 
@@ -33,9 +29,6 @@ provider "kubernetes" {
 module "wandb_app" {
   source = "github.com/wandb/terraform-kubernetes-wandb"
 
-  # wandb_image   = "wandb/local-dev"
-  # wandb_version = "cloudsql"
-
   license = var.license
 
   host                       = module.wandb_infra.url
@@ -50,29 +43,35 @@ module "wandb_app" {
   depends_on = [module.wandb_infra]
 }
 
-// static ip
-// 
+resource "kubernetes_ingress" "ingress" {
+  metadata {
+    name = var.namespace
+    annotations = {
+      "kubernetes.io/ingress.global-static-ip-name" = module.wandb_infra.lb_ip_name,
+      "networking.gke.io/managed-certificates"      = "${var.namespace}-cert",
+    }
+  }
 
-locals {
-  app_name = "wandb"
+  spec {
+    backend {
+      service_name = "wandb"
+      service_port = 8080
+    }
+  }
 }
 
-output "license" {
-  value = var.license
-}
+resource "kubernetes_manifest" "managed_certificate" {
+  manifest = {
+    apiVersion = "networking.gke.io/v1beta1"
+    kind       = "ManagedCertificate"
 
-output "service_account_email" {
-  value = module.wandb_infra.service_account.email
-}
+    metadata = {
+      name      = "${var.namespace}-cert"
+      namespace = "default"
+    }
 
-output "database_connection_string" {
-  value = nonsensitive(module.wandb_infra.database_connection_string)
-}
-
-output "bucket_name" {
-  value = module.wandb_infra.bucket_name
-}
-
-output "bucket_queue_name" {
-  value = module.wandb_infra.bucket_queue_name
+    spec = {
+      domains = [module.wandb_infra.fqdn]
+    }
+  }
 }

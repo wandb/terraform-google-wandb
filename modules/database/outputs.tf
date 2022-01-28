@@ -1,8 +1,8 @@
 locals {
-  output_private_ip    = google_sql_database_instance.default.private_ip_address
-  output_database_name = google_sql_database.wandb.name
-  output_username      = google_sql_user.wandb.name
-  output_password      = google_sql_user.wandb.password
+  output_private_ip      = google_sql_database_instance.default.private_ip_address
+  output_database_name   = google_sql_database.wandb.name
+  output_username        = google_sql_user.wandb.name
+  output_password        = google_sql_user.wandb.password
   output_connection_name = replace(google_sql_database_instance.default.connection_name, ":", ".")
 }
 

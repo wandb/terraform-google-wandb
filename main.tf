@@ -19,9 +19,16 @@ module "project_factory_project_services" {
 }
 
 locals {
-  fqdn = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
-  url  = "https://${local.fqdn}"
+  fqdn              = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
+  url               = "https://${local.fqdn}"
   internal_app_port = 32543
+}
+
+module "app_lb" {
+  source    = "./modules/app_lb"
+  namespace = var.namespace
+
+  fqdn = local.fqdn
 }
 
 module "service_accounts" {

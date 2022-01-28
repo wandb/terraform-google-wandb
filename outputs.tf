@@ -3,6 +3,11 @@ output "url" {
   description = "The URL to the W&B application"
 }
 
+output "fqdn" {
+  value       = local.fqdn
+  description = "The FQDN to the W&B application"
+}
+
 output "service_account" {
   value = module.service_accounts.service_account
 }
@@ -39,4 +44,16 @@ output "cluster_ca_certificate" {
 
 output "cluster_self_link" {
   value = module.app_gke.cluster_self_link
+}
+
+output "lb_ip_address" {
+  value = module.app_lb.ip_address
+}
+
+output "lb_ip_name" {
+  value = module.app_lb.ip_name
+}
+
+output "lb_certificate_name" {
+  value = module.app_lb.certificate_name
 }
