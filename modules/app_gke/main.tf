@@ -23,7 +23,6 @@ resource "google_container_cluster" "default" {
 
 resource "google_container_node_pool" "default" {
   name       = "default-node-pool"
-  location   = "us-central1"
   cluster    = google_container_cluster.default.id
   node_count = 2
 
