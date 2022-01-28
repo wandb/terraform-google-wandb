@@ -7,7 +7,7 @@ variable "namespace" {
 }
 
 variable "deletion_protection" {
-  description = "If the instance should have deletion protection enabled. The database / S3 can't be deleted when this value is set to `true`."
+  description = "If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`."
   type        = bool
   default     = true
 }
@@ -19,19 +19,14 @@ variable "labels" {
 }
 
 variable "use_internal_queue" {
-  type    = bool
-  default = false
+  type        = bool
+  description = "Uses an internal redis queue instead of using google pubsub."
+  default     = false
 }
 
 ##########################################
 # DNS                                    #
 ##########################################
-variable "zone_name" {
-  type        = string
-  default     = null
-  description = "Name of the DNS zone set up in GCP"
-}
-
 variable "domain_name" {
   type        = string
   default     = null
