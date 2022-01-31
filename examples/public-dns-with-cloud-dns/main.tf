@@ -1,7 +1,7 @@
 provider "google" {
   project = var.project_id
-  region  = "us-central1"
-  zone    = "us-central1-c"
+  region  = var.region
+  zone    = var.zone
 }
 
 # Spin up all required services
@@ -35,8 +35,6 @@ module "wandb_app" {
   bucket                     = "gs://${module.wandb_infra.bucket_name}"
   bucket_queue               = "pubsub:/${module.wandb_infra.bucket_queue_name}"
   database_connection_string = "mysql://${module.wandb_infra.database_connection_string}"
-
-  service_port = module.wandb_infra.internal_app_port
 
   # If we dont wait, tf will start trying to deploy while the work group is
   # still spinning up
