@@ -15,3 +15,14 @@ resource "google_service_account" "main" {
 resource "google_service_account_key" "main" {
   service_account_id = google_service_account.main.name
 }
+
+resource "google_project_iam_binding" "token_creator_binding" {
+  project = "your-project-id" // project_id is null as part of the root main.tf
+  role    = [
+  "roles/iam.serviceAccountTokenCreator",
+  "roles/pubsub.admin",
+  "roles/composer.environmentAndStorageObjectAdmin",
+  "roles/cloudsql.client"
+] 
+  members = "serviceAccount:${google_service_account.sa-name.email}"
+}
