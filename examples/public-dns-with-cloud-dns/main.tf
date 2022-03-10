@@ -72,6 +72,7 @@ resource "kubernetes_manifest" "managed_certificate" {
       domains = [module.wandb_infra.fqdn]
     }
   }
+  depends_on = [module.wandb_app]
 }
 
 # Create Loadbalancer
@@ -91,6 +92,7 @@ resource "kubernetes_ingress" "ingress" {
       service_port = 8080
     }
   }
+   depends_on = [module.wandb_app]
 }
 
 output "url" {
