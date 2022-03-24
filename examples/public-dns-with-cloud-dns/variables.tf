@@ -13,7 +13,6 @@ variable "zone" {
   description = "Google zone"
 }
 
-
 variable "namespace" {
   type        = string
   description = "Namespace prefix used for resources"
