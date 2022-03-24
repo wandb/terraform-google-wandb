@@ -1,5 +1,5 @@
 locals {
-  member = "serviceAccount:${var.service_account.email}"
+  sa_member = "serviceAccount:${var.service_account.email}"
 }
 
 resource "random_pet" "suffix" {
@@ -22,27 +22,21 @@ resource "google_storage_bucket" "file_storage" {
   }
 }
 
-resource "google_storage_bucket_iam_member" "file_storage_object_admin" {
+resource "google_storage_bucket_iam_member" "object_admin" {
   bucket = google_storage_bucket.file_storage.name
-  member = local.member
-  role   = "roles/storage.objectAdmin"
-}
-
-resource "google_storage_bucket_iam_member" "legacy_bucket_reader" {
-  bucket = google_storage_bucket.file_storage.name
-  member = local.member
-  role   = "roles/storage.legacyBucketReader"
+  member = local.sa_member
+  role   = "roles/storage.admin"
 }
 
 resource "google_pubsub_topic" "file_storage" {
   name = "${var.namespace}-file-storage"
 }
 
-resource "google_pubsub_topic_iam_member" "file_storage_editor" {
-  topic  = google_pubsub_topic.file_storage.name
-  member = local.member
-  role   = "roles/editor"
-}
+# resource "google_pubsub_topic_iam_member" "file_storage_editor" {
+#   topic  = google_pubsub_topic.file_storage.name
+#   member = local.sa_member
+#   role   = "roles/editor"
+# }
 
 resource "google_pubsub_subscription" "file_storage" {
   name                 = "${var.namespace}-file-storage"
@@ -51,13 +45,13 @@ resource "google_pubsub_subscription" "file_storage" {
 }
 
 
-// Enable notifications by giving the correct IAM permission to the unique
-// service account.
+# Enable notifications by giving the correct IAM permission to the unique
+# service account.
 data "google_storage_project_service_account" "service" {
 }
 
-// For some reason we need to give the GCS Service agent access?
-// TODO: figure out why? It would be nice if this could be all isolated to one account.
+# For some reason we need to give the GCS Service agent access?
+# TODO: figure out why? It would be nice if this could be all isolated to one account.
 resource "google_pubsub_topic_iam_binding" "gcp_publisher" {
   topic   = google_pubsub_topic.file_storage.id
   role    = "roles/pubsub.publisher"

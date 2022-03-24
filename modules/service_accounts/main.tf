@@ -35,19 +35,11 @@ resource "google_project_iam_member" "token_creator" {
 
 # PubSub Admin role provides service account members 
 # full access to topics and subscriptions
-resource "google_project_iam_member" "pubsub_admin" {
-  project = local.project_id
-  role    = "roles/pubsub.admin"
-  member  = local.sa_member
-}
-
-# Storage Object Admin role grants service account members
-# full control of objects in a storage bucket
-resource "google_project_iam_member" "storage_object_admin" {
-  project = local.project_id
-  role    = "roles/storage.objectAdmin"
-  member  = local.sa_member
-}
+# resource "google_project_iam_member" "pubsub_admin" {
+#   project = local.project_id
+#   role    = "roles/pubsub.admin"
+#   member  = local.sa_member
+# }
 
 # Cloud SQL Client role allows service account members
 # connectivity access to Cloud SQL instances
