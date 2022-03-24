@@ -18,3 +18,7 @@ output "cluster_self_link" {
 output "node_pool" {
   value = google_container_node_pool.default
 }
+
+output "instance_group_url" {
+  value = google_container_node_pool.default.instance_group_urls[0]
+}

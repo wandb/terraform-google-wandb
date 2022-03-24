@@ -43,60 +43,23 @@ module "wandb_app" {
 
 # At this point terraform the instance is running in a private gke cluster Now
 # we will deploy an ingress and SSL certificate to expose it publicly. You'll
-# want to update your DNS with the provisioned API
+# # want to update your DNS with the provisioned API
+# module "certificate" {
+#   depends_on = [module.wandb_infra]
+#   source     = "../../modules/certificate"
 
-# Create public IP. This IP address is the one you need to set in your cloud DNS
-# as an A record. Make sure the domain and subdomain matchs the ones passed into
-# this terraform module
-resource "google_compute_global_address" "default" {
-  name = "${var.namespace}-address"
-}
-
-locals {
-  managed_certificate_name = "${var.namespace}-cert"
-}
-
-# Create SSL certificate for HTTPS connections. Note: it can take up to 2 hours
-# for these certificates be provisioned
-resource "kubernetes_manifest" "managed_certificate" {
-  manifest = {
-    apiVersion = "networking.gke.io/v1"
-    kind       = "ManagedCertificate"
-
-    metadata = {
-      name      = local.managed_certificate_name
-      namespace = "default"
-    }
-
-    spec = {
-      domains = [module.wandb_infra.fqdn]
-    }
-  }
-}
-
-# Create Loadbalancer
-resource "kubernetes_ingress" "ingress" {
-  metadata {
-    name = "${var.namespace}-ingress"
-    annotations = {
-      "kubernetes.io/ingress.allow-http"            = false
-      "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.default.name,
-      "networking.gke.io/managed-certificates"      = local.managed_certificate_name,
-    }
-  }
-
-  spec {
-    backend {
-      service_name = "wandb"
-      service_port = 8080
-    }
-  }
-}
+#   namespace = var.namespace
+#   fqdn      = module.wandb_infra.fqdn
+# }
 
 output "url" {
   value = module.wandb_infra.url
 }
 
-output "ip_address" {
-  value = google_compute_global_address.default.address
+# output "ip_address" {
+#   value = module.certificate.ip_address
+# }
+
+output "address" {
+  value = module.wandb_infra.address
 }

@@ -64,6 +64,19 @@ module "app_gke" {
   depends_on = [module.project_factory_project_services]
 }
 
+
+module "app_lb" {
+  source    = "./modules/app_lb"
+  namespace = var.namespace
+
+  fqdn            = local.fqdn
+  network         = module.networking.network
+  group           = module.app_gke.instance_group_url
+  service_account = module.service_accounts.service_account
+
+  depends_on = [module.project_factory_project_services]
+}
+
 module "database" {
   source    = "./modules/database"
   namespace = var.namespace
