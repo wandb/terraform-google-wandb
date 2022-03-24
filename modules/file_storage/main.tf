@@ -32,18 +32,17 @@ resource "google_pubsub_topic" "file_storage" {
   name = "${var.namespace}-file-storage"
 }
 
-# resource "google_pubsub_topic_iam_member" "file_storage_editor" {
-#   topic  = google_pubsub_topic.file_storage.name
-#   member = local.sa_member
-#   role   = "roles/editor"
-# }
+resource "google_pubsub_topic_iam_member" "file_storage_editor" {
+  topic  = google_pubsub_topic.file_storage.name
+  member = local.sa_member
+  role   = "roles/editor"
+}
 
 resource "google_pubsub_subscription" "file_storage" {
   name                 = "${var.namespace}-file-storage"
   topic                = google_pubsub_topic.file_storage.name
   ack_deadline_seconds = 30
 }
-
 
 # Enable notifications by giving the correct IAM permission to the unique
 # service account.
