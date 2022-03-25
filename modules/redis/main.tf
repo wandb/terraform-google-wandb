@@ -12,7 +12,7 @@ resource "google_redis_instance" "default" {
 
   authorized_network = var.network.id
 
-  redis_version     = "REDIS_6_0"
+  redis_version     = "REDIS_6_X"
   reserved_ip_range = "10.10.30.0/24"
 
   transit_encryption_mode = "SERVER_AUTHENTICATION"
