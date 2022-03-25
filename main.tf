@@ -89,3 +89,23 @@ module "database" {
 
   depends_on = [module.project_factory_project_services]
 }
+
+module "gke_app" {
+  source  = "wandb/wandb/kubernetes"
+  version = "1.0.2"
+
+  license = var.license
+
+  host                       = local.url
+  bucket                     = "gs://${module.file_storage.bucket_name}"
+  bucket_queue               = "pubsub:/${module.file_storage.bucket_queue_name}"
+  database_connection_string = "mysql://${module.database.connection_string}"
+
+  # If we dont wait, tf will start trying to deploy while the work group is
+  # still spinning up
+  depends_on = [
+    module.database,
+    module.file_storage,
+    module.app_gke
+  ]
+}

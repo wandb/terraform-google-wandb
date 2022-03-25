@@ -54,7 +54,11 @@ variable "database_version" {
   default     = "MYSQL_5_7"
 
   validation {
-    condition     = contains(["MYSQL_5_7", "MYSQL_8_0"], var.version)
+    condition     = contains(["MYSQL_5_7", "MYSQL_8_0"], var.database_version)
     error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
   }
+}
+
+variable "license" {
+  type = string
 }
