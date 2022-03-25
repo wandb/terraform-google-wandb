@@ -38,3 +38,9 @@ variable "subdomain" {
   default     = null
   description = "Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route."
 }
+
+variable "ssl" {
+  type        = bool
+  default     = true
+  description = "Enable SSL certificate"
+}

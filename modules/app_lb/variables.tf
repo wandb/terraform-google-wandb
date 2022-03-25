@@ -15,8 +15,8 @@ variable "fqdn" {
 
 variable "ssl" {
   type        = bool
-  default     = false
-  description = "SSL certificate"
+  default     = true
+  description = "Enable SSL certificate"
 }
 
 variable "group" {

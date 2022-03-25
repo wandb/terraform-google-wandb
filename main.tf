@@ -20,7 +20,8 @@ module "project_factory_project_services" {
 
 locals {
   fqdn              = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
-  url               = "https://${local.fqdn}"
+  url_prefix        = var.ssl ? "https" : "http"
+  url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
 }
 
@@ -69,6 +70,7 @@ module "app_lb" {
   source    = "./modules/app_lb"
   namespace = var.namespace
 
+  ssl             = var.ssl
   fqdn            = local.fqdn
   network         = module.networking.network
   group           = module.app_gke.instance_group_url

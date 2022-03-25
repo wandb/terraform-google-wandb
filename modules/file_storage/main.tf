@@ -46,9 +46,9 @@ resource "google_pubsub_subscription" "file_storage" {
 }
 
 resource "google_pubsub_subscription_iam_member" "subscriber" {
-  subscription  = google_pubsub_subscription.file_storage.name
-  member = local.sa_member
-  role   = "roles/pubsub.subscriber"
+  subscription = google_pubsub_subscription.file_storage.name
+  member       = local.sa_member
+  role         = "roles/pubsub.subscriber"
 }
 
 # Enable notifications by giving the correct IAM permission to the unique
@@ -58,8 +58,8 @@ data "google_storage_project_service_account" "service" {
 
 # Google needs access to publish events from the bucket onto the queue.
 resource "google_pubsub_topic_iam_member" "gcp_publisher" {
-  topic   = google_pubsub_topic.file_storage.id
-  role    = "roles/pubsub.publisher"
+  topic  = google_pubsub_topic.file_storage.id
+  role   = "roles/pubsub.publisher"
   member = "serviceAccount:${data.google_storage_project_service_account.service.email_address}"
 }
 
