@@ -95,6 +95,13 @@ module "gke_app" {
   bucket_queue               = "pubsub:/${module.file_storage.bucket_queue_name}"
   database_connection_string = "mysql://${module.database.connection_string}"
 
+  oidc_client_id   = var.oidc_client_id
+  oidc_issuer      = var.oidc_issuer
+  oidc_auth_method = var.oidc_auth_method
+
+  wandb_image   = var.wandb_image
+  wandb_version = var.wandb_version
+
   # If we dont wait, tf will start trying to deploy while the work group is
   # still spinning up
   depends_on = [
