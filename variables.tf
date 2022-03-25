@@ -44,3 +44,17 @@ variable "ssl" {
   default     = true
   description = "Enable SSL certificate"
 }
+
+##########################################
+# Database                               #
+##########################################
+variable "database_version" {
+  description = "Version for MySQL"
+  type        = string
+  default     = "MYSQL_5_7"
+
+  validation {
+    condition     = contains(["MYSQL_5_7", "MYSQL_8_0"], var.version)
+    error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
+  }
+}

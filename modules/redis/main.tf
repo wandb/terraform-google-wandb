@@ -1,0 +1,22 @@
+data "google_compute_zones" "available" {
+}
+
+resource "google_redis_instance" "default" {
+  name           = "${var.namespace}-redis"
+  tier           = "STANDARD_HA"
+  memory_size_gb = 4
+
+  location_id             = google_compute_zones.available.names.0
+  alternative_location_id = google_compute_zones.available.names.1
+
+  authorized_network = var.network.id
+
+  redis_version     = "REDIS_6_0"
+  display_name      = "Weights & Biases Redis (${var.namespace})"
+  reserved_ip_range = "10.10.30.0/24"
+
+  transit_encryption_mode = "SERVER_AUTHENTICATION"
+  connect_mode            = "DIRECT_PEERING"
+
+  labels = var.labels
+}
