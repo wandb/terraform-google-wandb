@@ -4,6 +4,12 @@ provider "google" {
   zone    = var.zone
 }
 
+provider "google-beta" {
+  project = var.project_id
+  region  = var.region
+  zone    = var.zone
+}
+
 data "google_client_config" "current" {}
 
 provider "kubernetes" {
@@ -16,8 +22,8 @@ provider "kubernetes" {
 module "wandb" {
   source = "../../"
 
-  namespace = var.namespace
-  license = var.license
+  namespace   = var.namespace
+  license     = var.license
   domain_name = var.domain
   subdomain   = var.subdomain
 

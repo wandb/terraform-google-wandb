@@ -6,6 +6,7 @@ resource "google_redis_instance" "default" {
   display_name   = "${var.namespace} W&B Instance"
   tier           = "STANDARD_HA"
   memory_size_gb = var.memory_size_gb
+  auth_enabled   = true
 
   location_id             = google_compute_zones.available.names.0
   alternative_location_id = google_compute_zones.available.names.1
