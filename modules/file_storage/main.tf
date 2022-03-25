@@ -1,13 +1,9 @@
 locals {
-  member = "serviceAccount:${var.service_account.email}"
-}
-
-resource "random_pet" "suffix" {
-  length = 2
+  sa_member = "serviceAccount:${var.service_account.email}"
 }
 
 resource "google_storage_bucket" "file_storage" {
-  name     = "${var.namespace}-file-storage-${random_pet.suffix.id}"
+  name     = "${var.namespace}-file-storage"
   location = var.bucket_location
 
   uniform_bucket_level_access = true
@@ -16,32 +12,28 @@ resource "google_storage_bucket" "file_storage" {
   labels = var.labels
 
   cors {
+    origin          = ["*"]
     method          = ["GET", "HEAD", "PUT"]
     response_header = ["ETag"]
     max_age_seconds = 3000
   }
 }
 
-resource "google_storage_bucket_iam_member" "file_storage_object_admin" {
+resource "google_storage_bucket_iam_member" "object_admin" {
   bucket = google_storage_bucket.file_storage.name
-  member = local.member
+  member = local.sa_member
   role   = "roles/storage.objectAdmin"
 }
 
-resource "google_storage_bucket_iam_member" "legacy_bucket_reader" {
-  bucket = google_storage_bucket.file_storage.name
-  member = local.member
-  role   = "roles/storage.legacyBucketReader"
-}
-
 resource "google_pubsub_topic" "file_storage" {
-  name = "${var.namespace}-file-storage"
+  name         = "${var.namespace}-file-storage"
+  kms_key_name = var.crypto_key.id
 }
 
-resource "google_pubsub_topic_iam_member" "file_storage_editor" {
+resource "google_pubsub_topic_iam_member" "admin" {
   topic  = google_pubsub_topic.file_storage.name
-  member = local.member
-  role   = "roles/editor"
+  member = local.sa_member
+  role   = "roles/pubsub.admin"
 }
 
 resource "google_pubsub_subscription" "file_storage" {
@@ -50,18 +42,22 @@ resource "google_pubsub_subscription" "file_storage" {
   ack_deadline_seconds = 30
 }
 
-
-// Enable notifications by giving the correct IAM permission to the unique
-// service account.
-data "google_storage_project_service_account" "service" {
+resource "google_pubsub_subscription_iam_member" "admin" {
+  subscription = google_pubsub_subscription.file_storage.name
+  member       = local.sa_member
+  role         = "roles/pubsub.admin"
 }
 
-// For some reason we need to give the GCS Service agent access?
-// TODO: figure out why? It would be nice if this could be all isolated to one account.
-resource "google_pubsub_topic_iam_binding" "gcp_publisher" {
-  topic   = google_pubsub_topic.file_storage.id
-  role    = "roles/pubsub.publisher"
-  members = ["serviceAccount:${data.google_storage_project_service_account.service.email_address}"]
+# Enable notifications by giving the correct IAM permission to the unique
+# service account.
+data "google_storage_project_service_account" "default" {
+}
+
+# Google needs access to publish events from the bucket onto the queue.
+resource "google_pubsub_topic_iam_member" "gcp_publisher" {
+  topic  = google_pubsub_topic.file_storage.id
+  role   = "roles/pubsub.publisher"
+  member = "serviceAccount:${data.google_storage_project_service_account.default.email_address}"
 }
 
 resource "google_storage_notification" "file_storage" {
@@ -69,5 +65,5 @@ resource "google_storage_notification" "file_storage" {
   topic          = google_pubsub_topic.file_storage.name
   payload_format = "JSON_API_V1"
 
-  depends_on = [google_pubsub_topic_iam_binding.gcp_publisher]
+  depends_on = [google_pubsub_topic_iam_member.gcp_publisher]
 }

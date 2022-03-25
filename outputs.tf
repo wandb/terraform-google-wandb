@@ -54,3 +54,7 @@ output "cluster_self_link" {
   value       = module.app_gke.cluster_self_link
   description = "Self link of the kubernetes (GKE) cluster."
 }
+
+output "address" {
+  value = module.app_lb.address
+}

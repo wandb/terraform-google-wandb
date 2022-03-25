@@ -53,3 +53,14 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "database_version" {
+  description = "Version for MySQL"
+  type        = string
+  default     = "MYSQL_5_7"
+
+  validation {
+    condition     = contains(["MYSQL_5_7", "MYSQL_8_0"], var.database_version)
+    error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
+  }
+}

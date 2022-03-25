@@ -5,9 +5,17 @@ resource "google_compute_network" "vpc" {
 }
 
 resource "google_compute_subnetwork" "default" {
-  name          = "${var.namespace}-subnet"
-  ip_cidr_range = "10.10.0.0/16"
-  network       = google_compute_network.vpc.self_link
+  name = "${var.namespace}-subnet"
+
+  ip_cidr_range            = "10.10.0.0/16"
+  private_ip_google_access = true
+  network                  = google_compute_network.vpc.self_link
+
+  log_config {
+    aggregation_interval = "INTERVAL_10_MIN"
+    flow_sampling        = 0.5
+    metadata             = "INCLUDE_ALL_METADATA"
+  }
 }
 
 resource "google_compute_global_address" "private_ip_address" {

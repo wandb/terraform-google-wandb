@@ -3,6 +3,12 @@ variable "namespace" {
   description = "Friendly name prefix used for tagging and naming AWS resources."
 }
 
+variable "crypto_key" {
+  type        = object({ id = string })
+  default     = { id = null }
+  description = "Key used to encrypt and decrypt pubsub"
+}
+
 variable "service_account" {
   description = "The service account associated with the GKE cluster instances that host Weights & Biases."
   type        = object({ email = string })

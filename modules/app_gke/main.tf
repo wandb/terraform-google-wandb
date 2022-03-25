@@ -5,6 +5,9 @@ resource "google_container_cluster" "default" {
   subnetwork      = var.subnetwork.self_link
   networking_mode = "VPC_NATIVE"
 
+  enable_intranode_visibility = true
+  enable_binary_authorization = true
+
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
     services_ipv4_cidr_block = "/19"
@@ -21,12 +24,18 @@ resource "google_container_cluster" "default" {
   initial_node_count       = 1
 }
 
+resource "random_pet" "node_pool" {
+  keepers = {
+  }
+}
+
 resource "google_container_node_pool" "default" {
-  name       = "default-node-pool"
+  name       = "default-pool-${random_pet.node_pool.id}"
   cluster    = google_container_cluster.default.id
   node_count = 2
 
   node_config {
+    image_type      = "COS"
     machine_type    = "e2-standard-4"
     service_account = var.service_account.email
     oauth_scopes = [
@@ -41,6 +50,14 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
+    shielded_instance_config {
+      enable_secure_boot = true
+    }
+  }
+
+  management {
+    auto_upgrade = true
+    auto_repair  = true
   }
 
   lifecycle {
@@ -49,5 +66,6 @@ resource "google_container_node_pool" "default" {
       # -> "us-central1" this causes the pool to be destory on each apply
       location,
     ]
+    create_before_destroy = true
   }
 }

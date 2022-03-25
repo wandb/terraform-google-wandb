@@ -19,7 +19,7 @@ locals {
 
 resource "google_sql_database_instance" "default" {
   name                = local.master_instance_name
-  database_version    = "MYSQL_5_7"
+  database_version    = var.database_version
   deletion_protection = var.deletion_protection
 
   settings {
