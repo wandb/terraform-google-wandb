@@ -1,3 +1,5 @@
+data "google_client_config" "current" {}
+
 resource "random_id" "main" {
   # 30 bytes ensures that enough characters are generated to satisfy the service account ID requirements, regardless of
   # the prefix.
@@ -14,4 +16,26 @@ resource "google_service_account" "main" {
 
 resource "google_service_account_key" "main" {
   service_account_id = google_service_account.main.name
+}
+
+locals {
+  sa_member  = "serviceAccount:${google_service_account.main.email}"
+  project_id = data.google_client_config.current.project
+}
+
+# Service Account Token Creator role allows principals to impersonate service
+# accounts to create OAuth 2.0 tokens which can be used to authenticate with
+# Google APIs 
+resource "google_project_iam_member" "token_creator" {
+  project = local.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = local.sa_member
+}
+
+# Cloud SQL Client role allows service account members connectivity access to
+# Cloud SQL instances
+resource "google_project_iam_member" "cloudsql_client" {
+  project = local.project_id
+  role    = "roles/cloudsql.client"
+  member  = local.sa_member
 }
