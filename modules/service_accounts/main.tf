@@ -14,10 +14,6 @@ resource "google_service_account" "main" {
   description  = "Service Account used by Weights & Biases."
 }
 
-resource "google_service_account_key" "main" {
-  service_account_id = google_service_account.main.name
-}
-
 locals {
   sa_member  = "serviceAccount:${google_service_account.main.email}"
   project_id = data.google_client_config.current.project
