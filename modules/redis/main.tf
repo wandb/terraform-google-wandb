@@ -8,8 +8,8 @@ resource "google_redis_instance" "default" {
   memory_size_gb = var.memory_size_gb
   auth_enabled   = true
 
-  location_id             = google_compute_zones.available.names.0
-  alternative_location_id = google_compute_zones.available.names.1
+  location_id             = data.google_compute_zones.available.names.0
+  alternative_location_id = data.google_compute_zones.available.names.1
 
   authorized_network = var.network.id
 

@@ -22,10 +22,11 @@ provider "kubernetes" {
 module "wandb" {
   source = "../../"
 
-  namespace   = var.namespace
-  license     = var.license
-  domain_name = var.domain
-  subdomain   = var.subdomain
+  namespace    = var.namespace
+  license      = var.license
+  domain_name  = var.domain
+  subdomain    = var.subdomain
+  create_redis = true
 
   deletion_protection = false
 }
