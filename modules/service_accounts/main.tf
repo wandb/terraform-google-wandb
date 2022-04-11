@@ -19,13 +19,22 @@ locals {
   project_id = data.google_client_config.current.project
 }
 
+data "google_compute_default_service_account" "default" {
+}
+
 # Service Account Token Creator role allows principals to impersonate service
 # accounts to create OAuth 2.0 tokens which can be used to authenticate with
 # Google APIs 
-resource "google_project_iam_member" "token_creator" {
-  project = local.project_id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member  = local.sa_member
+# resource "google_project_iam_member" "token_creator" {
+#   project = local.project_id
+#   role    = "roles/iam.serviceAccountTokenCreator"
+#   member  = local.sa_member
+# }
+
+resource "google_service_account_iam_member" "gce_default_token_creator" {
+  service_account_id = data.google_compute_default_service_account.default.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = local.sa_member
 }
 
 # Cloud SQL Client role allows service account members connectivity access to
