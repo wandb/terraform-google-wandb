@@ -90,7 +90,7 @@ variable "ssl" {
 variable "database_version" {
   description = "Version for MySQL"
   type        = string
-  default     = "MYSQL_5_7"
+  default     = "MYSQL_8_0"
 
   validation {
     condition     = contains(["MYSQL_5_7", "MYSQL_8_0"], var.database_version)
