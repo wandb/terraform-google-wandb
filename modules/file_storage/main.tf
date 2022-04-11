@@ -2,8 +2,12 @@ locals {
   sa_member = "serviceAccount:${var.service_account.email}"
 }
 
+resource "random_pet" "file_storage" {
+  length = 2
+}
+
 resource "google_storage_bucket" "file_storage" {
-  name     = "${var.namespace}-file-storage"
+  name     = "${var.namespace}-file-storage-${random_pet.file_storage.id}"
   location = var.bucket_location
 
   uniform_bucket_level_access = true
