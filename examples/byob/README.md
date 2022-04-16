@@ -10,8 +10,10 @@ access to an google bucket provisioned in project account.
 
 ## Provision Bucket using Terraform
 
-1. Install [Terraform 1.0+](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started)
-2. Authenticate with GCP. The easiest way to do this is to run `gcloud auth application-default login`, if you already have gcloud installed. If you
+1. Install [Terraform
+   1.0+](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started)
+2. Authenticate with GCP. The easiest way to do this is to run `gcloud auth
+   application-default login`, if you already have gcloud installed. If you
    don't already have it, you can install it from
    [here](https://cloud.google.com/sdk/docs/install).
    > Please make sure the
