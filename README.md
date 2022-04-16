@@ -1,15 +1,10 @@
 # Weights & Biases Google Module
 
-**IMPORTANT:** You are viewing a beta version of the official module to install
-Weights & Biases. This new version is incompatible with earlier versions, and it
-is not currently meant for production use. Please contact your Customer Success
-Manager for details before using.
-
 This is a Terraform module for provisioning a Weights & Biases Cluster on Google
 Cloud. Weights & Biases Local is our self-hosted distribution of wandb.ai. It
 offers enterprises a private instance of the Weights & Biases application, with
 no resource limits and with additional enterprise-grade architectural features
-like audit logging and SAML single sign-on.
+like audit logging and single sign-on.
 
 ## About This Module
 
@@ -61,13 +56,14 @@ resources that lack official modules.
 - [Public Instance with HTTPS using Cloud DNS](examples/public-dns-with-cloud-dns)
 
 <!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.15 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.9 |
+| Name                                                                        | Version |
+| --------------------------------------------------------------------------- | ------- |
+| <a name="requirement_terraform"></a> [terraform](#requirement_terraform)    | ~> 1.0  |
+| <a name="requirement_google"></a> [google](#requirement_google)             | ~> 4.15 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement_kubernetes) | ~> 2.9  |
 
 ## Providers
 
@@ -75,18 +71,18 @@ No providers.
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_app_gke"></a> [app\_gke](#module\_app\_gke) | ./modules/app_gke | n/a |
-| <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
-| <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
-| <a name="module_file_storage"></a> [file\_storage](#module\_file\_storage) | ./modules/file_storage | n/a |
-| <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.0.2 |
-| <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
-| <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
-| <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 11.3 |
-| <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
-| <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
+| Name                                                                                                                                | Source                                                                    | Version |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------- |
+| <a name="module_app_gke"></a> [app_gke](#module_app_gke)                                                                            | ./modules/app_gke                                                         | n/a     |
+| <a name="module_app_lb"></a> [app_lb](#module_app_lb)                                                                               | ./modules/app_lb                                                          | n/a     |
+| <a name="module_database"></a> [database](#module_database)                                                                         | ./modules/database                                                        | n/a     |
+| <a name="module_file_storage"></a> [file_storage](#module_file_storage)                                                             | ./modules/file_storage                                                    | n/a     |
+| <a name="module_gke_app"></a> [gke_app](#module_gke_app)                                                                            | wandb/wandb/kubernetes                                                    | 1.0.2   |
+| <a name="module_kms"></a> [kms](#module_kms)                                                                                        | ./modules/kms                                                             | n/a     |
+| <a name="module_networking"></a> [networking](#module_networking)                                                                   | ./modules/networking                                                      | n/a     |
+| <a name="module_project_factory_project_services"></a> [project_factory_project_services](#module_project_factory_project_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 11.3 |
+| <a name="module_redis"></a> [redis](#module_redis)                                                                                  | ./modules/redis                                                           | n/a     |
+| <a name="module_service_accounts"></a> [service_accounts](#module_service_accounts)                                                 | ./modules/service_accounts                                                | n/a     |
 
 ## Resources
 
@@ -94,39 +90,40 @@ No resources.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
-| <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
-| <a name="input_database_version"></a> [database\_version](#input\_database\_version) | Version for MySQL | `string` | `"MYSQL_8_0"` | no |
-| <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
-| <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
-| <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
-| <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
-| <a name="input_namespace"></a> [namespace](#input\_namespace) | String used for prefix resources. | `string` | n/a | yes |
-| <a name="input_oidc_auth_method"></a> [oidc\_auth\_method](#input\_oidc\_auth\_method) | OIDC auth method | `string` | `"implicit"` | no |
-| <a name="input_oidc_client_id"></a> [oidc\_client\_id](#input\_oidc\_client\_id) | The Client ID of application in your identity provider | `string` | `""` | no |
-| <a name="input_oidc_issuer"></a> [oidc\_issuer](#input\_oidc\_issuer) | A url to your Open ID Connect identity provider, i.e. https://cognito-idp.us-east-1.amazonaws.com/us-east-1_uiIFNdacd | `string` | `""` | no |
-| <a name="input_ssl"></a> [ssl](#input\_ssl) | Enable SSL certificate | `bool` | `true` | no |
-| <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route. | `string` | `null` | no |
-| <a name="input_use_internal_queue"></a> [use\_internal\_queue](#input\_use\_internal\_queue) | Uses an internal redis queue instead of using google pubsub. | `bool` | `false` | no |
-| <a name="input_wandb_image"></a> [wandb\_image](#input\_wandb\_image) | Docker repository of to pull the wandb image from. | `string` | `"wandb/local"` | no |
-| <a name="input_wandb_version"></a> [wandb\_version](#input\_wandb\_version) | The version of Weights & Biases local to deploy. | `string` | `"latest"` | no |
+| Name                                                                                       | Description                                                                                                                       | Type          | Default         | Required |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------- | :------: |
+| <a name="input_bucket_name"></a> [bucket_name](#input_bucket_name)                         | Use an existing bucket.                                                                                                           | `string`      | `""`            |    no    |
+| <a name="input_create_redis"></a> [create_redis](#input_create_redis)                      | Boolean indicating whether to provision an redis instance (true) or not (false).                                                  | `bool`        | `false`         |    no    |
+| <a name="input_database_version"></a> [database_version](#input_database_version)          | Version for MySQL                                                                                                                 | `string`      | `"MYSQL_8_0"`   |    no    |
+| <a name="input_deletion_protection"></a> [deletion_protection](#input_deletion_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool`        | `true`          |    no    |
+| <a name="input_domain_name"></a> [domain_name](#input_domain_name)                         | Domain for accessing the Weights & Biases UI.                                                                                     | `string`      | `null`          |    no    |
+| <a name="input_labels"></a> [labels](#input_labels)                                        | Labels to apply to resources                                                                                                      | `map(string)` | `{}`            |    no    |
+| <a name="input_license"></a> [license](#input_license)                                     | Your wandb/local license                                                                                                          | `string`      | n/a             |   yes    |
+| <a name="input_namespace"></a> [namespace](#input_namespace)                               | String used for prefix resources.                                                                                                 | `string`      | n/a             |   yes    |
+| <a name="input_oidc_auth_method"></a> [oidc_auth_method](#input_oidc_auth_method)          | OIDC auth method                                                                                                                  | `string`      | `"implicit"`    |    no    |
+| <a name="input_oidc_client_id"></a> [oidc_client_id](#input_oidc_client_id)                | The Client ID of application in your identity provider                                                                            | `string`      | `""`            |    no    |
+| <a name="input_oidc_issuer"></a> [oidc_issuer](#input_oidc_issuer)                         | A url to your Open ID Connect identity provider, i.e. https://cognito-idp.us-east-1.amazonaws.com/us-east-1_uiIFNdacd             | `string`      | `""`            |    no    |
+| <a name="input_ssl"></a> [ssl](#input_ssl)                                                 | Enable SSL certificate                                                                                                            | `bool`        | `true`          |    no    |
+| <a name="input_subdomain"></a> [subdomain](#input_subdomain)                               | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route.                                         | `string`      | `null`          |    no    |
+| <a name="input_use_internal_queue"></a> [use_internal_queue](#input_use_internal_queue)    | Uses an internal redis queue instead of using google pubsub.                                                                      | `bool`        | `false`         |    no    |
+| <a name="input_wandb_image"></a> [wandb_image](#input_wandb_image)                         | Docker repository of to pull the wandb image from.                                                                                | `string`      | `"wandb/local"` |    no    |
+| <a name="input_wandb_version"></a> [wandb_version](#input_wandb_version)                   | The version of Weights & Biases local to deploy.                                                                                  | `string`      | `"latest"`      |    no    |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_address"></a> [address](#output\_address) | n/a |
-| <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of google bucket. |
-| <a name="output_bucket_queue_name"></a> [bucket\_queue\_name](#output\_bucket\_queue\_name) | Pubsub queue created for google bucket file upload events. |
-| <a name="output_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#output\_cluster\_ca\_certificate) | Certificate of the kubernetes (GKE) cluster. |
-| <a name="output_cluster_endpoint"></a> [cluster\_endpoint](#output\_cluster\_endpoint) | Endpoint of the kubernetes (GKE) cluster. |
-| <a name="output_cluster_id"></a> [cluster\_id](#output\_cluster\_id) | ID of the kubernetes (GKE) cluster. |
-| <a name="output_cluster_node_pool"></a> [cluster\_node\_pool](#output\_cluster\_node\_pool) | Default node pool where Weights & Biases should be deployed into. |
-| <a name="output_cluster_self_link"></a> [cluster\_self\_link](#output\_cluster\_self\_link) | Self link of the kubernetes (GKE) cluster. |
-| <a name="output_database_connection_string"></a> [database\_connection\_string](#output\_database\_connection\_string) | Full database connection string. You must be in the VPC to access the database. |
-| <a name="output_fqdn"></a> [fqdn](#output\_fqdn) | The FQDN to the W&B application |
-| <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Weights & Biases service account used to manage resources. |
-| <a name="output_url"></a> [url](#output\_url) | The URL to the W&B application |
+| Name                                                                                                              | Description                                                                     |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| <a name="output_address"></a> [address](#output_address)                                                          | n/a                                                                             |
+| <a name="output_bucket_name"></a> [bucket_name](#output_bucket_name)                                              | Name of google bucket.                                                          |
+| <a name="output_bucket_queue_name"></a> [bucket_queue_name](#output_bucket_queue_name)                            | Pubsub queue created for google bucket file upload events.                      |
+| <a name="output_cluster_ca_certificate"></a> [cluster_ca_certificate](#output_cluster_ca_certificate)             | Certificate of the kubernetes (GKE) cluster.                                    |
+| <a name="output_cluster_endpoint"></a> [cluster_endpoint](#output_cluster_endpoint)                               | Endpoint of the kubernetes (GKE) cluster.                                       |
+| <a name="output_cluster_id"></a> [cluster_id](#output_cluster_id)                                                 | ID of the kubernetes (GKE) cluster.                                             |
+| <a name="output_cluster_node_pool"></a> [cluster_node_pool](#output_cluster_node_pool)                            | Default node pool where Weights & Biases should be deployed into.               |
+| <a name="output_cluster_self_link"></a> [cluster_self_link](#output_cluster_self_link)                            | Self link of the kubernetes (GKE) cluster.                                      |
+| <a name="output_database_connection_string"></a> [database_connection_string](#output_database_connection_string) | Full database connection string. You must be in the VPC to access the database. |
+| <a name="output_fqdn"></a> [fqdn](#output_fqdn)                                                                   | The FQDN to the W&B application                                                 |
+| <a name="output_service_account"></a> [service_account](#output_service_account)                                  | Weights & Biases service account used to manage resources.                      |
+| <a name="output_url"></a> [url](#output_url)                                                                      | The URL to the W&B application                                                  |
+
 <!-- END_TF_DOCS -->
