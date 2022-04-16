@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/wandb/terraform-google-wandb/compare/v1.1.0...v1.2.0) (2022-04-16)
+
+
+### Features
+
+* Option to enable redis ([#11](https://github.com/wandb/terraform-google-wandb/issues/11)) ([1022cd6](https://github.com/wandb/terraform-google-wandb/commit/1022cd630ae68dac78afb8fa0d53e16b755e5279))
+
 ## [1.1.0](https://github.com/wandb/terraform-google-wandb/compare/v1.0.0...v1.1.0) (2022-04-11)
 
 
