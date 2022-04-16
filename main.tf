@@ -37,14 +37,16 @@ module "kms" {
 }
 
 module "file_storage" {
-  source              = "./modules/file_storage"
-  namespace           = var.namespace
-  labels              = var.labels
-  create_queue        = !var.use_internal_queue
-  bucket_location     = "US"
+  source    = "./modules/file_storage"
+  namespace = var.namespace
+  labels    = var.labels
+
+  create_queue    = !var.use_internal_queue
+  bucket_location = "US"
+  service_account = module.service_accounts.service_account
+  crypto_key      = module.kms.crypto_key
+
   deletion_protection = var.deletion_protection
-  service_account     = module.service_accounts.service_account
-  crypto_key          = module.kms.crypto_key
   depends_on          = [module.project_factory_project_services, module.kms]
 }
 

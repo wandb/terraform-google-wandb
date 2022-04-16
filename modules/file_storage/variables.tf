@@ -6,7 +6,13 @@ variable "namespace" {
 variable "crypto_key" {
   type        = object({ id = string })
   default     = { id = null }
-  description = "Key used to encrypt and decrypt pubsub"
+  description = "Key used to encrypt and decrypt pubsub."
+}
+
+variable "create_queue" {
+  type        = bool
+  default     = true
+  description = "Disable pubsub queue on storage bucket."
 }
 
 variable "service_account" {
