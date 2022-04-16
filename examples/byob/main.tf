@@ -17,15 +17,16 @@ module "project_factory_project_services" {
 }
 
 module "resources" {
-  source = "../../modules/file_storage"
+  source = "../../modules/storage"
 
   namespace = var.namespace
   labels    = var.labels
 
   bucket_location = "US"
-
   create_queue        = false
   deletion_protection = true
+
+  depends_on = [module.project_factory_project_services]
 }
 
 resource "google_storage_bucket_iam_member" "object_admin" {
