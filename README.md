@@ -1,15 +1,10 @@
 # Weights & Biases Google Module
 
-**IMPORTANT:** You are viewing a beta version of the official module to install
-Weights & Biases. This new version is incompatible with earlier versions, and it
-is not currently meant for production use. Please contact your Customer Success
-Manager for details before using.
-
 This is a Terraform module for provisioning a Weights & Biases Cluster on Google
 Cloud. Weights & Biases Local is our self-hosted distribution of wandb.ai. It
 offers enterprises a private instance of the Weights & Biases application, with
 no resource limits and with additional enterprise-grade architectural features
-like audit logging and SAML single sign-on.
+like audit logging and single sign-on.
 
 ## About This Module
 
@@ -80,13 +75,13 @@ No providers.
 | <a name="module_app_gke"></a> [app\_gke](#module\_app\_gke) | ./modules/app_gke | n/a |
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
-| <a name="module_file_storage"></a> [file\_storage](#module\_file\_storage) | ./modules/file_storage | n/a |
 | <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.0.2 |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
-| <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 11.3 |
+| <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 13.0 |
 | <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
+| <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
 
 ## Resources
 

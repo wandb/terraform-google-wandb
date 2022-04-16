@@ -1,6 +1,6 @@
 module "project_factory_project_services" {
   source                      = "terraform-google-modules/project-factory/google//modules/project_services"
-  version                     = "~> 11.3"
+  version                     = "~> 13.0"
   project_id                  = null
   disable_dependent_services  = false
   disable_services_on_destroy = false
@@ -22,6 +22,7 @@ locals {
   url_prefix        = var.ssl ? "https" : "http"
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
+  create_bucket     = var.bucket_name == ""
 }
 
 module "service_accounts" {
@@ -36,8 +37,9 @@ module "kms" {
   deletion_protection = var.deletion_protection
 }
 
-module "file_storage" {
-  source    = "./modules/file_storage"
+module "storage" {
+  count     = local.create_bucket ? 1 : 0
+  source    = "./modules/storage"
   namespace = var.namespace
   labels    = var.labels
 
@@ -47,7 +49,7 @@ module "file_storage" {
   crypto_key      = module.kms.crypto_key
 
   deletion_protection = var.deletion_protection
-  depends_on          = [module.project_factory_project_services, module.kms]
+  depends_on          = [module.project_factory_project_services]
 }
 
 module "networking" {
@@ -92,11 +94,12 @@ module "redis" {
   namespace      = var.namespace
   memory_size_gb = 4
   network        = module.networking.network
-
 }
 
 locals {
   redis_connection_string = var.create_redis ? "redis://${module.redis.0.connection_string}?tls=true&ttlInSeconds=60" : null
+  bucket = local.create_bucket ? "gs://${module.storage.0.bucket_name}" : var.bucket_name
+  bucket_queue = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 
 module "gke_app" {
@@ -106,8 +109,8 @@ module "gke_app" {
   license = var.license
 
   host                       = local.url
-  bucket                     = "gs://${module.file_storage.bucket_name}"
-  bucket_queue               = "pubsub:/${module.file_storage.bucket_queue_name}"
+  bucket                     = local.bucket
+  bucket_queue               = local.bucket_queue
   database_connection_string = "mysql://${module.database.connection_string}"
   redis_connection_string    = local.redis_connection_string
 
@@ -124,7 +127,7 @@ module "gke_app" {
   depends_on = [
     module.database,
     module.redis,
-    module.file_storage,
+    module.storage,
     module.app_gke
   ]
 }
