@@ -34,3 +34,15 @@ variable "subdomain" {
 variable "license" {
   type = string
 }
+
+variable "wandb_version" {
+  description = "The version of Weights & Biases local to deploy."
+  type        = string
+  default     = "latest"
+}
+
+variable "wandb_image" {
+  description = "Docker repository of to pull the wandb image from."
+  type        = string
+  default     = "wandb/local"
+}

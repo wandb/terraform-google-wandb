@@ -97,3 +97,12 @@ variable "database_version" {
     error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
   }
 }
+
+##########################################
+# Redis                                  #
+##########################################
+variable "create_redis" {
+  type        = bool
+  description = "Boolean indicating whether to provision an redis instance (true) or not (false)."
+  default     = false
+}
