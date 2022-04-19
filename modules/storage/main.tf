@@ -5,6 +5,8 @@ module "bucket" {
 
   bucket_location = var.bucket_location
   service_account = var.service_account
+
+  deletion_protection = var.deletion_protection
 }
 
 module "pubsub" {
