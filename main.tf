@@ -84,6 +84,19 @@ module "database" {
   depends_on          = [module.project_factory_project_services]
 }
 
+module "redis" {
+  count          = var.create_redis ? 1 : 0
+  source         = "./modules/redis"
+  namespace      = var.namespace
+  memory_size_gb = 4
+  network        = module.networking.network
+
+}
+
+locals {
+  redis_connection_string = var.create_redis ? "redis://${module.redis.0.connection_string}?tls=true&ttlInSeconds=60" : null
+}
+
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
   version = "1.0.2"
@@ -94,6 +107,8 @@ module "gke_app" {
   bucket                     = "gs://${module.file_storage.bucket_name}"
   bucket_queue               = "pubsub:/${module.file_storage.bucket_queue_name}"
   database_connection_string = "mysql://${module.database.connection_string}"
+  redis_connection_string    = local.redis_connection_string
+
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
@@ -106,6 +121,7 @@ module "gke_app" {
   # still spinning up
   depends_on = [
     module.database,
+    module.redis,
     module.file_storage,
     module.app_gke
   ]
