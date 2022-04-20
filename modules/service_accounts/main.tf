@@ -35,3 +35,11 @@ resource "google_project_iam_member" "cloudsql_client" {
   role    = "roles/cloudsql.client"
   member  = local.sa_member
 }
+
+# If the bucket already exists, grant this new service account permission
+resource "google_storage_bucket_iam_member" "object_admin" {
+  count = var.bucket_name != "" ? 1 : 0
+  bucket = var.bucket_name
+  member = local.sa_member
+  role   = "roles/storage.objectAdmin"
+}
