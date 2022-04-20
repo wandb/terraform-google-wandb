@@ -22,17 +22,17 @@ module "resources" {
   namespace = var.namespace
   labels    = var.labels
 
-  bucket_location = "US"
+  bucket_location     = var.bucket_location
+  deletion_protection = var.deletion_protection
   create_queue        = false
-  deletion_protection = true
 
   depends_on = [module.project_factory_project_services]
 }
 
-resource "google_storage_bucket_iam_member" "object_admin" {
+resource "google_storage_bucket_iam_member" "admin" {
   bucket = module.resource.bucket_name
   member = "serviceAccount:${var.service_account_email}"
-  role   = "roles/storage.objectAdmin"
+  role   = "roles/storage.admin"
 }
 
 output "bucket_name" {

@@ -32,9 +32,15 @@ module "service_accounts" {
 }
 
 module "kms" {
+  # KMS is currently only used to encrypt pubsub queue. Disable it if we dont use it.
+  count               = var.use_internal_queue ? 0 : 1
   source              = "./modules/kms"
   namespace           = var.namespace
   deletion_protection = var.deletion_protection
+}
+
+locals {
+  crypto_key = var.use_internal_queue ? null : module.kms.0.crypto_key
 }
 
 module "storage" {
@@ -46,7 +52,7 @@ module "storage" {
   create_queue    = !var.use_internal_queue
   bucket_location = "US"
   service_account = module.service_accounts.service_account
-  crypto_key      = module.kms.crypto_key
+  crypto_key      = local.crypto_key
 
   deletion_protection = var.deletion_protection
   depends_on          = [module.project_factory_project_services]
@@ -98,8 +104,8 @@ module "redis" {
 
 locals {
   redis_connection_string = var.create_redis ? "redis://${module.redis.0.connection_string}?tls=true&ttlInSeconds=60" : null
-  bucket = local.create_bucket ? "gs://${module.storage.0.bucket_name}" : var.bucket_name
-  bucket_queue = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
+  bucket                  = local.create_bucket ? "gs://${module.storage.0.bucket_name}" : var.bucket_name
+  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 
 module "gke_app" {

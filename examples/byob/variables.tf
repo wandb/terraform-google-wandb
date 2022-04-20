@@ -29,3 +29,15 @@ variable "service_account_email" {
   description = "Service account to grant permission too."
   default     = ""
 }
+
+variable "bucket_location" {
+  type        = string
+  description = "Location of the bucket (US, EU, ASIA)"
+  default     = "US"
+}
+
+variable "deletion_protection" {
+  description = "Bucket can't be deleted when this value is set to `true`."
+  type        = bool
+  default     = true
+}

@@ -3,7 +3,6 @@ locals {
 }
 
 resource "google_pubsub_topic" "file_storage" {
-
   name         = "${var.namespace}-file-storage"
   kms_key_name = var.crypto_key.id
 }
