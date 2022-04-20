@@ -30,8 +30,8 @@ module "wandb" {
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
-  create_redis       = false
-  use_internal_queue = false
+  create_redis       = true
+  use_internal_queue = true
 
   deletion_protection = false
 }
