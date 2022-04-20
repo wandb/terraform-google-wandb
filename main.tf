@@ -26,10 +26,10 @@ locals {
 }
 
 module "service_accounts" {
-  source     = "./modules/service_accounts"
-  namespace  = var.namespace
+  source      = "./modules/service_accounts"
+  namespace   = var.namespace
   bucket_name = var.bucket_name
-  depends_on = [module.project_factory_project_services]
+  depends_on  = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -105,8 +105,8 @@ module "redis" {
 
 locals {
   redis_connection_string = var.create_redis ? "redis://${module.redis.0.connection_string}?tls=true&ttlInSeconds=60" : null
-  bucket = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
-  bucket_queue = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
+  bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
+  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 
 module "gke_app" {
