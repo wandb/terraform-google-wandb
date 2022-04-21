@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/wandb/terraform-google-wandb/compare/v1.2.1...v1.3.0) (2022-04-21)
+
+
+### Features
+
+* Bring your own bucket ([#12](https://github.com/wandb/terraform-google-wandb/issues/12)) ([1fc8a3d](https://github.com/wandb/terraform-google-wandb/commit/1fc8a3df9273f042b67ed0c74bac3fff43b10ec3))
+
 ### [1.2.1](https://github.com/wandb/terraform-google-wandb/compare/v1.2.0...v1.2.1) (2022-04-20)
 
 
