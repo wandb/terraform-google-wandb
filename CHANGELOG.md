@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.1](https://github.com/wandb/terraform-google-wandb/compare/v1.2.0...v1.2.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* Isolate token creator permissions to SA ([#10](https://github.com/wandb/terraform-google-wandb/issues/10)) ([2fd2d9c](https://github.com/wandb/terraform-google-wandb/commit/2fd2d9c6a68646cdf478668e6c8782d4b5ccde5a))
+
 ## [1.2.0](https://github.com/wandb/terraform-google-wandb/compare/v1.1.0...v1.2.0) (2022-04-16)
 
 

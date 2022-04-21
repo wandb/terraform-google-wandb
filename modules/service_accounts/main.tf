@@ -19,13 +19,15 @@ locals {
   project_id = data.google_client_config.current.project
 }
 
-# Service Account Token Creator role allows principals to impersonate service
-# accounts to create OAuth 2.0 tokens which can be used to authenticate with
-# Google APIs 
-resource "google_project_iam_member" "token_creator" {
-  project = local.project_id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member  = local.sa_member
+# The only permission we care about is `iam.serviceAccounts.signBlob`. W&B signs
+# blobs using the account it is currently logged in with. Technically we dont
+# need all the permissions `serviceAccountTokenCreator` offers, but creating a
+# new custom role, requires more confusing terraform. Instead we can simply
+# scope this role to the itself.
+resource "google_service_account_iam_member" "token_creator" {
+  service_account_id = google_service_account.main.id
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = local.sa_member
 }
 
 # Cloud SQL Client role allows service account members connectivity access to
