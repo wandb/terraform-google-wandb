@@ -20,12 +20,12 @@ output "database_connection_string" {
 }
 
 output "bucket_name" {
-  value       = module.file_storage.bucket_name
+  value       = local.bucket
   description = "Name of google bucket."
 }
 
 output "bucket_queue_name" {
-  value       = module.file_storage.bucket_queue_name
+  value       = local.bucket_queue
   description = "Pubsub queue created for google bucket file upload events."
 }
 

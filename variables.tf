@@ -106,3 +106,14 @@ variable "create_redis" {
   description = "Boolean indicating whether to provision an redis instance (true) or not (false)."
   default     = false
 }
+
+##########################################
+# External Bucket                        #
+##########################################
+# Most users will not need these settings. They are ment for users who want a
+# bucket in a different account.
+variable "bucket_name" {
+  type        = string
+  description = "Use an existing bucket."
+  default     = ""
+}

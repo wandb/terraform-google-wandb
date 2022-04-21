@@ -2,33 +2,6 @@ locals {
   sa_member = "serviceAccount:${var.service_account.email}"
 }
 
-resource "random_pet" "file_storage" {
-  length = 2
-}
-
-resource "google_storage_bucket" "file_storage" {
-  name     = "${var.namespace}-file-storage-${random_pet.file_storage.id}"
-  location = var.bucket_location
-
-  uniform_bucket_level_access = true
-  force_destroy               = !var.deletion_protection
-
-  labels = var.labels
-
-  cors {
-    origin          = ["*"]
-    method          = ["GET", "HEAD", "PUT"]
-    response_header = ["ETag"]
-    max_age_seconds = 3000
-  }
-}
-
-resource "google_storage_bucket_iam_member" "object_admin" {
-  bucket = google_storage_bucket.file_storage.name
-  member = local.sa_member
-  role   = "roles/storage.objectAdmin"
-}
-
 resource "google_pubsub_topic" "file_storage" {
   name         = "${var.namespace}-file-storage"
   kms_key_name = var.crypto_key.id
@@ -65,7 +38,7 @@ resource "google_pubsub_topic_iam_member" "gcp_publisher" {
 }
 
 resource "google_storage_notification" "file_storage" {
-  bucket         = google_storage_bucket.file_storage.name
+  bucket         = var.bucket
   topic          = google_pubsub_topic.file_storage.name
   payload_format = "JSON_API_V1"
 
