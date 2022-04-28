@@ -117,3 +117,9 @@ variable "bucket_name" {
   description = "Use an existing bucket."
   default     = ""
 }
+
+variable "bucket_location" {
+  type        = string
+  description = "Bucket location."
+  default     = "US"
+}

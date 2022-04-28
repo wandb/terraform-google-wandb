@@ -51,7 +51,7 @@ module "storage" {
   labels    = var.labels
 
   create_queue    = !var.use_internal_queue
-  bucket_location = "US"
+  bucket_location = var.bucket_location
   service_account = module.service_accounts.service_account
   crypto_key      = local.crypto_key
 
