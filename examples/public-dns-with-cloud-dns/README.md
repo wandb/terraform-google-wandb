@@ -1,40 +1,49 @@
-# Deploy a W&B with a domain that uses GCP Cloud DNS as the DNS service
-
-## About
-
-This example is a minimal example of what is needed to deploy an instance of
-Weights & Biases that uses a Domain hosted in Route53.
-
-## Module Prerequisites
-
-As with the main version of this module, this example assumes the following
-resources already exist:
-
-- A valid Cloud DNS for the provided domain
-- Valid W&B Local license (You get one at [here](https://deploy.wandb.ai))
-
 ### Setting up Terraform
 
-- TODO: How to download terraform?
+- You can download terraform by following one of the methods here[[https://www.terraform.io/downloads](https://www.terraform.io/downloads)]
 - The required version of terraform for this module is v1.1.7 or greater
+- If you operate with multiple terraforms, `tfenv` is a great tool that allows switching between different terraform versions
 
 ### Setting up a google domain
 
+- Navigate to Cloud DNS from the GCP console
+- Then, click on `Create Zone`
+- Enter your Zone name and DNS name
+- Click `Create`
+
 ### Setting up a google sub-domain
+
+- Once you’ve created a zone & DNS in the above step, click on that Zone name
+- Click on `Add Record Set`
+- Add your sub-domain in the DNS name field
+- You can choose to leave the defaults for Resource Record Set, TTL and Routing Policy
+- Add the IPv4 Address (you’ll get this as an output of `terraform apply`)
+- Then click `Create`
+
+Note: The domain and subdomain association might take a few minutes to reflect.
 
 ### Getting a W&B license
 
 ### Getting the ID of a project in GCP
 
+- Once you login to the GCP dashboard, you should see an option similar to the following image
+  ![Screen Shot 2022-04-30 at 10.12.20 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/85fe025a-1915-4475-999d-3bfdd195c2e4/Screen_Shot_2022-04-30_at_10.12.20_AM.png)
+- Click on the Project name, in this case it’s WandB Sandbox
+- This will open a dialog similar to this
+  ![Screen Shot 2022-04-30 at 10.13.33 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/21eb1a02-4266-415b-8250-1c4dd9955380/Screen_Shot_2022-04-30_at_10.13.33_AM.png)
+- You can find the ID of the project here, in this case `playground-111`
+
 ### Setting the region and zone in GCP
+
+- Firstly, identify the region you’d like to deploy the W&B application
+- A list of all the regions and zones available in GCP can be found here[[https://cloud.google.com/compute/docs/regions-zones](https://cloud.google.com/compute/docs/regions-zones)]
+- Once you’ve identified the region and the zone, make sure to input the name in the same format into the `terraform.tfvars` file below
 
 ### Setting the stage
 
 - First authorize your google account by running the command `gcloud auth login`
-
   - This would take you to the browser to select the google account to authenticate with GCP
   - Once the google account is selected and authorized, you should see a message similar to:
-
     ```markdown
     You are now logged in as [venkata@wandb.com].
     Your current project is [playground-111]. You can change this setting by running:
@@ -47,7 +56,6 @@ resources already exist:
     To take a quick anonymous survey, run:
     $ gcloud survey
     ```
-
 - Clone the [Github repository](https://github.com/wandb/terraform-google-wandb) to get access to the W&B’s google terraform module
 - As a next step, navigate to the examples directory in the [terraform-google-wandb](https://github.com/wandb/terraform-google-wandb/tree/main/examples) repo
   - Then, `cd public-dns-with-cloud-dns`
@@ -62,7 +70,7 @@ resources already exist:
   subdomain = "<subdomain-for-accessing-the-UI>"
   domain = "<domain-for-accessing-the-UI>"
   ```
-  Note that, `subdomain` and `domain` are optional fields. If you do not create a domain and subdomain, W&B automatically provisions one for you at `wandb.io`
+  Refer to sections above to see how you can obtain these values
   An example `terraform.tfvars` file would look like this,
   ```markdown
   project_id = "playground-111"
@@ -103,3 +111,4 @@ terraform apply
 - This will output a plan of all the resources to be created by terraform in your GCP account
 - The terminal prompts to enter `yes`, if you intend to continue
 - Once you input `yes` the terraform creation process begins
+- It takes ~10 minutes to create all the resources
