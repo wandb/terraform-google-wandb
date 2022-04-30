@@ -13,11 +13,15 @@ resources already exist:
 - A valid Cloud DNS for the provided domain
 - Valid W&B Local license (You get one at [here](https://deploy.wandb.ai))
 
-### Setting up Terraform
+### Downloading Terraform
 
 - You can download terraform by following one of the methods here[[https://www.terraform.io/downloads](https://www.terraform.io/downloads)]
 - The required version of terraform for this module is v1.1.7 or greater
 - If you operate with multiple terraforms, `tfenv` is a great tool that allows switching between different terraform versions
+
+### Using an existing domain
+- If you already have an existing domain, you could create a sub-domain for that domain and use that for W&B.
+- If you don't have an existing domain, please see below on how to create one
 
 ### Setting up a google domain
 
