@@ -44,10 +44,10 @@ Note: The domain and subdomain association might take a few minutes to reflect.
 ### Getting the ID of a project in GCP
 
 - Once you login to the GCP dashboard, you should see an option similar to the following image
-  ![Screen Shot 2022-04-30 at 10.12.20 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/85fe025a-1915-4475-999d-3bfdd195c2e4/Screen_Shot_2022-04-30_at_10.12.20_AM.png)
+  ![gcp-project-name](https://user-images.githubusercontent.com/92930965/166116107-019bad40-bf9c-4666-96e3-04e4512dab4b.png)
 - Click on the Project name, in this case it’s WandB Sandbox
 - This will open a dialog similar to this
-  ![Screen Shot 2022-04-30 at 10.13.33 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/21eb1a02-4266-415b-8250-1c4dd9955380/Screen_Shot_2022-04-30_at_10.13.33_AM.png)
+  ![gcp-project-id](https://user-images.githubusercontent.com/92930965/166116122-e7882c85-2024-447c-ad3c-2bd1df4dad17.png)
 - You can find the ID of the project here, in this case `playground-111`
 
 ### Setting the region and zone in GCP
