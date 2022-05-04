@@ -13,7 +13,13 @@ variable "zone" {
   description = "Google zone"
 }
 
-variable "namespace" {
+variable "bucket_location" {
+  type        = string
+  description = "Location of the bucket (US, EU, ASIA)"
+  default     = "US"
+}
+
+variable "bucket_prefix" {
   type        = string
   description = "String used for prefix resources."
 }
@@ -27,13 +33,7 @@ variable "labels" {
 variable "service_account_email" {
   type        = string
   description = "Service account to grant permission too."
-  default     = ""
-}
-
-variable "bucket_location" {
-  type        = string
-  description = "Location of the bucket (US, EU, ASIA)"
-  default     = "US"
+  default     = "deploy@wandb-production.iam.gserviceaccount.com"
 }
 
 variable "deletion_protection" {
