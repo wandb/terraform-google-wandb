@@ -18,5 +18,7 @@ resource "google_redis_instance" "default" {
   transit_encryption_mode = "SERVER_AUTHENTICATION"
   connect_mode            = "DIRECT_PEERING"
 
+  auth_enabled = true
+
   labels = var.labels
 }
