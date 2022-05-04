@@ -21,13 +21,11 @@ variable "namespace" {
 
 variable "domain" {
   type        = string
-  default     = "wandb.io"
   description = "Domain for access the Weights & Biases UI."
 }
 
 variable "subdomain" {
   type        = string
-  default     = "wandb"
   description = "Subdomain for access the Weights & Biases UI."
 }
 
