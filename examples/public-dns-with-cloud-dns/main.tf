@@ -31,7 +31,7 @@ module "wandb" {
   wandb_image   = var.wandb_image
 
   create_redis = false
-  # use_internal_queue = true
+  use_internal_queue = true
 
   deletion_protection = false
 }

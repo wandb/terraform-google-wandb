@@ -19,16 +19,14 @@ module "project_factory_project_services" {
 module "resources" {
   source = "../../modules/storage"
 
-  namespace = var.namespace
+  namespace = var.bucket_prefix
   labels    = var.labels
 
   bucket_location     = var.bucket_location
   deletion_protection = var.deletion_protection
   create_queue        = false
 
-  service_account = {
-    "email": var.service_account_email
-  }
+  service_account = { "email": var.service_account_email }
 
   depends_on = [module.project_factory_project_services]
 }
