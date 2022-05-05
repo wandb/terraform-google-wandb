@@ -105,14 +105,14 @@ module "redis" {
 
 locals {
   redis_certificate       = var.create_redis ? module.redis.0.ca_cert : null
-  redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=60&caCertPath=/tmp/server_ca.pem" : null
+  redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=60&caCertPath=/etc/ssl/certs/server_ca.pem" : null
   bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.1.0"
+  version = "1.1.1"
 
   license = var.license
 
@@ -121,7 +121,7 @@ module "gke_app" {
   bucket_queue               = local.bucket_queue
   database_connection_string = "mysql://${module.database.connection_string}"
   redis_connection_string    = local.redis_connection_string
-  redis_certificate          = local.redis_certificate
+  redis_ca_cert              = local.redis_certificate
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
