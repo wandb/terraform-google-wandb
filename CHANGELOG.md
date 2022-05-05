@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/wandb/terraform-google-wandb/compare/v1.3.1...v1.4.0) (2022-05-05)
+
+
+### Features
+
+* Use Redis ([#17](https://github.com/wandb/terraform-google-wandb/issues/17)) ([3f08d7b](https://github.com/wandb/terraform-google-wandb/commit/3f08d7b044e97d3fc3ccef1f659aabb196763bb3))
+
 ### [1.3.1](https://github.com/wandb/terraform-google-wandb/compare/v1.3.0...v1.3.1) (2022-05-04)
 
 
