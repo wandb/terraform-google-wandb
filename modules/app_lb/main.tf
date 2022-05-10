@@ -1,5 +1,5 @@
 resource "google_compute_global_address" "default" {
-  name   = "${var.namespace}-address"
+  name = "${var.namespace}-address"
 }
 
 # Create a URL map that points to the GKE service
@@ -20,7 +20,7 @@ module "http" {
   url_map    = module.url_map.app
   ip_address = google_compute_global_address.default.address
 
-  labels     = var.labels
+  labels = var.labels
 }
 
 module "https" {
@@ -32,5 +32,5 @@ module "https" {
   url_map    = module.url_map.app
   ip_address = google_compute_global_address.default.address
 
-  labels     = var.labels
+  labels = var.labels
 }
