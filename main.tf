@@ -126,7 +126,7 @@ module "gke_app" {
   bucket_queue               = local.bucket_queue
   database_connection_string = "mysql://${module.database.connection_string}"
   redis_connection_string    = local.redis_connection_string
-  redis_ca_cert              = var.create_redis ? module.redis.0.ca_cert : ""
+  redis_ca_cert              = local.redis_certificate
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
