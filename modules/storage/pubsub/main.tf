@@ -5,6 +5,7 @@ locals {
 resource "google_pubsub_topic" "file_storage" {
   name         = "${var.namespace}-file-storage"
   kms_key_name = var.crypto_key.id
+  labels       = var.labels
 }
 
 resource "google_pubsub_topic_iam_member" "admin" {
@@ -16,6 +17,7 @@ resource "google_pubsub_topic_iam_member" "admin" {
 resource "google_pubsub_subscription" "file_storage" {
   name                 = "${var.namespace}-file-storage"
   topic                = google_pubsub_topic.file_storage.name
+  labels               = var.labels
   ack_deadline_seconds = 30
 }
 

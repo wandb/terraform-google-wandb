@@ -13,4 +13,6 @@ module "http" {
   namespace  = var.namespace
   url_map    = google_compute_url_map.redirect_to_https
   ip_address = var.ip_address
+
+  labels = var.labels
 }

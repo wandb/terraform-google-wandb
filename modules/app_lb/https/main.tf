@@ -25,4 +25,6 @@ resource "google_compute_global_forwarding_rule" "default" {
   target     = google_compute_target_https_proxy.default.id
   port_range = "443"
   ip_address = var.ip_address
+
+  labels = var.labels
 }

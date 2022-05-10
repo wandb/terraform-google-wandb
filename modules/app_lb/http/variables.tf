@@ -10,3 +10,9 @@ variable "url_map" {
 variable "ip_address" {
   type = string
 }
+
+variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  type        = map(string)
+  default     = {}
+}

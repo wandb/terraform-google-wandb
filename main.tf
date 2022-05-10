@@ -13,7 +13,9 @@ module "project_factory_project_services" {
     "redis.googleapis.com",             // Redis
     "pubsub.googleapis.com",            // File Storage
     "storage.googleapis.com",           // Cloud Storage
-    "cloudkms.googleapis.com"           // KMS
+    "cloudkms.googleapis.com",          // KMS
+    "compute.googleapis.com",           // required for datadog monitoring
+    "cloudasset.googleapis.com"         // required for datadog monitoring
   ]
 }
 
@@ -83,6 +85,7 @@ module "app_lb" {
   network         = module.networking.network
   group           = module.app_gke.instance_group_url
   service_account = module.service_accounts.service_account
+  labels          = var.labels
   depends_on      = [module.project_factory_project_services]
 }
 
@@ -92,6 +95,7 @@ module "database" {
   database_version    = var.database_version
   network_connection  = module.networking.connection
   deletion_protection = var.deletion_protection
+  labels              = var.labels
   depends_on          = [module.project_factory_project_services]
 }
 
@@ -101,6 +105,7 @@ module "redis" {
   namespace      = var.namespace
   memory_size_gb = 4
   network        = module.networking.network
+  labels         = var.labels
 }
 
 locals {
@@ -111,8 +116,8 @@ locals {
 }
 
 module "gke_app" {
-  source  = "wandb/wandb/kubernetes"
-  version = "1.1.1"
+  source  = "github.com/wandb/terraform-kubernetes-wandb?ref=fix-tf-counts"
+  #version = "1.1.1"
 
   license = var.license
 
@@ -121,7 +126,8 @@ module "gke_app" {
   bucket_queue               = local.bucket_queue
   database_connection_string = "mysql://${module.database.connection_string}"
   redis_connection_string    = local.redis_connection_string
-  redis_ca_cert              = local.redis_certificate
+  redis_ca_cert              = var.create_redis ? module.redis.0.ca_cert : ""
+  cloud_monitoring_connection_string = "noop://"
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer

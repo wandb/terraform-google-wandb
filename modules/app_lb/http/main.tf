@@ -9,4 +9,6 @@ resource "google_compute_global_forwarding_rule" "default" {
   target     = google_compute_target_http_proxy.default.id
   port_range = "80"
   ip_address = var.ip_address
+
+  labels = var.labels
 }
