@@ -116,8 +116,8 @@ locals {
 }
 
 module "gke_app" {
-  source  = "github.com/wandb/terraform-kubernetes-wandb?ref=fix-tf-counts"
-  #version = "1.1.1"
+  source  = "wandb/wandb/kubernetes"
+  version = "1.1.2"
 
   license = var.license
 
@@ -127,7 +127,6 @@ module "gke_app" {
   database_connection_string = "mysql://${module.database.connection_string}"
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = var.create_redis ? module.redis.0.ca_cert : ""
-  cloud_monitoring_connection_string = "noop://"
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
