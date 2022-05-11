@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.1](https://github.com/wandb/terraform-google-wandb/compare/v1.4.0...v1.4.1) (2022-05-11)
+
+
+### Bug Fixes
+
+* Add labels and health-check logging ([#19](https://github.com/wandb/terraform-google-wandb/issues/19)) ([40fd527](https://github.com/wandb/terraform-google-wandb/commit/40fd527f924f3daa283ffbd5902b98ea79525e1d))
+* Update redis TTL ([#20](https://github.com/wandb/terraform-google-wandb/issues/20)) ([f56cfff](https://github.com/wandb/terraform-google-wandb/commit/f56cfffae1b6d540d76eda511c3234d3a81f83b1))
+
 ## [1.4.0](https://github.com/wandb/terraform-google-wandb/compare/v1.3.1...v1.4.0) (2022-05-05)
 
 
