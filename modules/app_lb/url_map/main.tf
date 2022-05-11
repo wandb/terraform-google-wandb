@@ -15,6 +15,10 @@ resource "google_compute_health_check" "gke_ingress" {
     port         = var.target_port
     request_path = "/ready"
   }
+
+  log_config {
+    enable = true
+  }
 }
 
 # This is an ingress rule that allows traffic from the Google Cloud health

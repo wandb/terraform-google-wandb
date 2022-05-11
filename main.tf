@@ -13,7 +13,9 @@ module "project_factory_project_services" {
     "redis.googleapis.com",             // Redis
     "pubsub.googleapis.com",            // File Storage
     "storage.googleapis.com",           // Cloud Storage
-    "cloudkms.googleapis.com"           // KMS
+    "cloudkms.googleapis.com",          // KMS
+    "compute.googleapis.com",           // required for datadog monitoring
+    "cloudasset.googleapis.com"         // required for datadog monitoring
   ]
 }
 
@@ -83,6 +85,7 @@ module "app_lb" {
   network         = module.networking.network
   group           = module.app_gke.instance_group_url
   service_account = module.service_accounts.service_account
+  labels          = var.labels
   depends_on      = [module.project_factory_project_services]
 }
 
@@ -92,6 +95,7 @@ module "database" {
   database_version    = var.database_version
   network_connection  = module.networking.connection
   deletion_protection = var.deletion_protection
+  labels              = var.labels
   depends_on          = [module.project_factory_project_services]
 }
 
@@ -101,6 +105,7 @@ module "redis" {
   namespace      = var.namespace
   memory_size_gb = 4
   network        = module.networking.network
+  labels         = var.labels
 }
 
 locals {
@@ -112,7 +117,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.1.1"
+  version = "1.1.2"
 
   license = var.license
 
