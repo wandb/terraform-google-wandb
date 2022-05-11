@@ -105,7 +105,7 @@ module "redis" {
 
 locals {
   redis_certificate       = var.create_redis ? module.redis.0.ca_cert : null
-  redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=60&caCertPath=/etc/ssl/certs/server_ca.pem" : null
+  redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
   bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
