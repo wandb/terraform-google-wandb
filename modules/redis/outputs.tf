@@ -3,10 +3,10 @@ output "connection_string" {
 }
 
 output "ca_cert" {
-  value = "${google_redis_instance.default.server_ca_certs[0].cert}"
+  value = google_redis_instance.default.server_ca_certs[0].cert
 }
 
 output "auth_string" {
-  value = "${google_redis_instance.default.auth_string}"
+  value = google_redis_instance.default.auth_string
 }
 
