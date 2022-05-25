@@ -34,7 +34,7 @@ module "resources" {
 resource "google_storage_bucket_iam_member" "admin" {
   bucket = module.resources.bucket_name
   member = "serviceAccount:${var.service_account_email}"
-  role   = "roles/storage.admin"
+  role   = "roles/storage.objectAdmin"
 }
 
 output "bucket_name" {

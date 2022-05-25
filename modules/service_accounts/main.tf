@@ -1,16 +1,9 @@
 data "google_client_config" "current" {}
 
-resource "random_id" "main" {
-  # 30 bytes ensures that enough characters are generated to satisfy the service account ID requirements, regardless of
-  # the prefix.
-  byte_length = 30
-  prefix      = "${var.namespace}-sa-"
-}
-
 resource "google_service_account" "main" {
   # Limit the string used to 30 characters.
-  account_id   = substr(random_id.main.dec, 0, 30)
-  display_name = "Weights & Biases"
+  account_id   = "${var.namespace}-sa"
+  display_name = "Service Account for ${var.namespace}"
   description  = "Service Account used by Weights & Biases."
 }
 
@@ -36,12 +29,4 @@ resource "google_project_iam_member" "cloudsql_client" {
   project = local.project_id
   role    = "roles/cloudsql.client"
   member  = local.sa_member
-}
-
-# If the bucket already exists, grant this new service account permission
-resource "google_storage_bucket_iam_member" "object_admin" {
-  count  = var.bucket_name != "" ? 1 : 0
-  bucket = var.bucket_name
-  member = local.sa_member
-  role   = "roles/storage.objectAdmin"
 }
