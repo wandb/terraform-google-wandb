@@ -26,6 +26,7 @@ resource "google_container_cluster" "default" {
 
 resource "random_pet" "node_pool" {
   keepers = {
+    machine_type = var.machine_type
   }
 }
 
