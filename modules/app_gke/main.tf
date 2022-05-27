@@ -26,6 +26,7 @@ resource "google_container_cluster" "default" {
 
 resource "random_pet" "node_pool" {
   keepers = {
+    machine_type = var.machine_type
   }
 }
 
@@ -36,7 +37,7 @@ resource "google_container_node_pool" "default" {
 
   node_config {
     image_type      = "COS"
-    machine_type    = "e2-standard-4"
+    machine_type    = var.machine_type
     service_account = var.service_account.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/bigtable.admin",

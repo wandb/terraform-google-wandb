@@ -17,3 +17,8 @@ variable "subnetwork" {
   description = "Google Compute Engine subnetwork in which the cluster's instances are launched."
   type        = object({ self_link = string })
 }
+
+variable "machine_type" {
+  type    = string
+  default = "n1-standard-4" 
+}
