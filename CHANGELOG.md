@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.2](https://github.com/wandb/terraform-google-wandb/compare/v1.4.1...v1.4.2) (2022-05-27)
+
+
+### Bug Fixes
+
+* Default to n1-standard-4 machines ([#21](https://github.com/wandb/terraform-google-wandb/issues/21)) ([36d7a8e](https://github.com/wandb/terraform-google-wandb/commit/36d7a8eaa1f94abc2df698f542c14e4912d3a2eb))
+
 ### [1.4.1](https://github.com/wandb/terraform-google-wandb/compare/v1.4.0...v1.4.1) (2022-05-11)
 
 
