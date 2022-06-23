@@ -22,6 +22,15 @@ resource "google_container_cluster" "default" {
   # node pool and immediately delete it.
   remove_default_node_pool = true
   initial_node_count       = 1
+
+  # Disable client certificate authentication, which reduces the attack surface 
+  # for the cluster by disabling this deprecated feature. It defaults to false, 
+  # but this will make it explicit and quiet some security tooling.
+  master_auth {
+    client_certificate_config {
+      issue_client_certificate = false
+    }
+  }
 }
 
 resource "random_pet" "node_pool" {
