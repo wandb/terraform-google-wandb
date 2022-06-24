@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.3](https://github.com/wandb/terraform-google-wandb/compare/v1.4.2...v1.4.3) (2022-06-24)
+
+
+### Bug Fixes
+
+* Explicitly disable client certificate auth (deprecated by kubernetes) ([#23](https://github.com/wandb/terraform-google-wandb/issues/23)) ([0a16247](https://github.com/wandb/terraform-google-wandb/commit/0a16247d98d2437002faac9b95210ca92ad78b13))
+
 ### [1.4.2](https://github.com/wandb/terraform-google-wandb/compare/v1.4.1...v1.4.2) (2022-05-27)
 
 
