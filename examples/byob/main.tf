@@ -26,7 +26,7 @@ module "resources" {
   deletion_protection = var.deletion_protection
   create_queue        = false
 
-  service_account = { "email": var.service_account_email }
+  service_account = { "email" : var.service_account_email }
 
   depends_on = [module.project_factory_project_services]
 }
