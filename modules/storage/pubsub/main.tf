@@ -41,7 +41,7 @@ resource "google_pubsub_topic_iam_member" "gcp_publisher" {
 
 resource "google_storage_notification" "file_storage" {
   bucket         = var.bucket
-  topic          = google_pubsub_topic.file_storage.name
+  topic          = google_pubsub_topic.file_storage.id
   payload_format = "JSON_API_V1"
 
   depends_on = [google_pubsub_topic_iam_member.gcp_publisher]
