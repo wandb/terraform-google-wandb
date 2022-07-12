@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.5](https://github.com/wandb/terraform-google-wandb/compare/v1.4.4...v1.4.5) (2022-07-12)
+
+
+### Bug Fixes
+
+* Race condition with load balancer ([#25](https://github.com/wandb/terraform-google-wandb/issues/25)) ([6f116c6](https://github.com/wandb/terraform-google-wandb/commit/6f116c629c029d06a39312b18d26950d7a7002cc))
+
 ### [1.4.4](https://github.com/wandb/terraform-google-wandb/compare/v1.4.3...v1.4.4) (2022-07-12)
 
 
