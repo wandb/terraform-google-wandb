@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.4.4](https://github.com/wandb/terraform-google-wandb/compare/v1.4.3...v1.4.4) (2022-07-12)
+
+
+### Bug Fixes
+
+* notification topic not include project name ([#24](https://github.com/wandb/terraform-google-wandb/issues/24)) ([46c7711](https://github.com/wandb/terraform-google-wandb/commit/46c7711bdac5bab95f48ce945937123f8e80070a))
+
 ### [1.4.3](https://github.com/wandb/terraform-google-wandb/compare/v1.4.2...v1.4.3) (2022-06-24)
 
 
