@@ -86,7 +86,7 @@ module "app_lb" {
   group           = module.app_gke.instance_group_url
   service_account = module.service_accounts.service_account
   labels          = var.labels
-  depends_on      = [module.project_factory_project_services]
+  depends_on      = [module.project_factory_project_services, module.app_gke]
 }
 
 module "database" {
