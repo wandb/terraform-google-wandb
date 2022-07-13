@@ -64,6 +64,22 @@ variable "oidc_auth_method" {
 }
 
 ##########################################
+# Networking                             #
+##########################################
+variable "network" {
+  default     = null
+  description = "Pre-existing network self link"
+  type        = string
+}
+
+variable "subnetwork" {
+  default     = null
+  description = "Pre-existing subnetwork self link"
+  type        = string
+}
+
+
+##########################################
 # DNS                                    #
 ##########################################
 variable "domain_name" {
