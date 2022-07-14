@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/wandb/terraform-google-wandb/compare/v1.4.5...v1.5.0) (2022-07-14)
+
+
+### Features
+
+* Deploy into existing network ([#26](https://github.com/wandb/terraform-google-wandb/issues/26)) ([6aff8b7](https://github.com/wandb/terraform-google-wandb/commit/6aff8b74779255c4fa86f47458c1c9cc3ee3de3a))
+
 ### [1.4.5](https://github.com/wandb/terraform-google-wandb/compare/v1.4.4...v1.4.5) (2022-07-12)
 
 
