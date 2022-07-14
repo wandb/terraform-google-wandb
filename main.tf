@@ -25,6 +25,7 @@ locals {
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
   create_bucket     = var.bucket_name == ""
+  create_network    = var.network == null
 }
 
 module "service_accounts" {
@@ -62,16 +63,24 @@ module "storage" {
 }
 
 module "networking" {
+  count = local.create_network ? 1 : 0
+
   source     = "./modules/networking"
   namespace  = var.namespace
   depends_on = [module.project_factory_project_services]
 }
 
+locals {
+  network_connection = try(module.networking.0.service_networking_connection, { network = var.network })
+  network            = try(module.networking.0.network, { self_link = var.network })
+  subnetwork         = try(module.networking.0.subnetwork, { self_link = var.subnetwork })
+}
+
 module "app_gke" {
   source          = "./modules/app_gke"
   namespace       = var.namespace
-  network         = module.networking.network
-  subnetwork      = module.networking.subnetwork
+  network         = local.network
+  subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
   depends_on      = [module.project_factory_project_services]
 }
@@ -82,7 +91,7 @@ module "app_lb" {
   namespace       = var.namespace
   ssl             = var.ssl
   fqdn            = local.fqdn
-  network         = module.networking.network
+  network         = local.network
   group           = module.app_gke.instance_group_url
   service_account = module.service_accounts.service_account
   labels          = var.labels
@@ -93,7 +102,7 @@ module "database" {
   source              = "./modules/database"
   namespace           = var.namespace
   database_version    = var.database_version
-  network_connection  = module.networking.connection
+  network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
   depends_on          = [module.project_factory_project_services]
@@ -104,7 +113,7 @@ module "redis" {
   source         = "./modules/redis"
   namespace      = var.namespace
   memory_size_gb = 4
-  network        = module.networking.network
+  network        = local.network
   labels         = var.labels
 }
 
