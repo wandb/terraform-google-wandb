@@ -18,7 +18,7 @@ resource "google_storage_bucket" "file_storage" {
   cors {
     origin          = ["*"]
     method          = ["GET", "HEAD", "PUT"]
-    response_header = ["ETag"]
+    response_header = ["*"]
     max_age_seconds = 3000
   }
 }
