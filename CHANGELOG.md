@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.5.1](https://github.com/wandb/terraform-google-wandb/compare/v1.5.0...v1.5.1) (2022-07-29)
+
+
+### Bug Fixes
+
+* CORS response headers on bucket ([0defaa4](https://github.com/wandb/terraform-google-wandb/commit/0defaa4c9a68944f09500d1422f63c92461ad10a))
+
 ## [1.5.0](https://github.com/wandb/terraform-google-wandb/compare/v1.4.5...v1.5.0) (2022-07-14)
 
 
