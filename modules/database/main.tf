@@ -70,7 +70,7 @@ resource "google_sql_database_instance" "default" {
     }
     database_flags {
       name  = "sort_buffer_size"
-      value = 1048576
+      value = var.sort_buffer_size
     }
   }
 }
