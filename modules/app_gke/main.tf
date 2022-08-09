@@ -63,6 +63,10 @@ resource "google_container_node_pool" "default" {
     shielded_instance_config {
       enable_secure_boot = true
     }
+
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
   }
 
   management {
