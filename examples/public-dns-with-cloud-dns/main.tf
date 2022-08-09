@@ -34,6 +34,8 @@ module "wandb" {
   use_internal_queue = true
 
   deletion_protection = false
+
+  database_sort_buffer_size = var.database_sort_buffer_size
 }
 
 # You'll want to update your DNS with the provisioned IP address
