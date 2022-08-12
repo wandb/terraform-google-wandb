@@ -38,11 +38,11 @@ resource "google_project_iam_member" "cloudsql_client" {
   member  = local.sa_member
 }
 
-# Cloud SQL Client role allows service account members connectivity access to
-# Cloud SQL instances
-resource "google_project_iam_member" "cloudsql_client" {
+# For some reason we need this permission otherwise backend is throwing an error
+# hopfully this is a short term fix.
+resource "google_project_iam_member" "log_writer" {
   project = local.project_id
-  role    = "roles/cloudsql.client"
+  role    = "roles/logging.logWriter"
   member  = local.sa_member
 }
 
