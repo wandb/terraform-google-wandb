@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.1](https://github.com/wandb/terraform-google-wandb/compare/v1.6.0...v1.6.1) (2022-08-12)
+
+
+### Bug Fixes
+
+* Add log writer permissions to SA account ([#31](https://github.com/wandb/terraform-google-wandb/issues/31)) ([682f658](https://github.com/wandb/terraform-google-wandb/commit/682f65848e0a3a95660a1dc20e5d28ceba549889))
+
 ## [1.6.0](https://github.com/wandb/terraform-google-wandb/compare/v1.5.1...v1.6.0) (2022-08-10)
 
 
