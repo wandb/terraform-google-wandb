@@ -6,7 +6,11 @@ resource "google_container_cluster" "default" {
   networking_mode = "VPC_NATIVE"
 
   enable_intranode_visibility = true
-  enable_binary_authorization = true
+
+  binary_authorization {
+    evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
+  }
+
 
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
