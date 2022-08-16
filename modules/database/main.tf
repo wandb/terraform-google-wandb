@@ -68,6 +68,10 @@ resource "google_sql_database_instance" "default" {
       name  = "max_execution_time"
       value = 60000
     }
+    database_flags {
+      name  = "sort_buffer_size"
+      value = var.sort_buffer_size
+    }
   }
 }
 

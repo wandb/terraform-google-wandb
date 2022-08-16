@@ -102,6 +102,7 @@ module "database" {
   source              = "./modules/database"
   namespace           = var.namespace
   database_version    = var.database_version
+  sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
