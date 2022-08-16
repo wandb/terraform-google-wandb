@@ -71,7 +71,7 @@ module "networking" {
 }
 
 locals {
-  network_connection = try(module.networking.0.service_networking_connection, { network = var.network })
+  network_connection = try(module.networking.0.connection, { network = var.network })
   network            = try(module.networking.0.network, { self_link = var.network })
   subnetwork         = try(module.networking.0.subnetwork, { self_link = var.subnetwork })
 }
@@ -126,7 +126,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.1.2"
+  version = "1.2.0"
 
   license = var.license
 
