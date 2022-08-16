@@ -72,7 +72,7 @@ variable "oidc_auth_method" {
 
 variable "local_restore" {
   type        = bool
-  description = "Restore W&B to a stable state if needed"
+  description = "Restores W&B to a stable state if needed"
   default     = false
 }
 
