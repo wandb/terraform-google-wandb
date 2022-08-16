@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0](https://github.com/wandb/terraform-google-wandb/compare/v1.7.0...v1.8.0) (2022-08-16)
+
+
+### Features
+
+* Add oidc secret as variable ([#34](https://github.com/wandb/terraform-google-wandb/issues/34)) ([fdefb03](https://github.com/wandb/terraform-google-wandb/commit/fdefb038d23a2b95e3e26230a1949c313d16af43))
+
 ## [1.7.0](https://github.com/wandb/terraform-google-wandb/compare/v1.6.3...v1.7.0) (2022-08-16)
 
 
