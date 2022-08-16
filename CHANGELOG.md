@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.6.3](https://github.com/wandb/terraform-google-wandb/compare/v1.6.2...v1.6.3) (2022-08-13)
+
+
+### Bug Fixes
+
+* Resolved mis-named network variable ([#33](https://github.com/wandb/terraform-google-wandb/issues/33)) ([50cd769](https://github.com/wandb/terraform-google-wandb/commit/50cd769ed3fef6e0e1e36409e1ebce558fbec6aa))
+
+### [1.6.2](https://github.com/wandb/terraform-google-wandb/compare/v1.6.1...v1.6.2) (2022-08-12)
+
+
+### Bug Fixes
+
+* Bump wandb kubernetes module to 1.2.0 ([#32](https://github.com/wandb/terraform-google-wandb/issues/32)) ([2652bda](https://github.com/wandb/terraform-google-wandb/commit/2652bdacde06542fb0d01abee9a36cbd932628b0))
+
+### [1.6.1](https://github.com/wandb/terraform-google-wandb/compare/v1.6.0...v1.6.1) (2022-08-12)
+
+
+### Bug Fixes
+
+* Add log writer permissions to SA account ([#31](https://github.com/wandb/terraform-google-wandb/issues/31)) ([682f658](https://github.com/wandb/terraform-google-wandb/commit/682f65848e0a3a95660a1dc20e5d28ceba549889))
+
+## [1.6.0](https://github.com/wandb/terraform-google-wandb/compare/v1.5.1...v1.6.0) (2022-08-10)
+
+
+### Features
+
+* Add disable legacy endpoints ([#29](https://github.com/wandb/terraform-google-wandb/issues/29)) ([f776134](https://github.com/wandb/terraform-google-wandb/commit/f7761343302ae921a797d2a7e8beb3aebcec2ae7))
+
 ### [1.5.1](https://github.com/wandb/terraform-google-wandb/compare/v1.5.0...v1.5.1) (2022-07-29)
 
 

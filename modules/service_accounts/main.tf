@@ -38,6 +38,14 @@ resource "google_project_iam_member" "cloudsql_client" {
   member  = local.sa_member
 }
 
+# For some reason we need this permission otherwise backend is throwing an error
+# hopfully this is a short term fix.
+resource "google_project_iam_member" "log_writer" {
+  project = local.project_id
+  role    = "roles/logging.logWriter"
+  member  = local.sa_member
+}
+
 # If the bucket already exists, grant this new service account permission
 resource "google_storage_bucket_iam_member" "object_admin" {
   count  = var.bucket_name != "" ? 1 : 0
