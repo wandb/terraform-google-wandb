@@ -47,6 +47,7 @@ resource "google_sql_database_instance" "default" {
       private_network = var.network_connection.network
     }
 
+
     # requires minimum memory of 26624 MB
     # database_flags {
     #   name  = "performance_schema"
