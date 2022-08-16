@@ -120,6 +120,12 @@ variable "database_version" {
   }
 }
 
+variable "database_sort_buffer_size" {
+  description = "Specifies the sort_buffer_size value to set for the database"
+  type        = number
+  default     = 262144
+}
+
 ##########################################
 # Redis                                  #
 ##########################################

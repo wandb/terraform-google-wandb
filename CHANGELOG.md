@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0](https://github.com/wandb/terraform-google-wandb/compare/v1.6.3...v1.7.0) (2022-08-16)
+
+
+### Features
+
+* Add sort buffer size ([#28](https://github.com/wandb/terraform-google-wandb/issues/28)) ([0b3e90a](https://github.com/wandb/terraform-google-wandb/commit/0b3e90a9deb17ec3c8d627bf1b458976cc5c9f87))
+
 ### [1.6.3](https://github.com/wandb/terraform-google-wandb/compare/v1.6.2...v1.6.3) (2022-08-13)
 
 
