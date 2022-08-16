@@ -127,7 +127,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.2.1"
+  version = "1.3.0"
 
   license = var.license
 
