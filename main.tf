@@ -127,7 +127,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.2.0"
+  version = "1.3.0"
 
   license = var.license
 
@@ -141,6 +141,7 @@ module "gke_app" {
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
   oidc_auth_method = var.oidc_auth_method
+  oidc_secret      = var.oidc_secret
 
   wandb_image   = var.wandb_image
   wandb_version = var.wandb_version
