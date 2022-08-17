@@ -57,6 +57,7 @@ variable "oidc_secret" {
   type        = string
   description = "The Client secret of application in your identity provider"
   default     = ""
+  sensitive   = true
 }
 
 variable "oidc_auth_method" {
@@ -67,6 +68,12 @@ variable "oidc_auth_method" {
     condition     = contains(["pkce", "implicit"], var.oidc_auth_method)
     error_message = "Invalid OIDC auth method."
   }
+}
+
+variable "local_restore" {
+  type        = bool
+  description = "Restores W&B to a stable state if needed"
+  default     = false
 }
 
 ##########################################
