@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0](https://github.com/wandb/terraform-google-wandb/compare/v1.8.0...v1.9.0) (2022-08-17)
+
+
+### Features
+
+* Add local restore option ([#35](https://github.com/wandb/terraform-google-wandb/issues/35)) ([67bf73c](https://github.com/wandb/terraform-google-wandb/commit/67bf73c8f1075370a17a9d400f23a091d9e284a5))
+
 ## [1.8.0](https://github.com/wandb/terraform-google-wandb/compare/v1.7.0...v1.8.0) (2022-08-16)
 
 
