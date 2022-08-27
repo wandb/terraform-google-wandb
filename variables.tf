@@ -127,6 +127,12 @@ variable "database_version" {
   }
 }
 
+variable "database_vm_size" {
+  description = "Specifies the vm size to be allocated for the database"
+  type        = string
+  default     = "db-n1-standard-2"
+}
+
 variable "database_sort_buffer_size" {
   description = "Specifies the sort_buffer_size value to set for the database"
   type        = number

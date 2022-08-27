@@ -36,6 +36,7 @@ module "wandb" {
   deletion_protection = false
 
   database_sort_buffer_size = var.database_sort_buffer_size
+  database_vm_size          = var.database_vm_size
 }
 
 # You'll want to update your DNS with the provisioned IP address

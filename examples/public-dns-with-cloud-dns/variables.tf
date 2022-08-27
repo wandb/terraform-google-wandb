@@ -49,3 +49,9 @@ variable "database_sort_buffer_size" {
   type        = number
   default     = 262144
 }
+
+variable "database_vm_size" {
+  description = "Specifies the vm size to be allocated for the database"
+  type        = string
+  default     = "db-n1-standard-2"
+}
