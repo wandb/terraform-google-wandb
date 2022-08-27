@@ -27,6 +27,8 @@ module "wandb" {
   domain_name = var.domain
   subdomain   = var.subdomain
 
+  gke_machine_type = var.gke_machine_type
+
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
@@ -36,7 +38,7 @@ module "wandb" {
   deletion_protection = false
 
   database_sort_buffer_size = var.database_sort_buffer_size
-  database_vm_size          = var.database_vm_size
+  database_machine_type     = var.database_machine_type
 }
 
 # You'll want to update your DNS with the provisioned IP address

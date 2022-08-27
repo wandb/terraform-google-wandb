@@ -91,6 +91,11 @@ variable "subnetwork" {
   type        = string
 }
 
+variable "gke_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "n1-standard-4"
+}
 
 ##########################################
 # DNS                                    #
@@ -127,8 +132,8 @@ variable "database_version" {
   }
 }
 
-variable "database_vm_size" {
-  description = "Specifies the vm size to be allocated for the database"
+variable "database_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
   type        = string
   default     = "db-n1-standard-2"
 }
