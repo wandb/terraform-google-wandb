@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0](https://github.com/wandb/terraform-google-wandb/compare/v1.9.0...v1.10.0) (2022-08-29)
+
+
+### Features
+
+* Add database and GKE instance types as configurable params ([#36](https://github.com/wandb/terraform-google-wandb/issues/36)) ([2f7dbb8](https://github.com/wandb/terraform-google-wandb/commit/2f7dbb822a76a0a622cf42024b13ce7c7aec8a40))
+
 ## [1.9.0](https://github.com/wandb/terraform-google-wandb/compare/v1.8.0...v1.9.0) (2022-08-17)
 
 
