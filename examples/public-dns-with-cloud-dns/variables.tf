@@ -28,6 +28,12 @@ variable "subdomain" {
   description = "Subdomain for access the Weights & Biases UI."
 }
 
+variable "gke_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "n1-standard-4"
+}
+
 variable "license" {
   type = string
 }
@@ -48,4 +54,10 @@ variable "database_sort_buffer_size" {
   description = "Specifies the sort_buffer_size value to set for the database"
   type        = number
   default     = 262144
+}
+
+variable "database_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "db-n1-standard-2"
 }

@@ -79,6 +79,7 @@ locals {
 module "app_gke" {
   source          = "./modules/app_gke"
   namespace       = var.namespace
+  machine_type    = var.gke_machine_type
   network         = local.network
   subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
@@ -102,6 +103,7 @@ module "database" {
   source              = "./modules/database"
   namespace           = var.namespace
   database_version    = var.database_version
+  tier                = var.database_machine_type
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection

@@ -91,6 +91,11 @@ variable "subnetwork" {
   type        = string
 }
 
+variable "gke_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "n1-standard-4"
+}
 
 ##########################################
 # DNS                                    #
@@ -125,6 +130,12 @@ variable "database_version" {
     condition     = contains(["MYSQL_5_7", "MYSQL_8_0"], var.database_version)
     error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
   }
+}
+
+variable "database_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "db-n1-standard-2"
 }
 
 variable "database_sort_buffer_size" {
