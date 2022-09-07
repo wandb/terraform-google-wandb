@@ -28,6 +28,8 @@ resource "google_compute_firewall" "hc" {
   name          = "${var.namespace}-hc"
   network       = var.network.self_link
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
+  direction     = "INGRESS"
+  priority      = 5
 
   allow {
     protocol = "tcp"
@@ -36,12 +38,42 @@ resource "google_compute_firewall" "hc" {
 }
 
 
+resource "google_compute_security_policy" "default" {
+  name = var.namespace
+
+  rule {
+    action   = "deny(403)"
+    priority = 2147483647
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["*"]
+      }
+    }
+    description = "Deny access to all IPs"
+  }
+
+  rule {
+    action   = "allow"
+    priority = 1
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = var.allowed_inbound_cidr
+      }
+    }
+    description = "allow list rule"
+  }
+}
+
 resource "google_compute_backend_service" "default" {
   name        = "${var.namespace}-gke-ingress"
   timeout_sec = 10
   protocol    = "HTTP"
   enable_cdn  = false
   port_name   = local.port_name
+
+  security_policy = google_compute_security_policy.default.id
 
   log_config {
     enable      = true

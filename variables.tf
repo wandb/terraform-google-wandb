@@ -76,6 +76,12 @@ variable "local_restore" {
   default     = false
 }
 
+variable "gke_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "n1-standard-4"
+}
+
 ##########################################
 # Networking                             #
 ##########################################
@@ -91,11 +97,12 @@ variable "subnetwork" {
   type        = string
 }
 
-variable "gke_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
-  type        = string
-  default     = "n1-standard-4"
+variable "allowed_inbound_cidr" {
+  type        = list(string)
+  default     = ["*"]
+  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
 }
+
 
 ##########################################
 # DNS                                    #

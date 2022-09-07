@@ -38,3 +38,9 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "allowed_inbound_cidr" {
+  type        = list(string)
+  default     = ["*"]
+  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
+}
