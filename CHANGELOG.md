@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0](https://github.com/wandb/terraform-google-wandb/compare/v1.10.0...v1.11.0) (2022-09-08)
+
+
+### Features
+
+* Support for ip or cidr allow list ([#37](https://github.com/wandb/terraform-google-wandb/issues/37)) ([df49860](https://github.com/wandb/terraform-google-wandb/commit/df49860bd989886341b644e55ba8fd16494d1032))
+
 ## [1.10.0](https://github.com/wandb/terraform-google-wandb/compare/v1.9.0...v1.10.0) (2022-08-29)
 
 
