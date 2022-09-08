@@ -61,3 +61,9 @@ variable "database_machine_type" {
   type        = string
   default     = "db-n1-standard-2"
 }
+
+variable "allowed_inbound_cidr" {
+  type        = list(string)
+  default     = ["*"]
+  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
+}

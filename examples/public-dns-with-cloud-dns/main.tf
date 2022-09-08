@@ -33,12 +33,14 @@ module "wandb" {
   wandb_image   = var.wandb_image
 
   create_redis       = false
-  use_internal_queue = true
+  use_internal_queue = false
 
   deletion_protection = false
 
   database_sort_buffer_size = var.database_sort_buffer_size
   database_machine_type     = var.database_machine_type
+ 
+  allowed_inbound_cidr = var.allowed_inbound_cidr
 }
 
 # You'll want to update your DNS with the provisioned IP address
