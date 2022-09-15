@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.11.3](https://github.com/wandb/terraform-google-wandb/compare/v1.11.2...v1.11.3) (2022-09-15)
+
+
+### Bug Fixes
+
+* Database version nolonger changes database name ([ff96083](https://github.com/wandb/terraform-google-wandb/commit/ff96083c6c96581087a55f14a6053b95018ff149))
+
 ### [1.11.2](https://github.com/wandb/terraform-google-wandb/compare/v1.11.1...v1.11.2) (2022-09-15)
 
 
