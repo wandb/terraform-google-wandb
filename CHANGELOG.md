@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.11.7](https://github.com/wandb/terraform-google-wandb/compare/v1.11.6...v1.11.7) (2022-09-15)
+
+
+### Bug Fixes
+
+* split order of database strings ([b7ab0bf](https://github.com/wandb/terraform-google-wandb/commit/b7ab0bfe936cbfa20944db0c09f473f810781e0b))
+
 ### [1.11.6](https://github.com/wandb/terraform-google-wandb/compare/v1.11.5...v1.11.6) (2022-09-15)
 
 
