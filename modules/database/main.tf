@@ -5,7 +5,7 @@ resource "random_string" "master_password" {
 }
 
 locals {
-  version_list   = split(var.database_version, "_")
+  version_list   = split("_", var.database_version)
   version_kepper = "${local.version_list[0]}_${local.version_list[1]}_${local.version_list[2]}"
 }
 
