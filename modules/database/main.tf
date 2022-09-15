@@ -6,13 +6,13 @@ resource "random_string" "master_password" {
 
 locals {
   version_list   = split(var.database_version, "_")
-  version_kepper = "${version_list[0]}_${version_list[1]}_${version_list[2]}"
+  version_kepper = "${local.version_list[0]}_${local.version_list[1]}_${local.version_list[2]}"
 }
 
 resource "random_pet" "mysql" {
   length = 2
   keepers = {
-    version = var.version_kepper
+    version = local.version_kepper
   }
 }
 
