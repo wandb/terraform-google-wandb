@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.11.1](https://github.com/wandb/terraform-google-wandb/compare/v1.11.0...v1.11.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* Add mysql 8.0.28 as default ([05e2401](https://github.com/wandb/terraform-google-wandb/commit/05e2401231e1733208a7670d206d38ee9da898dc))
+
 ## [1.11.0](https://github.com/wandb/terraform-google-wandb/compare/v1.10.0...v1.11.0) (2022-09-08)
 
 
