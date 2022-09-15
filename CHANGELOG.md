@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.11.2](https://github.com/wandb/terraform-google-wandb/compare/v1.11.1...v1.11.2) (2022-09-15)
+
+
+### Bug Fixes
+
+* bump support mysql databases ([621a075](https://github.com/wandb/terraform-google-wandb/commit/621a075e735f6caba9d2ffe82a788eda6fd6e5a3))
+
 ### [1.11.1](https://github.com/wandb/terraform-google-wandb/compare/v1.11.0...v1.11.1) (2022-09-15)
 
 
