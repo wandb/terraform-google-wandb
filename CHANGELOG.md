@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.11.6](https://github.com/wandb/terraform-google-wandb/compare/v1.11.5...v1.11.6) (2022-09-15)
+
+
+### Bug Fixes
+
+* Database recreation keepers ([3a29511](https://github.com/wandb/terraform-google-wandb/commit/3a2951154a1cadb2fa70e60549a9d37ca3807afa))
+* Version references ([6edb800](https://github.com/wandb/terraform-google-wandb/commit/6edb800fc3f246a6d3d7ff34d110104dde77dfba))
+
 ### [1.11.5](https://github.com/wandb/terraform-google-wandb/compare/v1.11.4...v1.11.5) (2022-09-15)
 
 
