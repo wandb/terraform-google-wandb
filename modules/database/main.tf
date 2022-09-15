@@ -6,9 +6,6 @@ resource "random_string" "master_password" {
 
 resource "random_pet" "mysql" {
   length = 2
-  keepers = {
-    version = var.database_version
-  }
 }
 
 locals {
