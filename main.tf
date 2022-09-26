@@ -147,6 +147,9 @@ module "gke_app" {
   oidc_auth_method = var.oidc_auth_method
   oidc_secret      = var.oidc_secret
   local_restore    = var.local_restore
+  other_wandb_env  = {
+    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+  }
 
   wandb_image   = var.wandb_image
   wandb_version = var.wandb_version
