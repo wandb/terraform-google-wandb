@@ -166,3 +166,13 @@ variable "bucket_name" {
   description = "Use an existing bucket."
   default     = ""
 }
+
+##########################################
+# General Application                    #
+##########################################
+
+variable "disable_code_saving" {
+  type        = bool
+  description = "Boolean indicating if code saving is disabled"
+  default     = false
+}

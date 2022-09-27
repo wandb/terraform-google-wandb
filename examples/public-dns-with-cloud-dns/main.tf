@@ -39,6 +39,8 @@ module "wandb" {
 
   database_sort_buffer_size = var.database_sort_buffer_size
   database_machine_type     = var.database_machine_type
+
+  disable_code_saving = var.disable_code_saving
 }
 
 # You'll want to update your DNS with the provisioned IP address

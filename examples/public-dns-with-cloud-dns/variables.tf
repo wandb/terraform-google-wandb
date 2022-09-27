@@ -61,3 +61,9 @@ variable "database_machine_type" {
   type        = string
   default     = "db-n1-standard-2"
 }
+
+variable "disable_code_saving" {
+  type        = bool
+  description = "Boolean indicating if code saving is disabled"
+  default     = false
+}
