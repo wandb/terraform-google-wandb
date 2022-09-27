@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0](https://github.com/wandb/terraform-google-wandb/compare/v1.11.7...v1.12.0) (2022-09-27)
+
+
+### Features
+
+* Adds code saving env variable ([#38](https://github.com/wandb/terraform-google-wandb/issues/38)) ([18df530](https://github.com/wandb/terraform-google-wandb/commit/18df53003a306f7b1f288ed94b1c63d1a005b67d))
+
 ### [1.11.7](https://github.com/wandb/terraform-google-wandb/compare/v1.11.6...v1.11.7) (2022-09-15)
 
 
