@@ -24,7 +24,7 @@ module "wandb" {
 
   namespace   = var.namespace
   license     = var.license
-  domain_name = var.domain
+  domain_name = var.domain_name
   subdomain   = var.subdomain
 
   gke_machine_type = var.gke_machine_type
