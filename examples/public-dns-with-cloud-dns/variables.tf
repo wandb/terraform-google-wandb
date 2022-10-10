@@ -20,7 +20,7 @@ variable "namespace" {
 
 variable "domain_name" {
   type        = string
-  description = "Domain for access the Weights & Biases UI."
+  description = "Domain name for accessing the Weights & Biases UI."
 }
 
 variable "subdomain" {
