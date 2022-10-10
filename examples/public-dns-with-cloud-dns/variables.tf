@@ -18,7 +18,7 @@ variable "namespace" {
   description = "Namespace prefix used for resources"
 }
 
-variable "domain" {
+variable "domain_name" {
   type        = string
   description = "Domain for access the Weights & Biases UI."
 }
