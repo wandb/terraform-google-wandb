@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.12.1](https://github.com/wandb/terraform-google-wandb/compare/v1.12.0...v1.12.1) (2022-10-12)
+
+
+### Bug Fixes
+
+* Fix domain_name variable name in the example ([#40](https://github.com/wandb/terraform-google-wandb/issues/40)) ([96028d3](https://github.com/wandb/terraform-google-wandb/commit/96028d3287ceb47d0553cd3062b00e568f6fa19a))
+
 ## [1.12.0](https://github.com/wandb/terraform-google-wandb/compare/v1.11.7...v1.12.0) (2022-09-27)
 
 
