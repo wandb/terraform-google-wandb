@@ -24,3 +24,9 @@ variable "bucket_location" {
   type    = string
   default = "US"
 }
+
+variable "project_id" {
+  type        = string
+  default     = null
+  description = "The project ID to deploy to. If unset, the provider's default project is used."
+}
