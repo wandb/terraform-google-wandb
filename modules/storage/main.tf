@@ -1,7 +1,8 @@
 module "bucket" {
-  source    = "./bucket"
-  namespace = var.namespace
-  labels    = var.labels
+  source     = "./bucket"
+  project_id = var.project_id
+  namespace  = var.namespace
+  labels     = var.labels
 
   bucket_location = var.bucket_location
   service_account = var.service_account
