@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.12.2](https://github.com/wandb/terraform-google-wandb/compare/v1.12.1...v1.12.2) (2022-11-23)
+
+
+### Bug Fixes
+
+* Add project option to storage module ([#43](https://github.com/wandb/terraform-google-wandb/issues/43)) ([e95f86f](https://github.com/wandb/terraform-google-wandb/commit/e95f86fb2b26e5723d70914a4b780bdb5bbe8dcb))
+
 ### [1.12.1](https://github.com/wandb/terraform-google-wandb/compare/v1.12.0...v1.12.1) (2022-10-12)
 
 
