@@ -53,16 +53,19 @@ resource "google_compute_security_policy" "default" {
     description = "Deny access to all IPs"
   }
 
-  rule {
-    action   = "allow"
-    priority = 1
-    match {
-      versioned_expr = "SRC_IPS_V1"
-      config {
-        src_ip_ranges = var.allowed_inbound_cidr
+  dynamic "rule" {
+    for_each = chunklist(var.allowed_inbound_cidr, 10)
+    content {
+      action   = "allow"
+      priority = 1 + rule.key # Index
+      match {
+        versioned_expr = "SRC_IPS_V1"
+        config {
+          src_ip_ranges = rule.value
+        }
       }
+      description = "allow list rule"
     }
-    description = "allow list rule"
   }
 }
 
