@@ -22,9 +22,3 @@ variable "machine_type" {
   type    = string
   default = "n1-standard-4"
 }
-
-variable "image_type" {
-  description = "Node Pool image type"
-  type        = string
-  default     = "COS_CONTAINERD"
-}
