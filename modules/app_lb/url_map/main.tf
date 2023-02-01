@@ -6,6 +6,10 @@ resource "google_compute_instance_group_named_port" "default" {
   group = var.group
   name  = local.port_name
   port  = var.target_port
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_health_check" "gke_ingress" {

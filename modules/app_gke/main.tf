@@ -4,6 +4,7 @@ resource "google_container_cluster" "default" {
   network         = var.network.self_link
   subnetwork      = var.subnetwork.self_link
   networking_mode = "VPC_NATIVE"
+  min_master_version = "1.22.15-gke.2500"
 
   enable_intranode_visibility = true
 
@@ -40,6 +41,7 @@ resource "google_container_cluster" "default" {
 resource "random_pet" "node_pool" {
   keepers = {
     machine_type = var.machine_type
+    # image_type   = var.image_type
   }
 }
 
@@ -47,9 +49,12 @@ resource "google_container_node_pool" "default" {
   name       = "default-pool-${random_pet.node_pool.id}"
   cluster    = google_container_cluster.default.id
   node_count = 2
+  version    = "1.22.15-gke.2500"
+
 
   node_config {
-    image_type      = "COS"
+    # image_type      = "COS_CONTAINERD"
+    image_type      = var.image_type
     machine_type    = var.machine_type
     service_account = var.service_account.email
     oauth_scopes = [
