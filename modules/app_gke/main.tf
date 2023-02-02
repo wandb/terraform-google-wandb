@@ -52,7 +52,7 @@ resource "google_container_node_pool" "default" {
 
 
   node_config {
-    image_type      = "COS_CONTAINERD"
+    image_type      = "COS"
     machine_type    = var.machine_type
     service_account = var.service_account.email
     oauth_scopes = [
