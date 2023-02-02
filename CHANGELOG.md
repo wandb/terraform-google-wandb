@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.12.4](https://github.com/wandb/terraform-google-wandb/compare/v1.12.3...v1.12.4) (2023-02-02)
+
+
+### Bug Fixes
+
+* Update node pool image type ([#46](https://github.com/wandb/terraform-google-wandb/issues/46)) ([72e0ea7](https://github.com/wandb/terraform-google-wandb/commit/72e0ea700f1801e07d3cd0c19baa771b488c9a41))
+
+### [1.12.3](https://github.com/wandb/terraform-google-wandb/compare/v1.12.2...v1.12.3) (2023-01-27)
+
+
+### Bug Fixes
+
+* Remove deperciated binary auth property ([#30](https://github.com/wandb/terraform-google-wandb/issues/30)) ([c48a551](https://github.com/wandb/terraform-google-wandb/commit/c48a551ca875d3926cb43e8d7bbd92fe59d1fa07))
+
 ### [1.12.2](https://github.com/wandb/terraform-google-wandb/compare/v1.12.1...v1.12.2) (2022-11-23)
 
 
