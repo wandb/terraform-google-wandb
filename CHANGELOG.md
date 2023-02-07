@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.12.5](https://github.com/wandb/terraform-google-wandb/compare/v1.12.4...v1.12.5) (2023-02-07)
+
+
+### Bug Fixes
+
+* Add additional database verisons ([#48](https://github.com/wandb/terraform-google-wandb/issues/48)) ([6526d7b](https://github.com/wandb/terraform-google-wandb/commit/6526d7b2c2b9ae729dd2fdc25118893a78dbecf0))
+
 ### [1.12.4](https://github.com/wandb/terraform-google-wandb/compare/v1.12.3...v1.12.4) (2023-02-02)
 
 
