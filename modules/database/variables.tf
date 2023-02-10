@@ -60,7 +60,7 @@ variable "database_version" {
   default     = "MYSQL_8_0_31"
 
   validation {
-    condition     = contains(["MYSQL_5_7", "MYSQL_8_0", "MYSQL_8_0_28", "MYSQL_8_0_29", "MYSQL_8_0_30", "MYSQL_8_0_31"], var.database_version)
+    condition     = regex("MYSQL_(8_0(_[0-9]*)?|5_7)$", var.database_version)
     error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
   }
 }
