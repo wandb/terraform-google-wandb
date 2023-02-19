@@ -2,7 +2,7 @@
 
 This is a Terraform module for provisioning a google cloud storage bucket to be used with Weights and Biases. To use this bucket 
 with Weights and Biases multi-tenant cloud, pass `wandb-integration@wandb-production.iam.gserviceaccount.com` for the
-service account variable.
+`service_account_email` variable.
 
 **Google Services Used**
 
