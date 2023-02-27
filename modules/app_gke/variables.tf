@@ -26,7 +26,7 @@ variable "machine_type" {
 variable "gke_version" {
   description = "Default GKE version"
   type        = string
-  default     = "1.22.12-gke.500"
+  default     = "1.22.16-gke.2000"
 
   validation {
     condition     = regex("^1.2[2-4].*", var.gke_version)
