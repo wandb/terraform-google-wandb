@@ -84,6 +84,7 @@ module "app_gke" {
   subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
   depends_on      = [module.project_factory_project_services]
+  gke_version     = var.gke_cluster_version
 }
 
 
@@ -131,7 +132,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.4.1"
+  version = "1.6.0"
 
   license = var.license
 
@@ -147,7 +148,7 @@ module "gke_app" {
   oidc_auth_method = var.oidc_auth_method
   oidc_secret      = var.oidc_secret
   local_restore    = var.local_restore
-  other_wandb_env  = {
+  other_wandb_env = {
     "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
   }
 

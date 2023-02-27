@@ -1,9 +1,10 @@
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
-  network         = var.network.self_link
-  subnetwork      = var.subnetwork.self_link
-  networking_mode = "VPC_NATIVE"
+  network            = var.network.self_link
+  subnetwork         = var.subnetwork.self_link
+  networking_mode    = "VPC_NATIVE"
+  min_master_version = var.gke_version
 
   enable_intranode_visibility = true
 
@@ -47,6 +48,7 @@ resource "google_container_node_pool" "default" {
   name       = "default-pool-${random_pet.node_pool.id}"
   cluster    = google_container_cluster.default.id
   node_count = 2
+  version    = var.gke_version
 
   node_config {
     image_type      = "COS_CONTAINERD"

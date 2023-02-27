@@ -82,6 +82,13 @@ variable "gke_machine_type" {
   default     = "n1-standard-4"
 }
 
+variable "gke_cluster_version" {
+  description = "Kuberntes version"
+  type        = string
+  default     = "1.22.16-gke.2000"
+
+}
+
 ##########################################
 # Networking                             #
 ##########################################

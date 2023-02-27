@@ -22,3 +22,14 @@ variable "machine_type" {
   type    = string
   default = "n1-standard-4"
 }
+
+variable "gke_version" {
+  description = "Default GKE version"
+  type        = string
+  default     = "1.22.12-gke.500"
+
+  validation {
+    condition     = regex("^1.2[2-4].*", var.gke_version)
+    error_message = "We only support GKE: \"1.22\", \"1.23\" or \"1.24\"."
+  }
+}
