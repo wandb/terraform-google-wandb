@@ -30,6 +30,6 @@ resource "google_storage_bucket_iam_member" "admin" {
   role   = "roles/storage.admin"
 }
 
-data "google_storage_bucket" "default" {
+data "google_storage_bucket" "file_storage" {
   name = module.resources.bucket_name
 }

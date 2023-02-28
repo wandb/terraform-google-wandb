@@ -1,3 +1,3 @@
 output "bucket" {
-  value = data.google_storage_bucket.default
+  value = data.google_storage_bucket.file_storage
 }
