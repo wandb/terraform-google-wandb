@@ -29,3 +29,7 @@ resource "google_storage_bucket_iam_member" "admin" {
   member = "serviceAccount:${var.service_account_email}"
   role   = "roles/storage.admin"
 }
+
+data "google_storage_bucket" "default" {
+  name = module.resources.bucket_name
+}

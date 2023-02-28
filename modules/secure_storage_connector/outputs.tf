@@ -1,3 +1,3 @@
-output "bucket_name" {
-  value = module.resources.bucket_name
+output "bucket" {
+  value = data.google_storage_bucket.default
 }
