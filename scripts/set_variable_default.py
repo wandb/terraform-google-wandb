@@ -15,7 +15,6 @@ def set_variable_default(variable: str, value: str, content: str) -> str:
 if __name__ == '__main__':
     var, val, *var_file = sys.argv[1:]
     file_path = ''.join(var_file) or 'variables.tf'
-    print(var_file)
 
     print(f"Setting \"{var}\" to \"{val}\" in \"{file_path}\"")
 
