@@ -29,6 +29,9 @@ jobs:
       - name: Set MySQL Version
         run: python scripts/set_variable_default.py database_version ${{ steps.mysql.outputs.LATEST_VERSION }}
 
+      - name: Set MySQL Version Module
+        run: python scripts/set_variable_default.py database_version ${{ steps.mysql.outputs.LATEST_VERSION }} modules/database/variables.tf
+
       - name: Update terraform docs
         uses: terraform-docs/gh-actions@main
         with:

@@ -18,7 +18,7 @@ if __name__ == "__main__":
     versions = re.findall(r'MYSQL\w*', results)
     compatible_versions = filter(is_version_compatible, versions)
     sem_ver = set(s.replace('MYSQL_', '').replace('_', '.') for s in compatible_versions)
-    
+
     print(sem_ver)
 
     latest_version = sorted(sem_ver, key=version.Version)
