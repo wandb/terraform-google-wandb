@@ -9,6 +9,13 @@ on:
       - ".github/workflows/upgrade-checks.yml"
 
 jobs:
+  gke-nodes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "google-github-actions/setup-gcloud@v1"
+      - name: Check versions
+        run: gcloud container get-server-config --format "yaml(channels)" --zone us-east1
+
   mysql:
     runs-on: ubuntu-latest
     steps:
