@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          check-latest: true
       - id: mysql
         name: Get latest MySQL version
         run: python scripts/get_latest_mysql_version.py
