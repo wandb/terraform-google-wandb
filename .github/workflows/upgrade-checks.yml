@@ -1,0 +1,21 @@
+name: Upgrade variables to latest versions
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  push:
+    paths:
+      - "scripts/**"
+      - ".github/workflows/upgrade-checks.yml"
+
+jobs:
+  mysql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+      - id: mysql
+        name: Get latest MySQL version
+        run: python scripts/get_latest_mysql_version.py
+      - name: Set MySQL Version
+        run: python scripts/set_variable_default.py database_version ${{ steps.mysql.outputs.LATEST_VERSION }}
