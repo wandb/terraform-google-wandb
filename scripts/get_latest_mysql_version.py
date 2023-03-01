@@ -19,7 +19,7 @@ if __name__ == "__main__":
     latest = f"MYSQL_{latest_version[0].replace('.', '_')}"
 
     if os.getenv("GITHUB_ACTIONS") == "true":
-        print(f'::set-output name=LATEST_VERSION::{latest_version[0]}')
+        print(f'::set-output name=LATEST_VERSION::{latest}')
     else:
-        print(latest_version[0])
+        print(latest)
 
