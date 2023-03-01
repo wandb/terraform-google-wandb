@@ -16,6 +16,8 @@ if __name__ == "__main__":
     latest_version = sorted(sem_ver, key=version.Version)
     latest_version.reverse()
 
+    latest = f"MYSQL_{latest_version[0].replace('.', '_')}"
+
     if os.getenv("GITHUB_ACTIONS") == "true":
         print(f'::set-output name=LATEST_VERSION::{latest_version[0]}')
     else:
