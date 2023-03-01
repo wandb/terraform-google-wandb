@@ -7,9 +7,6 @@ def set_variable_default(variable: str, value: str, content: str) -> str:
     default value must be declared before an conditions are applied.
     """
     pat = '(variable\s+\"' + variable + '\"\s*{[^\}]+\s+default\s*=\s\").*(\"\n)'
-    # pat = '(variable\s+\"' + variable + '\"\s*{[\s\S]+\s+default\s+=\s\").*(\"[\s\S]+}\n\n)'
-    # pat = '(variable\s*\"' + variable + '\"\s*{[\s\w\"=.#]*default\s*=\s\").*(\"[\w\s\{=\(\)\[\]\",\.;:\\\}]*}\n\n)'
-    # pat = '(variable\ \"' + variable + '\"\ {[\s\w\"=.#]+default\s*=\s\")[\w\s\d]*(\"[\s\w\"]*})'
     return re.sub(
         pat,
         r'\1' + value + r'\2',
