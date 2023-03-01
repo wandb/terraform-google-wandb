@@ -9,15 +9,6 @@ on:
       - ".github/workflows/upgrade-checks.yml"
 
 jobs:
-  gke-nodes:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v1"
-      - uses: "google-github-actions/setup-gcloud@v1"
-      - name: Check versions
-        run: gcloud container get-server-config --project=test --region=us-east1 --flatten=channels --filter="channels.channel=STABLE" --format="value(channels.defaultVersion)"
-
   mysql:
     runs-on: ubuntu-latest
     steps:
