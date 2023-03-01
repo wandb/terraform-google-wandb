@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.13.2](https://github.com/wandb/terraform-google-wandb/compare/v1.13.1...v1.13.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* Add back the default mysql version ([#54](https://github.com/wandb/terraform-google-wandb/issues/54)) ([5c001fa](https://github.com/wandb/terraform-google-wandb/commit/5c001fa58baea4b88e926fd0f0d400d2e8dcbd54))
+
+### [1.13.1](https://github.com/wandb/terraform-google-wandb/compare/v1.13.0...v1.13.1) (2023-03-01)
+
+
+### Bug Fixes
+
+* Update mysql version ([#47](https://github.com/wandb/terraform-google-wandb/issues/47)) ([f7e9b87](https://github.com/wandb/terraform-google-wandb/commit/f7e9b87f123b2bb9f993361b80289b6a33b88707))
+
+## [1.13.0](https://github.com/wandb/terraform-google-wandb/compare/v1.12.5...v1.13.0) (2023-02-28)
+
+
+### Features
+
+* Add module for secure storage connector ([#50](https://github.com/wandb/terraform-google-wandb/issues/50)) ([ea192ba](https://github.com/wandb/terraform-google-wandb/commit/ea192bafb9bc588e466b005d2f2238b09997352c))
+
+### [1.12.5](https://github.com/wandb/terraform-google-wandb/compare/v1.12.4...v1.12.5) (2023-02-07)
+
+
+### Bug Fixes
+
+* Add additional database verisons ([#48](https://github.com/wandb/terraform-google-wandb/issues/48)) ([6526d7b](https://github.com/wandb/terraform-google-wandb/commit/6526d7b2c2b9ae729dd2fdc25118893a78dbecf0))
+
+### [1.12.4](https://github.com/wandb/terraform-google-wandb/compare/v1.12.3...v1.12.4) (2023-02-02)
+
+
+### Bug Fixes
+
+* Update node pool image type ([#46](https://github.com/wandb/terraform-google-wandb/issues/46)) ([72e0ea7](https://github.com/wandb/terraform-google-wandb/commit/72e0ea700f1801e07d3cd0c19baa771b488c9a41))
+
 ### [1.12.3](https://github.com/wandb/terraform-google-wandb/compare/v1.12.2...v1.12.3) (2023-01-27)
 
 

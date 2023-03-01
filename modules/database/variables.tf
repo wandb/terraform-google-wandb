@@ -57,10 +57,10 @@ variable "labels" {
 variable "database_version" {
   description = "Version for MySQL"
   type        = string
-  default     = "MYSQL_8_0_28"
+  default     = "MYSQL_8_0_29"
 
   validation {
-    condition     = contains(["MYSQL_5_7", "MYSQL_8_0", "MYSQL_8_0_28", "MYSQL_8_0_29"], var.database_version)
+    condition     = regex("^MYSQL_(8_0(_[0-9]*)?|5_7)$", var.database_version)
     error_message = "We only support MySQL: \"MYSQL_5_7\"; \"MYSQL_8_0\"."
   }
 }
