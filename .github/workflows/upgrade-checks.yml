@@ -28,3 +28,11 @@ jobs:
 
       - name: Set MySQL Version
         run: python scripts/set_variable_default.py database_version ${{ steps.mysql.outputs.LATEST_VERSION }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: "fix: Set MySQL default version to ${{ steps.mysql.outputs.LATEST_VERSION }}"
+          commit-message: "fix: Set MySQL default version to ${{ steps.mysql.outputs.LATEST_VERSION }}"
+          delete-branch: true
+          branch: ci/upgrade-mysql
