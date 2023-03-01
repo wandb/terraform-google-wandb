@@ -29,6 +29,13 @@ jobs:
       - name: Set MySQL Version
         run: python scripts/set_variable_default.py database_version ${{ steps.mysql.outputs.LATEST_VERSION }}
 
+      - name: Update terraform docs
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          output-file: README.md
+          output-method: inject
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
