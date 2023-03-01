@@ -14,7 +14,13 @@ jobs:
     steps:
       - uses: "google-github-actions/setup-gcloud@v1"
       - name: Check versions
-        run: gcloud container get-server-config --format "yaml(channels)" --zone us-east1
+        run: |
+          gcloud container get-server-config \
+            --project=test \
+            --region=us-east1 \ 
+            --flatten=channels \
+            --filter="channels.channel=STABLE" \
+            --format="value(channels.defaultVersion)"
 
   mysql:
     runs-on: ubuntu-latest
