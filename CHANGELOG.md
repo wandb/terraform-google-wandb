@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.0](https://github.com/wandb/terraform-google-wandb/compare/v1.12.5...v1.13.0) (2023-02-28)
+
+
+### Features
+
+* Add module for secure storage connector ([#50](https://github.com/wandb/terraform-google-wandb/issues/50)) ([ea192ba](https://github.com/wandb/terraform-google-wandb/commit/ea192bafb9bc588e466b005d2f2238b09997352c))
+
 ### [1.12.5](https://github.com/wandb/terraform-google-wandb/compare/v1.12.4...v1.12.5) (2023-02-07)
 
 
