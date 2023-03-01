@@ -13,12 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
           check-latest: true
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
       - id: mysql
         name: Get latest MySQL version
         run: python scripts/get_latest_mysql_version.py
+
       - name: Set MySQL Version
         run: python scripts/set_variable_default.py database_version ${{ steps.mysql.outputs.LATEST_VERSION }}
