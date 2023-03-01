@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.13.1](https://github.com/wandb/terraform-google-wandb/compare/v1.13.0...v1.13.1) (2023-03-01)
+
+
+### Bug Fixes
+
+* Update mysql version ([#47](https://github.com/wandb/terraform-google-wandb/issues/47)) ([f7e9b87](https://github.com/wandb/terraform-google-wandb/commit/f7e9b87f123b2bb9f993361b80289b6a33b88707))
+
 ## [1.13.0](https://github.com/wandb/terraform-google-wandb/compare/v1.12.5...v1.13.0) (2023-02-28)
 
 
