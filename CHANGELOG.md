@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.13.3](https://github.com/wandb/terraform-google-wandb/compare/v1.13.2...v1.13.3) (2023-03-02)
+
+
+### Bug Fixes
+
+* Regex check is invalid on database version ([#60](https://github.com/wandb/terraform-google-wandb/issues/60)) ([c5ac642](https://github.com/wandb/terraform-google-wandb/commit/c5ac642b08f42dad691c6af67b1ba37ab9f38eac))
+
 ### [1.13.2](https://github.com/wandb/terraform-google-wandb/compare/v1.13.1...v1.13.2) (2023-03-01)
 
 
