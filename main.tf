@@ -138,7 +138,7 @@ module "gke_app" {
   host                       = local.url
   bucket                     = "gs://${local.bucket}"
   bucket_queue               = local.bucket_queue
-  database_connection_string = "mysql://${module.database.connection_string}"
+  database_connection_string = "cloudsql://${module.database.connection_string}"
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
 
