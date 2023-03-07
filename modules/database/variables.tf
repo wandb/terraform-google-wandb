@@ -57,7 +57,7 @@ variable "labels" {
 variable "database_version" {
   description = "Version for MySQL"
   type        = string
-  default     = "MYSQL_8_0_29"
+  default     = "MYSQL_8_0_31"
 }
 
 variable "sort_buffer_size" {
