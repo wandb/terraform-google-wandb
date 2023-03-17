@@ -24,9 +24,12 @@ output "password" {
 }
 
 output "connection_string" {
-  value = "${local.output_username}:${local.output_password}@${local.output_private_ip}/${local.output_database_name}"
+  value = var.use_cloud_proxy ? "mysql://${local.output_username}:${local.output_password}@${local.output_private_ip}/${local.output_database_name}" : "cloudsql://${local.output_username}:${local.output_password}@${local.output_connection_name}/${local.output_database_name}"
 }
 
 output "database_connection_name" {
   value = google_sql_database_instance.default.connection_name
 }
+
+
+# cloudsql://USER:PASSWORD@tmp-terraform-permissions.europe-west2.tf-perms-gcp-primary-mollusk/DATABASE
