@@ -102,16 +102,16 @@ module "app_lb" {
 }
 
 module "database" {
-  source              = "./modules/database"
-  namespace           = var.namespace
-  database_version    = var.database_version
-  # database_connection_ssl = true
-  tier                = var.database_machine_type
-  sort_buffer_size    = var.database_sort_buffer_size
-  network_connection  = local.network_connection
-  deletion_protection = var.deletion_protection
-  labels              = var.labels
-  depends_on          = [module.project_factory_project_services]
+  source                = "./modules/database"
+  namespace             = var.namespace
+  database_version      = var.database_version
+  ssl_connection_string = var.database_connection_ssl
+  tier                  = var.database_machine_type
+  sort_buffer_size      = var.database_sort_buffer_size
+  network_connection    = local.network_connection
+  deletion_protection   = var.deletion_protection
+  labels                = var.labels
+  depends_on            = [module.project_factory_project_services]
 }
 
 module "redis" {

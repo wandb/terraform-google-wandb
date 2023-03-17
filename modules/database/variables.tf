@@ -67,7 +67,7 @@ variable "sort_buffer_size" {
 }
 
 
-variable "use_cloud_proxy" {
+variable "ssl_connection_string" {
   description = "Enable the SSL through the usage of Cloud Proxy (cloudsql://) in the DB connection string"
   type        = bool
   default     = false
