@@ -131,8 +131,9 @@ locals {
 }
 
 module "gke_app" {
-  source  = "wandb/wandb/kubernetes"
-  version = "1.4.1"
+  # source  = "wandb/wandb/kubernetes"
+  # version = "1.4.1"
+  source = "../terraform-kubernetes-wandb"
 
   license = var.license
 
