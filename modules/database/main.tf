@@ -50,6 +50,7 @@ resource "google_sql_database_instance" "default" {
     ip_configuration {
       ipv4_enabled    = false
       private_network = var.network_connection.network
+      require_ssl     = var.force_ssl
     }
 
     # requires minimum memory of 26624 MB
