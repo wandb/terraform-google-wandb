@@ -26,7 +26,7 @@ output "password" {
 }
 
 output "connection_string" {
-  value = var.ssl_connection_string ? local.output_connection_string_cloudsql : local.output_connection_string_mysql
+  value = var.force_ssl ? local.output_connection_string_cloudsql : local.output_connection_string_mysql
 }
 
 output "database_connection_name" {
