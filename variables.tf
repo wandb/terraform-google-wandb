@@ -146,7 +146,7 @@ variable "database_sort_buffer_size" {
   default     = 262144
 }
 
-variable "database_connection_ssl" {
+variable "force_ssl" {
   description = "Enable the SSL through the usage of Cloud Proxy (cloudsql://) in the DB connection string"
   type        = bool
   default     = false
