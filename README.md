@@ -75,7 +75,7 @@ No providers.
 | <a name="module_app_gke"></a> [app\_gke](#module\_app\_gke) | ./modules/app_gke | n/a |
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
-| <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | ../terraform-kubernetes-wandb | n/a |
+| <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | github.com/wandb/terraform-kubernetes-wandb | recreate_pod_with_new_db_connection_string |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
 | <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 13.0 |
