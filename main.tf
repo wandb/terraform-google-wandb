@@ -131,9 +131,8 @@ locals {
 }
 
 module "gke_app" {
-  # source  = "wandb/wandb/kubernetes"
-  # version = "1.4.1"
-  source = "github.com/wandb/terraform-kubernetes-wandb?ref=recreate_pod_with_new_db_connection_string"
+  source  = "wandb/wandb/kubernetes"
+  version = "1.6.0"
 
   license = var.license
 
