@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.13.5](https://github.com/wandb/terraform-google-wandb/compare/v1.13.4...v1.13.5) (2023-03-23)
+
+
+### Bug Fixes
+
+* Enable MySQL connection ssl ([#63](https://github.com/wandb/terraform-google-wandb/issues/63)) ([2c2e1f6](https://github.com/wandb/terraform-google-wandb/commit/2c2e1f626a6da457674df61c8b371cfc0465c4fe))
+
 ### [1.13.4](https://github.com/wandb/terraform-google-wandb/compare/v1.13.3...v1.13.4) (2023-03-07)
 
 
