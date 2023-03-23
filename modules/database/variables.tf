@@ -65,3 +65,10 @@ variable "sort_buffer_size" {
   type        = number
   default     = 262144
 }
+
+
+variable "force_ssl" {
+  description = "Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string"
+  type        = bool
+  default     = false
+}

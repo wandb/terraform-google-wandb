@@ -34,6 +34,7 @@ module "wandb" {
 
   create_redis       = false
   use_internal_queue = true
+  force_ssl          = var.force_ssl
 
   deletion_protection = false
 

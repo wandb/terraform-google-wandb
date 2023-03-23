@@ -105,6 +105,7 @@ module "database" {
   source              = "./modules/database"
   namespace           = var.namespace
   database_version    = var.database_version
+  force_ssl           = var.force_ssl
   tier                = var.database_machine_type
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
@@ -131,14 +132,14 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.4.1"
+  version = "1.6.0"
 
   license = var.license
 
   host                       = local.url
   bucket                     = "gs://${local.bucket}"
   bucket_queue               = local.bucket_queue
-  database_connection_string = "mysql://${module.database.connection_string}"
+  database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
 
