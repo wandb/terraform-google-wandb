@@ -28,7 +28,11 @@ resource "google_compute_global_forwarding_rule" "default" {
 
 # SSL Policy to apply to Target Https Proxy
 resource "google_compute_ssl_policy" "ssl-policy" {
-  name            = "ssl-policy"
+  name            = "${var.namespace}-ssl-policy"
   profile         = "MODERN"
   min_tls_version = "TLS_1_2"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
