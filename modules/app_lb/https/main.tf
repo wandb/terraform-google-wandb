@@ -13,7 +13,7 @@ resource "google_compute_target_https_proxy" "default" {
   name             = "${var.namespace}-https-proxy"
   url_map          = var.url_map.id
   ssl_certificates = [google_compute_managed_ssl_certificate.default.id]
-  ssl_policy       = google_compute_ssl_policy.ssl-policy.id
+  ssl_policy       = google_compute_ssl_policy.default.id
 }
 
 # Configure a global forwarding rule to route the HTTPS traffic on the IP
