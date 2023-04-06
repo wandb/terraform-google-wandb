@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.0](https://github.com/wandb/terraform-google-wandb/compare/v1.13.5...v1.14.0) (2023-04-06)
+
+
+### Features
+
+* Add SSL policy to LB ([#65](https://github.com/wandb/terraform-google-wandb/issues/65)) ([a4251b2](https://github.com/wandb/terraform-google-wandb/commit/a4251b2b39216df7404640dddb89df08f912bd2b))
+
 ### [1.13.5](https://github.com/wandb/terraform-google-wandb/compare/v1.13.4...v1.13.5) (2023-03-23)
 
 
