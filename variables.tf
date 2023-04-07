@@ -184,7 +184,7 @@ variable "disable_code_saving" {
 }
 
 variable "other_wandb_env" {
-  type        = map(any)
+  type        = map(string)
   description = "Extra environment variables for W&B"
   default     = {}
 }
