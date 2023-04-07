@@ -182,3 +182,9 @@ variable "disable_code_saving" {
   description = "Boolean indicating if code saving is disabled"
   default     = false
 }
+
+variable "other_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
