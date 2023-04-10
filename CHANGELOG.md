@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.14.1](https://github.com/wandb/terraform-google-wandb/compare/v1.14.0...v1.14.1) (2023-04-10)
+
+
+### Bug Fixes
+
+* Update readme ([#67](https://github.com/wandb/terraform-google-wandb/issues/67)) ([6d03fbb](https://github.com/wandb/terraform-google-wandb/commit/6d03fbb47022f94cd0f61a3a5776ba1a6e338e7e))
+
 ## [1.14.0](https://github.com/wandb/terraform-google-wandb/compare/v1.13.5...v1.14.0) (2023-04-06)
 
 
