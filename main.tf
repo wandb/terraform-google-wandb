@@ -132,7 +132,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = var.kube_tf_version
+  version = "1.7.0"
 
   license = var.license
 

@@ -188,9 +188,3 @@ variable "other_wandb_env" {
   description = "Extra environment variables for W&B"
   default     = {}
 }
-
-variable "kube_tf_version" {
-  type        = string
-  description = "Kubernetes terraform version to use"
-  default     = "1.7.0"
-}
