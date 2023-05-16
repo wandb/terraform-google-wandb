@@ -24,7 +24,6 @@ locals {
   url_prefix        = var.ssl ? "https" : "http"
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
-  create_bucket     = var.bucket_name == ""
   create_network    = var.network == null
 }
 
@@ -126,7 +125,7 @@ module "redis" {
 locals {
   redis_certificate       = var.create_redis ? module.redis.0.ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
-  bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
+  bucket                  = var.bucket_name == "" ? var.bucket_name :  module.storage.0.bucket_name
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 

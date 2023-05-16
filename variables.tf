@@ -166,6 +166,11 @@ variable "create_redis" {
 ##########################################
 # Most users will not need these settings. They are ment for users who want a
 # bucket in a different account.
+variable "create_bucket" {
+  type        = bool
+  description = "Create a bucket"
+  default     = true
+}
 
 variable "bucket_name" {
   type        = string
