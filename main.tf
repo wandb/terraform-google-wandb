@@ -76,16 +76,15 @@ locals {
   subnetwork         = try(module.networking.0.subnetwork, { self_link = var.subnetwork })
 }
 
-module "app_gke" {
-  source          = "./modules/app_gke"
-  namespace       = var.namespace
-  machine_type    = var.gke_machine_type
-  network         = local.network
-  subnetwork      = local.subnetwork
-  service_account = module.service_accounts.service_account
-  depends_on      = [module.project_factory_project_services]
-}
-
+# module "app_gke" {
+#   source          = "./modules/app_gke"
+#   namespace       = var.namespace
+#   machine_type    = var.gke_machine_type
+#   network         = local.network
+#   subnetwork      = local.subnetwork
+#   service_account = module.service_accounts.service_account
+#   depends_on      = [module.project_factory_project_services]
+# }
 
 module "app_lb" {
   source               = "./modules/app_lb"
@@ -93,12 +92,16 @@ module "app_lb" {
   ssl                  = var.ssl
   fqdn                 = local.fqdn
   network              = local.network
-  group                = module.app_gke.instance_group_url
+  # group                = module.app_gke.instance_group_url
+  group                = var.instance_group_url
   service_account      = module.service_accounts.service_account
   labels               = var.labels
   allowed_inbound_cidr = var.allowed_inbound_cidr
 
-  depends_on = [module.project_factory_project_services, module.app_gke]
+  depends_on = [
+    module.project_factory_project_services, 
+    # module.app_gke
+  ]
 }
 
 module "database" {
@@ -161,6 +164,6 @@ module "gke_app" {
     module.database,
     module.redis,
     module.storage,
-    module.app_gke
+    # module.app_gke
   ]
 }

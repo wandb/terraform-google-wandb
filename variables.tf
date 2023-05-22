@@ -188,3 +188,10 @@ variable "other_wandb_env" {
   description = "Extra environment variables for W&B"
   default     = {}
 }
+
+variable "instance_group_url" {
+  description = "The URL of the instance group"
+  type        = string
+  # Example:
+  # instance_group_url = "https://www.googleapis.com/compute/v1/projects/my-gcp-project/zones/us-central1-a/instanceGroups/my-instance-group"
+}
