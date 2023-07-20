@@ -130,30 +130,17 @@ locals {
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 
-module "gke_app" {
-  source  = "wandb/wandb/kubernetes"
-  version = "1.6.0"
+module "operator" {
+  source = "./modules/operator"
 
-  license = var.license
+  bucket       = "gs://${local.bucket}"
+  address_name = module.app_lb.address_name
+  fqdn         = local.fqdn
 
-  host                       = local.url
-  bucket                     = "gs://${local.bucket}"
-  bucket_queue               = local.bucket_queue
-  database_connection_string = module.database.connection_string
-  redis_connection_string    = local.redis_connection_string
-  redis_ca_cert              = local.redis_certificate
-
-  oidc_client_id   = var.oidc_client_id
-  oidc_issuer      = var.oidc_issuer
-  oidc_auth_method = var.oidc_auth_method
-  oidc_secret      = var.oidc_secret
-  local_restore    = var.local_restore
-  other_wandb_env = merge({
-    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
-  }, var.other_wandb_env)
-
-  wandb_image   = var.wandb_image
-  wandb_version = var.wandb_version
+  # bucket_queue               = local.bucket_queue
+  # database_connection_string = module.database.connection_string
+  # redis_connection_string    = local.redis_connection_string
+  # redis_ca_cert              = local.redis_certificate
 
   # If we dont wait, tf will start trying to deploy while the work group is
   # still spinning up
@@ -164,3 +151,38 @@ module "gke_app" {
     module.app_gke
   ]
 }
+
+# module "gke_app" {
+#   source  = "wandb/wandb/kubernetes"
+#   version = "1.6.0"
+
+#   license = var.license
+
+#   host                       = local.url
+#   bucket                     = "gs://${local.bucket}"
+#   bucket_queue               = local.bucket_queue
+#   database_connection_string = module.database.connection_string
+#   redis_connection_string    = local.redis_connection_string
+#   redis_ca_cert              = local.redis_certificate
+
+#   oidc_client_id   = var.oidc_client_id
+#   oidc_issuer      = var.oidc_issuer
+#   oidc_auth_method = var.oidc_auth_method
+#   oidc_secret      = var.oidc_secret
+#   local_restore    = var.local_restore
+#   other_wandb_env = merge({
+#     "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+#   }, var.other_wandb_env)
+
+#   wandb_image   = var.wandb_image
+#   wandb_version = var.wandb_version
+
+#   # If we dont wait, tf will start trying to deploy while the work group is
+#   # still spinning up
+#   depends_on = [
+#     module.database,
+#     module.redis,
+#     module.storage,
+#     module.app_gke
+#   ]
+# }
