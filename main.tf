@@ -131,8 +131,16 @@ locals {
 }
 
 module "gke_app" {
-  source  = "wandb/wandb/kubernetes"
-  version = "1.6.0"
+  source  = "../terraform-kubernetes-wandb"
+
+  # source  = "../terraform-kubernetes-wandb"
+  # providers = {
+  #   google = google
+  #   google-beta = google-beta
+  # }
+
+  # source  = "wandb/wandb/kubernetes"
+  # version = "1.6.0"
 
   license = var.license
 
@@ -150,6 +158,9 @@ module "gke_app" {
   local_restore    = var.local_restore
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+    "YO" = "LO"
+    # add the address of nfs-server to env vars
+    "NFS_SERVER" = "nfs-server.default.svc.cluster.local"
   }, var.other_wandb_env)
 
   wandb_image   = var.wandb_image
