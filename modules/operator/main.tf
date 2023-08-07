@@ -44,15 +44,33 @@ resource "kubernetes_manifest" "instance" {
     spec = {
       version = "https://github.com/wandb/cdk8s"
 
+      license = null
+
       config = {
         bucket = { connectionString = var.bucket }
+        mysql  = var.database
+        # redis  = {
+        #   user     = ""
+        #   host     = var.redis.host
+        #   port     = var.redis.port
+        #   password = var.redis.password
+        #   caCert   = var.redis.caCert
+
+        #   params = {
+        #     tls = true
+        #     ttlInSeconds = 604800
+        #     caCertPath = "/etc/ssl/certs/redis_ca.pem"
+        #   }
+        # }
+
+        redis = var.redis
 
         ingress = {
           metadata = {
             annotations = {
               "kubernetes.io/ingress.global-static-ip-name" : var.address_name
               "networking.gke.io/managed-certificates" : "managed-cert"
-              "kubernetes.io/ingress.allow-http": "false",
+              "kubernetes.io/ingress.allow-http" : "false"
             }
           }
         }

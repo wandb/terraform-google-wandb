@@ -137,6 +137,28 @@ module "operator" {
   address_name = module.app_lb.address_name
   fqdn         = local.fqdn
 
+  database = {
+    name     = module.database.database_name
+    user     = module.database.username
+    password = module.database.password
+    database = module.database.database_name
+    host     = module.database.private_ip_address
+    port     = 3306
+  }
+
+  redis = var.create_redis ? {
+    user     = ""
+    password = module.redis.0.auth_string
+    host     = module.redis.0.host
+    port     = module.redis.0.port
+    caCert   = module.redis.0.ca_cert
+    params   = {
+      tls          = true
+      ttlInSeconds = 604800
+      caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+    }
+  } : null
+
   # bucket_queue               = local.bucket_queue
   # database_connection_string = module.database.connection_string
   # redis_connection_string    = local.redis_connection_string

@@ -40,7 +40,7 @@ module "wandb" {
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
-  create_redis       = false
+  create_redis       = true
   use_internal_queue = true
   force_ssl          = var.force_ssl
 
