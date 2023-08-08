@@ -10,3 +10,10 @@ output "auth_string" {
   value = google_redis_instance.default.auth_string
 }
 
+output "host" {
+  value = google_redis_instance.default.host
+}
+
+output "port" {
+  value = google_redis_instance.default.port
+}
