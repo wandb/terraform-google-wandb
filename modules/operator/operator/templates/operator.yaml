@@ -1,0 +1,10 @@
+apiVersion: apps.wandb.com/v1
+kind: WeightsAndBiases
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: weightsandbiases
+    app.kubernetes.io/instance: wandb
+spec:
+  {{ .Values.spec | nindent 2 }}

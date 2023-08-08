@@ -13,81 +13,52 @@ resource "helm_release" "operator" {
   }
 }
 
-resource "kubernetes_manifest" "certificate" {
-  manifest = {
-    apiVersion = "networking.gke.io/v1"
-    kind       = "ManagedCertificate"
-    metadata = {
-      name      = "managed-cert"
-      namespace = "default"
-    }
-    spec = {
-      domains = [var.fqdn]
-    }
-  }
-}
+locals {
+  spec = yamlencode({
+    version = "https://github.com/wandb/cdk8s"
 
-resource "kubernetes_manifest" "instance" {
-  manifest = {
-    apiVersion = "apps.wandb.com/v1"
-    kind       = "WeightsAndBiases"
+    config = {
+      bucket = { connectionString = var.bucket }
+      mysql  = var.database
+      # redis  = var.redis
 
-    metadata = {
-      name      = "wandb"
-      namespace = "default"
-      labels = {
-        "app.kubernetes.io/name"     = "weightsandbiases"
-        "app.kubernetes.io/instance" = "wandb"
-      }
-    }
-
-    spec = {
-      version = "https://github.com/wandb/cdk8s"
-
-      license = null
-
-      config = {
-        bucket = { connectionString = var.bucket }
-        mysql  = var.database
-        # redis  = {
-        #   user     = ""
-        #   host     = var.redis.host
-        #   port     = var.redis.port
-        #   password = var.redis.password
-        #   caCert   = var.redis.caCert
-
-        #   params = {
-        #     tls = true
-        #     ttlInSeconds = 604800
-        #     caCertPath = "/etc/ssl/certs/redis_ca.pem"
-        #   }
-        # }
-
-        redis = var.redis
-
-        ingress = {
-          metadata = {
-            annotations = {
-              "kubernetes.io/ingress.global-static-ip-name" : var.address_name
-              "networking.gke.io/managed-certificates" : "managed-cert"
-              "kubernetes.io/ingress.allow-http" : "false"
-            }
+      ingress = {
+        metadata = {
+          annotations = {
+            "kubernetes.io/ingress.global-static-ip-name" : var.address_name
+            "networking.gke.io/managed-certificates" : "wandb-cert"
+            "kubernetes.io/ingress.allow-http" : "false"
           }
         }
       }
     }
+  })
+}
+
+resource "helm_release" "instance" {
+  name       = "wandb"
+  chart      = "operator"
+  repository = path.module
+
+  namespace        = "default"
+  create_namespace = true
+  wait             = true
+
+  set {
+    name  = "domain"
+    value = var.fqdn
   }
 
-  computed_fields = [
-    "metadata.annotations",
-    "metadata.labels",
-  ]
-
-  wait {
-    fields = {
-      "status.phase" = "Completed",
-    }
+  set {
+    name  = "cloud"
+    value = "google"
   }
 
-  depends_on = [helm_release.operator, kubernetes_manifest.certificate]
+  set {
+    name  = "spec"
+    value = local.spec
+    type  = "string"
+  }
+
+  depends_on = [helm_release.operator]
 }

@@ -152,7 +152,7 @@ module "operator" {
     host     = module.redis.0.host
     port     = module.redis.0.port
     caCert   = module.redis.0.ca_cert
-    params   = {
+    params = {
       tls          = true
       ttlInSeconds = 604800
       caCertPath   = "/etc/ssl/certs/redis_ca.pem"
