@@ -78,11 +78,11 @@ No providers.
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
-| <a name="module_operator"></a> [operator](#module\_operator) | ./modules/operator | n/a |
 | <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 13.0 |
 | <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
+| <a name="module_wandb"></a> [wandb](#module\_wandb) | wandb/wandb/helm | 1.0.0 |
 
 ## Resources
 

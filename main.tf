@@ -130,51 +130,62 @@ locals {
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
 }
 
-module "operator" {
-  source = "./modules/operator"
+module "wandb" {
+  source  = "wandb/wandb/helm"
+  version = "1.0.0"
 
-  bucket       = "gs://${local.bucket}"
-  address_name = module.app_lb.address_name
-  fqdn         = local.fqdn
-  host         = local.url
+  spec = {
+    release = {
+      url = "https://github.com/wandb/cdk8s"
+    }
+    config = {
+      global = {
+        extraEnvs = merge({
+          "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+        }, var.other_wandb_env)
+      }
 
-  other_wandb_env = merge({
-    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
-  }, var.other_wandb_env)
+      bucket = { connectionString = "gs://${local.bucket}" }
 
-  database = {
-    name     = module.database.database_name
-    user     = module.database.username
-    password = module.database.password
-    database = module.database.database_name
-    host     = module.database.private_ip_address
-    port     = 3306
+      mysql = {
+        name     = module.database.database_name
+        user     = module.database.username
+        password = module.database.password
+        database = module.database.database_name
+        host     = module.database.private_ip_address
+        port     = 3306
+      }
+
+      redis = var.create_redis ? {
+        user     = ""
+        password = module.redis.0.auth_string
+        host     = module.redis.0.host
+        port     = module.redis.0.port
+        caCert   = module.redis.0.ca_cert
+        params = {
+          tls          = true
+          ttlInSeconds = 604800
+          caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+        }
+      } : null
+
+      host = local.url
+
+      ingress = {
+        metadata = {
+          annotations = {
+            "kubernetes.io/ingress.global-static-ip-name" : module.app_lb.address_name
+            "networking.gke.io/managed-certificates" : "wandb-cert"
+            "kubernetes.io/ingress.allow-http" : "false"
+            "kubernetes.io/ingress.class" : "gce"
+          }
+        }
+      }
+    }
   }
 
-  redis = var.create_redis ? {
-    user     = ""
-    password = module.redis.0.auth_string
-    host     = module.redis.0.host
-    port     = module.redis.0.port
-    caCert   = module.redis.0.ca_cert
-    params = {
-      tls          = true
-      ttlInSeconds = 604800
-      caCertPath   = "/etc/ssl/certs/redis_ca.pem"
-    }
-  } : null
+  wandb_fqdn  = local.fqdn
+  wandb_cloud = "google"
 
-  # bucket_queue               = local.bucket_queue
-  # database_connection_string = module.database.connection_string
-  # redis_connection_string    = local.redis_connection_string
-  # redis_ca_cert              = local.redis_certificate
-
-  # If we dont wait, tf will start trying to deploy while the work group is
-  # still spinning up
-  depends_on = [
-    module.database,
-    module.redis,
-    module.storage,
-    module.app_gke
-  ]
+  operator_image_tag = "1.2.13"
 }

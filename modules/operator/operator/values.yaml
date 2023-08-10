@@ -1,7 +1,0 @@
-cloud: ""
-
-domain: ""
-
-spec:
-  version: "https://github.com/wandb/cdk8s"
-  config: {}
