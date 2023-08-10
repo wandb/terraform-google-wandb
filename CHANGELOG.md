@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.14.2](https://github.com/wandb/terraform-google-wandb/compare/v1.14.1...v1.14.2) (2023-08-10)
+
+
+### Bug Fixes
+
+* Create LICENSE ([#71](https://github.com/wandb/terraform-google-wandb/issues/71)) ([fa125dc](https://github.com/wandb/terraform-google-wandb/commit/fa125dce2536e804a0125563160f52e749044157))
+
 ### [1.14.1](https://github.com/wandb/terraform-google-wandb/compare/v1.14.0...v1.14.1) (2023-04-10)
 
 
