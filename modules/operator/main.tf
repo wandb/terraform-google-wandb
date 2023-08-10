@@ -2,25 +2,26 @@ resource "helm_release" "operator" {
   name             = "operator"
   chart            = "operator"
   repository       = "https://charts.wandb.ai"
-  version          = "0.1.4"
+  version          = "0.1.5"
   namespace        = "wandb"
   create_namespace = true
   wait             = true
 
   set {
     name  = "image.tag"
-    value = "1.2.6"
+    value = "1.2.12"
   }
 }
 
 locals {
   spec = yamlencode({
-    version = "https://github.com/wandb/cdk8s"
-
+    release = {
+      url = "https://github.com/wandb/cdk8s"
+    }
     config = {
       bucket = { connectionString = var.bucket }
       mysql  = var.database
-      # redis  = var.redis
+      redis  = var.redis
 
       ingress = {
         metadata = {
