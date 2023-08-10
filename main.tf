@@ -132,7 +132,7 @@ locals {
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.0.0"
+  version = "1.0.1"
 
   spec = {
     release = {
@@ -141,7 +141,7 @@ module "wandb" {
     config = {
       global = {
         extraEnvs = merge({
-          "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+          "GORILLA_DISABLE_CODE_SAVING" = tostring(var.disable_code_saving)
         }, var.other_wandb_env)
       }
 
