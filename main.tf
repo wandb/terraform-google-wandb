@@ -136,6 +136,11 @@ module "operator" {
   bucket       = "gs://${local.bucket}"
   address_name = module.app_lb.address_name
   fqdn         = local.fqdn
+  host         = local.url
+
+  other_wandb_env = merge({
+    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+  }, var.other_wandb_env)
 
   database = {
     name     = module.database.database_name

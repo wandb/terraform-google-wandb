@@ -2,7 +2,7 @@ resource "helm_release" "operator" {
   name             = "operator"
   chart            = "operator"
   repository       = "https://charts.wandb.ai"
-  version          = "0.1.5"
+  version          = "0.1.6"
   namespace        = "wandb"
   create_namespace = true
   wait             = true
@@ -19,9 +19,12 @@ locals {
       url = "https://github.com/wandb/cdk8s"
     }
     config = {
+      global = { extraEnvs = var.other_wandb_env }
       bucket = { connectionString = var.bucket }
       mysql  = var.database
       redis  = var.redis
+
+      host = var.host
 
       ingress = {
         metadata = {
@@ -29,6 +32,7 @@ locals {
             "kubernetes.io/ingress.global-static-ip-name" : var.address_name
             "networking.gke.io/managed-certificates" : "wandb-cert"
             "kubernetes.io/ingress.allow-http" : "false"
+            "kubernetes.io/ingress.class" : "gce"
           }
         }
       }

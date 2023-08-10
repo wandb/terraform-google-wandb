@@ -8,6 +8,17 @@ variable "fqdn" {
   description = "The FQD of your instance."
 }
 
+variable "host" {
+  type        = string
+  description = "The FQD of your instance."
+}
+
+variable "other_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
 variable "address_name" {
   type = string
 }
