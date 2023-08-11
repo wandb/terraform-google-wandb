@@ -140,9 +140,12 @@ module "wandb" {
     }
     config = {
       global = {
-        extraEnvs = merge({
-          "GORILLA_DISABLE_CODE_SAVING" = tostring(var.disable_code_saving)
-        }, var.other_wandb_env)
+        extraEnvs = merge(
+          {
+            "GORILLA_DISABLE_CODE_SAVING" = tostring(var.disable_code_saving)
+          },
+          var.other_wandb_env,
+        )
       }
 
       bucket = { connectionString = "gs://${local.bucket}" }
