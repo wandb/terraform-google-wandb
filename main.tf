@@ -132,7 +132,7 @@ locals {
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.0.1"
+  version = "1.0.2"
 
   spec = {
     release = {
