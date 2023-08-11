@@ -132,7 +132,7 @@ locals {
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.0.2"
+  version = "1.1.0"
 
   spec = {
     release = {
@@ -190,5 +190,7 @@ module "wandb" {
   wandb_fqdn  = local.fqdn
   wandb_cloud = "google"
 
-  operator_image_tag = "1.2.13"
+  operator_version    = "0.2.0"
+  controler_image_tag = "1"
+
 }
