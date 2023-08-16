@@ -131,8 +131,7 @@ locals {
 }
 
 module "gke_app" {
-  source  = "wandb/wandb/kubernetes"
-  version = "1.6.0"
+  source = "../terraform-kubernetes-wandb"
 
   license = var.license
 
@@ -154,6 +153,12 @@ module "gke_app" {
 
   wandb_image   = var.wandb_image
   wandb_version = var.wandb_version
+
+  weave_enabled = true
+  dd_env = "prod-mi"
+  weave_enable_datadog = true
+  weave_dd_profiling_enabled = true
+  parquet_enabled = true
 
   # If we dont wait, tf will start trying to deploy while the work group is
   # still spinning up

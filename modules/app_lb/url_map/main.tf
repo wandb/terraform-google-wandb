@@ -68,7 +68,7 @@ resource "google_compute_security_policy" "default" {
 
 resource "google_compute_backend_service" "default" {
   name        = "${var.namespace}-gke-ingress"
-  timeout_sec = 10
+  timeout_sec = 90
   protocol    = "HTTP"
   enable_cdn  = false
   port_name   = local.port_name

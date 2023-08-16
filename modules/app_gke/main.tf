@@ -1,3 +1,7 @@
+locals {
+  big_machine_type = "n1-standard-16"
+}
+
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
@@ -42,15 +46,65 @@ resource "random_pet" "node_pool" {
     machine_type = var.machine_type
   }
 }
+resource "random_pet" "big_node_pool" {
+  keepers = {
+    machine_type = local.big_machine_type
+  }
+}
 
 resource "google_container_node_pool" "default" {
   name       = "default-pool-${random_pet.node_pool.id}"
   cluster    = google_container_cluster.default.id
-  node_count = 2
+  node_count = 4
 
   node_config {
     image_type      = "COS_CONTAINERD"
     machine_type    = var.machine_type
+    service_account = var.service_account.email
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/bigtable.admin",
+      "https://www.googleapis.com/auth/bigtable.data",
+      "https://www.googleapis.com/auth/bigquery",
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/devstorage.read_write",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/pubsub",
+      "https://www.googleapis.com/auth/trace.append",
+      "https://www.googleapis.com/auth/sqlservice.admin",
+    ]
+    shielded_instance_config {
+      enable_secure_boot = true
+    }
+
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+  }
+
+  management {
+    auto_upgrade = true
+    auto_repair  = true
+  }
+
+  lifecycle {
+    ignore_changes = [
+      # GCP will select a zone within the region automically e.g "us-central1-c"
+      # -> "us-central1" this causes the pool to be destory on each apply
+      location,
+    ]
+    create_before_destroy = true
+  }
+}
+
+resource "google_container_node_pool" "big_node_pool" {
+  name       = "default-pool-${random_pet.big_node_pool.id}"
+  cluster    = google_container_cluster.default.id
+  node_count = 1
+
+  node_config {
+    image_type      = "COS_CONTAINERD"
+    machine_type    = local.big_machine_type
     service_account = var.service_account.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/bigtable.admin",

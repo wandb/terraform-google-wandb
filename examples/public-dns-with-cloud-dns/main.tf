@@ -32,7 +32,7 @@ module "wandb" {
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
-  create_redis       = false
+  create_redis       = true
   use_internal_queue = true
   force_ssl          = var.force_ssl
 
@@ -41,7 +41,7 @@ module "wandb" {
   database_sort_buffer_size = var.database_sort_buffer_size
   database_machine_type     = var.database_machine_type
 
-  disable_code_saving = var.disable_code_saving
+  disable_code_saving = var.disable_code_saving  
 }
 
 # You'll want to update your DNS with the provisioned IP address
