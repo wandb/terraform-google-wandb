@@ -132,7 +132,7 @@ locals {
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.1.5"
+  version = "1.2.0"
 
   spec = {
     values = {
@@ -150,15 +150,6 @@ module "wandb" {
           port     = 3306
         }
 
-        ingress = {
-          annotations = {
-            "kubernetes.io/ingress.global-static-ip-name" : module.app_lb.address_name
-            "networking.gke.io/managed-certificates" : "wandb-cr-cert"
-            "kubernetes.io/ingress.allow-http" : "false"
-            "kubernetes.io/ingress.class" : "gce"
-          }
-        }
-
         redis = var.create_redis ? {
           password = module.redis.0.auth_string
           host     = module.redis.0.host
@@ -174,8 +165,16 @@ module "wandb" {
 
       app = {
         extraEnvs = {
-          "BUCKET_QUEUE" = local.bucket_queue
+          "BUCKET_QUEUE"                = local.bucket_queue
           "GORILLA_DISABLE_CODE_SAVING" = tostring(var.disable_code_saving)
+        }
+      }
+
+      ingress = {
+        issuer = { create = true, type = "google" }
+        annotations = {
+          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_name
+          "kubernetes.io/ingress.class"                 = "gce"
         }
       }
 
@@ -183,9 +182,6 @@ module "wandb" {
       mysql = { install = false }
     }
   }
-
-  wandb_fqdn  = local.fqdn
-  wandb_cloud = "google"
 
   operator_chart_version = "1.1.0"
   controller_image_tag   = "1.8.9"
