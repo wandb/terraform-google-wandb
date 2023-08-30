@@ -10,7 +10,7 @@ module "app_gke" {
 
 
 module "app_lb" {
-  count = var.internal_loadbalancer ? 1 : 0
+  count = var.external_loadbalancer ? 1 : 0
   source               = "./modules/app_lb"
   depends_on = [module.project_factory_project_services, module.app_gke]
 
