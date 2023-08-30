@@ -32,6 +32,13 @@ variable "allowed_inbound_cidr" {
   description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
 }
 
+variable "internal_loadbalancer" {
+  default = false
+  description = "TRUE to create an internal loadbalancer, false not to."
+  nullable = false
+  type = bool
+}
+
 
 ##########################################
 # DNS                                    #

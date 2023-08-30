@@ -10,17 +10,18 @@ module "app_gke" {
 
 
 module "app_lb" {
+  count = var.internal_loadbalancer ? 1 : 0
   source               = "./modules/app_lb"
-  namespace            = var.namespace
-  ssl                  = var.ssl
-  fqdn                 = local.fqdn
-  network              = local.network
-  group                = module.app_gke.instance_group_url
-  service_account      = module.service_accounts.service_account
-  labels               = var.labels
-  allowed_inbound_cidr = var.allowed_inbound_cidr
-
   depends_on = [module.project_factory_project_services, module.app_gke]
+
+  allowed_inbound_cidr = var.allowed_inbound_cidr
+  fqdn                 = local.fqdn
+  group                = module.app_gke.instance_group_url
+  labels               = var.labels
+  namespace            = var.namespace
+  network              = local.network
+  service_account      = module.service_accounts.service_account
+  ssl                  = var.ssl
 }
 
 module "database" {
