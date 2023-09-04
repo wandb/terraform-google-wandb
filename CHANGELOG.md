@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.14.3](https://github.com/wandb/terraform-google-wandb/compare/v1.14.2...v1.14.3) (2023-09-04)
+
+
+### Bug Fixes
+
+* Bump pod resources according GKE node size ([#77](https://github.com/wandb/terraform-google-wandb/issues/77)) ([19821b5](https://github.com/wandb/terraform-google-wandb/commit/19821b59a09c9c870f71470da8cb0fca6e5c59b4))
+
 ### [1.14.2](https://github.com/wandb/terraform-google-wandb/compare/v1.14.1...v1.14.2) (2023-08-10)
 
 
