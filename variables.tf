@@ -82,6 +82,24 @@ variable "gke_machine_type" {
   default     = "n1-standard-4"
 }
 
+variable "resource_limits" {
+  description = "Specifies the resource limits for the wandb deployment"
+  type        = map(string)
+  default = {
+    cpu    = 4
+    memory = "15G"
+  }
+}
+
+variable "resource_requests" {
+  description = "Specifies the resource requests for the wandb deployment"
+  type        = map(string)
+  default = {
+    cpu    = 4
+    memory = "15G"
+  }
+}
+
 ##########################################
 # Networking                             #
 ##########################################

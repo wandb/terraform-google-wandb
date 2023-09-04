@@ -132,7 +132,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.6.0"
+  version = "1.7.0"
 
   license = var.license
 
@@ -154,6 +154,9 @@ module "gke_app" {
 
   wandb_image   = var.wandb_image
   wandb_version = var.wandb_version
+
+  resource_limits   = var.resource_limits
+  resource_requests = var.resource_requests
 
   # If we dont wait, tf will start trying to deploy while the work group is
   # still spinning up
