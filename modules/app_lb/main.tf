@@ -10,7 +10,7 @@ module "url_map" {
   target_port          = var.target_port
   network              = var.network
   ip_address           = google_compute_global_address.default.address
-  allowed_inbound_cidr = var.allowed_inbound_cidr
+  allowed_inbound_cidrs = var.allowed_inbound_cidrs
 }
 
 module "http" {

@@ -96,7 +96,7 @@ module "app_lb" {
   group                = module.app_gke.instance_group_url
   service_account      = module.service_accounts.service_account
   labels               = var.labels
-  allowed_inbound_cidr = var.allowed_inbound_cidr
+  allowed_inbound_cidrs = var.allowed_inbound_cidrs
 
   depends_on = [module.project_factory_project_services, module.app_gke]
 }

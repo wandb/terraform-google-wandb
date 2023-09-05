@@ -59,7 +59,7 @@ resource "google_compute_security_policy" "default" {
     match {
       versioned_expr = "SRC_IPS_V1"
       config {
-        src_ip_ranges = var.allowed_inbound_cidr
+        src_ip_ranges = var.allowed_inbound_cidrs
       }
     }
     description = "allow list rule"
