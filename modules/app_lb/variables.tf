@@ -1,5 +1,5 @@
 variable "allowed_inbound_cidrs" {
-  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
+  description = "Which IPv4 addresses/ranges to allow access. No default -- this must be explicitly provided."
   nullable    = false
   type        = list(string)
 }
