@@ -1,3 +1,9 @@
+variable "allowed_inbound_cidrs" {
+  type        = list(string)
+  nullable    = false
+  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
+}
+
 variable "project_id" {
   type        = string
   description = "Project ID"
