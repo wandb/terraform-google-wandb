@@ -116,9 +116,10 @@ variable "subnetwork" {
 }
 
 variable "allowed_inbound_cidrs" {
-  type        = list(string)
+  default     = ["*"]
+  description = "Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to [\"*\"]"
   nullable    = false
-  description = "Which IPv4 addresses/ranges to allow access. No default -- this must be explicitly provided."
+  type        = list(string)
 }
 
 
