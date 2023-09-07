@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.0](https://github.com/wandb/terraform-google-wandb/compare/v1.14.3...v1.15.0) (2023-09-07)
+
+
+### Features
+
+* Require inbound cidrs be set explicitly ([#78](https://github.com/wandb/terraform-google-wandb/issues/78)) ([9ee945e](https://github.com/wandb/terraform-google-wandb/commit/9ee945e4f29ff1267c0b995c3b2c68bfc8cce717))
+
 ### [1.14.3](https://github.com/wandb/terraform-google-wandb/compare/v1.14.2...v1.14.3) (2023-09-04)
 
 
