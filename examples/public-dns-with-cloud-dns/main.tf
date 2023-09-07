@@ -22,6 +22,7 @@ provider "kubernetes" {
 module "wandb" {
   source = "../../"
 
+  allowed_inbound_cidrs = var.allowed_inbound_cidrs
   namespace   = var.namespace
   license     = var.license
   domain_name = var.domain_name

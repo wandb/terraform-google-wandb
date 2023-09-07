@@ -115,10 +115,11 @@ variable "subnetwork" {
   type        = string
 }
 
-variable "allowed_inbound_cidr" {
-  type        = list(string)
+variable "allowed_inbound_cidrs" {
   default     = ["*"]
-  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
+  description = "Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to [\"*\"]"
+  nullable    = false
+  type        = list(string)
 }
 
 

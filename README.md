@@ -91,7 +91,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_allowed_inbound_cidr"></a> [allowed\_inbound\_cidr](#input\_allowed\_inbound\_cidr) | (Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections. | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
+| <a name="input_allowed_inbound_cidrs"></a> [allowed\_inbound\_cidrs](#input\_allowed\_inbound\_cidrs) | Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to ["*"] | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"db-n1-standard-2"` | no |
