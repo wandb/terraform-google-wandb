@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.0](https://github.com/wandb/terraform-google-wandb/compare/v1.15.0...v1.16.0) (2023-09-12)
+
+
+### Features
+
+* Upgrade k8s provider v2.23.0 ([#79](https://github.com/wandb/terraform-google-wandb/issues/79)) ([1e0ecd9](https://github.com/wandb/terraform-google-wandb/commit/1e0ecd93ace5eacffeeff22994ec556a52854046))
+
 ## [1.15.0](https://github.com/wandb/terraform-google-wandb/compare/v1.14.3...v1.15.0) (2023-09-07)
 
 
