@@ -16,3 +16,9 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "tags" {
+  description = "A map of tags added to all resources"
+  nullable    = false
+  type        = map(string)
+}

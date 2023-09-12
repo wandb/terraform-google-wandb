@@ -30,3 +30,9 @@ variable "project_id" {
   default     = null
   description = "The project ID to deploy to. If unset, the provider's default project is used."
 }
+
+variable "tags" {
+  description = "A map of tags added to all resources"
+  nullable    = false
+  type        = map(string)
+}

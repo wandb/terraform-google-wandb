@@ -18,3 +18,9 @@ variable "memory_size_gb" {
   description = "The amount of memory which will be allocated to the Redis instance; this value must be expressed in gibibytes."
   type        = number
 }
+
+variable "tags" {
+  description = "A map of tags added to all resources"
+  nullable    = false
+  type        = map(string)
+}

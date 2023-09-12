@@ -2,7 +2,10 @@ module "bucket" {
   source     = "./bucket"
   project_id = var.project_id
   namespace  = var.namespace
-  labels     = var.labels
+    labels = merge(
+    var.labels,
+    var.tags
+  )
 
   bucket_location = var.bucket_location
   service_account = var.service_account
@@ -15,7 +18,10 @@ module "pubsub" {
 
   source    = "./pubsub"
   namespace = var.namespace
-  labels    = var.labels
+    labels = merge(
+    var.labels,
+    var.tags
+  )
 
   bucket          = module.bucket.bucket_name
   service_account = var.service_account

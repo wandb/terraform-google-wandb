@@ -6,7 +6,10 @@ resource "google_pubsub_topic" "file_storage" {
   name         = "${var.namespace}-file-storage"
   project      = var.project_id
   kms_key_name = var.crypto_key.id
-  labels       = var.labels
+    labels = merge(
+    var.labels,
+    var.tags
+  )
 }
 
 resource "google_pubsub_topic_iam_member" "admin" {

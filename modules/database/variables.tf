@@ -72,3 +72,9 @@ variable "force_ssl" {
   type        = bool
   default     = false
 }
+
+variable "tags" {
+  description = "A map of tags added to all resources"
+  nullable    = false
+  type        = map(string)
+}

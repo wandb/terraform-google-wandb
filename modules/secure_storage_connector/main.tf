@@ -13,7 +13,10 @@ module "resources" {
   source = "../../modules/storage"
 
   namespace = var.namespace
-  labels    = var.labels
+    labels = merge(
+    var.labels,
+    var.tags
+  )
 
   bucket_location     = var.bucket_location
   deletion_protection = var.deletion_protection
