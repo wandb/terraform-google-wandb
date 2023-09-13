@@ -5,6 +5,7 @@ resource "google_container_cluster" "default" {
   subnetwork      = var.subnetwork.self_link
   networking_mode = "VPC_NATIVE"
 
+
   enable_intranode_visibility = true
 
   binary_authorization {

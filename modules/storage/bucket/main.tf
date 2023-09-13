@@ -14,10 +14,7 @@ resource "google_storage_bucket" "file_storage" {
   uniform_bucket_level_access = true
   force_destroy               = !var.deletion_protection
 
-  labels = merge(
-    var.labels,
-    var.tags
-  )
+  labels = var.labels
 
   cors {
     origin          = ["*"]

@@ -115,7 +115,7 @@ variable "subnetwork" {
   type        = string
 }
 
-variable "allowed_inbound_cidr" {
+variable "allowed_inbound_cidrs" {
   type        = list(string)
   default     = ["*"]
   description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."

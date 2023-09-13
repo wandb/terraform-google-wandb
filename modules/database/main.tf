@@ -33,10 +33,7 @@ resource "google_sql_database_instance" "default" {
   settings {
     tier              = var.tier
     availability_type = var.availability_type
-    user_labels       = merge(
-    var.labels,
-    var.tags
-  )
+    user_labels       = var.labels
 
     backup_configuration {
       binary_log_enabled             = true

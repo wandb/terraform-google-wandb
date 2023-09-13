@@ -4,9 +4,9 @@ variable "namespace" {
 }
 
 variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  nullable    = false
   type        = map(string)
-  description = "Labels to apply to resources"
-  default     = {}
 }
 
 variable "bucket_location" {
@@ -26,8 +26,4 @@ variable "deletion_protection" {
   default     = false
 }
 
-variable "tags" {
-  description = "A map of tags added to all resources"
-  nullable    = false
-  type        = map(string)
-}
+

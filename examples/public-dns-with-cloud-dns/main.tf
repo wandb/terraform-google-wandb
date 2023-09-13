@@ -23,10 +23,10 @@ module "wandb" {
   source = "../../"
 
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  namespace   = var.namespace
-  license     = var.license
-  domain_name = var.domain_name
-  subdomain   = var.subdomain
+  namespace             = var.namespace
+  license               = var.license
+  domain_name           = var.domain_name
+  subdomain             = var.subdomain
 
   gke_machine_type = var.gke_machine_type
 
@@ -43,6 +43,14 @@ module "wandb" {
   database_machine_type     = var.database_machine_type
 
   disable_code_saving = var.disable_code_saving
+
+  tags = {
+      cloud       = "gcp"
+      database    = "managed"
+	    env         = "managed-install"
+      namespace   = var.namespace
+      objectstore = "managed"
+  }
 }
 
 # You'll want to update your DNS with the provisioned IP address

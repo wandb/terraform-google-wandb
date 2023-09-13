@@ -50,8 +50,8 @@ variable "maintenance_window_update_track" {
 
 variable "labels" {
   description = "Labels which will be applied to all applicable resources."
+  nullable    = false
   type        = map(string)
-  default     = {}
 }
 
 variable "database_version" {
@@ -73,8 +73,3 @@ variable "force_ssl" {
   default     = false
 }
 
-variable "tags" {
-  description = "A map of tags added to all resources"
-  nullable    = false
-  type        = map(string)
-}

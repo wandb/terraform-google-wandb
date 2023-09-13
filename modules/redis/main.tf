@@ -20,8 +20,5 @@ resource "google_redis_instance" "default" {
 
   auth_enabled = true
 
-    labels = merge(
-    var.labels,
-    var.tags
-  )
+  labels = var.labels
 }

@@ -41,6 +41,10 @@ module "kms" {
   source              = "./modules/kms"
   namespace           = var.namespace
   deletion_protection = var.deletion_protection
+    labels = merge(
+    var.labels,
+    var.tags
+  )
 }
 
 locals {
@@ -51,7 +55,10 @@ module "storage" {
   count     = local.create_bucket ? 1 : 0
   source    = "./modules/storage"
   namespace = var.namespace
-  labels    = var.labels
+  labels = merge(
+    var.labels,
+    var.tags
+  )
 
   create_queue    = !var.use_internal_queue
   bucket_location = "US"
@@ -88,14 +95,14 @@ module "app_gke" {
 
 
 module "app_lb" {
-  source               = "./modules/app_lb"
-  namespace            = var.namespace
-  ssl                  = var.ssl
-  fqdn                 = local.fqdn
-  network              = local.network
-  group                = module.app_gke.instance_group_url
-  service_account      = module.service_accounts.service_account
-  labels               = var.labels
+  source                = "./modules/app_lb"
+  namespace             = var.namespace
+  ssl                   = var.ssl
+  fqdn                  = local.fqdn
+  network               = local.network
+  group                 = module.app_gke.instance_group_url
+  service_account       = module.service_accounts.service_account
+  labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
 
   depends_on = [module.project_factory_project_services, module.app_gke]
@@ -110,8 +117,11 @@ module "database" {
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
-  labels              = var.labels
-  depends_on          = [module.project_factory_project_services]
+  labels = merge(
+    var.labels,
+    var.tags
+  )
+  depends_on = [module.project_factory_project_services]
 }
 
 module "redis" {
@@ -120,7 +130,10 @@ module "redis" {
   namespace      = var.namespace
   memory_size_gb = 4
   network        = local.network
-  labels         = var.labels
+  labels = merge(
+    var.labels,
+    var.tags
+  )
 }
 
 locals {

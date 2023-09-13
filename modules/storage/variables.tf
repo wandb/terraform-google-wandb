@@ -15,9 +15,9 @@ variable "deletion_protection" {
 }
 
 variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  nullable    = false
   type        = map(string)
-  description = "Labels to apply to resources"
-  default     = {}
 }
 
 variable "bucket_location" {
@@ -40,10 +40,4 @@ variable "project_id" {
   type        = string
   default     = null
   description = "The project ID to deploy to. If unset, the provider's default project is used."
-}
-
-variable "tags" {
-  description = "A map of tags added to all resources"
-  nullable    = false
-  type        = map(string)
 }

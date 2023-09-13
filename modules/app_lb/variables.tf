@@ -15,8 +15,8 @@ variable "group" {
 
 variable "labels" {
   description = "Labels which will be applied to all applicable resources."
+  nullable    = false
   type        = map(string)
-  default     = {}
 }
 
 variable "namespace" {

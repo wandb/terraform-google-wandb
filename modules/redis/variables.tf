@@ -5,8 +5,8 @@ variable "namespace" {
 
 variable "labels" {
   description = "Labels which will be applied to all applicable resources."
+  nullable    = false
   type        = map(string)
-  default     = {}
 }
 
 variable "network" {
@@ -19,8 +19,3 @@ variable "memory_size_gb" {
   type        = number
 }
 
-variable "tags" {
-  description = "A map of tags added to all resources"
-  nullable    = false
-  type        = map(string)
-}

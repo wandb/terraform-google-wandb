@@ -1,11 +1,11 @@
 resource "google_compute_network" "vpc" {
-  name                    = "${var.namespace}-vpc"
+  name                    = var.namespace
   description             = "Weights & Biases VPC Network"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "default" {
-  name = "${var.namespace}-subnet"
+  name = var.namespace
 
   ip_cidr_range            = "10.10.0.0/16"
   private_ip_google_access = true
@@ -19,7 +19,7 @@ resource "google_compute_subnetwork" "default" {
 }
 
 resource "google_compute_global_address" "private_ip_address" {
-  name          = "${var.namespace}-private-ip-address"
+  name          = var.namespace
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
