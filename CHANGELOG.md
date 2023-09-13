@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.17.0](https://github.com/wandb/terraform-google-wandb/compare/v1.16.0...v1.17.0) (2023-09-13)
+
+
+### Features
+
+* Amend resource limits ([#81](https://github.com/wandb/terraform-google-wandb/issues/81)) ([074bd67](https://github.com/wandb/terraform-google-wandb/commit/074bd67f5f19cace81eac4f00847170e14c3a862))
+* Update to terraform-kubernetes-wandb v1.12.0 ([#80](https://github.com/wandb/terraform-google-wandb/issues/80)) ([056f53a](https://github.com/wandb/terraform-google-wandb/commit/056f53aca46956acf0e774ba689127a43eef8dee))
+
 ## [1.16.0](https://github.com/wandb/terraform-google-wandb/compare/v1.15.0...v1.16.0) (2023-09-12)
 
 
