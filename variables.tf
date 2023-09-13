@@ -96,7 +96,7 @@ variable "resource_requests" {
   type        = map(string)
   default = {
     cpu    = 4
-    memory = "15G"
+    memory = "8G"
   }
 }
 
