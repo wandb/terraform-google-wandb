@@ -113,7 +113,7 @@ No resources.
 | <a name="input_oidc_secret"></a> [oidc\_secret](#input\_oidc\_secret) | The Client secret of application in your identity provider | `string` | `""` | no |
 | <a name="input_other_wandb_env"></a> [other\_wandb\_env](#input\_other\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_resource_limits"></a> [resource\_limits](#input\_resource\_limits) | Specifies the resource limits for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": 4,<br>  "memory": "15G"<br>}</pre> | no |
-| <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": 4,<br>  "memory": "15G"<br>}</pre> | no |
+| <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": 2,<br>  "memory": "8G"<br>}</pre> | no |
 | <a name="input_ssl"></a> [ssl](#input\_ssl) | Enable SSL certificate | `bool` | `true` | no |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route. | `string` | `null` | no |
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | Pre-existing subnetwork self link | `string` | `null` | no |
