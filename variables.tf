@@ -95,7 +95,7 @@ variable "resource_requests" {
   description = "Specifies the resource requests for the wandb deployment"
   type        = map(string)
   default = {
-    cpu    = 4
+    cpu    = 2
     memory = "8G"
   }
 }
