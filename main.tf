@@ -88,14 +88,15 @@ module "app_gke" {
 
 
 module "app_lb" {
-  source               = "./modules/app_lb"
-  namespace            = var.namespace
-  ssl                  = var.ssl
-  fqdn                 = local.fqdn
-  network              = local.network
-  group                = module.app_gke.instance_group_url
-  service_account      = module.service_accounts.service_account
-  labels               = var.labels
+  source                = "./modules/app_lb"
+  namespace             = var.namespace
+  ssl                   = var.ssl
+  internal_lb           = var.internal_lb
+  fqdn                  = local.fqdn
+  network               = local.network
+  group                 = module.app_gke.instance_group_url
+  service_account       = module.service_accounts.service_account
+  labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
 
   depends_on = [module.project_factory_project_services, module.app_gke]

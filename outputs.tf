@@ -58,3 +58,19 @@ output "cluster_self_link" {
 output "address" {
   value = module.app_lb.address
 }
+
+output "network" {
+  value       = module.networking.network
+  description = "The network."
+}
+
+output "subnetwork" {
+  value = module.networking.subnetwork
+
+  description = "The subnetwork."
+}
+
+output "connection" {
+  description = "The private connection between the network and GCP services."
+  value       = module.networking.connection
+}
