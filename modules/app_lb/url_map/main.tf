@@ -94,7 +94,7 @@ resource "google_compute_backend_service" "default" {
 }
 
 
-resource "google_compute_internal_backend_service" "internal" {
+resource "google_compute_backend_service" "internal" {
   count       = var.internal_lb ? 1 : 0
   name        = "${var.namespace}-gke-ingress"
   timeout_sec = 90
@@ -124,7 +124,7 @@ resource "google_compute_internal_backend_service" "internal" {
 resource "google_compute_url_map" "default" {
   count           = var.internal_lb ? 0 : 1
   name            = "${var.namespace}-urlmap"
-  default_service = google_compute_backend_service.default.self_link
+  default_service = google_compute_backend_service.default[0].self_link
 
   lifecycle {
     create_before_destroy = true
@@ -135,7 +135,7 @@ resource "google_compute_url_map" "default" {
 resource "google_compute_region_url_map" "internal" {
   count           = var.internal_lb ? 1 : 0
   name            = "${var.namespace}-urlmap"
-  default_service = google_compute_internal_backend_service.internal.self_link
+  default_service = google_compute_backend_service.internal[0].self_link
 
   lifecycle {
     create_before_destroy = true

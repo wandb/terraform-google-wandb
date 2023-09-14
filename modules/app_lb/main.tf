@@ -11,7 +11,7 @@ module "url_map" {
   target_port           = var.target_port
   network               = var.network
   internal_lb           = var.internal_lb
-  ip_address            = var.internal_lb ? var.internal_ip : google_compute_global_address.default.address
+  ip_address            = var.internal_lb ? var.internal_ip : google_compute_global_address.default[0].address
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
 }
 
@@ -22,7 +22,7 @@ module "http" {
   namespace   = var.namespace
   internal_lb = var.internal_lb
   url_map     = var.internal_lb ? module.url_map.internal : module.url_map.app
-  ip_address  = var.internal_lb ? var.internal_ip : google_compute_global_address.default.address
+  ip_address  = var.internal_lb ? var.internal_ip : google_compute_global_address.default[0].address
 
   labels = var.labels
 }
@@ -35,7 +35,7 @@ module "https" {
   namespace   = var.namespace
   url_map     = module.url_map.app
   internal_lb = var.internal_lb
-  ip_address  = google_compute_global_address.default.address
+  ip_address  = google_compute_global_address.default[0].address
 
   labels = var.labels
 }

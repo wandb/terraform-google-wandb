@@ -59,18 +59,18 @@ output "address" {
   value = module.app_lb.address
 }
 
-output "network" {
-  value       = module.networking.network
-  description = "The network."
-}
+# output "network" {
+#   value       = module.networking.network
+#   description = "The network."
+# }
 
-output "subnetwork" {
-  value = module.networking.subnetwork
+# output "subnetwork" {
+#   value = module.networking.subnetwork
 
-  description = "The subnetwork."
-}
+#   description = "The subnetwork."
+# }
 
-output "connection" {
-  description = "The private connection between the network and GCP services."
-  value       = module.networking.connection
-}
+# output "connection" {
+#   description = "The private connection between the network and GCP services."
+#   value       = module.networking.connection
+# }

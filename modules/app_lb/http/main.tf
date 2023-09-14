@@ -14,7 +14,7 @@ resource "google_compute_target_http_proxy" "internal" {
 resource "google_compute_global_forwarding_rule" "default" {
   name = "${var.namespace}-http"
 
-  target     = google_compute_target_http_proxy.default.id
+  target     = google_compute_target_http_proxy.default[0].id
   port_range = "80"
   ip_address = var.ip_address
 
@@ -25,7 +25,7 @@ resource "google_compute_global_forwarding_rule" "default" {
 resource "google_compute_global_forwarding_rule" "internal" {
   name = "${var.namespace}-http"
 
-  target     = google_compute_target_http_proxy.internal.id
+  target     = google_compute_target_http_proxy.internal[0].id
   port_range = "80"
   ip_address = var.ip_address
 
