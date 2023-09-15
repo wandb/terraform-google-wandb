@@ -22,27 +22,22 @@ provider "kubernetes" {
 module "wandb" {
   source = "../../"
 
-  allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  namespace   = var.namespace
-  license     = var.license
-  domain_name = var.domain_name
-  subdomain   = var.subdomain
-
-  gke_machine_type = var.gke_machine_type
-
-  wandb_version = var.wandb_version
-  wandb_image   = var.wandb_image
-
-  create_redis       = false
-  use_internal_queue = true
-  force_ssl          = var.force_ssl
-
-  deletion_protection = false
-
-  database_sort_buffer_size = var.database_sort_buffer_size
+  allowed_inbound_cidrs     = var.allowed_inbound_cidrs
+  create_redis              = false
   database_machine_type     = var.database_machine_type
-
-  disable_code_saving = var.disable_code_saving
+  database_sort_buffer_size = var.database_sort_buffer_size
+  deletion_protection       = false
+  disable_code_saving       = var.disable_code_saving
+  domain_name               = var.domain_name
+  force_ssl                 = var.force_ssl
+  gke_machine_type          = var.gke_machine_type
+  labels                    = var.labels
+  license                   = var.license
+  namespace                 = var.namespace
+  subdomain                 = var.subdomain
+  use_internal_queue        = true
+  wandb_image               = var.wandb_image
+  wandb_version             = var.wandb_version
 }
 
 # You'll want to update your DNS with the provisioned IP address

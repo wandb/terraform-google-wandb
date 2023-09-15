@@ -1,12 +1,15 @@
+locals {
+  database_name        = "wandb_local"
+  master_instance_name = "${var.namespace}-${random_pet.mysql.id}"
+  master_password      = random_string.master_password.result
+  master_username      = "wandb"
+  version_kepper       = "${local.version_list[0]}_${local.version_list[1]}_${local.version_list[2]}"
+  version_list         = split("_", var.database_version)
+}
 # Random string to use as master password
 resource "random_string" "master_password" {
   length  = 32
   special = false
-}
-
-locals {
-  version_list   = split("_", var.database_version)
-  version_kepper = "${local.version_list[0]}_${local.version_list[1]}_${local.version_list[2]}"
 }
 
 resource "random_pet" "mysql" {
@@ -16,19 +19,12 @@ resource "random_pet" "mysql" {
   }
 }
 
-locals {
-  database_name = "wandb_local"
-
-  master_username = "wandb"
-  master_password = random_string.master_password.result
-
-  master_instance_name = "${var.namespace}-${random_pet.mysql.id}"
-}
-
 resource "google_sql_database_instance" "default" {
-  name                = local.master_instance_name
   database_version    = var.database_version
   deletion_protection = var.deletion_protection
+  name                = local.master_instance_name
+  # TODO: upgrade to provider which supports user labels
+  #user_labels         = var.labels
 
   settings {
     tier              = var.tier

@@ -1,11 +1,11 @@
 resource "google_container_cluster" "default" {
-  name = "${var.namespace}-cluster"
-
-  network         = var.network.self_link
-  subnetwork      = var.subnetwork.self_link
-  networking_mode = "VPC_NATIVE"
-
   enable_intranode_visibility = true
+  # todo: upgrade to provider which supports labels
+  #labels                      = var.labels
+  name                        = "${var.namespace}-cluster"
+  network                     = var.network.self_link
+  networking_mode             = "VPC_NATIVE"
+  subnetwork                  = var.subnetwork.self_link
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"

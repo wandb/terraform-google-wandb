@@ -14,10 +14,6 @@ resource "google_service_account" "main" {
   description  = "Service Account used by Weights & Biases."
 }
 
-locals {
-  sa_member  = "serviceAccount:${google_service_account.main.email}"
-  project_id = data.google_client_config.current.project
-}
 
 # The only permission we care about is `iam.serviceAccounts.signBlob`. W&B signs
 # blobs using the account it is currently logged in with. Technically we dont

@@ -1,15 +1,17 @@
 resource "google_compute_global_address" "default" {
-  name = "${var.namespace}-address"
+  # TODO: upgrade to provider which supports labels
+  # labels = var.labels
+  name   = "${var.namespace}-address"
 }
 
 # Create a URL map that points to the GKE service
 module "url_map" {
-  source               = "./url_map"
-  namespace            = var.namespace
-  group                = var.group
-  target_port          = var.target_port
-  network              = var.network
-  ip_address           = google_compute_global_address.default.address
+  source                = "./url_map"
+  namespace             = var.namespace
+  group                 = var.group
+  target_port           = var.target_port
+  network               = var.network
+  ip_address            = google_compute_global_address.default.address
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
 }
 

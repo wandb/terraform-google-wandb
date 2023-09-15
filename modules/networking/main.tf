@@ -19,11 +19,13 @@ resource "google_compute_subnetwork" "default" {
 }
 
 resource "google_compute_global_address" "private_ip_address" {
-  name          = "${var.namespace}-private-ip-address"
-  purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
-  prefix_length = 16
+  # TODO: upgrade to provider which supports labels
+  #labels        = var.labels
+  name          = "${var.namespace}-private-ip-address"
   network       = google_compute_network.vpc.id
+  prefix_length = 16
+  purpose       = "VPC_PEERING"
 }
 
 resource "google_service_networking_connection" "default" {

@@ -4,9 +4,9 @@ variable "namespace" {
 }
 
 variable "labels" {
-  description = "Labels which will be applied to all applicable resources."
+  description = "A map of tags added to all resources"
+  nullable    = false
   type        = map(string)
-  default     = {}
 }
 
 variable "network" {

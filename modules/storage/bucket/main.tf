@@ -7,14 +7,12 @@ resource "random_pet" "file_storage" {
 }
 
 resource "google_storage_bucket" "file_storage" {
-  name     = "${var.namespace}-${random_pet.file_storage.id}"
-  location = var.bucket_location
-  project  = var.project_id
-
-  uniform_bucket_level_access = true
   force_destroy               = !var.deletion_protection
-
-  labels = var.labels
+  labels                      = var.labels
+  location                    = var.bucket_location
+  name                        = "${var.namespace}-${random_pet.file_storage.id}"
+  project                     = var.project_id
+  uniform_bucket_level_access = true
 
   cors {
     origin          = ["*"]

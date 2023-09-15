@@ -1,25 +1,22 @@
 module "bucket" {
-  source     = "./bucket"
-  project_id = var.project_id
-  namespace  = var.namespace
-  labels     = var.labels
+  source = "./bucket"
 
-  bucket_location = var.bucket_location
-  service_account = var.service_account
-
+  bucket_location     = var.bucket_location
   deletion_protection = var.deletion_protection
+  labels              = var.labels
+  namespace           = var.namespace
+  project_id          = var.project_id
+  service_account     = var.service_account
 }
 
 module "pubsub" {
-  count = var.create_queue ? 1 : 0
+  source = "./pubsub"
+  count  = var.create_queue ? 1 : 0
 
-  source    = "./pubsub"
-  namespace = var.namespace
-  labels    = var.labels
-
-  bucket          = module.bucket.bucket_name
-  service_account = var.service_account
-  crypto_key      = var.crypto_key
-
+  bucket              = module.bucket.bucket_name
+  crypto_key          = var.crypto_key
   deletion_protection = var.deletion_protection
+  labels              = var.labels
+  namespace           = var.namespace
+  service_account     = var.service_account
 }

@@ -13,9 +13,9 @@ variable "deletion_protection" {
 }
 
 variable "labels" {
+  description = "A map of tags added to all resources"
+  nullable    = false
   type        = map(string)
-  description = "Labels to apply to resources"
-  default     = {}
 }
 
 variable "use_internal_queue" {

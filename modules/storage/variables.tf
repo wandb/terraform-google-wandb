@@ -13,29 +13,24 @@ variable "deletion_protection" {
   type        = bool
   default     = true
 }
-
 variable "labels" {
+  description = "A map of tags added to all resources"
+  nullable    = false
   type        = map(string)
-  description = "Labels to apply to resources"
-  default     = {}
 }
-
 variable "bucket_location" {
   type    = string
   default = "US"
 }
-
 variable "create_queue" {
   type    = bool
   default = true
 }
-
 variable "crypto_key" {
   type        = object({ id = string })
   default     = { id = null }
   description = "Key used to encrypt and decrypt pubsub."
 }
-
 variable "project_id" {
   type        = string
   default     = null
