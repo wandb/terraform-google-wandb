@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.18.0](https://github.com/wandb/terraform-google-wandb/compare/v1.17.0...v1.18.0) (2023-09-18)
+
+
+### Features
+
+* Update google provider ([#83](https://github.com/wandb/terraform-google-wandb/issues/83)) ([30d4243](https://github.com/wandb/terraform-google-wandb/commit/30d4243eb31c4b04ad295d5e63868b980228bd8e))
+
 ## [1.17.0](https://github.com/wandb/terraform-google-wandb/compare/v1.16.0...v1.17.0) (2023-09-13)
 
 
