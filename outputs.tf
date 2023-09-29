@@ -50,6 +50,10 @@ output "cluster_ca_certificate" {
   description = "Certificate of the kubernetes (GKE) cluster."
 }
 
+output "cluster_name" {
+  value = module.app_gke.cluster_name
+}
+
 output "cluster_self_link" {
   value       = module.app_gke.cluster_self_link
   description = "Self link of the kubernetes (GKE) cluster."
