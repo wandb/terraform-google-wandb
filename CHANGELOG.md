@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.0](https://github.com/wandb/terraform-google-wandb/compare/v1.18.0...v1.19.0) (2023-09-29)
+
+
+### Features
+
+* Add Google Container Cluster Name to outputs ([#84](https://github.com/wandb/terraform-google-wandb/issues/84)) ([9c56aa3](https://github.com/wandb/terraform-google-wandb/commit/9c56aa30cb2906744d19dd90e70218c9ca960005))
+
 ## [1.18.0](https://github.com/wandb/terraform-google-wandb/compare/v1.17.0...v1.18.0) (2023-09-18)
 
 
