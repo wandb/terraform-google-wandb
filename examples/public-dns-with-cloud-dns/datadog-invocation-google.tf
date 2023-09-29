@@ -2,35 +2,51 @@ variable "cluster_name" {
   nullable = true
   type     = string
 }
-
 variable "dd_api_key" {
   nullable = true
   type     = string
 }
-
 variable "dd_app_key" {
   nullable = true
   type     = string
 }
-
 variable "dd_site" {
   nullable = true
   type     = string
+}
+
+ variable "k8s_cluster_ca_certificate" {
+   nullable = false
+   type     = string
+ }
+
+ variable "k8s_host" {
+   nullable = false
+   type     = string
+ }
+
+ variable "k8s_token" {
+   nullable = false
+   type     = string
+ }
+
+data "google_container_cluster" "wandb" {
+  name = module.wandb.cluster_self_link
 }
 
  module "datadog" {
    source             = "git::https://github.com/wandb/terraform-wandb-modules.git//datadog?ref=working"
 
    cloud_provider_tag = "aws"
-   cluster_name       = module.wandb.c
+   cluster_name       = data.gke.cluster_name
    database_tag       = "managed"
    api_key            = var.dd_api_key
    app_key            = var.dd_app_key
    site               = var.dd_site
    environment_tag    = "managed-install"
-   #k8s_cluster_ca_certificate = base64decode(data.aws_eks_cluster.app_cluster.certificate_authority[0].data)
-   #k8s_host                   = data.aws_eks_cluster.app_cluster.endpoint
-   #k8s_token                  = data.aws_eks_cluster_auth.app_cluster.token
+   #k8s_cluster_ca_certificate = base64decode(data.gke.wandb.k8s_cluster_ca_certificate)
+   #k8s_host                   = data.gke.wandb.k8s_host
+   #k8s_token                  = data.gke.wandb.k8s_token
    namespace       = var.namespace
    objectstore_tag = "managed"
 }
