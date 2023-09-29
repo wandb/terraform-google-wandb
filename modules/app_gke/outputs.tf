@@ -11,6 +11,10 @@ output "cluster_ca_certificate" {
   sensitive = true
 }
 
+output "cluster_name" {
+  value = google_container_cluster.default.name
+}
+
 output "cluster_self_link" {
   value = google_container_cluster.default.self_link
 }
