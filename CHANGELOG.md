@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.19.2](https://github.com/wandb/terraform-google-wandb/compare/v1.19.1...v1.19.2) (2023-10-05)
+
+
+### Bug Fixes
+
+* Fix ssl certificate recreation ([#86](https://github.com/wandb/terraform-google-wandb/issues/86)) ([8d0e800](https://github.com/wandb/terraform-google-wandb/commit/8d0e80007de2064e85a2e78730243f54a1ead0e4))
+
 ### [1.19.1](https://github.com/wandb/terraform-google-wandb/compare/v1.19.0...v1.19.1) (2023-10-05)
 
 
