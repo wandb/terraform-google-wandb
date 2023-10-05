@@ -17,11 +17,12 @@ output "cluster_ca_certificate" {
 }
 
 output "cluster_client_certificate" {
+  sensitive   = true
   value = module.app_gke.cluster_client_certificate
-  sensitive = true
 }
 
 output "cluster_client_key" {
+  sensitive   = true
   value = module.app_gke.cluster_client_key
 }
 output "cluster_endpoint" {
