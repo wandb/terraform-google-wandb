@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.19.1](https://github.com/wandb/terraform-google-wandb/compare/v1.19.0...v1.19.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* Amend resource requests and limits ([#85](https://github.com/wandb/terraform-google-wandb/issues/85)) ([c0aed88](https://github.com/wandb/terraform-google-wandb/commit/c0aed881b361e2ad24461aa7d90665213d85028b))
+
 ## [1.19.0](https://github.com/wandb/terraform-google-wandb/compare/v1.18.0...v1.19.0) (2023-09-29)
 
 
