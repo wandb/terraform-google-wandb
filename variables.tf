@@ -86,8 +86,8 @@ variable "resource_limits" {
   description = "Specifies the resource limits for the wandb deployment"
   type        = map(string)
   default = {
-    cpu    = 4
-    memory = "15G"
+    cpu    = null
+    memory = null
   }
 }
 
@@ -95,8 +95,8 @@ variable "resource_requests" {
   description = "Specifies the resource requests for the wandb deployment"
   type        = map(string)
   default = {
-    cpu    = 2
-    memory = "8G"
+    cpu    = "2000m"
+    memory = "2G"
   }
 }
 
