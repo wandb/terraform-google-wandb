@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.20.0](https://github.com/wandb/terraform-google-wandb/compare/v1.19.2...v1.20.0) (2023-10-06)
+
+
+### Features
+
+* Update terraform-wandb-kubernetes ([#87](https://github.com/wandb/terraform-google-wandb/issues/87)) ([55bcdc6](https://github.com/wandb/terraform-google-wandb/commit/55bcdc6b0aabb7f5c0739833a1040bf5e9e22103))
+
 ### [1.19.2](https://github.com/wandb/terraform-google-wandb/compare/v1.19.1...v1.19.2) (2023-10-05)
 
 
