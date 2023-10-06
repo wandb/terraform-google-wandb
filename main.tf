@@ -139,7 +139,10 @@ module "wandb" {
       global = {
         host = local.url
 
-        storage = { connectionString = "gs://${local.bucket}" }
+        bucket = {
+          provider = "gcs"
+          name = local.bucket
+        }
 
         mysql = {
           name     = module.database.database_name
@@ -171,7 +174,7 @@ module "wandb" {
       }
 
       ingress = {
-        issuer = { create = true, type = "google" }
+        issuer = { create = true, provider = "google" }
         annotations = {
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_name
           "kubernetes.io/ingress.class"                 = "gce"
