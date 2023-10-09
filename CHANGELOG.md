@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.20.1](https://github.com/wandb/terraform-google-wandb/compare/v1.20.0...v1.20.1) (2023-10-09)
+
+
+### Bug Fixes
+
+* Enable additional GKE outputs ([#88](https://github.com/wandb/terraform-google-wandb/issues/88)) ([6799afd](https://github.com/wandb/terraform-google-wandb/commit/6799afdbc0eecf262cbbaae58faaa3a4390aa1fb))
+
 ## [1.20.0](https://github.com/wandb/terraform-google-wandb/compare/v1.19.2...v1.20.0) (2023-10-06)
 
 
