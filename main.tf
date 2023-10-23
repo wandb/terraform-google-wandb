@@ -129,7 +129,7 @@ locals {
 }
 
 module "google_secret_manager" {
-  source          = "./modules/secret_manager"
+  source          = "./modules/google_secret_manager"
   service_account = module.service_accounts.service_account
   project_id      = local.project_id
 }
