@@ -76,7 +76,7 @@ No providers.
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
 | <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.13.0 |
-| <a name="module_google_secret_manager"></a> [google\_secret\_manager](#module\_google\_secret\_manager) | ./modules/secret_manager | n/a |
+| <a name="module_google_secret_manager"></a> [google\_secret\_manager](#module\_google\_secret\_manager) | ./modules/google_secret_manager | n/a |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
 | <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 13.0 |
