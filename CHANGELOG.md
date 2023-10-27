@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.21.0](https://github.com/wandb/terraform-google-wandb/compare/v1.20.2...v1.21.0) (2023-10-27)
+
+
+### Features
+
+* Add support for Google Secret Manager ([#89](https://github.com/wandb/terraform-google-wandb/issues/89)) ([8eb6b98](https://github.com/wandb/terraform-google-wandb/commit/8eb6b98e29d491deb5f3ff9d6735ff14d89b61a9))
+
 ### [1.20.2](https://github.com/wandb/terraform-google-wandb/compare/v1.20.1...v1.20.2) (2023-10-27)
 
 
