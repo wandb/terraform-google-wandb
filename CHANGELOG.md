@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.20.2](https://github.com/wandb/terraform-google-wandb/compare/v1.20.1...v1.20.2) (2023-10-27)
+
+
+### Bug Fixes
+
+* Remove unused var from BYBO example ([#90](https://github.com/wandb/terraform-google-wandb/issues/90)) ([8377c01](https://github.com/wandb/terraform-google-wandb/commit/8377c01c1fa98656972b81004827a68d6b3778b9))
+
 ### [1.20.1](https://github.com/wandb/terraform-google-wandb/compare/v1.20.0...v1.20.1) (2023-10-09)
 
 
