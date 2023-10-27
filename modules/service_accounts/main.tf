@@ -53,3 +53,10 @@ resource "google_storage_bucket_iam_member" "object_admin" {
   member = local.sa_member
   role   = "roles/storage.objectAdmin"
 }
+
+# Required for W&B Secrets
+resource "google_project_iam_member" "secretmanager_admin" {
+  project = local.project_id
+  member  = local.sa_member
+  role    = "roles/secretmanager.admin"
+}

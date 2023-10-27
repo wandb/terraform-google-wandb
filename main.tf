@@ -15,7 +15,8 @@ module "project_factory_project_services" {
     "storage.googleapis.com",           // Cloud Storage
     "cloudkms.googleapis.com",          // KMS
     "compute.googleapis.com",           // required for datadog monitoring
-    "cloudasset.googleapis.com"         // required for datadog monitoring
+    "cloudasset.googleapis.com",        // required for datadog monitoring
+    "secretmanager.googleapis.com"      // required for secrets
   ]
 }
 
@@ -128,6 +129,8 @@ locals {
   redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
   bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
+  project_id              = module.project_factory_project_services.project_id
+  secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
 
 module "gke_app" {
@@ -149,7 +152,8 @@ module "gke_app" {
   oidc_secret      = var.oidc_secret
   local_restore    = var.local_restore
   other_wandb_env = merge({
-    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
+    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving,
+    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source
   }, var.other_wandb_env)
 
   wandb_image   = var.wandb_image
