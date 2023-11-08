@@ -18,3 +18,8 @@ variable "memory_size_gb" {
   description = "The amount of memory which will be allocated to the Redis instance; this value must be expressed in gibibytes."
   type        = number
 }
+
+variable "tier" {
+  type        = string
+  description = "Specifies the tier for this Redis instance"
+}
