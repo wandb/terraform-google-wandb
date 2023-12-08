@@ -59,7 +59,7 @@ resource "google_compute_security_policy" "default" {
     match {
       versioned_expr = "SRC_IPS_V1"
       config {
-        src_ip_ranges = var.allowed_inbound_cidr
+        src_ip_ranges = var.allowed_inbound_cidrs
       }
     }
     description = "allow list rule"
@@ -68,7 +68,7 @@ resource "google_compute_security_policy" "default" {
 
 resource "google_compute_backend_service" "default" {
   name        = "${var.namespace}-gke-ingress"
-  timeout_sec = 10
+  timeout_sec = 90
   protocol    = "HTTP"
   enable_cdn  = false
   port_name   = local.port_name

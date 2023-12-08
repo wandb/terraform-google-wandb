@@ -82,6 +82,24 @@ variable "gke_machine_type" {
   default     = "n1-standard-4"
 }
 
+variable "resource_limits" {
+  description = "Specifies the resource limits for the wandb deployment"
+  type        = map(string)
+  default = {
+    cpu    = null
+    memory = null
+  }
+}
+
+variable "resource_requests" {
+  description = "Specifies the resource requests for the wandb deployment"
+  type        = map(string)
+  default = {
+    cpu    = "2000m"
+    memory = "2G"
+  }
+}
+
 ##########################################
 # Networking                             #
 ##########################################
@@ -97,10 +115,11 @@ variable "subnetwork" {
   type        = string
 }
 
-variable "allowed_inbound_cidr" {
-  type        = list(string)
+variable "allowed_inbound_cidrs" {
   default     = ["*"]
-  description = "(Optional) Allow HTTP(S) traffic to W&B. Defaults to all connections."
+  description = "Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to [\"*\"]"
+  nullable    = false
+  type        = list(string)
 }
 
 

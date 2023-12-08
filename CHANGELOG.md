@@ -2,6 +2,98 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.21.0](https://github.com/wandb/terraform-google-wandb/compare/v1.20.2...v1.21.0) (2023-10-27)
+
+
+### Features
+
+* Add support for Google Secret Manager ([#89](https://github.com/wandb/terraform-google-wandb/issues/89)) ([8eb6b98](https://github.com/wandb/terraform-google-wandb/commit/8eb6b98e29d491deb5f3ff9d6735ff14d89b61a9))
+
+### [1.20.2](https://github.com/wandb/terraform-google-wandb/compare/v1.20.1...v1.20.2) (2023-10-27)
+
+
+### Bug Fixes
+
+* Remove unused var from BYBO example ([#90](https://github.com/wandb/terraform-google-wandb/issues/90)) ([8377c01](https://github.com/wandb/terraform-google-wandb/commit/8377c01c1fa98656972b81004827a68d6b3778b9))
+
+### [1.20.1](https://github.com/wandb/terraform-google-wandb/compare/v1.20.0...v1.20.1) (2023-10-09)
+
+
+### Bug Fixes
+
+* Enable additional GKE outputs ([#88](https://github.com/wandb/terraform-google-wandb/issues/88)) ([6799afd](https://github.com/wandb/terraform-google-wandb/commit/6799afdbc0eecf262cbbaae58faaa3a4390aa1fb))
+
+## [1.20.0](https://github.com/wandb/terraform-google-wandb/compare/v1.19.2...v1.20.0) (2023-10-06)
+
+
+### Features
+
+* Update terraform-wandb-kubernetes ([#87](https://github.com/wandb/terraform-google-wandb/issues/87)) ([55bcdc6](https://github.com/wandb/terraform-google-wandb/commit/55bcdc6b0aabb7f5c0739833a1040bf5e9e22103))
+
+### [1.19.2](https://github.com/wandb/terraform-google-wandb/compare/v1.19.1...v1.19.2) (2023-10-05)
+
+
+### Bug Fixes
+
+* Fix ssl certificate recreation ([#86](https://github.com/wandb/terraform-google-wandb/issues/86)) ([8d0e800](https://github.com/wandb/terraform-google-wandb/commit/8d0e80007de2064e85a2e78730243f54a1ead0e4))
+
+### [1.19.1](https://github.com/wandb/terraform-google-wandb/compare/v1.19.0...v1.19.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* Amend resource requests and limits ([#85](https://github.com/wandb/terraform-google-wandb/issues/85)) ([c0aed88](https://github.com/wandb/terraform-google-wandb/commit/c0aed881b361e2ad24461aa7d90665213d85028b))
+
+## [1.19.0](https://github.com/wandb/terraform-google-wandb/compare/v1.18.0...v1.19.0) (2023-09-29)
+
+
+### Features
+
+* Add Google Container Cluster Name to outputs ([#84](https://github.com/wandb/terraform-google-wandb/issues/84)) ([9c56aa3](https://github.com/wandb/terraform-google-wandb/commit/9c56aa30cb2906744d19dd90e70218c9ca960005))
+
+## [1.18.0](https://github.com/wandb/terraform-google-wandb/compare/v1.17.0...v1.18.0) (2023-09-18)
+
+
+### Features
+
+* Update google provider ([#83](https://github.com/wandb/terraform-google-wandb/issues/83)) ([30d4243](https://github.com/wandb/terraform-google-wandb/commit/30d4243eb31c4b04ad295d5e63868b980228bd8e))
+
+## [1.17.0](https://github.com/wandb/terraform-google-wandb/compare/v1.16.0...v1.17.0) (2023-09-13)
+
+
+### Features
+
+* Amend resource limits ([#81](https://github.com/wandb/terraform-google-wandb/issues/81)) ([074bd67](https://github.com/wandb/terraform-google-wandb/commit/074bd67f5f19cace81eac4f00847170e14c3a862))
+* Update to terraform-kubernetes-wandb v1.12.0 ([#80](https://github.com/wandb/terraform-google-wandb/issues/80)) ([056f53a](https://github.com/wandb/terraform-google-wandb/commit/056f53aca46956acf0e774ba689127a43eef8dee))
+
+## [1.16.0](https://github.com/wandb/terraform-google-wandb/compare/v1.15.0...v1.16.0) (2023-09-12)
+
+
+### Features
+
+* Upgrade k8s provider v2.23.0 ([#79](https://github.com/wandb/terraform-google-wandb/issues/79)) ([1e0ecd9](https://github.com/wandb/terraform-google-wandb/commit/1e0ecd93ace5eacffeeff22994ec556a52854046))
+
+## [1.15.0](https://github.com/wandb/terraform-google-wandb/compare/v1.14.3...v1.15.0) (2023-09-07)
+
+
+### Features
+
+* Require inbound cidrs be set explicitly ([#78](https://github.com/wandb/terraform-google-wandb/issues/78)) ([9ee945e](https://github.com/wandb/terraform-google-wandb/commit/9ee945e4f29ff1267c0b995c3b2c68bfc8cce717))
+
+### [1.14.3](https://github.com/wandb/terraform-google-wandb/compare/v1.14.2...v1.14.3) (2023-09-04)
+
+
+### Bug Fixes
+
+* Bump pod resources according GKE node size ([#77](https://github.com/wandb/terraform-google-wandb/issues/77)) ([19821b5](https://github.com/wandb/terraform-google-wandb/commit/19821b59a09c9c870f71470da8cb0fca6e5c59b4))
+
+### [1.14.2](https://github.com/wandb/terraform-google-wandb/compare/v1.14.1...v1.14.2) (2023-08-10)
+
+
+### Bug Fixes
+
+* Create LICENSE ([#71](https://github.com/wandb/terraform-google-wandb/issues/71)) ([fa125dc](https://github.com/wandb/terraform-google-wandb/commit/fa125dce2536e804a0125563160f52e749044157))
+
 ### [1.14.1](https://github.com/wandb/terraform-google-wandb/compare/v1.14.0...v1.14.1) (2023-04-10)
 
 
