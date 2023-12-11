@@ -31,8 +31,8 @@ resource "google_sql_database_instance" "default" {
   deletion_protection = var.deletion_protection
 
   settings {
-    tier              = var.tier
     availability_type = var.availability_type
+    tier              = var.tier
     user_labels       = var.labels
 
     backup_configuration {
@@ -41,39 +41,38 @@ resource "google_sql_database_instance" "default" {
       transaction_log_retention_days = 7
     }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
-    }
-
     ip_configuration {
       ipv4_enabled    = false
       private_network = var.network_connection.network
       require_ssl     = var.force_ssl
     }
 
-    # requires minimum memory of 26624 MB
-    # database_flags {
-    #   name  = "performance_schema"
-    #   value = 1
-    # }
-    database_flags {
-      name  = "slow_query_log"
-      value = "on"
+    maintenance_window {
+      day          = var.maintenance_window_day
+      hour         = var.maintenance_window_hour
+      update_track = var.maintenance_window_update_track
     }
+
     database_flags {
       name  = "long_query_time"
       value = 1
     }
+
     database_flags {
       name  = "max_prepared_stmt_count"
       value = 1048576
     }
+
     database_flags {
       name  = "max_execution_time"
       value = 60000
     }
+
+    database_flags {
+      name  = "slow_query_log"
+      value = "on"
+    }
+
     database_flags {
       name  = "sort_buffer_size"
       value = var.sort_buffer_size
