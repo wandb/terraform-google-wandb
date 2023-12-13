@@ -34,7 +34,7 @@ resource "google_sql_database_instance" "default" {
     tier                        = var.tier
     availability_type           = var.availability_type
     user_labels                 = var.labels
-    deletion_protection_enabled = true
+    deletion_protection_enabled = var.deletion_protection
 
     backup_configuration {
       binary_log_enabled             = true
