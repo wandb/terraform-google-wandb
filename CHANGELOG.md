@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.22.0](https://github.com/wandb/terraform-google-wandb/compare/v1.21.0...v1.22.0) (2023-12-15)
+
+
+### Features
+
+* Update redis reserved ip range and Add deletion protection to database ([#92](https://github.com/wandb/terraform-google-wandb/issues/92)) ([c5ec027](https://github.com/wandb/terraform-google-wandb/commit/c5ec02738cb4a047c44e8e8b14cb85c0c9620034))
+
 ## [1.21.0](https://github.com/wandb/terraform-google-wandb/compare/v1.20.2...v1.21.0) (2023-10-27)
 
 
