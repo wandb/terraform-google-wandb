@@ -123,14 +123,14 @@ module "app_gke" {
 }
 
 module "app_lb" {
-  source               = "./modules/app_lb"
-  namespace            = var.namespace
-  ssl                  = var.ssl
-  fqdn                 = local.fqdn
-  network              = local.network
-  group                = module.app_gke.instance_group_url
-  service_account      = module.service_accounts.service_account
-  labels               = var.labels
+  source                = "./modules/app_lb"
+  namespace             = var.namespace
+  ssl                   = var.ssl
+  fqdn                  = local.fqdn
+  network               = local.network
+  group                 = module.app_gke.instance_group_url
+  service_account       = module.service_accounts.service_account
+  labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
 
   depends_on = [module.project_factory_project_services, module.app_gke]
@@ -150,12 +150,13 @@ module "database" {
 }
 
 module "redis" {
-  count          = var.create_redis ? 1 : 0
-  source         = "./modules/redis"
-  namespace      = var.namespace
-  memory_size_gb = 4
-  network        = local.network
-  labels         = var.labels
+  count             = var.create_redis ? 1 : 0
+  source            = "./modules/redis"
+  namespace         = var.namespace
+  memory_size_gb    = 4
+  network           = local.network
+  reserved_ip_range = var.redis_reserved_ip_range
+  labels            = var.labels
   tier           = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
 }
 
@@ -187,7 +188,7 @@ module "gke_app" {
   oidc_secret      = var.oidc_secret
   local_restore    = var.local_restore
   other_wandb_env = merge({
-    "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving,
+    "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
     "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source
   }, var.other_wandb_env)
 

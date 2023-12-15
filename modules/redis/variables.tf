@@ -19,6 +19,11 @@ variable "memory_size_gb" {
   type        = number
 }
 
+variable "reserved_ip_range" {
+  description = "This defines the IP range for REDIS peering connection"
+  type        = string
+}
+
 variable "tier" {
   type        = string
   description = "Specifies the tier for this Redis instance"

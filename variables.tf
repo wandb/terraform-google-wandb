@@ -174,6 +174,12 @@ variable "create_redis" {
   default     = false
 }
 
+variable "redis_reserved_ip_range" {
+  type        = string
+  description = "Reserved IP range for REDIS peering connection"
+  default     = "10.30.0.0/16"
+}
+
 variable "redis_tier" {
   type        = string
   description = "Specifies the tier for this Redis instance"

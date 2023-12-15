@@ -13,7 +13,7 @@ resource "google_redis_instance" "default" {
   authorized_network = var.network.id
 
   redis_version     = "REDIS_6_X"
-  reserved_ip_range = "10.30.0.0/16"
+  reserved_ip_range = var.reserved_ip_range
 
   transit_encryption_mode = "SERVER_AUTHENTICATION"
   connect_mode            = "DIRECT_PEERING"
