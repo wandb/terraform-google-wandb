@@ -40,3 +40,9 @@ variable "target_port" {
   type    = number
   default = 32543
 }
+
+variable "use_new_ingress" {
+  type        = bool
+  description = "Boolean indicating if the new ingress should be used (true) or not (false). Default is false."
+  default     = false
+}
