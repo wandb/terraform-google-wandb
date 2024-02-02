@@ -18,22 +18,30 @@ provider "kubernetes" {
   token                  = data.google_client_config.current.access_token
 }
 
+provider "helm" {
+  kubernetes {
+    host                   = "https://${module.wandb.cluster_endpoint}"
+    cluster_ca_certificate = base64decode(module.wandb.cluster_ca_certificate)
+    token                  = data.google_client_config.current.access_token
+  }
+}
+
 # Spin up all required services
 module "wandb" {
   source = "../../"
 
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  namespace   = var.namespace
-  license     = var.license
-  domain_name = var.domain_name
-  subdomain   = var.subdomain
+  namespace             = var.namespace
+  license               = var.license
+  domain_name           = var.domain_name
+  subdomain             = var.subdomain
 
   gke_machine_type = var.gke_machine_type
 
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
-  create_redis       = false
+  create_redis       = true
   use_internal_queue = true
   force_ssl          = var.force_ssl
 

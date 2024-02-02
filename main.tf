@@ -172,3 +172,63 @@ module "gke_app" {
     module.app_gke
   ]
 }
+
+module "wandb" {
+  source  = "wandb/wandb/helm"
+  version = "1.2.0"
+
+  spec = {
+    values = {
+      global = {
+        host = local.url
+
+        bucket = {
+          provider = "gcs"
+          name     = local.bucket
+        }
+
+        mysql = {
+          name     = module.database.database_name
+          user     = module.database.username
+          password = module.database.password
+          database = module.database.database_name
+          host     = module.database.private_ip_address
+          port     = 3306
+        }
+
+        redis = var.create_redis ? {
+          password = module.redis.0.auth_string
+          host     = module.redis.0.host
+          port     = module.redis.0.port
+          caCert   = module.redis.0.ca_cert
+          params = {
+            tls          = true
+            ttlInSeconds = 604800
+            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+          }
+        } : null
+      }
+
+      app = {
+        extraEnvs = {
+          "BUCKET_QUEUE"                = local.bucket_queue
+          "GORILLA_DISABLE_CODE_SAVING" = tostring(var.disable_code_saving)
+        }
+      }
+
+      ingress = {
+        issuer = { create = true, provider = "google" }
+        annotations = {
+          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_name
+          "kubernetes.io/ingress.class"                 = "gce"
+        }
+      }
+
+      redis = { install = false }
+      mysql = { install = false }
+    }
+  }
+
+  operator_chart_version = "1.1.0"
+  controller_image_tag   = "1.8.9"
+}
