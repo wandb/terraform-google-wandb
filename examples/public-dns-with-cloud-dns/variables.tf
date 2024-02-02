@@ -79,3 +79,9 @@ variable "disable_code_saving" {
   description = "Boolean indicating if code saving is disabled"
   default     = false
 }
+
+variable "use_new_ingress" {
+  type        = bool
+  description = "Boolean indicating if the new ingress should be used (true) or not (false). Default is false."
+  default     = false
+}

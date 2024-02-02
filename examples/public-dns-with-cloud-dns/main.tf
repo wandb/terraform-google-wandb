@@ -51,6 +51,7 @@ module "wandb" {
   database_machine_type     = var.database_machine_type
 
   disable_code_saving = var.disable_code_saving
+  use_new_ingress     = var.use_new_ingress
 }
 
 # You'll want to update your DNS with the provisioned IP address

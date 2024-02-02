@@ -174,16 +174,6 @@ module "gke_app" {
   ]
 }
 
-locals {
-  base_annotations = {
-    "kubernetes.io/ingress.class" = "gce"
-  }
-
-  conditional_annotations = var.use_new_ingress ? {
-    "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_name
-  } : {}
-}
-
 module "wandb" {
   source  = "wandb/wandb/helm"
   version = "1.2.0"
@@ -229,10 +219,10 @@ module "wandb" {
 
       ingress = {
         issuer = { create = true, provider = "google" }
-        annotations = merge(
-          local.base_annotations,
-          local.conditional_annotations
-        )
+        annotations = {
+          "kubernetes.io/ingress.class"                 = "gce"
+          "kubernetes.io/ingress.global-static-ip-name" = var.use_new_ingress ? module.app_lb.address_name : null
+        }
       }
 
       redis = { install = false }
