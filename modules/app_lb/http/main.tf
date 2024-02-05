@@ -4,7 +4,8 @@ resource "google_compute_target_http_proxy" "default" {
 }
 
 resource "google_compute_global_forwarding_rule" "default" {
-  name = "${var.namespace}-http"
+  count = var.use_new_ingress ? 0 : 1
+  name  = "${var.namespace}-http"
 
   target     = google_compute_target_http_proxy.default.id
   port_range = "80"

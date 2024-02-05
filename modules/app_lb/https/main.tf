@@ -31,6 +31,7 @@ resource "google_compute_target_https_proxy" "default" {
 # Configure a global forwarding rule to route the HTTPS traffic on the IP
 # address to the target HTTPS proxy:
 resource "google_compute_global_forwarding_rule" "default" {
+  count      = var.use_new_ingress ? 0 : 1
   name       = "${var.namespace}-https"
   target     = google_compute_target_https_proxy.default.id
   port_range = "443"
