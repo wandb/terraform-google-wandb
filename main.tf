@@ -98,7 +98,6 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  use_new_ingress       = var.use_new_ingress
 
   depends_on = [module.project_factory_project_services, module.app_gke]
 }
@@ -221,7 +220,7 @@ module "wandb" {
         issuer = { create = true, provider = "google" }
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
-          "kubernetes.io/ingress.global-static-ip-name" = var.use_new_ingress ? module.app_lb.address_name : null
+          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
         }
       }
 

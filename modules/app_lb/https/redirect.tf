@@ -9,11 +9,10 @@ resource "google_compute_url_map" "redirect_to_https" {
 }
 
 module "http" {
-  source          = "../http"
-  namespace       = var.namespace
-  url_map         = google_compute_url_map.redirect_to_https
-  ip_address      = var.ip_address
-  use_new_ingress = var.use_new_ingress
+  source     = "../http"
+  namespace  = var.namespace
+  url_map    = google_compute_url_map.redirect_to_https
+  ip_address = var.ip_address
 
   labels = var.labels
 }
