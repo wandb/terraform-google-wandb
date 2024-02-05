@@ -216,13 +216,14 @@ module "wandb" {
         }
       }
 
-      ingress = {
-        issuer = { create = true, provider = "google" }
-        annotations = {
-          "kubernetes.io/ingress.class"                 = "gce"
-          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
-        }
-      }
+      # in phase 2 we will use the ingress to expose the new app
+      # ingress = {
+      #   issuer = { create = true, provider = "google" }
+      #   annotations = {
+      #     "kubernetes.io/ingress.class"                 = "gce"
+      #     "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+      #   }
+      # }
 
       redis = { install = false }
       mysql = { install = false }
