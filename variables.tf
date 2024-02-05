@@ -213,9 +213,3 @@ variable "other_wandb_env" {
   description = "Extra environment variables for W&B"
   default     = {}
 }
-
-variable "use_new_ingress" {
-  type        = bool
-  description = "Boolean indicating if the new ingress should be used (true) or not (false). Default is false."
-  default     = false
-}
