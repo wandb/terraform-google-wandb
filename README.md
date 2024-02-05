@@ -121,7 +121,6 @@ No resources.
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route. | `string` | `null` | no |
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | Pre-existing subnetwork self link | `string` | `null` | no |
 | <a name="input_use_internal_queue"></a> [use\_internal\_queue](#input\_use\_internal\_queue) | Uses an internal redis queue instead of using google pubsub. | `bool` | `false` | no |
-| <a name="input_use_new_ingress"></a> [use\_new\_ingress](#input\_use\_new\_ingress) | Boolean indicating if the new ingress should be used (true) or not (false). Default is false. | `bool` | `false` | no |
 | <a name="input_wandb_image"></a> [wandb\_image](#input\_wandb\_image) | Docker repository of to pull the wandb image from. | `string` | `"wandb/local"` | no |
 | <a name="input_wandb_version"></a> [wandb\_version](#input\_wandb\_version) | The version of Weights & Biases local to deploy. | `string` | `"latest"` | no |
 
