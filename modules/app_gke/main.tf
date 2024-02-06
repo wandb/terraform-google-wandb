@@ -35,6 +35,12 @@ resource "google_container_cluster" "default" {
       issue_client_certificate = false
     }
   }
+
+  addons_config {
+    gcp_filestore_csi_driver_config {
+      enabled = true
+    }
+  }
 }
 
 resource "random_pet" "node_pool" {

@@ -224,6 +224,12 @@ module "wandb" {
         }
       }
 
+      weave = {
+        persistence = {
+          provider = "filestore"
+        }
+      }
+
       redis = { install = false }
       mysql = { install = false }
     }
