@@ -213,3 +213,9 @@ variable "other_wandb_env" {
   description = "Extra environment variables for W&B"
   default     = {}
 }
+
+variable "enable_new_ingress" {
+  type        = bool
+  description = "Boolean indicating if the new operator ingress should be enabled"
+  default     = false
+}
