@@ -236,4 +236,5 @@ variable "size" {
   description = "Deployment size for the instance"
   type        = string
   default = "small"
+  nullable = false
 }
