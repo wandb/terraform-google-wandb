@@ -136,7 +136,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.13.0"
+  version = "1.14.1"
 
   license = var.license
 
@@ -158,8 +158,9 @@ module "gke_app" {
     "GORILLA_GLUE_LIST"                    = var.enable_operator
   }, var.other_wandb_env)
 
-  wandb_image   = var.wandb_image
-  wandb_version = var.wandb_version
+  wandb_image    = var.wandb_image
+  wandb_version  = var.wandb_version
+  wandb_replicas = var.enable_operator ? 0 : 1
 
   resource_limits   = var.resource_limits
   resource_requests = var.resource_requests
