@@ -228,7 +228,7 @@ module "wandb" {
 
       redis = { install = false }
       mysql = { install = false }
-      weave = { install = false }
+      # weave = { install = false }
     }
   }
 
