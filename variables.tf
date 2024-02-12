@@ -183,7 +183,7 @@ variable "redis_reserved_ip_range" {
 variable "redis_tier" {
   type        = string
   description = "Specifies the tier for this Redis instance"
-  default = "STANDARD_HA"
+  default     = "STANDARD_HA"
 }
 
 
@@ -235,6 +235,6 @@ variable "other_wandb_env" {
 variable "size" {
   description = "Deployment size for the instance"
   type        = string
-  default = "small"
-  nullable = false
+  default     = "small"
+  nullable    = false
 }

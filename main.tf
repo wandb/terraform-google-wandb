@@ -31,34 +31,34 @@ locals {
   # Specifications for t-shirt sized deployments
   deployment_size = {
     small = {
-      db = "db-n1-highmem-2",
-      node_count = 2,
-      node_instance = "n2-highmem-2"
-      cache = "Standard 6 GB"
+      db            = "db-n1-highmem-2",
+      node_count    = 2,
+      node_instance = "n2-highmem-4"
+      cache         = "Standard 6 GB"
     },
     medium = {
-      db = "db-n1-highmem-4",
-      node_count = 2,
+      db            = "db-n1-highmem-4",
+      node_count    = 2,
       node_instance = "n2-highmem-4"
-      cache = "Standard 6 GB"
+      cache         = "Standard 6 GB"
     },
     large = {
-      db = "db-n1-highmem-8",
-      node_count = 2,
+      db            = "db-n1-highmem-8",
+      node_count    = 2,
       node_instance = "n2-highmem-8"
-      cache = "Standard 13 GB"
+      cache         = "Standard 13 GB"
     },
     xlarge = {
-      db = "db-n1-highmem-16",
-      node_count = 3,
+      db            = "db-n1-highmem-16",
+      node_count    = 3,
       node_instance = "n2-highmem-8"
-      cache = "Standard 13 GB"
+      cache         = "Standard 13 GB"
     },
     xxlarge = {
-      db = "db-n1-highmem-32",
-      node_count = 3,
+      db            = "db-n1-highmem-32",
+      node_count    = 3,
       node_instance = "n2-highmem-16"
-      cache = "Standard 26 GB"
+      cache         = "Standard 26 GB"
     }
   }
 }
@@ -157,7 +157,7 @@ module "redis" {
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
-  tier           = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
+  tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
 }
 
 locals {

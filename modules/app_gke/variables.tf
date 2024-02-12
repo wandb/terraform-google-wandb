@@ -19,9 +19,9 @@ variable "subnetwork" {
 }
 
 variable "machine_type" {
-  type    = string
+  type = string
 }
 
 variable "node_count" {
-  type    = number
+  type = number
 }

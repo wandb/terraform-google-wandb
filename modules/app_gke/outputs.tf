@@ -5,13 +5,13 @@ output "cluster_ca_certificate" {
 }
 
 output "cluster_client_certificate" {
-  sensitive   = true
-  value = google_container_cluster.default.master_auth.0.client_certificate
+  sensitive = true
+  value     = google_container_cluster.default.master_auth.0.client_certificate
 }
 
 output "cluster_client_key" {
   sensitive = true
-  value = google_container_cluster.default.master_auth.0.client_key
+  value     = google_container_cluster.default.master_auth.0.client_key
 }
 output "cluster_endpoint" {
   value = google_container_cluster.default.endpoint
