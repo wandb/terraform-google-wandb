@@ -184,10 +184,10 @@ module "wandb" {
         host    = local.url
         license = var.license
 
-        extraEnv = merge({
-          "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
-          "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
-        }, var.other_wandb_env)
+        # extraEnv = merge({
+        #   "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
+        #   "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+        # }, var.other_wandb_env)
 
         bucket = {
           provider = "gcs"
@@ -216,19 +216,19 @@ module "wandb" {
         } : null
       }
 
-      # app = var.enable_operator ? {} : {
-      #   extraEnvs = {
-      #     "GORILLA_GLUE_LIST" = "true"
-      #   }
-      # }
+      app = var.enable_operator ? {} : {
+        extraEnvs = {
+          "GORILLA_GLUE_LIST" = "true"
+        }
+      }
 
-      # ingress = {
-      #   issuer = { create = true, provider = "google" }
-      #   annotations = {
-      #     "kubernetes.io/ingress.class"                 = "gce"
-      #     "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
-      #   }
-      # }
+      ingress = {
+        issuer = { create = true, provider = "google" }
+        annotations = {
+          "kubernetes.io/ingress.class"                 = "gce"
+          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+        }
+      }
 
       redis = { install = false }
       mysql = { install = false }
