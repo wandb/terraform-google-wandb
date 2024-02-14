@@ -189,31 +189,31 @@ module "wandb" {
         #   "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
         # }, var.other_wandb_env)
 
-        # bucket = {
-        #   provider = "gcs"
-        #   name     = local.bucket
-        # }
+        bucket = {
+          provider = "gcs"
+          name     = local.bucket
+        }
 
-        # mysql = {
-        #   name     = module.database.database_name
-        #   user     = module.database.username
-        #   password = module.database.password
-        #   database = module.database.database_name
-        #   host     = module.database.private_ip_address
-        #   port     = 3306
-        # }
+        mysql = {
+          name     = module.database.database_name
+          user     = module.database.username
+          password = module.database.password
+          database = module.database.database_name
+          host     = module.database.private_ip_address
+          port     = 3306
+        }
 
-        # redis = var.create_redis ? {
-        #   password = module.redis.0.auth_string
-        #   host     = module.redis.0.host
-        #   port     = module.redis.0.port
-        #   caCert   = module.redis.0.ca_cert
-        #   params = {
-        #     tls          = true
-        #     ttlInSeconds = 604800
-        #     caCertPath   = "/etc/ssl/certs/server_ca.pem"
-        #   }
-        # } : null
+        redis = var.create_redis ? {
+          password = module.redis.0.auth_string
+          host     = module.redis.0.host
+          port     = module.redis.0.port
+          caCert   = module.redis.0.ca_cert
+          params = {
+            tls          = true
+            ttlInSeconds = 604800
+            caCertPath   = "/etc/ssl/certs/server_ca.pem"
+          }
+        } : null
       }
 
       # app = var.enable_operator ? {} : {
