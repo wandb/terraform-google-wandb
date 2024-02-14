@@ -184,51 +184,51 @@ module "wandb" {
         host    = local.url
         license = var.license
 
-        extraEnv = merge({
-          "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
-          "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
-        }, var.other_wandb_env)
+        # extraEnv = merge({
+        #   "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
+        #   "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+        # }, var.other_wandb_env)
 
-        bucket = {
-          provider = "gcs"
-          name     = local.bucket
-        }
+        # bucket = {
+        #   provider = "gcs"
+        #   name     = local.bucket
+        # }
 
-        mysql = {
-          name     = module.database.database_name
-          user     = module.database.username
-          password = module.database.password
-          database = module.database.database_name
-          host     = module.database.private_ip_address
-          port     = 3306
-        }
+        # mysql = {
+        #   name     = module.database.database_name
+        #   user     = module.database.username
+        #   password = module.database.password
+        #   database = module.database.database_name
+        #   host     = module.database.private_ip_address
+        #   port     = 3306
+        # }
 
-        redis = var.create_redis ? {
-          password = module.redis.0.auth_string
-          host     = module.redis.0.host
-          port     = module.redis.0.port
-          caCert   = module.redis.0.ca_cert
-          params = {
-            tls          = true
-            ttlInSeconds = 604800
-            caCertPath   = "/etc/ssl/certs/server_ca.pem"
-          }
-        } : null
+        # redis = var.create_redis ? {
+        #   password = module.redis.0.auth_string
+        #   host     = module.redis.0.host
+        #   port     = module.redis.0.port
+        #   caCert   = module.redis.0.ca_cert
+        #   params = {
+        #     tls          = true
+        #     ttlInSeconds = 604800
+        #     caCertPath   = "/etc/ssl/certs/server_ca.pem"
+        #   }
+        # } : null
       }
 
-      app = var.enable_operator ? {} : {
-        extraEnvs = {
-          "GORILLA_GLUE_LIST" = "true"
-        }
-      }
+      # app = var.enable_operator ? {} : {
+      #   extraEnvs = {
+      #     "GORILLA_GLUE_LIST" = "true"
+      #   }
+      # }
 
-      ingress = {
-        issuer = { create = true, provider = "google" }
-        annotations = {
-          "kubernetes.io/ingress.class"                 = "gce"
-          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
-        }
-      }
+      # ingress = {
+      #   issuer = { create = true, provider = "google" }
+      #   annotations = {
+      #     "kubernetes.io/ingress.class"                 = "gce"
+      #     "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+      #   }
+      # }
 
       redis = { install = false }
       mysql = { install = false }
