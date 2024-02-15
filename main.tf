@@ -154,7 +154,7 @@ module "gke_app" {
   local_restore    = var.local_restore
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
-    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source
   }, var.other_wandb_env)
 
   wandb_image    = var.wandb_image
