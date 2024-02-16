@@ -238,4 +238,12 @@ module "wandb" {
 
   operator_chart_version = "1.1.0"
   controller_image_tag   = "1.8.9"
+
+  # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
+  # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
+  # mitigates the risk of "insufficient CPU" errors by facilitating controlled pod scheduling across nodes.
+  # TODO: Remove `depends_on` for phase 3
+  depends_on = [
+    module.gke_app
+  ]
 }
