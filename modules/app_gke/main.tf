@@ -46,7 +46,7 @@ resource "random_pet" "node_pool" {
 resource "google_container_node_pool" "default" {
   name       = "default-pool-${random_pet.node_pool.id}"
   cluster    = google_container_cluster.default.id
-  node_count = 2
+  node_count = var.node_count
 
   node_config {
     image_type      = "COS_CONTAINERD"

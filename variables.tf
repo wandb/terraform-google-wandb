@@ -76,12 +76,6 @@ variable "local_restore" {
   default     = false
 }
 
-variable "gke_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
-  type        = string
-  default     = "n1-standard-4"
-}
-
 variable "resource_limits" {
   description = "Specifies the resource limits for the wandb deployment"
   type        = map(string)
@@ -186,6 +180,12 @@ variable "redis_reserved_ip_range" {
   default     = "10.30.0.0/16"
 }
 
+variable "redis_tier" {
+  type        = string
+  description = "Specifies the tier for this Redis instance"
+  default     = "STANDARD_HA"
+}
+
 ##########################################
 # External Bucket                        #
 ##########################################
@@ -196,6 +196,22 @@ variable "bucket_name" {
   type        = string
   description = "Use an existing bucket."
   default     = ""
+}
+
+##########################################
+# K8s                                    #
+##########################################
+
+variable "gke_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "n1-standard-4"
+}
+
+
+variable "gke_node_count" {
+  type    = number
+  default = 2
 }
 
 ##########################################
@@ -212,4 +228,11 @@ variable "other_wandb_env" {
   type        = map(string)
   description = "Extra environment variables for W&B"
   default     = {}
+}
+
+variable "size" {
+  description = "Deployment size for the instance"
+  type        = string
+  default     = "small"
+  nullable    = false
 }

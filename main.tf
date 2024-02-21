@@ -27,6 +27,40 @@ locals {
   internal_app_port = 32543
   create_bucket     = var.bucket_name == ""
   create_network    = var.network == null
+
+  # Specifications for t-shirt sized deployments
+  deployment_size = {
+    small = {
+      db            = "db-n1-highmem-2",
+      node_count    = 2,
+      node_instance = "n2-highmem-4"
+      cache         = "Standard 6 GB"
+    },
+    medium = {
+      db            = "db-n1-highmem-4",
+      node_count    = 2,
+      node_instance = "n2-highmem-4"
+      cache         = "Standard 6 GB"
+    },
+    large = {
+      db            = "db-n1-highmem-8",
+      node_count    = 2,
+      node_instance = "n2-highmem-8"
+      cache         = "Standard 13 GB"
+    },
+    xlarge = {
+      db            = "db-n1-highmem-16",
+      node_count    = 3,
+      node_instance = "n2-highmem-8"
+      cache         = "Standard 13 GB"
+    },
+    xxlarge = {
+      db            = "db-n1-highmem-32",
+      node_count    = 3,
+      node_instance = "n2-highmem-16"
+      cache         = "Standard 26 GB"
+    }
+  }
 }
 
 module "service_accounts" {
@@ -80,13 +114,13 @@ locals {
 module "app_gke" {
   source          = "./modules/app_gke"
   namespace       = var.namespace
-  machine_type    = var.gke_machine_type
+  machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
   network         = local.network
   subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
   depends_on      = [module.project_factory_project_services]
 }
-
 
 module "app_lb" {
   source                = "./modules/app_lb"
@@ -107,7 +141,7 @@ module "database" {
   namespace           = var.namespace
   database_version    = var.database_version
   force_ssl           = var.force_ssl
-  tier                = var.database_machine_type
+  tier                = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
@@ -123,6 +157,7 @@ module "redis" {
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
+  tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
 }
 
 locals {
