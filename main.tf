@@ -187,6 +187,10 @@ module "wandb" {
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+          "TAG_CUSTOMER_NS"                      = var.namespace
+          "OIDC_ISSUER"                          = var.oidc_issuer
+          "OIDC_CLIENT_ID"                       = var.oidc_client_id
+          "OIDC_AUTH_METHOD"                     = var.oidc_auth_method
         }, var.other_wandb_env)
 
         bucket = {
