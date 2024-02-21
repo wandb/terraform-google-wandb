@@ -73,17 +73,3 @@ output "standardized_size" {
   value = var.size
 }
 
-output "gke_node_count" {
-  value = local.deployment_size[var.size].node_count
-}
-
-output "gke_node_instance_type" {
-  value = local.deployment_size[var.size].node_instance
-}
-
-output "database_instance_type" {
-  value = local.deployment_size[var.size].db
-}
-
-
-
