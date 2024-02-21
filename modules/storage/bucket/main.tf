@@ -5,6 +5,8 @@ locals {
 resource "random_pet" "file_storage" {
   length = 2
 }
+data "google_project" "default" {
+}
 
 resource "google_storage_bucket" "file_storage" {
   name     = "${var.namespace}-${random_pet.file_storage.id}"
@@ -15,6 +17,10 @@ resource "google_storage_bucket" "file_storage" {
   force_destroy               = !var.deletion_protection
 
   labels = var.labels
+
+  encryption {
+    default_kms_key_name = var.crypto_key.id
+  }
 
   cors {
     origin          = ["*"]

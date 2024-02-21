@@ -171,6 +171,13 @@ variable "force_ssl" {
   default     = false
 }
 
+
+variable "database_region" {
+  type        = string
+  description = "Region where the database is located."
+  default     = ""
+}
+
 ##########################################
 # Redis                                  #
 ##########################################
@@ -198,6 +205,11 @@ variable "bucket_name" {
   default     = ""
 }
 
+variable "bucket_location" {
+  type        = string
+  default     = ""
+  description = "Location of the bucket where the KMS key will be used. If not provided (empty string), the default location will be used."
+}
 ##########################################
 # General Application                    #
 ##########################################
@@ -212,4 +224,19 @@ variable "other_wandb_env" {
   type        = map(string)
   description = "Extra environment variables for W&B"
   default     = {}
+}
+##########################################
+# KMS                                    #
+##########################################
+
+variable "customer_provided_sql_key_id" {
+  type        = string
+  default     = ""
+  description = "ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key."
+}
+
+variable "customer_provided_bucket_key_id" {
+  type        = string
+  default     = ""
+  description = "ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key."
 }

@@ -30,3 +30,9 @@ variable "project_id" {
   default     = null
   description = "The project ID to deploy to. If unset, the provider's default project is used."
 }
+
+variable "crypto_key" {
+  type        = object({ id = string })
+  default     = { id = null }
+  description = "Key used to encrypt and decrypt pubsub."
+}

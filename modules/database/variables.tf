@@ -30,6 +30,10 @@ variable "availability_type" {
   default = "REGIONAL"
 }
 
+variable "region" {
+   type    = string
+}
+
 variable "maintenance_window_day" {
   description = "The day of week (1-7) for the master instance maintenance."
   type        = number
@@ -71,4 +75,10 @@ variable "force_ssl" {
   description = "Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string"
   type        = bool
   default     = false
+}
+
+variable "crypto_key" {
+  type        = object({ id = string })
+  default     = { id = null }
+  description = "Key used to encrypt and decrypt pubsub."
 }
