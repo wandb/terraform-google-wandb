@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.23.0](https://github.com/wandb/terraform-google-wandb/compare/v1.22.0...v1.23.0) (2024-02-21)
+
+
+### Features
+
+* Add support for t-shirt-sized deployments ([#91](https://github.com/wandb/terraform-google-wandb/issues/91)) ([5432961](https://github.com/wandb/terraform-google-wandb/commit/5432961f6688a5eed5a646d7ab772f28844d4bf7)), closes [#92](https://github.com/wandb/terraform-google-wandb/issues/92)
+
 ## [1.22.0](https://github.com/wandb/terraform-google-wandb/compare/v1.21.0...v1.22.0) (2023-12-15)
 
 
