@@ -233,6 +233,5 @@ variable "other_wandb_env" {
 variable "size" {
   description = "Deployment size for the instance"
   type        = string
-  default     = "small"
-  nullable    = false
+  default     = null
 }
