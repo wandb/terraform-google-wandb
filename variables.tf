@@ -230,16 +230,12 @@ variable "other_wandb_env" {
   default     = {}
 }
 
-variable "enable_operator" {
-  type        = bool
-  description = "Boolean indicating if the new operator should be enabled"
-  default     = false
-}
 variable "size" {
   description = "Deployment size for the instance"
   type        = string
   default     = null
 }
+
 variable "enable_operator" {
   type        = bool
   description = "Boolean indicating if the new operator should be enabled"
