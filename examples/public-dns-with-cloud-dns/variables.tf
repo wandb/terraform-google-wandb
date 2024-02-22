@@ -83,5 +83,5 @@ variable "disable_code_saving" {
 variable "size" {
   description = "Deployment size for the instance"
   type        = string
-  default     = "small"
+  default     = null
 }
