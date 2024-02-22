@@ -190,7 +190,7 @@ module "gke_app" {
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
     "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
-    "GORILLA_GLUE_LIST"                    = var.enable_new_ingress
+    "GORILLA_GLUE_LIST"                    = var.enable_operator
   }, var.other_wandb_env)
 
   wandb_image    = var.wandb_image
@@ -258,13 +258,7 @@ module "wandb" {
 
       app = var.enable_operator ? {} : {
         extraEnvs = {
-<<<<<<< HEAD
           "GORILLA_GLUE_LIST" = "true"
-=======
-          "BUCKET_QUEUE"                = local.bucket_queue
-          "GORILLA_DISABLE_CODE_SAVING" = var.disable_code_saving
-          "GORILLA_GLUE_LIST"           = !var.enable_new_ingress
->>>>>>> 730d918 (add boolean flag)
         }
       }
 
