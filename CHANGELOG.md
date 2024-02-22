@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.23.2](https://github.com/wandb/terraform-google-wandb/compare/v1.23.1...v1.23.2) (2024-02-22)
+
+
+### Bug Fixes
+
+* Backwards compatibility fix to avoid changes in nodegroups. ([#102](https://github.com/wandb/terraform-google-wandb/issues/102)) ([c331853](https://github.com/wandb/terraform-google-wandb/commit/c3318536187b9cd17d9371c64b602e3aa8f5c399))
+
 ### [1.23.1](https://github.com/wandb/terraform-google-wandb/compare/v1.23.0...v1.23.1) (2024-02-21)
 
 
