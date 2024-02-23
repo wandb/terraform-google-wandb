@@ -76,12 +76,6 @@ variable "local_restore" {
   default     = false
 }
 
-variable "gke_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
-  type        = string
-  default     = "n1-standard-4"
-}
-
 variable "resource_limits" {
   description = "Specifies the resource limits for the wandb deployment"
   type        = map(string)
@@ -193,6 +187,12 @@ variable "redis_reserved_ip_range" {
   default     = "10.30.0.0/16"
 }
 
+variable "redis_tier" {
+  type        = string
+  description = "Specifies the tier for this Redis instance"
+  default     = "STANDARD_HA"
+}
+
 ##########################################
 # External Bucket                        #
 ##########################################
@@ -211,6 +211,22 @@ variable "bucket_location" {
   description = "Location of the bucket where the KMS key will be used. If not provided (empty string), the default location will be used."
 }
 ##########################################
+# K8s                                    #
+##########################################
+
+variable "gke_machine_type" {
+  description = "Specifies the machine type to be allocated for the database"
+  type        = string
+  default     = "n1-standard-4"
+}
+
+
+variable "gke_node_count" {
+  type    = number
+  default = 2
+}
+
+##########################################
 # General Application                    #
 ##########################################
 
@@ -225,6 +241,7 @@ variable "other_wandb_env" {
   description = "Extra environment variables for W&B"
   default     = {}
 }
+
 ##########################################
 # KMS                                    #
 ##########################################
@@ -239,4 +256,11 @@ variable "bucket_kms_key_id" {
   type        = string
   default     = ""
   description = "ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key."
+}
+=======
+
+variable "size" {
+  description = "Deployment size for the instance"
+  type        = string
+  default     = null
 }

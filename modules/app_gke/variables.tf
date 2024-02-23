@@ -19,6 +19,9 @@ variable "subnetwork" {
 }
 
 variable "machine_type" {
-  type    = string
-  default = "n1-standard-4"
+  type = string
+}
+
+variable "node_count" {
+  type = number
 }

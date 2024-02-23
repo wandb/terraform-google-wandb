@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.23.2](https://github.com/wandb/terraform-google-wandb/compare/v1.23.1...v1.23.2) (2024-02-22)
+
+
+### Bug Fixes
+
+* Backwards compatibility fix to avoid changes in nodegroups. ([#102](https://github.com/wandb/terraform-google-wandb/issues/102)) ([c331853](https://github.com/wandb/terraform-google-wandb/commit/c3318536187b9cd17d9371c64b602e3aa8f5c399))
+
+### [1.23.1](https://github.com/wandb/terraform-google-wandb/compare/v1.23.0...v1.23.1) (2024-02-21)
+
+
+### Bug Fixes
+
+* Backwards compatibility for t-shirt-sized deployments ([#101](https://github.com/wandb/terraform-google-wandb/issues/101)) ([f812f81](https://github.com/wandb/terraform-google-wandb/commit/f812f810ec6addd3f8a18fe114d320245d64c9da))
+
+## [1.23.0](https://github.com/wandb/terraform-google-wandb/compare/v1.22.0...v1.23.0) (2024-02-21)
+
+
+### Features
+
+* Add support for t-shirt-sized deployments ([#91](https://github.com/wandb/terraform-google-wandb/issues/91)) ([5432961](https://github.com/wandb/terraform-google-wandb/commit/5432961f6688a5eed5a646d7ab772f28844d4bf7)), closes [#92](https://github.com/wandb/terraform-google-wandb/issues/92)
+
 ## [1.22.0](https://github.com/wandb/terraform-google-wandb/compare/v1.21.0...v1.22.0) (2023-12-15)
 
 

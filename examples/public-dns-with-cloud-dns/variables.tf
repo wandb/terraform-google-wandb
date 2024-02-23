@@ -79,3 +79,9 @@ variable "disable_code_saving" {
   description = "Boolean indicating if code saving is disabled"
   default     = false
 }
+
+variable "size" {
+  description = "Deployment size for the instance"
+  type        = string
+  default     = null
+}

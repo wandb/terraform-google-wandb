@@ -69,11 +69,21 @@ output "url" {
   description = "The URL to the W&B application"
 }
 
+output "standardized_size" {
+  value = var.size
+}
 
+output "gke_node_count" {
+  value = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+}
 
+output "gke_node_instance_type" {
+  value = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+}
 
-
-
+output "database_instance_type" {
+  value = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
+}
 
 
 
