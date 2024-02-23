@@ -34,7 +34,7 @@ resource "google_project_service_identity" "gcp_sa_cloud_sql" {
 }
 
 resource "google_project_service_identity" "pubsub" {
-  count    = var.bind_pubsub_service_access ? 1 : 0
+  count    = var.bind_pubsub_service_to_kms_key ? 1 : 0
   provider = google-beta
   project  = data.google_project.project.project_id
   service  = "pubsub.googleapis.com"
@@ -44,7 +44,7 @@ resource "google_project_service_identity" "pubsub" {
 # # use pubsub topic encryption.
 # # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/pubsub_topic#kms_key_name
 resource "google_kms_crypto_key_iam_member" "pubsub_service_access" {
-  count         = var.bind_pubsub_service_access ? 1 : 0
+  count         = var.bind_pubsub_service_to_kms_key ? 1 : 0
   crypto_key_id = google_kms_crypto_key.default.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   member        = "serviceAccount:${google_project_service_identity.pubsub.email}"

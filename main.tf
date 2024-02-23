@@ -39,28 +39,28 @@ module "service_accounts" {
   depends_on  = [module.project_factory_project_services]
 }
 
-module "kms_generic_bucket" {
-  count                      = var.customer_provided_bucket_key_id == "" ? 1 : 0
-  source                     = "./modules/kms"
-  namespace                  = var.namespace
-  deletion_protection        = var.deletion_protection
-  key_location               = lower(local.bucket_location)
-  bind_pubsub_service_access = !var.use_internal_queue
+module "kms_default_bucket" {
+  count                          = var.bucket_kms_key_id == "" ? 1 : 0
+  source                         = "./modules/kms"
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  key_location                   = lower(local.bucket_location)
+  bind_pubsub_service_to_kms_key = !var.use_internal_queue
 }
 
-module "kms_generic_sql" {
+module "kms_default_sql" {
 
-  count               = var.customer_provided_sql_key_id == "" ? 1 : 0
-  source              = "./modules/kms"
-  namespace           = var.namespace
-  deletion_protection = var.deletion_protection
-  key_location        = local.database_region
-  bind_pubsub_service_access = false
+  count                          = var.db_kms_key_id == "" ? 1 : 0
+  source                         = "./modules/kms"
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  key_location                   = local.database_region
+  bind_pubsub_service_to_kms_key = false
 }
 
 locals {
-  bucket_crypto_key = length(module.kms_generic_bucket) > 0 ? module.kms_generic_bucket[0].crypto_key : var.customer_provided_bucket_key_id
-  sql_crypto_key    = length(module.kms_generic_sql) > 0 ? module.kms_generic_sql[0].crypto_key : var.customer_provided_sql_key_id
+  bucket_crypto_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key : var.bucket_kms_key_id
+  sql_crypto_key    = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key : var.db_kms_key_id
 }
 
 module "storage" {
@@ -73,7 +73,7 @@ module "storage" {
   service_account     = module.service_accounts.service_account
   crypto_key          = local.bucket_crypto_key
   deletion_protection = var.deletion_protection
-  depends_on          = [module.project_factory_project_services, module.kms_generic_bucket.google_kms_crypto_key_iam_binding]
+  depends_on          = [module.project_factory_project_services, module.kms_default_bucket.google_kms_crypto_key_iam_binding]
 }
 
 module "networking" {
@@ -127,7 +127,7 @@ module "database" {
   labels              = var.labels
   crypto_key          = local.sql_crypto_key
   region              = local.database_region
-  depends_on          = [module.project_factory_project_services, module.kms_generic_sql.google_kms_crypto_key_iam_binding]
+  depends_on          = [module.project_factory_project_services, module.kms_default_sql.google_kms_crypto_key_iam_binding]
 }
 
 module "redis" {

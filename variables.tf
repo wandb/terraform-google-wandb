@@ -229,13 +229,13 @@ variable "other_wandb_env" {
 # KMS                                    #
 ##########################################
 
-variable "customer_provided_sql_key_id" {
+variable "db_kms_key_id" {
   type        = string
   default     = ""
   description = "ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key."
 }
 
-variable "customer_provided_bucket_key_id" {
+variable "bucket_kms_key_id" {
   type        = string
   default     = ""
   description = "ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key."

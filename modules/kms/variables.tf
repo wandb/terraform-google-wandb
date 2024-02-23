@@ -14,7 +14,7 @@ variable "key_location" {
   description = "Location where the KMS key will be created."
 }
 
-variable "bind_pubsub_service_access" {
+variable "bind_pubsub_service_to_kms_key" {
   type        = bool
   description = "Whether to bind the Pub/Sub service account to the KMS key for encrypter/decrypter access."
 }
