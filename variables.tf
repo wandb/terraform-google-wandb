@@ -257,7 +257,6 @@ variable "bucket_kms_key_id" {
   default     = ""
   description = "ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key."
 }
-=======
 
 variable "size" {
   description = "Deployment size for the instance"
