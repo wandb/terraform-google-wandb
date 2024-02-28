@@ -28,7 +28,8 @@ module "http" {
   url_map    = var.enable_operator ? null : module.url_map.app
   ip_address = google_compute_global_address.default.address
 
-  labels = var.labels
+  labels          = var.labels
+  enable_operator = var.enable_operator
 }
 
 module "https" {
@@ -41,5 +42,6 @@ module "https" {
   url_map    = var.enable_operator ? null : module.url_map.app
   ip_address = google_compute_global_address.default.address
 
-  labels = var.labels
+  labels          = var.labels
+  enable_operator = var.enable_operator
 }

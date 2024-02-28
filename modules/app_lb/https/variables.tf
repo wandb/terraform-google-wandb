@@ -20,3 +20,9 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "enable_operator" {
+  type        = bool
+  description = "Boolean indicating if the new operator should be enabled"
+  default     = false
+}
