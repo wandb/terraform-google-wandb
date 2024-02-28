@@ -123,6 +123,7 @@ module "app_gke" {
 }
 
 module "app_lb" {
+  count                 = var.enable_operator ? 0 : 1
   source                = "./modules/app_lb"
   namespace             = var.namespace
   ssl                   = var.ssl
@@ -135,6 +136,10 @@ module "app_lb" {
   enable_operator       = var.enable_operator
 
   depends_on = [module.project_factory_project_services, module.app_gke]
+}
+
+resource "google_compute_global_address" "operator" {
+  name = "${var.namespace}-operator-address"
 }
 
 module "database" {
@@ -168,6 +173,7 @@ locals {
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
+  operator_ip_name        = google_compute_global_address.operator.name
 }
 
 module "gke_app" {
@@ -267,7 +273,7 @@ module "wandb" {
         issuer = { create = true, provider = "google" }
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
-          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+          "kubernetes.io/ingress.global-static-ip-name" = local.operator_ip_name
         }
       }
 
