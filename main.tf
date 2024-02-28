@@ -133,7 +133,6 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  enable_operator       = var.enable_operator
 
   depends_on = [module.project_factory_project_services, module.app_gke]
 }
@@ -200,9 +199,8 @@ module "gke_app" {
     "GORILLA_GLUE_LIST"                    = var.enable_operator
   }, var.other_wandb_env)
 
-  wandb_image    = var.wandb_image
-  wandb_version  = var.wandb_version
-  wandb_replicas = var.enable_operator ? 0 : 1
+  wandb_image   = var.wandb_image
+  wandb_version = var.wandb_version
 
   resource_limits   = var.resource_limits
   resource_requests = var.resource_requests

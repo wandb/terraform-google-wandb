@@ -1,8 +1,6 @@
 resource "google_compute_target_http_proxy" "default" {
   name    = "${var.namespace}-http-proxy"
   url_map = var.url_map.id
-
-  depends_on = [var.url_map]
 }
 
 resource "google_compute_global_forwarding_rule" "default" {

@@ -22,8 +22,6 @@ module "http" {
   ip_address = google_compute_global_address.default.address
 
   labels = var.labels
-
-  depends_on = [module.url_map]
 }
 
 module "https" {
@@ -36,6 +34,4 @@ module "https" {
   ip_address = google_compute_global_address.default.address
 
   labels = var.labels
-
-  depends_on = [module.url_map]
 }
