@@ -24,7 +24,7 @@ resource "google_compute_managed_ssl_certificate" "default" {
 resource "google_compute_target_https_proxy" "default" {
   name = "${var.namespace}-https-proxy"
   // url_map          = var.url_map.id
-  url_map          = var.enable_operator ? null : var.url_map.id
+  url_map          = var.enable_operator ? "" : var.url_map.id
   ssl_certificates = [google_compute_managed_ssl_certificate.default.id]
   ssl_policy       = google_compute_ssl_policy.default.id
 }

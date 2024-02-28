@@ -1,7 +1,7 @@
 resource "google_compute_target_http_proxy" "default" {
   name = "${var.namespace}-http-proxy"
   // url_map = var.url_map.id
-  url_map = var.enable_operator ? null : var.url_map.id
+  url_map = var.enable_operator ? "" : var.url_map.id
 }
 
 resource "google_compute_global_forwarding_rule" "default" {
