@@ -30,6 +30,8 @@ module "http" {
 
   labels          = var.labels
   enable_operator = var.enable_operator
+
+  depends_on = [module.url_map]
 }
 
 module "https" {
@@ -44,4 +46,6 @@ module "https" {
 
   labels          = var.labels
   enable_operator = var.enable_operator
+
+  depends_on = [module.url_map]
 }
