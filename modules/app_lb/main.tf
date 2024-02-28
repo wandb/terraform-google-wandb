@@ -8,6 +8,8 @@ resource "google_compute_global_address" "operator" {
 
 # Create a URL map that points to the GKE service
 module "url_map" {
+  count = var.enable_operator ? 0 : 1
+
   source                = "./url_map"
   namespace             = var.namespace
   group                 = var.group
@@ -18,7 +20,7 @@ module "url_map" {
 }
 
 module "http" {
-  count = var.ssl ? 0 : 1
+  count = var.ssl ? 0 : var.enable_operator ? 0 : 1
 
   source     = "./http"
   namespace  = var.namespace
@@ -29,7 +31,7 @@ module "http" {
 }
 
 module "https" {
-  count = var.ssl ? 1 : 0
+  count = var.ssl ? 1 : var.enable_operator ? 0 : 1
 
   source     = "./https"
   fqdn       = var.fqdn
