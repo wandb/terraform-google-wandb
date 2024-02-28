@@ -122,9 +122,24 @@ module "app_gke" {
   depends_on      = [module.project_factory_project_services]
 }
 
+resource "google_compute_global_address" "default" {
+  name = "${var.namespace}-address"
+}
+
+resource "google_compute_global_address" "operator" {
+  name = "${var.namespace}-operator-address"
+}
+
+locals {
+  address          = google_compute_global_address.default.address
+  operator_address = google_compute_global_address.operator.address
+  operator_ip_name = google_compute_global_address.operator.name
+}
+
 module "app_lb" {
   count                 = var.enable_operator ? 0 : 1
   source                = "./modules/app_lb"
+  address               = local.address
   namespace             = var.namespace
   ssl                   = var.ssl
   fqdn                  = local.fqdn
@@ -137,9 +152,7 @@ module "app_lb" {
   depends_on = [module.project_factory_project_services, module.app_gke]
 }
 
-resource "google_compute_global_address" "operator" {
-  name = "${var.namespace}-operator-address"
-}
+
 
 module "database" {
   source              = "./modules/database"
@@ -172,7 +185,6 @@ locals {
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
-  operator_ip_name        = google_compute_global_address.operator.name
 }
 
 module "gke_app" {

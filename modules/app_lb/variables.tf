@@ -1,3 +1,8 @@
+variable "address" {
+  description = "The IP address of the load balancer"
+  type        = string
+  default     = null
+}
 variable "allowed_inbound_cidrs" {
   description = "Which IPv4 addresses/ranges to allow access. No default -- this must be explicitly provided."
   nullable    = false
