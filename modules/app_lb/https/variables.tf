@@ -11,6 +11,12 @@ variable "ip_address" {
   type = string
 }
 
+variable "ssl_certificate_id" {
+  type        = string
+  description = "The ID of the SSL certificate to use for the load balancer."
+  default     = null
+}
+
 variable "fqdn" {
   type = string
 }

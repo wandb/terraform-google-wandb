@@ -41,6 +41,13 @@ variable "ssl" {
   default     = true
   description = "Enable SSL certificate"
 }
+
+variable "ssl_certificate_id" {
+  type        = string
+  description = "The ID of the SSL certificate to use for the load balancer."
+  default     = null
+}
+
 variable "target_port" {
   type    = number
   default = 32543

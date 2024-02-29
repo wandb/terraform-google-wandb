@@ -7,24 +7,24 @@ resource "random_pet" "cert" {
 
 
 # Create a managed SSL certificate that's issued and renewed by Google
-resource "google_compute_managed_ssl_certificate" "default" {
-  name = "${var.namespace}-cert-${random_pet.cert.id}"
+# resource "google_compute_managed_ssl_certificate" "default" {
+#   name = "${var.namespace}-cert-${random_pet.cert.id}"
 
-  managed {
-    domains = [var.fqdn]
-  }
+#   managed {
+#     domains = [var.fqdn]
+#   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
 # Configure an HTTPS proxy with the Google-managed certificate and route it to
 # the URL map
 resource "google_compute_target_https_proxy" "default" {
   name             = "${var.namespace}-https-proxy"
   url_map          = var.url_map.id
-  ssl_certificates = [google_compute_managed_ssl_certificate.default.id]
+  ssl_certificates = [var.ssl_certificate_id]
   ssl_policy       = google_compute_ssl_policy.default.id
 }
 

@@ -130,10 +130,25 @@ resource "google_compute_global_address" "operator" {
   name = "${var.namespace}-operator-address"
 }
 
+# Create a managed SSL certificate that's issued and renewed by Google
+resource "google_compute_managed_ssl_certificate" "default" {
+  name = "${var.namespace}-cert-${random_pet.cert.id}"
+
+  managed {
+    domains = [local.fqdn]
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 locals {
-  address          = google_compute_global_address.default.address
-  operator_address = google_compute_global_address.operator.address
-  operator_ip_name = google_compute_global_address.operator.name
+  address              = google_compute_global_address.default.address
+  operator_address     = google_compute_global_address.operator.address
+  operator_ip_name     = google_compute_global_address.operator.name
+  ssl_certificate_id   = google_compute_managed_ssl_certificate.default.id
+  ssl_certificate_name = google_compute_managed_ssl_certificate.default.name
 }
 
 module "app_lb" {
@@ -148,6 +163,7 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
+  ssl_certificate_id    = local.ssl_certificate_id
 
   depends_on = [module.project_factory_project_services, module.app_gke]
 }
@@ -284,6 +300,7 @@ module "wandb" {
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = local.operator_ip_name
+          "networking.gke.io/managed-certificates"      = local.ssl_certificate_name
         }
       }
 
