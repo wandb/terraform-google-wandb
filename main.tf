@@ -130,6 +130,14 @@ resource "google_compute_global_address" "operator" {
   name = "${var.namespace}-operator-address"
 }
 
+resource "random_pet" "cert" {
+  length = 2
+  keepers = {
+    fqdn = local.fqdn
+  }
+}
+
+
 # Create a managed SSL certificate that's issued and renewed by Google
 resource "google_compute_managed_ssl_certificate" "default" {
   name = "${var.namespace}-cert-${random_pet.cert.id}"
