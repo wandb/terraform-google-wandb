@@ -23,11 +23,12 @@ module "http" {
 module "https" {
   count = var.ssl ? 1 : 0
 
-  source     = "./https"
-  fqdn       = var.fqdn
-  namespace  = var.namespace
-  url_map    = module.url_map.app
-  ip_address = var.address
+  source             = "./https"
+  fqdn               = var.fqdn
+  namespace          = var.namespace
+  url_map            = module.url_map.app
+  ip_address         = var.address
+  ssl_certificate_id = var.ssl_certificate_id
 
   labels = var.labels
 }
