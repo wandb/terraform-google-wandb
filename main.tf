@@ -119,7 +119,8 @@ module "redis" {
   count             = var.create_redis ? 1 : 0
   source            = "./modules/redis"
   namespace         = var.namespace
-  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, null), var.database_machine_type)
+  ### here we set the default to 6gb, which is = setting for "small" standard size
+  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
