@@ -4,6 +4,13 @@ variable "allowed_inbound_cidrs" {
   description = "Which IPv4 addresses/ranges to allow access. No default -- this must be explicitly provided."
 }
 
+variable "create_redis" {
+  default     = false
+  description = "Boolean indicating whether to provision an redis instance (true) or not (false)."
+  nullable    = false
+  type        = bool
+}
+
 variable "project_id" {
   type        = string
   description = "Project ID"

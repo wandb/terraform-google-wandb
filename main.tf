@@ -27,40 +27,6 @@ locals {
   internal_app_port = 32543
   create_bucket     = var.bucket_name == ""
   create_network    = var.network == null
-
-  # Specifications for t-shirt sized deployments
-  deployment_size = {
-    small = {
-      db            = "db-n1-highmem-2",
-      node_count    = 2,
-      node_instance = "n2-highmem-4"
-      cache         = "Standard 6 GB"
-    },
-    medium = {
-      db            = "db-n1-highmem-4",
-      node_count    = 2,
-      node_instance = "n2-highmem-4"
-      cache         = "Standard 6 GB"
-    },
-    large = {
-      db            = "db-n1-highmem-8",
-      node_count    = 2,
-      node_instance = "n2-highmem-8"
-      cache         = "Standard 13 GB"
-    },
-    xlarge = {
-      db            = "db-n1-highmem-16",
-      node_count    = 3,
-      node_instance = "n2-highmem-8"
-      cache         = "Standard 13 GB"
-    },
-    xxlarge = {
-      db            = "db-n1-highmem-32",
-      node_count    = 3,
-      node_instance = "n2-highmem-16"
-      cache         = "Standard 26 GB"
-    }
-  }
 }
 
 module "service_accounts" {
@@ -153,11 +119,11 @@ module "redis" {
   count             = var.create_redis ? 1 : 0
   source            = "./modules/redis"
   namespace         = var.namespace
-  memory_size_gb    = 4
+  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, null), var.database_machine_type)
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
-  tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
+  tier              = var.redis_tier
 }
 
 locals {
