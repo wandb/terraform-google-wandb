@@ -116,9 +116,9 @@ module "database" {
 }
 
 module "redis" {
-  count             = var.create_redis ? 1 : 0
-  source            = "./modules/redis"
-  namespace         = var.namespace
+  count     = var.create_redis ? 1 : 0
+  source    = "./modules/redis"
+  namespace = var.namespace
   ### here we set the default to 6gb, which is = setting for "small" standard size
   memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
   network           = local.network
@@ -230,7 +230,6 @@ module "wandb" {
       }
 
       ingress = {
-        issuer = { create = true, provider = "google" }
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
