@@ -11,5 +11,5 @@ output "address_operator_name" {
 }
 
 output "certificate" {
-  value = module.https.certificate
+  value = module.https[0].certificate
 }
