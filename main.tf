@@ -267,6 +267,7 @@ module "wandb" {
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+          "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
       }
 

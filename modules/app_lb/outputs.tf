@@ -9,3 +9,7 @@ output "address_operator" {
 output "address_operator_name" {
   value = google_compute_global_address.operator.name
 }
+
+output "certificate" {
+  value = module.https.certificate
+}
