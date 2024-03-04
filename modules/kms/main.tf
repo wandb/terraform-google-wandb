@@ -47,7 +47,7 @@ resource "google_kms_crypto_key_iam_member" "pubsub_service_access" {
   count         = var.bind_pubsub_service_to_kms_key ? 1 : 0
   crypto_key_id = google_kms_crypto_key.default.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  member        = "serviceAccount:${google_project_service_identity.pubsub.email}"
+  member        = "serviceAccount:${google_project_service_identity.pubsub[0].email}"
 }
 
 # granting service account role

@@ -33,8 +33,8 @@ resource "google_sql_database_instance" "default" {
   database_version    = var.database_version
   deletion_protection = var.deletion_protection
   region              = var.region
-  
-  encryption_key_name = var.crypto_key.id
+
+  encryption_key_name = var.crypto_key
 
   settings {
     tier                        = var.tier

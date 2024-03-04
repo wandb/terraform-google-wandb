@@ -32,7 +32,7 @@ variable "project_id" {
 }
 
 variable "crypto_key" {
-  type        = object({ id = string })
-  default     = { id = null }
+  type        = string
+  default     = null
   description = "Key used to encrypt and decrypt pubsub."
 }

@@ -19,7 +19,7 @@ resource "google_storage_bucket" "file_storage" {
   labels = var.labels
 
   encryption {
-    default_kms_key_name = var.crypto_key.id
+    default_kms_key_name = var.crypto_key
   }
 
   cors {
