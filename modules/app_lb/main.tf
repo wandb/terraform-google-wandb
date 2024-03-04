@@ -2,6 +2,10 @@ resource "google_compute_global_address" "default" {
   name = "${var.namespace}-address"
 }
 
+resource "google_compute_global_address" "operator" {
+  name = "${var.namespace}-operator-address"
+}
+
 # Create a URL map that points to the GKE service
 module "url_map" {
   source                = "./url_map"
