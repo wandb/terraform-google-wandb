@@ -223,9 +223,9 @@ module "wandb" {
         } : null
       }
 
-      app = var.enable_operator ? {} : {
+      app = {
         extraEnvs = {
-          "GORILLA_GLUE_LIST" = "true"
+          "GORILLA_GLUE_LIST" = !var.enable_operator
         }
       }
 
