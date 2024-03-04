@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.23.3](https://github.com/wandb/terraform-google-wandb/compare/v1.23.2...v1.23.3) (2024-03-01)
+
+
+### Bug Fixes
+
+* Fix Redis Tier ([#103](https://github.com/wandb/terraform-google-wandb/issues/103)) ([432517e](https://github.com/wandb/terraform-google-wandb/commit/432517ef30460f6c0bf63e0b117f6f3db9347540))
+
 ### [1.23.2](https://github.com/wandb/terraform-google-wandb/compare/v1.23.1...v1.23.2) (2024-02-22)
 
 

@@ -64,6 +64,7 @@ locals {
       cache         = "Standard 26 GB"
     }
   }
+
 }
 
 module "service_accounts" {
@@ -168,12 +169,14 @@ module "redis" {
   count             = var.create_redis ? 1 : 0
   source            = "./modules/redis"
   namespace         = var.namespace
-  memory_size_gb    = 4
+  ### here we set the default to 6gb, which is = setting for "small" standard size
+  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
   depends_on        = [module.project_factory_project_services]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
+
 }
 
 locals {
