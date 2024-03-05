@@ -166,9 +166,9 @@ module "database" {
 }
 
 module "redis" {
-  count             = var.create_redis ? 1 : 0
-  source            = "./modules/redis"
-  namespace         = var.namespace
+  count     = var.create_redis ? 1 : 0
+  source    = "./modules/redis"
+  namespace = var.namespace
   ### here we set the default to 6gb, which is = setting for "small" standard size
   memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
   network           = local.network
@@ -190,7 +190,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.13.0"
+  version = "1.14.1"
 
   license = var.license
 
@@ -208,11 +208,13 @@ module "gke_app" {
   local_restore    = var.local_restore
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
-    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source
+    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+    "GORILLA_GLUE_LIST"                    = var.enable_operator
   }, var.other_wandb_env)
 
-  wandb_image   = var.wandb_image
-  wandb_version = var.wandb_version
+  wandb_image    = var.wandb_image
+  wandb_version  = var.wandb_version
+  wandb_replicas = var.enable_operator ? 0 : 1
 
   resource_limits   = var.resource_limits
   resource_requests = var.resource_requests
@@ -224,5 +226,83 @@ module "gke_app" {
     module.redis,
     module.storage,
     module.app_gke
+  ]
+}
+
+module "wandb" {
+  source  = "wandb/wandb/helm"
+  version = "1.2.0"
+
+  spec = {
+    values = {
+      global = {
+        host    = local.url
+        license = var.license
+
+        extraEnv = merge({
+          "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
+          "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+          "TAG_CUSTOMER_NS"                      = var.namespace
+          "OIDC_ISSUER"                          = var.oidc_issuer
+          "OIDC_CLIENT_ID"                       = var.oidc_client_id
+          "OIDC_AUTH_METHOD"                     = var.oidc_auth_method
+        }, var.other_wandb_env)
+
+        bucket = {
+          provider = "gcs"
+          name     = local.bucket
+        }
+
+        mysql = {
+          name     = module.database.database_name
+          user     = module.database.username
+          password = module.database.password
+          database = module.database.database_name
+          host     = module.database.private_ip_address
+          port     = 3306
+        }
+
+        redis = var.create_redis ? {
+          password = module.redis.0.auth_string
+          host     = module.redis.0.host
+          port     = module.redis.0.port
+          caCert   = module.redis.0.ca_cert
+          params = {
+            tls          = true
+            ttlInSeconds = 604800
+            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+          }
+        } : null
+      }
+
+      app = {
+        extraEnvs = {
+          "GORILLA_GLUE_LIST" = !var.enable_operator
+        }
+      }
+
+      ingress = {
+        annotations = {
+          "kubernetes.io/ingress.class"                 = "gce"
+          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+          "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
+        }
+      }
+
+      redis = { install = false }
+      mysql = { install = false }
+      # weave = { install = false }
+    }
+  }
+
+  operator_chart_version = "1.1.0"
+  controller_image_tag   = "1.10.1"
+
+  # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
+  # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
+  # mitigates the risk of "insufficient CPU" errors by facilitating controlled pod scheduling across nodes.
+  # TODO: Remove `depends_on` for phase 3
+  depends_on = [
+    module.gke_app
   ]
 }

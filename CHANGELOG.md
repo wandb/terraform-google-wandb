@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.24.0](https://github.com/wandb/terraform-google-wandb/compare/v1.23.3...v1.24.0) (2024-03-04)
+
+
+### Features
+
+* Add operator helm release ([#98](https://github.com/wandb/terraform-google-wandb/issues/98)) ([e3916a7](https://github.com/wandb/terraform-google-wandb/commit/e3916a76b47ea2afc2cc5b3dfae8b0e0bffd5dd7)), closes [#92](https://github.com/wandb/terraform-google-wandb/issues/92) [#101](https://github.com/wandb/terraform-google-wandb/issues/101) [#101](https://github.com/wandb/terraform-google-wandb/issues/101) [#102](https://github.com/wandb/terraform-google-wandb/issues/102)
+
 ### [1.23.3](https://github.com/wandb/terraform-google-wandb/compare/v1.23.2...v1.23.3) (2024-03-01)
 
 
