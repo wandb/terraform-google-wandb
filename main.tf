@@ -194,6 +194,7 @@ module "wandb" {
           "OIDC_ISSUER"                          = var.oidc_issuer
           "OIDC_CLIENT_ID"                       = var.oidc_client_id
           "OIDC_AUTH_METHOD"                     = var.oidc_auth_method
+          "OIDC_SECRET"                          = var.oidc_secret
         }, var.other_wandb_env)
 
         bucket = {
