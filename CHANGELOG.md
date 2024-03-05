@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.24.1](https://github.com/wandb/terraform-google-wandb/compare/v1.24.0...v1.24.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* Add oidc secret ([#106](https://github.com/wandb/terraform-google-wandb/issues/106)) ([19cdd25](https://github.com/wandb/terraform-google-wandb/commit/19cdd250aee1826ab7a34b96627e80b5f5eb5ee3))
+
 ## [1.24.0](https://github.com/wandb/terraform-google-wandb/compare/v1.23.3...v1.24.0) (2024-03-04)
 
 
