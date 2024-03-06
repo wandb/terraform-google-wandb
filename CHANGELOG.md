@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.1](https://github.com/wandb/terraform-google-wandb/compare/v2.0.0...v2.0.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Bump controller image and readd chart version ([#108](https://github.com/wandb/terraform-google-wandb/issues/108)) ([92a9bb4](https://github.com/wandb/terraform-google-wandb/commit/92a9bb4e991556bc4ecb86d4d588f115452ba3c9))
+
 ## [2.0.0](https://github.com/wandb/terraform-google-wandb/compare/v1.24.2...v2.0.0) (2024-03-06)
 
 
