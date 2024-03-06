@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.24.2](https://github.com/wandb/terraform-google-wandb/compare/v1.24.1...v1.24.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* Add ingress name ([#107](https://github.com/wandb/terraform-google-wandb/issues/107)) ([e659c40](https://github.com/wandb/terraform-google-wandb/commit/e659c4085ec96e9fa2605e2729e54d3127d8ad53))
+
 ### [1.24.1](https://github.com/wandb/terraform-google-wandb/compare/v1.24.0...v1.24.1) (2024-03-05)
 
 
