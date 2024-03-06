@@ -231,6 +231,7 @@ module "wandb" {
       }
 
       ingress = {
+        name = var.namespace
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
