@@ -230,6 +230,7 @@ module "wandb" {
       }
 
       ingress = {
+        nameOverride = var.namespace
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
@@ -243,8 +244,8 @@ module "wandb" {
     }
   }
 
-  operator_chart_version = "1.1.0"
-  controller_image_tag   = "1.10.1"
+  operator_chart_version = "1.1.2"
+  controller_image_tag   = "1.11.1"
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
