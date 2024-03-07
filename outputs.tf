@@ -1,5 +1,5 @@
 output "address" {
-  value = var.enable_operator ? module.app_lb.address_operator : module.app_lb.address
+  value = var.enable_operator ? google_compute_global_address.operator.address : google_compute_global_address.default.address
 }
 output "bucket_name" {
   value       = local.bucket
