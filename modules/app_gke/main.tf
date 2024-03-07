@@ -1,3 +1,4 @@
+data "google_project" "project" {}
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
@@ -6,6 +7,14 @@ resource "google_container_cluster" "default" {
   networking_mode = "VPC_NATIVE"
 
   enable_intranode_visibility = true
+
+ # Conditionally enable workload identity
+  dynamic "workload_identity_config" {
+    for_each = var.workload_identity == true ? [1] : []
+    content {
+      workload_pool = "${data.google_project.project.project_id}.svc.id.goog"
+    }
+  }
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
@@ -36,6 +45,7 @@ resource "google_container_cluster" "default" {
     }
   }
 }
+
 
 resource "random_pet" "node_pool" {
   keepers = {

@@ -71,6 +71,9 @@ module "service_accounts" {
   source      = "./modules/service_accounts"
   namespace   = var.namespace
   bucket_name = var.bucket_name
+  account_id =  "workload-identity"
+  service_account_name = "workload-identity-sa"
+  workload_identity  = var.create_workload_identity
   depends_on  = [module.project_factory_project_services]
 }
 
@@ -125,6 +128,9 @@ locals {
   subnetwork         = try(module.networking.0.subnetwork, { self_link = var.subnetwork })
 }
 
+
+
+
 module "app_gke" {
   source          = "./modules/app_gke"
   namespace       = var.namespace
@@ -133,6 +139,7 @@ module "app_gke" {
   network         = local.network
   subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
+  workload_identity  = var.create_workload_identity
   depends_on      = [module.project_factory_project_services]
 }
 
@@ -280,7 +287,13 @@ module "wandb" {
           "GORILLA_GLUE_LIST" = !var.enable_operator
         }
       }
-
+      serviceAccount = {
+        annotations = {
+          "iam.gke.io/gcp-service-account" = "${module.service_accounts.sa_account_email}"
+        }
+        name = module.service_accounts.service_account_name
+      }
+      
       ingress = {
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
