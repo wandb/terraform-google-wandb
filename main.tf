@@ -250,7 +250,7 @@ module "wandb" {
       mysql = { install = false }
 
       weave = {
-        install = true
+        install   = true
         extraEnvs = var.weave_wandb_env
       }
 
