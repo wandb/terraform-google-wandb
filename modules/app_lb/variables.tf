@@ -41,8 +41,11 @@ variable "target_port" {
   default = 32543
 }
 
-variable "enable_operator" {
-  type        = bool
-  description = "Boolean indicating if the new operator should be enabled"
-  default     = false
+variable "ip_address" {
+  type = string
 }
+
+variable "certificate_id" {
+  type = string
+}
+

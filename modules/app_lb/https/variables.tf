@@ -20,3 +20,7 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "certificate_id" {
+  type = string
+}

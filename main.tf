@@ -88,6 +88,35 @@ module "app_gke" {
   depends_on      = [module.project_factory_project_services]
 }
 
+resource "random_pet" "cert" {
+  length = 2
+  keepers = {
+    fqdn = local.fqdn
+  }
+}
+
+
+# Create a managed SSL certificate that's issued and renewed by Google
+resource "google_compute_managed_ssl_certificate" "default" {
+  name = "${var.namespace}-cert-${random_pet.cert.id}"
+
+  managed {
+    domains = [local.fqdn]
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "google_compute_global_address" "default" {
+  name = "${var.namespace}-address"
+}
+
+resource "google_compute_global_address" "operator" {
+  name = "${var.namespace}-operator-address"
+}
+
 module "app_lb" {
   source                = "./modules/app_lb"
   namespace             = var.namespace
@@ -98,7 +127,8 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  enable_operator       = var.enable_operator
+  certificate_id        = google_compute_managed_ssl_certificate.default.id
+  ip_address            = google_compute_global_address.default.address
 
   depends_on = [module.project_factory_project_services, module.app_gke]
 }
@@ -235,8 +265,8 @@ module "wandb" {
         nameOverride = var.namespace
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
-          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
-          "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
+          "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.operator.name
+          "ingress.gcp.kubernetes.io/pre-shared-cert"   = google_compute_managed_ssl_certificate.default.name
         }
       }
 
