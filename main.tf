@@ -98,6 +98,7 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
+  enable_operator       = var.enable_operator
 
   depends_on = [module.project_factory_project_services, module.app_gke]
 }
