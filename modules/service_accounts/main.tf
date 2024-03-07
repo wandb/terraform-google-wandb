@@ -75,6 +75,12 @@ resource "google_project_iam_member" "storage-role" {
   member  = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
 }
 
+resource "google_project_iam_member" "kms-role" {
+  count   = var.workload_identity == true ? 1 : 0
+  project = local.project_id
+  role    = "roles/cloudkms.admin"
+  member  = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
+}
 resource "google_project_iam_member" "workload_identity-role" {
   count   = var.workload_identity == true ? 1 : 0
   project = local.project_id
