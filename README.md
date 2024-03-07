@@ -67,7 +67,10 @@ resources that lack official modules.
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.82 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -87,7 +90,8 @@ No providers.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
 
 ## Inputs
 
