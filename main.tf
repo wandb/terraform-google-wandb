@@ -30,41 +30,6 @@ locals {
   create_network    = var.network == null
   bucket_location   = var.bucket_location == "" ? "US" : var.bucket_location
   database_region   = var.database_region == "" ? "us-central1" : var.database_region
-
-  # Specifications for t-shirt sized deployments
-  deployment_size = {
-    small = {
-      db            = "db-n1-highmem-2",
-      node_count    = 2,
-      node_instance = "n2-highmem-4"
-      cache         = "Standard 6 GB"
-    },
-    medium = {
-      db            = "db-n1-highmem-4",
-      node_count    = 2,
-      node_instance = "n2-highmem-4"
-      cache         = "Standard 6 GB"
-    },
-    large = {
-      db            = "db-n1-highmem-8",
-      node_count    = 2,
-      node_instance = "n2-highmem-8"
-      cache         = "Standard 13 GB"
-    },
-    xlarge = {
-      db            = "db-n1-highmem-16",
-      node_count    = 3,
-      node_instance = "n2-highmem-8"
-      cache         = "Standard 13 GB"
-    },
-    xxlarge = {
-      db            = "db-n1-highmem-32",
-      node_count    = 3,
-      node_instance = "n2-highmem-16"
-      cache         = "Standard 26 GB"
-    }
-  }
-
 }
 
 module "service_accounts" {
