@@ -25,3 +25,13 @@ variable "machine_type" {
 variable "node_count" {
   type = number
 }
+
+variable "location" {
+  type = string
+  default = "us-central1"
+}
+
+variable "workload_identity" {
+  description = "Flag to indicate whether to enable workload identity for the service account."
+  type        = bool
+}

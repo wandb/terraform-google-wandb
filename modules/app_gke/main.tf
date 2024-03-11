@@ -1,11 +1,26 @@
+data "google_client_config" "current" {}
+
+locals {
+  project_id = data.google_client_config.current.project
+}
+
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
   network         = var.network.self_link
   subnetwork      = var.subnetwork.self_link
   networking_mode = "VPC_NATIVE"
+  location        = var.location
 
   enable_intranode_visibility = true
+
+  # Conditionally enable workload identity
+  dynamic "workload_identity_config" {
+    for_each = var.workload_identity == true ? [1] : []
+    content {
+      workload_pool = "${local.project_id}.svc.id.goog"
+    }
+  }
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"

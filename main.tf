@@ -25,15 +25,18 @@ locals {
   url_prefix        = var.ssl ? "https" : "http"
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
-  create_bucket     = var.bucket_name == ""
-  create_network    = var.network == null
+  create_bucket  = var.bucket_name == ""
+  create_network = var.network == null
 }
 
 module "service_accounts" {
-  source      = "./modules/service_accounts"
-  namespace   = var.namespace
-  bucket_name = var.bucket_name
-  depends_on  = [module.project_factory_project_services]
+  source               = "./modules/service_accounts"
+  namespace            = var.namespace
+  bucket_name          = var.bucket_name
+  account_id           = "workload-identity"
+  service_account_name = "workload-identity-sa"
+  workload_identity    = var.create_workload_identity
+  depends_on           = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -78,14 +81,15 @@ locals {
 }
 
 module "app_gke" {
-  source          = "./modules/app_gke"
-  namespace       = var.namespace
-  machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network         = local.network
-  subnetwork      = local.subnetwork
-  service_account = module.service_accounts.service_account
-  depends_on      = [module.project_factory_project_services]
+  source            = "./modules/app_gke"
+  namespace         = var.namespace
+  machine_type      = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count        = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  network           = local.network
+  subnetwork        = local.subnetwork
+  service_account   = module.service_accounts.service_account
+  workload_identity = var.create_workload_identity
+  depends_on        = [module.project_factory_project_services]
 }
 
 module "app_lb" {
@@ -229,6 +233,13 @@ module "wandb" {
           "GORILLA_GLUE_LIST" = !var.enable_operator
         }
       }
+
+      serviceAccount = var.create_workload_identity ? {
+        annotations = {
+          "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email
+        }
+        name = module.service_accounts.service_account_name
+      } : null
 
       ingress = {
         nameOverride = var.namespace

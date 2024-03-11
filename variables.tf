@@ -241,3 +241,9 @@ variable "enable_operator" {
   description = "Boolean indicating if the new operator should be enabled"
   default     = false
 }
+
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
+  default     = true
+}
