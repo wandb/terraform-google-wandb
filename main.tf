@@ -25,16 +25,16 @@ locals {
   url_prefix        = var.ssl ? "https" : "http"
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
-  create_bucket  = var.bucket_name == ""
-  create_network = var.network == null
+  create_bucket     = var.bucket_name == ""
+  create_network    = var.network == null
 }
 
 module "service_accounts" {
   source               = "./modules/service_accounts"
   namespace            = var.namespace
   bucket_name          = var.bucket_name
-  account_id           = "workload-identity"
-  service_account_name = "workload-identity-sa"
+  account_id           = var.account_id
+  service_account_name = var.service_account_name
   workload_identity    = var.create_workload_identity
   depends_on           = [module.project_factory_project_services]
 }
@@ -238,7 +238,8 @@ module "wandb" {
         annotations = {
           "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email
         }
-        name = module.service_accounts.service_account_name
+        name      = module.service_accounts.service_account_name
+        namespace = var.namespace
       } : null
 
       ingress = {

@@ -247,3 +247,14 @@ variable "create_workload_identity" {
   type        = bool
   default     = true
 }
+
+variable "account_id" {
+  type    = string
+  default = "workload-identity"
+}
+
+variable "service_account_name" {
+  type    = string
+  default = "workload-identity-sa"
+}
+
