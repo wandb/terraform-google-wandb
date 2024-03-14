@@ -80,5 +80,5 @@ variable "force_ssl" {
 variable "crypto_key" {
   type        = string
   default     = null
-  description = "Key used to encrypt and decrypt pubsub."
+  description = "Key used to encrypt and decrypt database."
 }

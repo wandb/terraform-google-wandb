@@ -141,6 +141,8 @@ module "redis" {
   labels            = var.labels
   depends_on        = [module.project_factory_project_services]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
+  crypto_key        = local.sql_crypto_key
+  region            = local.database_region
 
 }
 

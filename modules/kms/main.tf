@@ -62,5 +62,6 @@ resource "google_kms_crypto_key_iam_binding" "crypto_key" {
   members = [
     "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}",
     "serviceAccount:${google_project_service_identity.gcp_sa_cloud_sql.email}",
+    "serviceAccount:service-${data.google_project.project.number}@cloud-redis.iam.gserviceaccount.com"
   ]
 }
