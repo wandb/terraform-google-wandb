@@ -84,5 +84,5 @@ resource "google_project_iam_member" "workload_identity-role" {
   count   = var.workload_identity == true ? 1 : 0
   project = local.project_id
   role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.project_id}.svc.id.goog[${var.namespace}/${var.service_account_name}]"
+  member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.service_account_name}]"
 }

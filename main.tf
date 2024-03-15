@@ -152,7 +152,10 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-
+  service_account_name       = var.service_account_name
+  service_account_annotations = var.create_workload_identity ? {
+    "iam.gke.io/gcp-service-account": module.service_accounts.sa_account_email
+  } : {}
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
   oidc_auth_method = var.oidc_auth_method
@@ -233,15 +236,6 @@ module "wandb" {
           "GORILLA_GLUE_LIST" = !var.enable_operator
         }
       }
-
-      serviceAccount = var.create_workload_identity ? {
-        annotations = {
-          "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email
-        }
-        name      = module.service_accounts.service_account_name
-        namespace = var.namespace
-      } : null
-
       ingress = {
         nameOverride = var.namespace
         annotations = {
