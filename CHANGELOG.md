@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.1](https://github.com/wandb/terraform-google-wandb/compare/v2.0.0...v2.0.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Bump controller image and readd chart version ([#108](https://github.com/wandb/terraform-google-wandb/issues/108)) ([92a9bb4](https://github.com/wandb/terraform-google-wandb/commit/92a9bb4e991556bc4ecb86d4d588f115452ba3c9))
+
+## [2.0.0](https://github.com/wandb/terraform-google-wandb/compare/v1.24.2...v2.0.0) (2024-03-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump operator chart version (#105)
+
+### Features
+
+* Bump operator chart version ([#105](https://github.com/wandb/terraform-google-wandb/issues/105)) ([3fde6be](https://github.com/wandb/terraform-google-wandb/commit/3fde6be607a0e7728ffb0949e836e00573d78a6c))
+
+### [1.24.2](https://github.com/wandb/terraform-google-wandb/compare/v1.24.1...v1.24.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* Add ingress name ([#107](https://github.com/wandb/terraform-google-wandb/issues/107)) ([e659c40](https://github.com/wandb/terraform-google-wandb/commit/e659c4085ec96e9fa2605e2729e54d3127d8ad53))
+
+### [1.24.1](https://github.com/wandb/terraform-google-wandb/compare/v1.24.0...v1.24.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* Add oidc secret ([#106](https://github.com/wandb/terraform-google-wandb/issues/106)) ([19cdd25](https://github.com/wandb/terraform-google-wandb/commit/19cdd250aee1826ab7a34b96627e80b5f5eb5ee3))
+
 ## [1.24.0](https://github.com/wandb/terraform-google-wandb/compare/v1.23.3...v1.24.0) (2024-03-04)
 
 
