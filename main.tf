@@ -164,12 +164,12 @@ module "gke_app" {
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
     "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
-    "GORILLA_GLUE_LIST"                    = var.enable_operator
+    "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
 
   wandb_image    = var.wandb_image
   wandb_version  = var.wandb_version
-  wandb_replicas = var.enable_operator ? 0 : 1
+  wandb_replicas = 0
 
   resource_limits   = var.resource_limits
   resource_requests = var.resource_requests
@@ -231,11 +231,6 @@ module "wandb" {
         } : null
       }
 
-      app = {
-        extraEnvs = {
-          "GORILLA_GLUE_LIST" = !var.enable_operator
-        }
-      }
       ingress = {
         nameOverride = var.namespace
         annotations = {

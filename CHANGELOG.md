@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/wandb/terraform-google-wandb/compare/v2.0.1...v3.0.0) (2024-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Enable operator as default (#114)
+
+### Features
+
+* Enable operator as default ([#114](https://github.com/wandb/terraform-google-wandb/issues/114)) ([10b501b](https://github.com/wandb/terraform-google-wandb/commit/10b501b6fb77c4ee8def6d5a7a1cdc86fd97afb8))
+
 ### [2.0.1](https://github.com/wandb/terraform-google-wandb/compare/v2.0.0...v2.0.1) (2024-03-06)
 
 

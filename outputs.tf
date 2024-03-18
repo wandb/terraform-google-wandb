@@ -1,5 +1,5 @@
 output "address" {
-  value = var.enable_operator ? module.app_lb.address_operator : module.app_lb.address
+  value = module.app_lb.address_operator
 }
 output "bucket_name" {
   value       = local.bucket

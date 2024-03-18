@@ -236,11 +236,6 @@ variable "size" {
   default     = null
 }
 
-variable "enable_operator" {
-  type        = bool
-  description = "Boolean indicating if the new operator should be enabled"
-  default     = false
-}
 
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
@@ -257,4 +252,5 @@ variable "service_account_name" {
   type    = string
   default = "workload-identity-sa"
 }
+
 
