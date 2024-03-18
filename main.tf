@@ -33,7 +33,7 @@ module "service_accounts" {
   source               = "./modules/service_accounts"
   namespace            = var.namespace
   bucket_name          = var.bucket_name
-  account_id           = var.account_id
+  account_id           = var.workload_account_id
   service_account_name = var.service_account_name
   workload_identity    = var.create_workload_identity
   depends_on           = [module.project_factory_project_services]

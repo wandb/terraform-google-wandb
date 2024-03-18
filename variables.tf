@@ -243,7 +243,7 @@ variable "create_workload_identity" {
   default     = true
 }
 
-variable "account_id" {
+variable "workload_account_id" {
   type    = string
   default = "workload-identity"
 }

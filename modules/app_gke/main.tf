@@ -10,8 +10,6 @@ resource "google_container_cluster" "default" {
   network         = var.network.self_link
   subnetwork      = var.subnetwork.self_link
   networking_mode = "VPC_NATIVE"
-  location        = var.location
-
   enable_intranode_visibility = true
 
   # Conditionally enable workload identity
