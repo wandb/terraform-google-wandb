@@ -232,9 +232,7 @@ module "wandb" {
       }
 
       app = {
-        extraEnvs = merge({
-          "GORILLA_GLUE_LIST" = !var.enable_operator
-        }, var.app_wandb_env)
+        extraEnvs = var.app_wandb_env
       }
 
       ingress = {

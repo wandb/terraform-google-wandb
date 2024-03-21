@@ -236,12 +236,6 @@ variable "size" {
   default     = null
 }
 
-variable "enable_operator" {
-  type        = bool
-  description = "Boolean indicating if the new operator should be enabled"
-  default     = false
-}
-
 variable "weave_wandb_env" {
   type        = map(string)
   description = "Extra environment variables for W&B"
