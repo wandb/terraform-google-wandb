@@ -15,13 +15,24 @@ variable "network" {
 }
 
 variable "region" {
-  type = string
+  type        = string
+  description = "The region where the resources will be deployed."
 }
 
 variable "instance_group" {
-   type = string
+  type        = string
+  description = "The name of the instance group."
 }
 
 variable "subnetwork" {
-  type = object({ self_link = string })
+  type = object({
+    self_link = string
+  })
+  description = "The subnetwork object containing the self-link of the subnetwork."
+}
+
+variable "allowed_projects" {
+  type = map(number)
+  default = {}
+  description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }

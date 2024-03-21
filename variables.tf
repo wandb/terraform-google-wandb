@@ -249,7 +249,15 @@ variable "psc_subnet_range" {
 }
 
 variable "create_private_link" {
-  type = bool
-  description = "Create private link service"
-  default = true
+  type        = bool
+  description = "Whether to create a private link service."
+  default     = true
+}
+
+variable "allowed_projects" {
+  type = map(number)
+  default = {
+    # "482878270665" = 4
+  }
+  description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }

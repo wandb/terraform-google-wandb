@@ -137,14 +137,15 @@ locals {
 }
 
 module "private_link" {
-  count          = var.create_private_link ? 1 : 0
-  source         = "./modules/private_link"
-  namespace      = var.namespace
-  region         = var.region
-  network        = local.network
-  subnetwork     = local.subnetwork
-  instance_group = module.app_gke.mig_instance_group_id
-  depends_on = [ module.app_gke ]
+  count            = var.create_private_link ? 1 : 0
+  source           = "./modules/private_link"
+  namespace        = var.namespace
+  region           = var.region
+  network          = local.network
+  subnetwork       = local.subnetwork
+  instance_group   = module.app_gke.mig_instance_group_id
+  allowed_projects = var.allowed_projects
+  depends_on       = [module.app_gke]
 }
 
 module "gke_app" {
