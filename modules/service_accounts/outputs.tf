@@ -3,3 +3,7 @@ output "service_account" {
 
   description = "The service account."
 }
+
+output "sa_account_email" {
+  value = var.workload_identity == true ? google_service_account.workload-identity-user-sa[0].email : null
+}

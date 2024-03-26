@@ -236,6 +236,22 @@ variable "size" {
   default     = null
 }
 
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
+  default     = true
+}
+
+variable "workload_account_id" {
+  type    = string
+  default = "workload-identity"
+}
+
+variable "service_account_name" {
+  type    = string
+  default = "workload-identity-sa"
+}
+
 variable "weave_wandb_env" {
   type        = map(string)
   description = "Extra environment variables for W&B"

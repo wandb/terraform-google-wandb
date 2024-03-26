@@ -30,10 +30,13 @@ locals {
 }
 
 module "service_accounts" {
-  source      = "./modules/service_accounts"
-  namespace   = var.namespace
-  bucket_name = var.bucket_name
-  depends_on  = [module.project_factory_project_services]
+  source               = "./modules/service_accounts"
+  namespace            = var.namespace
+  bucket_name          = var.bucket_name
+  account_id           = var.workload_account_id
+  service_account_name = var.service_account_name
+  workload_identity    = var.create_workload_identity
+  depends_on           = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -78,14 +81,15 @@ locals {
 }
 
 module "app_gke" {
-  source          = "./modules/app_gke"
-  namespace       = var.namespace
-  machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network         = local.network
-  subnetwork      = local.subnetwork
-  service_account = module.service_accounts.service_account
-  depends_on      = [module.project_factory_project_services]
+  source            = "./modules/app_gke"
+  namespace         = var.namespace
+  machine_type      = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count        = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  network           = local.network
+  subnetwork        = local.subnetwork
+  service_account   = module.service_accounts.service_account
+  workload_identity = var.create_workload_identity
+  depends_on        = [module.project_factory_project_services]
 }
 
 module "app_lb" {
@@ -148,7 +152,10 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-
+  service_account_name       = var.service_account_name
+  service_account_annotations = var.create_workload_identity ? {
+    "iam.gke.io/gcp-service-account": module.service_accounts.sa_account_email
+  } : {}
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
   oidc_auth_method = var.oidc_auth_method
