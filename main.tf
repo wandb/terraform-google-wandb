@@ -161,11 +161,18 @@ module "gke_app" {
   oidc_auth_method = var.oidc_auth_method
   oidc_secret      = var.oidc_secret
   local_restore    = var.local_restore
+
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
     "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
     "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
+
+  weave_wandb_env = var.weave_wandb_env
+
+  app_wandb_env = var.app_wandb_env
+
+  parquet_wandb_env = var.parquet_wandb_env
 
   wandb_image    = var.wandb_image
   wandb_version  = var.wandb_version
@@ -231,6 +238,10 @@ module "wandb" {
         } : null
       }
 
+      app = {
+        extraEnvs = var.app_wandb_env
+      }
+
       ingress = {
         nameOverride = var.namespace
         annotations = {
@@ -242,7 +253,14 @@ module "wandb" {
 
       redis = { install = false }
       mysql = { install = false }
-      # weave = { install = false }
+
+      weave = {
+        extraEnvs = var.weave_wandb_env
+      }
+
+      parquet = {
+        extraEnvs = var.parquet_wandb_env
+      }
     }
   }
 
