@@ -251,7 +251,13 @@ variable "psc_subnet_range" {
 variable "create_private_link" {
   type        = bool
   description = "Whether to create a private link service."
-  default     = true
+  default     = false
+}
+
+variable "public_access" {
+  type        = bool
+  description = "Whether to create a public endpoint for wandb access."
+  default = true
 }
 
 variable "allowed_projects" {

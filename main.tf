@@ -136,16 +136,27 @@ locals {
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
 
+
+resource "google_compute_address" "internal_ip" {
+  count            = var.create_private_link ? 1 : 0
+  name         = "${var.namespace}-internal-address-non-shared"
+  region       = var.region
+  subnetwork   = local.subnetwork.name
+  address_type = "INTERNAL"
+  purpose      = "GCE_ENDPOINT"
+  depends_on = [ module.app_gke ]
+}
+
 module "private_link" {
   count            = var.create_private_link ? 1 : 0
   source           = "./modules/private_link"
   namespace        = var.namespace
+  ingress_name     = "${var.namespace}-internal"
   region           = var.region
   network          = local.network
   subnetwork       = local.subnetwork
-  instance_group   = module.app_gke.mig_instance_group_id
   allowed_projects = var.allowed_projects
-  depends_on       = [module.app_gke]
+  depends_on       = [module.app_gke, module.wandb]
 }
 
 module "gke_app" {
@@ -237,6 +248,7 @@ module "wandb" {
       }
 
       ingress = {
+        create       = var.public_access # external ingress for public connection
         nameOverride = var.namespace
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
@@ -244,6 +256,16 @@ module "wandb" {
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
       }
+
+      gcpPrivatLinkIngress = var.create_private_link ? {
+        create       = var.create_private_link # internal ingress for private link connections
+        nameOverride = "${var.namespace}-internal"
+        annotations = {
+          "kubernetes.io/ingress.class"                   = "gce-internal"
+          "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.internal_ip.0.name
+
+        }
+      } : null
 
       redis = { install = false }
       mysql = { install = false }
