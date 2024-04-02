@@ -123,11 +123,9 @@ resources that lack official modules.
 | <a name="input_oidc_secret"></a> [oidc\_secret](#input\_oidc\_secret) | The Client secret of application in your identity provider | `string` | `""` | no |
 | <a name="input_other_wandb_env"></a> [other\_wandb\_env](#input\_other\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_parquet_wandb_env"></a> [parquet\_wandb\_env](#input\_parquet\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
-| <a name="input_psc_subnet_range"></a> [psc\_subnet\_range](#input\_psc\_subnet\_range) | Pre-existing psc subnetwork self link | `string` | `null` | no |
 | <a name="input_public_access"></a> [public\_access](#input\_public\_access) | Whether to create a public endpoint for wandb access. | `bool` | `true` | no |
 | <a name="input_redis_reserved_ip_range"></a> [redis\_reserved\_ip\_range](#input\_redis\_reserved\_ip\_range) | Reserved IP range for REDIS peering connection | `string` | `"10.30.0.0/16"` | no |
 | <a name="input_redis_tier"></a> [redis\_tier](#input\_redis\_tier) | Specifies the tier for this Redis instance | `string` | `"STANDARD_HA"` | no |
-| <a name="input_region"></a> [region](#input\_region) | private service connect region | `string` | `"us-central1"` | no |
 | <a name="input_resource_limits"></a> [resource\_limits](#input\_resource\_limits) | Specifies the resource limits for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
 | <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": "2000m",<br>  "memory": "2G"<br>}</pre> | no |
 | <a name="input_size"></a> [size](#input\_size) | Deployment size for the instance | `string` | `null` | no |
