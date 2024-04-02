@@ -267,3 +267,21 @@ variable "allowed_projects" {
   }
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
+
+variable "weave_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "app_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "parquet_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
