@@ -138,13 +138,12 @@ locals {
 
 
 resource "google_compute_address" "internal_ip" {
-  count            = var.create_private_link ? 1 : 0
+  count        = var.create_private_link ? 1 : 0
   name         = "${var.namespace}-internal-address-non-shared"
-  region       = var.region
   subnetwork   = local.subnetwork.name
   address_type = "INTERNAL"
   purpose      = "GCE_ENDPOINT"
-  depends_on = [ module.app_gke ]
+  depends_on   = [module.app_gke]
 }
 
 module "private_link" {
@@ -152,7 +151,6 @@ module "private_link" {
   source           = "./modules/private_link"
   namespace        = var.namespace
   ingress_name     = "${var.namespace}-internal"
-  region           = var.region
   network          = local.network
   subnetwork       = local.subnetwork
   allowed_projects = var.allowed_projects

@@ -14,10 +14,6 @@ variable "network" {
   type        = object({ id = string })
 }
 
-variable "region" {
-  type        = string
-  description = "The region where the resources will be deployed."
-}
 
 variable "subnetwork" {
   type = object({

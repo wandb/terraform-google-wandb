@@ -6,7 +6,6 @@ data "kubernetes_ingress_v1" "ingress" {
 
 resource "google_compute_service_attachment" "psc_ilb_service_attachment" {
   name                  = "${var.namespace}-private-link"
-  region                = var.region
   enable_proxy_protocol = false
   connection_preference = "ACCEPT_MANUAL"
   nat_subnets           = [google_compute_subnetwork.psc_ilb_nat.id]
@@ -23,7 +22,6 @@ resource "google_compute_service_attachment" "psc_ilb_service_attachment" {
 
 resource "google_compute_subnetwork" "psc_ilb_nat" {
   name          = "${var.namespace}-psc-ilb-subnet"
-  region        = var.region
   network       = var.network.id
   purpose       = "PRIVATE_SERVICE_CONNECT"
   ip_cidr_range = "192.168.0.0/24"
@@ -34,7 +32,6 @@ resource "google_compute_subnetwork" "proxy_subnet" {
   name          = "${var.namespace}-proxy-subnet"
   provider      = google-beta
   ip_cidr_range = "10.127.0.0/24"
-  region        = "us-central1"
   purpose       = "REGIONAL_MANAGED_PROXY"
   role          = "ACTIVE"
   network       = var.network.id

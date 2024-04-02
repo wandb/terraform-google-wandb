@@ -236,18 +236,6 @@ variable "size" {
   default     = null
 }
 
-variable "region" {
-  type        = string
-  description = "private service connect region"
-  default     = "us-central1"
-}
-
-variable "psc_subnet_range" {
-  description = "Pre-existing psc subnetwork self link"
-  type        = string
-  default     = null
-}
-
 variable "create_private_link" {
   type        = bool
   description = "Whether to create a private link service."
