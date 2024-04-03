@@ -24,14 +24,14 @@ resource "google_compute_subnetwork" "psc_ilb_nat" {
   name          = "${var.namespace}-psc-ilb-subnet"
   network       = var.network.id
   purpose       = "PRIVATE_SERVICE_CONNECT"
-  ip_cidr_range = "192.168.0.0/24"
+  ip_cidr_range = var.psc_subnetwork
 }
 
 # proxy-only subnet
 resource "google_compute_subnetwork" "proxy_subnet" {
   name          = "${var.namespace}-proxy-subnet"
   provider      = google-beta
-  ip_cidr_range = "10.127.0.0/24"
+  ip_cidr_range = var.proxynetwork_cidr
   purpose       = "REGIONAL_MANAGED_PROXY"
   role          = "ACTIVE"
   network       = var.network.id

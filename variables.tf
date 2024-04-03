@@ -236,6 +236,28 @@ variable "size" {
   default     = null
 }
 
+variable "weave_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "app_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "parquet_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+##########################################
+# private link                           #
+##########################################
+
 variable "create_private_link" {
   type        = bool
   description = "Whether to create a private link service."
@@ -256,20 +278,14 @@ variable "allowed_projects" {
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
 
-variable "weave_wandb_env" {
-  type        = map(string)
-  description = "Extra environment variables for W&B"
-  default     = {}
+variable "psc_subnetwork_cidr" {
+  default     = "192.168.0.0/24"
+  description = "Private link service reserved subnetwork"
+  type        = string
 }
 
-variable "app_wandb_env" {
-  type        = map(string)
-  description = "Extra environment variables for W&B"
-  default     = {}
-}
-
-variable "parquet_wandb_env" {
-  type        = map(string)
-  description = "Extra environment variables for W&B"
-  default     = {}
+variable "ilb_proxynetwork_cidr" {
+  default     = "10.127.0.0/24"
+  description = "Internal load balancer proxy subnetwork"
+  type        = string
 }

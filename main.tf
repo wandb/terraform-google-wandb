@@ -147,14 +147,16 @@ resource "google_compute_address" "internal_ip" {
 }
 
 module "private_link" {
-  count            = var.create_private_link ? 1 : 0
-  source           = "./modules/private_link"
-  namespace        = var.namespace
-  ingress_name     = "${var.namespace}-internal"
-  network          = local.network
-  subnetwork       = local.subnetwork
-  allowed_projects = var.allowed_projects
-  depends_on       = [module.app_gke, module.wandb]
+  count             = var.create_private_link ? 1 : 0
+  source            = "./modules/private_link"
+  namespace         = var.namespace
+  ingress_name      = "${var.namespace}-internal"
+  network           = local.network
+  subnetwork        = local.subnetwork
+  allowed_projects  = var.allowed_projects
+  psc_subnetwork    = var.psc_subnetwork_cidr
+  proxynetwork_cidr = var.ilb_proxynetwork_cidr
+  depends_on        = [module.app_gke, module.wandb]
 }
 
 module "gke_app" {

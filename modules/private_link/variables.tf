@@ -32,3 +32,10 @@ variable "ingress_name" {
   description = "Name of the ingress resources which was created by wandb module"
   type        = string
 }
+
+variable "psc_subnetwork" {
+  type        = string
+}
+variable "proxynetwork_cidr" {
+  type        = string
+}
