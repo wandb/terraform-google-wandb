@@ -48,13 +48,13 @@ resource "google_compute_firewall" "fw_iap" {
   }
 }
 
-# allow http from proxy subnet to backends
+# allow tcp from proxy subnet to backends
 resource "google_compute_firewall" "fw_iap_rule" {
   name          = "${var.namespace}-fw-allow-iap-hc"
   provider      = google-beta
   direction     = "INGRESS"
   network       = var.network.id
-  source_ranges = ["10.10.0.0/16","10.127.0.0/24","192.168.0.0/24"]
+  source_ranges = [var.proxynetwork_cidr]
   allow {
     protocol = "tcp"
   }
