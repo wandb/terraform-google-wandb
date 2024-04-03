@@ -4,12 +4,16 @@ data "kubernetes_ingress_v1" "ingress" {
   }
 }
 
+locals {
+  lb_name = data.kubernetes_ingress_v1.ingress.metadata[0].annotations != null ? data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"] : ""
+}
+
 resource "google_compute_service_attachment" "psc_ilb_service_attachment" {
   name                  = "${var.namespace}-private-link"
   enable_proxy_protocol = false
   connection_preference = "ACCEPT_MANUAL"
   nat_subnets           = [google_compute_subnetwork.psc_ilb_nat.id]
-  target_service        = data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"]
+  target_service        =  local.lb_name
 
  dynamic "consumer_accept_lists" {
     for_each = var.allowed_projects != {} ? var.allowed_projects : {}
@@ -18,6 +22,7 @@ resource "google_compute_service_attachment" "psc_ilb_service_attachment" {
       connection_limit  = consumer_accept_lists.value
     }
   }
+  depends_on = [ data.kubernetes_ingress_v1.ingress ]
 }
 
 resource "google_compute_subnetwork" "psc_ilb_nat" {
