@@ -112,6 +112,7 @@ resources that lack official modules.
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"n1-standard-4"` | no |
 | <a name="input_gke_node_count"></a> [gke\_node\_count](#input\_gke\_node\_count) | n/a | `number` | `2` | no |
+| <a name="input_ilb_proxynetwork_cidr"></a> [ilb\_proxynetwork\_cidr](#input\_ilb\_proxynetwork\_cidr) | Internal load balancer proxy subnetwork | `string` | `"10.127.0.0/24"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
 | <a name="input_local_restore"></a> [local\_restore](#input\_local\_restore) | Restores W&B to a stable state if needed | `bool` | `false` | no |
@@ -123,6 +124,7 @@ resources that lack official modules.
 | <a name="input_oidc_secret"></a> [oidc\_secret](#input\_oidc\_secret) | The Client secret of application in your identity provider | `string` | `""` | no |
 | <a name="input_other_wandb_env"></a> [other\_wandb\_env](#input\_other\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_parquet_wandb_env"></a> [parquet\_wandb\_env](#input\_parquet\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
+| <a name="input_psc_subnetwork_cidr"></a> [psc\_subnetwork\_cidr](#input\_psc\_subnetwork\_cidr) | Private link service reserved subnetwork | `string` | `"192.168.0.0/24"` | no |
 | <a name="input_public_access"></a> [public\_access](#input\_public\_access) | Whether to create a public endpoint for wandb access. | `bool` | `true` | no |
 | <a name="input_redis_reserved_ip_range"></a> [redis\_reserved\_ip\_range](#input\_redis\_reserved\_ip\_range) | Reserved IP range for REDIS peering connection | `string` | `"10.30.0.0/16"` | no |
 | <a name="input_redis_tier"></a> [redis\_tier](#input\_redis\_tier) | Specifies the tier for this Redis instance | `string` | `"STANDARD_HA"` | no |
