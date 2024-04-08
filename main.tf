@@ -161,12 +161,6 @@ module "gke_app" {
     "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
 
-  weave_wandb_env = var.weave_wandb_env
-
-  app_wandb_env = var.app_wandb_env
-
-  parquet_wandb_env = var.parquet_wandb_env
-
   wandb_image    = var.wandb_image
   wandb_version  = var.wandb_version
   wandb_replicas = 0
