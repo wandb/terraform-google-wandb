@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.4](https://github.com/wandb/terraform-google-wandb/compare/v3.0.3...v3.0.4) (2024-04-12)
+
+
+### Bug Fixes
+
+* Pass through env vars for services ([#117](https://github.com/wandb/terraform-google-wandb/issues/117)) ([35e15c0](https://github.com/wandb/terraform-google-wandb/commit/35e15c096372e549656877137c08529e2b32bcec))
+
 ### [3.0.3](https://github.com/wandb/terraform-google-wandb/compare/v3.0.2...v3.0.3) (2024-04-10)
 
 
