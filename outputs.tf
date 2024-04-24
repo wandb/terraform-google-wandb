@@ -50,7 +50,7 @@ output "cluster_self_link" {
 }
 
 output "database_connection_string" {
-  value       = module.database.connection_string
+  value       = var.create_database ? module.database.0.connection_string : null
   sensitive   = true
   description = "Full database connection string. You must be in the VPC to access the database."
 }

@@ -102,6 +102,12 @@ variable "network" {
   description = "Pre-existing network self link"
   type        = string
 }
+ 
+variable "network_link" {
+  description = "Pre-existing network self link"
+  type        = string
+  default = null
+}
 
 variable "subnetwork" {
   default     = null
@@ -141,6 +147,30 @@ variable "ssl" {
 ##########################################
 # Database                               #
 ##########################################
+variable "create_database" {
+  type        = bool
+  default     = true
+}
+
+variable "database_env" {
+  type = object({
+    name               = string
+    database_name      = string
+    username           = string
+    password           = string
+    private_ip_address = string
+    connection_string  = string
+  })
+  default = { 
+    name               = null
+    database_name      = null
+    username           = null
+    password           = null
+    private_ip_address = null
+    connection_string  = null
+  }
+}
+
 variable "database_version" {
   description = "Version for MySQL"
   type        = string

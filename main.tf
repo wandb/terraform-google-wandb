@@ -82,8 +82,8 @@ module "app_gke" {
   namespace       = var.namespace
   machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
   node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network         = local.network
-  subnetwork      = local.subnetwork
+  network         = local.create_network ? local.network : { self_link = var.network_link}
+  subnetwork      = local.create_network ? local.subnetwork  : { self_link = var.subnetwork}
   service_account = module.service_accounts.service_account
   depends_on      = [module.project_factory_project_services]
 }
@@ -103,6 +103,7 @@ module "app_lb" {
 }
 
 module "database" {
+  count     = var.create_database ? 1 : 0
   source              = "./modules/database"
   namespace           = var.namespace
   database_version    = var.database_version
@@ -121,7 +122,7 @@ module "redis" {
   namespace = var.namespace
   ### here we set the default to 6gb, which is = setting for "small" standard size
   memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
-  network           = local.network
+  network           = local.create_network ? local.network : { id = var.network}
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
   tier              = var.redis_tier
@@ -145,9 +146,9 @@ module "gke_app" {
   host                       = local.url
   bucket                     = "gs://${local.bucket}"
   bucket_queue               = local.bucket_queue
-  database_connection_string = module.database.connection_string
-  redis_connection_string    = local.redis_connection_string
-  redis_ca_cert              = local.redis_certificate
+  database_connection_string = var.create_database ? module.database.0.connection_string : var.database_env.connection_string
+  redis_connection_string    = local.redis_connection_string 
+  redis_ca_cert              =  local.redis_certificate 
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
@@ -209,11 +210,11 @@ module "wandb" {
         }
 
         mysql = {
-          name     = module.database.database_name
-          user     = module.database.username
-          password = module.database.password
-          database = module.database.database_name
-          host     = module.database.private_ip_address
+          name     = var.create_database ? module.database.0.database_name : var.database_env.name
+          user     = var.create_database ? module.database.0.username : var.database_env.username
+          password = var.create_database ?  module.database.0.password : var.database_env.password
+          database = var.create_database ?  module.database.0.database_name : var.database_env.database_name
+          host     = var.create_database ? module.database.0.private_ip_address :  var.database_env.private_ip_address
           port     = 3306
         }
 
