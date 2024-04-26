@@ -102,12 +102,6 @@ variable "network" {
   description = "Pre-existing network self link"
   type        = string
 }
- 
-variable "network_link" {
-  description = "Pre-existing network self link"
-  type        = string
-  default = null
-}
 
 variable "subnetwork" {
   default     = null
@@ -147,8 +141,15 @@ variable "ssl" {
 ##########################################
 # Database                               #
 ##########################################
+variable "database_version" {
+  description = "Version for MySQL"
+  type        = string
+  default     = "MYSQL_8_0_31"
+}
+
 variable "create_database" {
   type        = bool
+  description = "Create sql database"
   default     = true
 }
 
@@ -169,12 +170,6 @@ variable "database_env" {
     private_ip_address = null
     connection_string  = null
   }
-}
-
-variable "database_version" {
-  description = "Version for MySQL"
-  type        = string
-  default     = "MYSQL_8_0_31"
 }
 
 variable "database_machine_type" {
@@ -198,10 +193,38 @@ variable "force_ssl" {
 ##########################################
 # Redis                                  #
 ##########################################
+
 variable "create_redis" {
   type        = bool
   description = "Boolean indicating whether to provision an redis instance (true) or not (false)."
   default     = false
+}
+
+variable "self_redis" {
+   default     = false
+   type        = bool
+}
+
+variable "redis_ca_cert" {
+   type        = string
+   default = ""
+}
+
+variable "redis_env" {
+  nullable    = false
+  type = object({
+    password = string
+    host     = string
+    port     = string
+    connection_string = string
+  })
+
+  default = {
+    password = null
+    host     = null
+    port     = null
+    connection_string = null
+  }
 }
 
 variable "redis_reserved_ip_range" {
@@ -242,6 +265,12 @@ variable "gke_machine_type" {
 variable "gke_node_count" {
   type    = number
   default = 2
+}
+
+variable "create_gke" {
+  type = bool
+  description = "Create gke cluster"
+  default = true
 }
 
 ##########################################

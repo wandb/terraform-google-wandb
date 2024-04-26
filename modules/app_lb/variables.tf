@@ -9,9 +9,9 @@ variable "fqdn" {
   description = "The FQDN to the W&B application"
 }
 
-variable "group" {
-  type = string
-}
+# variable "group" {
+#   type = string
+# }
 
 variable "labels" {
   description = "Labels which will be applied to all applicable resources."

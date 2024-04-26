@@ -78,23 +78,24 @@ locals {
 }
 
 module "app_gke" {
+  count           = var.create_gke ? 1 : 0
   source          = "./modules/app_gke"
   namespace       = var.namespace
   machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
   node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network         = local.create_network ? local.network : { self_link = var.network_link}
-  subnetwork      = local.create_network ? local.subnetwork  : { self_link = var.subnetwork}
+  network         = local.network
+  subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
   depends_on      = [module.project_factory_project_services]
 }
 
 module "app_lb" {
-  source                = "./modules/app_lb"
-  namespace             = var.namespace
-  ssl                   = var.ssl
-  fqdn                  = local.fqdn
-  network               = local.network
-  group                 = module.app_gke.instance_group_url
+  source    = "./modules/app_lb"
+  namespace = var.namespace
+  ssl       = var.ssl
+  fqdn      = local.fqdn
+  network   = local.network
+  #group                 = module.app_gke.0.instance_group_url
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
@@ -103,7 +104,7 @@ module "app_lb" {
 }
 
 module "database" {
-  count     = var.create_database ? 1 : 0
+  count               = var.create_database ? 1 : 0
   source              = "./modules/database"
   namespace           = var.namespace
   database_version    = var.database_version
@@ -122,7 +123,7 @@ module "redis" {
   namespace = var.namespace
   ### here we set the default to 6gb, which is = setting for "small" standard size
   memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
-  network           = local.create_network ? local.network : { id = var.network}
+  network           = var.network == null ? local.network : { id = var.network }
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
   tier              = var.redis_tier
@@ -147,8 +148,8 @@ module "gke_app" {
   bucket                     = "gs://${local.bucket}"
   bucket_queue               = local.bucket_queue
   database_connection_string = var.create_database ? module.database.0.connection_string : var.database_env.connection_string
-  redis_connection_string    = local.redis_connection_string 
-  redis_ca_cert              =  local.redis_certificate 
+  redis_connection_string    = var.self_redis ? var.redis_env.connection_string : local.redis_connection_string
+  redis_ca_cert              = var.self_redis ? var.redis_ca_cert : local.redis_certificate
 
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
@@ -212,17 +213,17 @@ module "wandb" {
         mysql = {
           name     = var.create_database ? module.database.0.database_name : var.database_env.name
           user     = var.create_database ? module.database.0.username : var.database_env.username
-          password = var.create_database ?  module.database.0.password : var.database_env.password
-          database = var.create_database ?  module.database.0.database_name : var.database_env.database_name
-          host     = var.create_database ? module.database.0.private_ip_address :  var.database_env.private_ip_address
+          password = var.create_database ? module.database.0.password : var.database_env.password
+          database = var.create_database ? module.database.0.database_name : var.database_env.database_name
+          host     = var.create_database ? module.database.0.private_ip_address : var.database_env.private_ip_address
           port     = 3306
         }
 
-        redis = var.create_redis ? {
-          password = module.redis.0.auth_string
-          host     = module.redis.0.host
-          port     = module.redis.0.port
-          caCert   = module.redis.0.ca_cert
+        redis = var.create_redis || var.self_redis ? {
+          password = var.create_redis ? module.redis.0.auth_string : var.redis_env.password
+          host     = var.create_redis ? module.redis.0.host : var.redis_env.host
+          port     = var.create_redis ? module.redis.0.port : var.redis_env.port
+          caCert   = var.create_redis ? module.redis.0.ca_cert : var.redis_ca_cert
           params = {
             tls          = true
             ttlInSeconds = 604800

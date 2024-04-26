@@ -1,9 +1,3 @@
-variable "namespace" {
-  type        = string
-  description = "String used for prefix resources."
-  default = ""
-}
-
 variable "project_id" {
   type        = string
   description = "Project ID"
@@ -20,6 +14,12 @@ variable "zone" {
   type        = string
   description = "Google zone"
   default = "us-central1-b"
+}
+
+variable "namespace" {
+  type        = string
+  description = "Namespace prefix used for resources"
+  default = ""
 }
 
 variable "domain_name" {
@@ -48,7 +48,7 @@ variable "gke_node_count" {
 variable "license" {
   type = string
   default = ""
- }
+  }
 
 
 variable "wandb_image" {
@@ -67,6 +67,29 @@ variable "size" {
   description = "Deployment size for the instance"
   type        = string
   default     = null
+}
+
+variable "weave_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "app_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "parquet_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+variable "other_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
 }
 
 variable "labels" {

@@ -11,41 +11,41 @@ output "bucket_queue_name" {
   description = "Pubsub queue created for google bucket file upload events."
 }
 output "cluster_ca_certificate" {
-  value       = module.app_gke.cluster_ca_certificate
+  value       = var.create_gke ? module.app_gke.0.cluster_ca_certificate : null
   sensitive   = true
   description = "Certificate of the kubernetes (GKE) cluster."
 }
 
 output "cluster_client_certificate" {
   sensitive = true
-  value     = module.app_gke.cluster_client_certificate
+  value     = var.create_gke ? module.app_gke.0.cluster_client_certificate : null
 }
 
 output "cluster_client_key" {
   sensitive = true
-  value     = module.app_gke.cluster_client_key
+  value     = var.create_gke ? module.app_gke.0.cluster_client_key : null
 }
 output "cluster_endpoint" {
-  value       = module.app_gke.cluster_endpoint
+  value       = var.create_gke ? module.app_gke.0.cluster_endpoint : null
   description = "Endpoint of the kubernetes (GKE) cluster."
 }
 
 output "cluster_id" {
-  value       = module.app_gke.cluster_id
+  value       = var.create_gke ? module.app_gke.0.cluster_id : null
   description = "ID of the kubernetes (GKE) cluster."
 }
 
 output "cluster_name" {
-  value = module.app_gke.cluster_name
+  value = var.create_gke ? module.app_gke.0.cluster_name : null
 }
 
 output "cluster_node_pool" {
-  value       = module.app_gke.node_pool
+  value       = var.create_gke ? module.app_gke.0.node_pool : null
   description = "Default node pool where Weights & Biases should be deployed into."
 }
 
 output "cluster_self_link" {
-  value       = module.app_gke.cluster_self_link
+  value       = var.create_gke ? module.app_gke.0.cluster_self_link : null
   description = "Self link of the kubernetes (GKE) cluster."
 }
 

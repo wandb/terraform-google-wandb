@@ -26,16 +26,8 @@ provider "helm" {
   }
 }
 
-data "google_compute_network" "network" {
-  name = var.network
-}
-
-data "google_compute_subnetwork" "subnetwork" {
-  name = var.subnetwork
-}
-
-
 # Spin up all required services
+
 module "wandb" {
   source                = "../../"
   namespace             = var.namespace
@@ -49,16 +41,19 @@ module "wandb" {
   wandb_image           = var.wandb_image
   disable_code_saving   = var.disable_code_saving
   size                  = var.size
+  weave_wandb_env       = var.weave_wandb_env
+  app_wandb_env         = var.app_wandb_env
+  parquet_wandb_env     = var.parquet_wandb_env
+  other_wandb_env       = var.other_wandb_env
   labels                = var.labels
   create_redis          = var.create_redis
   local_restore         = false
   use_internal_queue    = true
   force_ssl             = false
   deletion_protection   = false
-  network               = var.network
-  network_link          = data.google_compute_network.network.self_link
-  subnetwork            = data.google_compute_subnetwork.subnetwork.id
-  create_database       = var.create_database
+  network               = var.network  # must be network created already
+  subnetwork            = var.subnetwork  # must be subnet created already
+  create_database       = false # must be false
   database_env          = var.database_env
 }
 

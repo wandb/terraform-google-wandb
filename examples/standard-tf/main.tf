@@ -28,16 +28,16 @@ provider "helm" {
 
 # Spin up all required services
 module "wandb" {
-  source                = "../../"
-  namespace             = var.namespace
-  license               = var.license
-  allowed_inbound_cidrs = var.allowed_inbound_cidrs
-  domain_name           = var.domain_name
-  subdomain             = var.subdomain
-  gke_machine_type      = var.gke_machine_type
-  gke_node_count        = var.gke_node_count
-  wandb_version         = var.wandb_version
-  wandb_image           = var.wandb_image
+  source                    = "../../"
+  namespace                 = var.namespace
+  license                   = var.license
+  allowed_inbound_cidrs     = var.allowed_inbound_cidrs
+  domain_name               = var.domain_name
+  subdomain                 = var.subdomain
+  gke_machine_type          = var.gke_machine_type
+  gke_node_count            = var.gke_node_count
+  wandb_version             = var.wandb_version
+  wandb_image               = var.wandb_image
   database_sort_buffer_size = var.database_sort_buffer_size
   database_machine_type     = var.database_machine_type
   disable_code_saving       = var.disable_code_saving
@@ -48,7 +48,7 @@ module "wandb" {
   other_wandb_env           = var.other_wandb_env
   labels                    = var.labels
   database_version          = var.database_version
-  create_redis          = var.create_redis
+  create_redis              = var.create_redis
   local_restore             = false
   use_internal_queue        = true
   force_ssl                 = false
