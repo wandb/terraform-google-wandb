@@ -184,12 +184,6 @@ module "gke_app" {
     "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
 
-  weave_wandb_env = var.weave_wandb_env
-
-  app_wandb_env = var.app_wandb_env
-
-  parquet_wandb_env = var.parquet_wandb_env
-
   wandb_image    = var.wandb_image
   wandb_version  = var.wandb_version
   wandb_replicas = 0
@@ -207,6 +201,15 @@ module "gke_app" {
   ]
 }
 
+locals {
+  oidc_envs = var.oidc_issuer != "" ? {
+    "OIDC_ISSUER"      = var.oidc_issuer
+    "OIDC_CLIENT_ID"   = var.oidc_client_id
+    "OIDC_AUTH_METHOD" = var.oidc_auth_method
+    "OIDC_SECRET"      = var.oidc_secret
+  } : {}
+}
+
 module "wandb" {
   source  = "wandb/wandb/helm"
   version = "1.2.0"
@@ -221,11 +224,7 @@ module "wandb" {
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
           "TAG_CUSTOMER_NS"                      = var.namespace
-          "OIDC_ISSUER"                          = var.oidc_issuer
-          "OIDC_CLIENT_ID"                       = var.oidc_client_id
-          "OIDC_AUTH_METHOD"                     = var.oidc_auth_method
-          "OIDC_SECRET"                          = var.oidc_secret
-        }, var.other_wandb_env)
+        }, var.other_wandb_env, local.oidc_envs)
 
         bucket = {
           provider = "gcs"

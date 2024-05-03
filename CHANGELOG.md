@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.4](https://github.com/wandb/terraform-google-wandb/compare/v3.0.3...v3.0.4) (2024-04-12)
+
+
+### Bug Fixes
+
+* Pass through env vars for services ([#117](https://github.com/wandb/terraform-google-wandb/issues/117)) ([35e15c0](https://github.com/wandb/terraform-google-wandb/commit/35e15c096372e549656877137c08529e2b32bcec))
+
+### [3.0.3](https://github.com/wandb/terraform-google-wandb/compare/v3.0.2...v3.0.3) (2024-04-10)
+
+
+### Bug Fixes
+
+* Remove passthrough vars for old module ([#119](https://github.com/wandb/terraform-google-wandb/issues/119)) ([5b61465](https://github.com/wandb/terraform-google-wandb/commit/5b614651a50562e82a7506b76b0fece2035bf68c))
+
+### [3.0.2](https://github.com/wandb/terraform-google-wandb/compare/v3.0.1...v3.0.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* Conditionally set oidc envs ([#118](https://github.com/wandb/terraform-google-wandb/issues/118)) ([0df0ec8](https://github.com/wandb/terraform-google-wandb/commit/0df0ec8fb47fb18bf8cd4d6f8dc108f3e2ee5458))
+
 ### [3.0.1](https://github.com/wandb/terraform-google-wandb/compare/v3.0.0...v3.0.1) (2024-03-22)
 
 

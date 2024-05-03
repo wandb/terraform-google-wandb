@@ -49,8 +49,8 @@ module "wandb" {
 
 ## Examples
 
-We have included documentation and reference examples for additional common
-installation scenarios for Weights & Biases, as well as examples for supporting
+We have included documentation and reference examples for common
+installation scenarios, as well as examples for supporting
 resources that lack official modules.
 
 - [Public Instance with HTTPS using Cloud DNS](examples/public-dns-with-cloud-dns)
