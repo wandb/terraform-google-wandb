@@ -8,11 +8,11 @@ locals {
   lb_name = data.kubernetes_ingress_v1.ingress.metadata[0].annotations != null ? data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"] : ""
 }
 
-resource "google_compute_service_attachment" "psc_ilb_service_attachment" {
+resource "google_compute_service_attachment" "attachment" {
   name                  = "${var.namespace}-private-link"
   enable_proxy_protocol = false
   connection_preference = "ACCEPT_MANUAL"
-  nat_subnets           = [google_compute_subnetwork.psc_ilb_nat.id]
+  nat_subnets           = [google_compute_subnetwork.subnet.id]
   target_service        =  local.lb_name
 
  dynamic "consumer_accept_lists" {
@@ -25,7 +25,7 @@ resource "google_compute_service_attachment" "psc_ilb_service_attachment" {
   depends_on = [ data.kubernetes_ingress_v1.ingress ]
 }
 
-resource "google_compute_subnetwork" "psc_ilb_nat" {
+resource "google_compute_subnetwork" "subnet" {
   name          = "${var.namespace}-psc-ilb-subnet"
   network       = var.network.id
   purpose       = "PRIVATE_SERVICE_CONNECT"
@@ -54,7 +54,7 @@ resource "google_compute_firewall" "fw_iap" {
 }
 
 # allow tcp from proxy subnet to backends
-resource "google_compute_firewall" "fw_iap_rule" {
+resource "google_compute_firewall" "rule" {
   name          = "${var.namespace}-fw-allow-iap-hc"
   provider      = google-beta
   direction     = "INGRESS"

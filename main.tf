@@ -137,9 +137,9 @@ locals {
 }
 
 
-resource "google_compute_address" "internal_ip" {
+resource "google_compute_address" "address" {
   count        = var.create_private_link ? 1 : 0
-  name         = "${var.namespace}-internal-address-non-shared"
+  name         = "${var.namespace}-ip-address"
   subnetwork   = local.subnetwork.name
   address_type = "INTERNAL"
   purpose      = "GCE_ENDPOINT"
@@ -267,12 +267,12 @@ module "wandb" {
         }
       }
 
-      gcpPrivatLinkIngress = var.create_private_link ? {
+      secondaryIngress = var.create_private_link ? {
         create       = var.create_private_link # internal ingress for private link connections
         nameOverride = "${var.namespace}-internal"
         annotations = {
           "kubernetes.io/ingress.class"                   = "gce-internal"
-          "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.internal_ip.0.name
+          "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.address.0.name
 
         }
       } : null
