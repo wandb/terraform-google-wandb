@@ -265,18 +265,15 @@ module "wandb" {
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
+        secondary = var.create_private_link ? {
+          create       = var.create_private_link # internal ingress for private link connections
+          nameOverride = "${var.namespace}-internal"
+          annotations = {
+            "kubernetes.io/ingress.class"                   = "gce-internal"
+            "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.address.0.name
+          }
+        } : null
       }
-
-      secondaryIngress = var.create_private_link ? {
-        create       = var.create_private_link # internal ingress for private link connections
-        nameOverride = "${var.namespace}-internal"
-        annotations = {
-          "kubernetes.io/ingress.class"                   = "gce-internal"
-          "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.address.0.name
-
-        }
-      } : null
-
       redis = { install = false }
       mysql = { install = false }
 
