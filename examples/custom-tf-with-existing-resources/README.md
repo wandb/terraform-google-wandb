@@ -19,7 +19,7 @@ resources already exist:
 - The required version of terraform for this module is v1.1.7 or greater
 - If you operate with multiple terraforms, `tfenv` is a great tool that allows switching between different terraform versions
 
-### Using an existing domain
+### Using an existing domain, VPC & pre-created subnets, connecting to an existing MySQL cluster, using an existing GKE cluster, and an existing Redis cache
 - If you already have an existing domain, you could create a sub-domain for that domain and use that for W&B.
 - If you don't have an existing domain, please see below on how to create one
 
@@ -40,6 +40,37 @@ resources already exist:
 - Then click `Create`
 
 Note: The domain and subdomain association might take a few minutes to reflect.
+
+### Setting up a google vpc networks
+
+- Navigate to VPC Networks from the GCP console
+- Then, click on `Create VPC Network`
+- Enter your vpc name and subnet name
+- Click `Create`
+
+### Setting up a sql server
+
+- Navigate to SQL  from the GCP console
+- Then, click on `Create Instance`
+- Then, Choose `Database Engine`
+- Then, Fill the required details
+- Click `Create`
+
+
+
+### Setting up a redis server
+
+- Navigate to Redis from the GCP console
+- Then, click on `Create Instance`
+- Then, Choose `Database Engine`
+- Then, Fill the required details
+- Click `Create`
+
+### Setting up a GKE Cluster
+- Navigate to Kubernetes cluster from the GCP console
+- Then, click on `Create Cluster`
+- Then, Fill the required details
+- Click `Create`
 
 ### Getting the ID of a project in GCP
 
@@ -86,6 +117,11 @@ Note: The domain and subdomain association might take a few minutes to reflect.
   license    = "<W&B-license-key>"
   subdomain  = "<subdomain-for-accessing-the-UI>"
   domain     = "<domain-for-accessing-the-UI>"
+  network    = "<vpc-network-name>"
+  subnetwork = "<vpc-subnetwork-name>"
+  database   = "<database-env's>"
+  Redis      = "<redis-cluster-env's>"
+  GKE        = "<gke-cluster-name>"
   ```
   Refer to sections above to see how you can obtain these values
   An example `terraform.tfvars` file would look like this,
@@ -97,6 +133,21 @@ Note: The domain and subdomain association might take a few minutes to reflect.
   license    = "eyJhbGciOiJS6InUzhEUXM1M0xQY09yNnZhaTdoSlduYnF1bTRZTlZWd1VwSWM9In0.eyJjb25jdXJyZW50QWdlbnRzIjoxMCwiZGVwbG95bWVudElkIjoiNGU0YWNiZmYtY2E5NS00MmRiLThmYmItMjliNmY5NTI2OWE0IiwibWF4VXNlcnMiOjQsIm1heFN0b3JhZ2VHYiI6MTAwMDAwMCwibWF4VGVhbXMiOjEsImV4cGlyZXNBdCI6IjIwMjItMTAtMjBUMTY6MjY6NTUuNzA3WiIsImZsYWdzIjpbIlNDQUxBQkxFIiwibXlzcWwiLCJzMyIsInJlZGlzIiwiTk9USUZJQ0FUSU9OUyIsInNsYWNrIiwibm90aWZpY2F0aW9ucyIsIk1BTkFHRU1FTlQiLCJvcmdfZGFzaCIsImF1dGgwIl0sInRyaWFsIjpmYWxzZSwiYWNjZXNzS2V5IjoiNzk3M2FkOWItNThmOC00OTUxLWJhOTctOGQ2NGFkYzI1ZThlIiwic2VhdHMiOjQsInRlYW1zIjoxLCJzdG9yYWdlR2lncyI6MTAwMDAwMCwiZXhwIjoxNjY2MjgzMjE1fQ.O_6D3Av9QoWI16ybg54KFvs7eGWugSXPxmfhobtZe3TBFvd8PwmSCAmMojmKWsqg6KNjLJ9sjxOP_3Pj9OAdrkx5WzU0KTcIByXD2hS9VwyYUOYEohBn65oCLnQJLYphXJBrB9JVS0GSUGxR1AzwnUK1PuKZ6jQFrpt-feQOD3rvCdyM1eBQ73rdHk6zfEBmdiZ7C4LiRLV8OEMxUfwxASvVF_cFUEeVQx82AaxRwfPBLZxXTL4qlQOIFjAKwGVyDMEWq04BhQ_ASdyND45w5qXiUOlvFOergrFyGBSHg-9yDT4fhdkDw5puGthDaMFsn02rr0eYHuxKFWSY958aig"
   subdomain  = "venky"
   domain     = "wandb.ml"
+  network  = ""
+  subnetwork  = ""
+  database  = {
+  name = "**"
+  username = "**"
+  password = "**"
+  database_name =  "**"
+  private_ip_address =  ""
+  connection_string = "**" # "mysql://${username}:${password}@${private_ip_address}/${database_name}"
+  }
+  redis  =  {
+  password = "**"
+  host     = "**"
+  port     = "**"
+  }
   ```
 
 ### Initializing the terraform
