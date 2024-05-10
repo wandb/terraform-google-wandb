@@ -137,7 +137,7 @@ locals {
 }
 
 
-resource "google_compute_address" "address" {
+resource "google_compute_address" "default" {
   count        = var.create_private_link ? 1 : 0
   name         = "${var.namespace}-ip-address"
   subnetwork   = local.subnetwork.name
@@ -145,6 +145,7 @@ resource "google_compute_address" "address" {
   purpose      = "GCE_ENDPOINT"
   depends_on   = [module.app_gke]
 }
+
 
 module "private_link" {
   count             = var.create_private_link ? 1 : 0
@@ -270,7 +271,7 @@ module "wandb" {
           nameOverride = "${var.namespace}-internal"
           annotations = {
             "kubernetes.io/ingress.class"                   = "gce-internal"
-            "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.address.0.name
+            "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.default.0.name
           }
         } : null
       }
