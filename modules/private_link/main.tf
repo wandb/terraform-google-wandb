@@ -1,3 +1,5 @@
+data "google_client_config" "current" {}
+
 data "kubernetes_ingress_v1" "ingress" {
   metadata {
     name = var.ingress_name
@@ -5,7 +7,10 @@ data "kubernetes_ingress_v1" "ingress" {
 }
 
 locals {
-  lb_name = data.kubernetes_ingress_v1.ingress.metadata[0].annotations != null ? data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"] : ""
+   forwardingRules = try(
+    data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"],
+    ""
+  )
 }
 
 resource "google_compute_service_attachment" "default" {
@@ -13,7 +18,7 @@ resource "google_compute_service_attachment" "default" {
   enable_proxy_protocol = false
   connection_preference = "ACCEPT_MANUAL"
   nat_subnets           = [google_compute_subnetwork.default.id]
-  target_service        =  local.lb_name
+  target_service        =  "https://www.googleapis.com/compute/v1/projects/${data.google_client_config.current.project}/regions/${data.google_client_config.current.region}/forwardingRules/${local.forwardingRules}"
 
  dynamic "consumer_accept_lists" {
     for_each = var.allowed_projects != {} ? var.allowed_projects : {}
@@ -41,6 +46,7 @@ resource "google_compute_subnetwork" "proxy" {
   role          = "ACTIVE"
   network       = var.network.id
 }
+
 # allow all access from IAP and health check ranges
 resource "google_compute_firewall" "default" {
   name          = "${var.namespace}-internal-fw"
