@@ -70,6 +70,8 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | ~> 4.82 |
+| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
