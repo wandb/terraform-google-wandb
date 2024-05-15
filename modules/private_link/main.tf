@@ -47,19 +47,7 @@ resource "google_compute_firewall" "default" {
   provider      = google-beta
   direction     = "INGRESS"
   network       = var.network.id
-  source_ranges = ["130.211.0.0/22", "35.191.0.0/16", "35.235.240.0/20"]
-  allow {
-    protocol = "tcp"
-  }
-}
-
-# allow tcp from proxy subnet to backends
-resource "google_compute_firewall" "default" {
-  name          = "${var.namespace}-fw-allow-iap-hc"
-  provider      = google-beta
-  direction     = "INGRESS"
-  network       = var.network.id
-  source_ranges = [var.proxynetwork_cidr]
+  source_ranges = ["130.211.0.0/22", "35.191.0.0/16", "35.235.240.0/20",var.proxynetwork_cidr]
   allow {
     protocol = "tcp"
   }
