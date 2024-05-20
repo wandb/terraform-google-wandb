@@ -154,6 +154,8 @@ resource "time_sleep" "wait_180_seconds" {
   create_duration = "180s"
 }
 
+## In order to support private link required min version 0.13.0 of operator-wandb chart
+
 module "private_link" {
   count             = var.create_private_link ? 0 : 1
   source            = "./modules/private_link"
@@ -273,6 +275,7 @@ module "wandb" {
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
+        ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
         secondary = var.create_private_link ? {
           create       = var.create_private_link # internal ingress for private link connections
           nameOverride = "${var.namespace}-internal"
