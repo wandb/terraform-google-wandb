@@ -258,10 +258,12 @@ variable "parquet_wandb_env" {
 # private link                           #
 ##########################################
 
+## In order to support private link required min version 0.13.0 of operator-wandb chart
+
 variable "create_private_link" {
   type        = bool
   description = "Whether to create a private link service."
-  default     = false
+  default     = true
 }
 
 variable "public_access" {

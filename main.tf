@@ -146,28 +146,6 @@ resource "google_compute_address" "default" {
   depends_on   = [module.app_gke]
 }
 
-resource "null_resource" "previous" {}
-
-resource "time_sleep" "wait_180_seconds" {
-  depends_on = [null_resource.previous]
-
-  create_duration = "180s"
-}
-
-## In order to support private link required min version 0.13.0 of operator-wandb chart
-
-module "private_link" {
-  count             = var.create_private_link ? 0 : 1
-  source            = "./modules/private_link"
-  namespace         = var.namespace
-  ingress_name      = "${var.namespace}-internal"
-  network           = local.network
-  subnetwork        = local.subnetwork
-  allowed_projects  = var.allowed_projects
-  psc_subnetwork    = var.psc_subnetwork_cidr
-  proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [module.app_gke, module.wandb,time_sleep.wait_180_seconds]
-}
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
@@ -276,14 +254,14 @@ module "wandb" {
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
         ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
-        secondary = var.create_private_link ? {
+        secondary = {
           create       = var.create_private_link # internal ingress for private link connections
           nameOverride = "${var.namespace}-internal"
           annotations = {
             "kubernetes.io/ingress.class"                   = "gce-internal"
-            "kubernetes.io/ingress.regional-static-ip-name" = google_compute_address.default.0.name
+            "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
           }
-        } : null
+        } 
       }
       redis = { install = false }
       mysql = { install = false }
@@ -308,4 +286,28 @@ module "wandb" {
   depends_on = [
     module.gke_app
   ]
+}
+
+
+resource "null_resource" "previous" {}
+
+resource "time_sleep" "wait_180_seconds" {
+  depends_on = [null_resource.previous]
+
+  create_duration = "180s"
+}
+
+## In order to support private link required min version 0.13.0 of operator-wandb chart
+
+module "private_link" {
+  count             = var.create_private_link ? 1 : 0
+  source            = "./modules/private_link"
+  namespace         = var.namespace
+  ingress_name      = "${var.namespace}-internal"
+  network           = local.network
+  subnetwork        = local.subnetwork
+  allowed_projects  = var.allowed_projects
+  psc_subnetwork    = var.psc_subnetwork_cidr
+  proxynetwork_cidr = var.ilb_proxynetwork_cidr
+  depends_on        = [module.wandb, time_sleep.wait_180_seconds]
 }
