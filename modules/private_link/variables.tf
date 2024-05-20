@@ -38,4 +38,5 @@ variable "psc_subnetwork" {
 }
 variable "proxynetwork_cidr" {
   type        = string
+  default = ""
 }

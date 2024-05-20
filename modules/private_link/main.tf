@@ -37,15 +37,6 @@ resource "google_compute_subnetwork" "default" {
   ip_cidr_range = var.psc_subnetwork
 }
 
-# proxy-only subnet
-resource "google_compute_subnetwork" "proxy" {
-  name          = "${var.namespace}-proxy-subnet"
-  provider      = google-beta
-  ip_cidr_range = var.proxynetwork_cidr
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-  network       = var.network.id
-}
 
 # allow all access from IAP and health check ranges
 resource "google_compute_firewall" "default" {

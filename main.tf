@@ -146,6 +146,17 @@ resource "google_compute_address" "default" {
   depends_on   = [module.app_gke]
 }
 
+# proxy-only subnet
+resource "google_compute_subnetwork" "proxy" {
+  count = var.create_private_link ? 1 : 0
+  name          = "${var.namespace}-proxy-subnet"
+  provider      = google-beta
+  ip_cidr_range = var.ilb_proxynetwork_cidr
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  role          = "ACTIVE"
+  network       = local.network.id
+}
+
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
@@ -284,17 +295,14 @@ module "wandb" {
   # mitigates the risk of "insufficient CPU" errors by facilitating controlled pod scheduling across nodes.
   # TODO: Remove `depends_on` for phase 3
   depends_on = [
-    module.gke_app
+    module.gke_app, google_compute_subnetwork.proxy
   ]
 }
 
-
-resource "null_resource" "previous" {}
-
 resource "time_sleep" "wait_180_seconds" {
-  depends_on = [null_resource.previous]
-
-  create_duration = "180s"
+  depends_on = [module.wandb,google_compute_address.default]
+  create_duration = "600s"
+  destroy_duration = "600s"
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
@@ -309,5 +317,5 @@ module "private_link" {
   allowed_projects  = var.allowed_projects
   psc_subnetwork    = var.psc_subnetwork_cidr
   proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [module.wandb, time_sleep.wait_180_seconds]
+  depends_on        = [time_sleep.wait_180_seconds]
 }

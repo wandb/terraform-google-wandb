@@ -85,6 +85,6 @@ output "database_instance_type" {
   value = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
 }
 
-output "private_attachement_id" {
-  value = var.create_private_link ? try(module.private_link[0].private_attachement_id,null) : null
-}
+# output "private_attachement_id" {
+#   value = var.create_private_link ? try(module.private_link[0].private_attachement_id,null) : null
+# }
