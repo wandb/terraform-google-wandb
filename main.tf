@@ -143,19 +143,9 @@ resource "google_compute_address" "default" {
   subnetwork   = local.subnetwork.name
   address_type = "INTERNAL"
   purpose      = "GCE_ENDPOINT"
-  depends_on   = [module.app_gke]
 }
 
-# proxy-only subnet
-resource "google_compute_subnetwork" "proxy" {
-  count = var.create_private_link ? 1 : 0
-  name          = "${var.namespace}-proxy-subnet"
-  provider      = google-beta
-  ip_cidr_range = var.ilb_proxynetwork_cidr
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-  network       = local.network.id
-}
+
 
 
 module "gke_app" {
@@ -272,7 +262,7 @@ module "wandb" {
             "kubernetes.io/ingress.class"                   = "gce-internal"
             "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
           }
-        } 
+        }
       }
       redis = { install = false }
       mysql = { install = false }
@@ -295,14 +285,28 @@ module "wandb" {
   # mitigates the risk of "insufficient CPU" errors by facilitating controlled pod scheduling across nodes.
   # TODO: Remove `depends_on` for phase 3
   depends_on = [
-    module.gke_app, google_compute_subnetwork.proxy
+    module.gke_app
   ]
 }
 
-resource "time_sleep" "wait_180_seconds" {
-  depends_on = [module.wandb,google_compute_address.default]
-  create_duration = "600s"
-  destroy_duration = "600s"
+
+
+# proxy-only subnet
+resource "google_compute_subnetwork" "proxy" {
+  name          = "${var.namespace}-proxy-subnet"
+  ip_cidr_range = var.ilb_proxynetwork_cidr
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  role          = "ACTIVE"
+  network       = local.network.id
+}
+
+resource "time_sleep" "wait_seconds" {
+  count = var.create_private_link ? 1 : 0
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  depends_on       = [module.wandb]
+  create_duration  = "400s"
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
@@ -317,5 +321,5 @@ module "private_link" {
   allowed_projects  = var.allowed_projects
   psc_subnetwork    = var.psc_subnetwork_cidr
   proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [time_sleep.wait_180_seconds]
+  depends_on        = [google_compute_subnetwork.proxy]
 }
