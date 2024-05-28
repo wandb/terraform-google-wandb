@@ -55,7 +55,6 @@ jobs:
 
       - name: Retrieve Health Check URL
         id: retrieve-health-check-url
-        working-directory: ${{ env.WORK_DIR_PATH }}
         run: |
           terraform output -no-color -raw health_check_url
 

@@ -15,8 +15,8 @@ jobs:
       - name: Slash Command Dispatch
         uses: peter-evans/slash-command-dispatch@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          reaction-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WANDB_RELEASE_TOKEN }}
+          reaction-token: ${{ secrets.WANDB_RELEASE_TOKEN }}
           commands: |
             test
             destroy
