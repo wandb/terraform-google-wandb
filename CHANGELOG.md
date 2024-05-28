@@ -2,6 +2,112 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.4](https://github.com/wandb/terraform-google-wandb/compare/v3.0.3...v3.0.4) (2024-04-12)
+
+
+### Bug Fixes
+
+* Pass through env vars for services ([#117](https://github.com/wandb/terraform-google-wandb/issues/117)) ([35e15c0](https://github.com/wandb/terraform-google-wandb/commit/35e15c096372e549656877137c08529e2b32bcec))
+
+### [3.0.3](https://github.com/wandb/terraform-google-wandb/compare/v3.0.2...v3.0.3) (2024-04-10)
+
+
+### Bug Fixes
+
+* Remove passthrough vars for old module ([#119](https://github.com/wandb/terraform-google-wandb/issues/119)) ([5b61465](https://github.com/wandb/terraform-google-wandb/commit/5b614651a50562e82a7506b76b0fece2035bf68c))
+
+### [3.0.2](https://github.com/wandb/terraform-google-wandb/compare/v3.0.1...v3.0.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* Conditionally set oidc envs ([#118](https://github.com/wandb/terraform-google-wandb/issues/118)) ([0df0ec8](https://github.com/wandb/terraform-google-wandb/commit/0df0ec8fb47fb18bf8cd4d6f8dc108f3e2ee5458))
+
+### [3.0.1](https://github.com/wandb/terraform-google-wandb/compare/v3.0.0...v3.0.1) (2024-03-22)
+
+
+### Bug Fixes
+
+* **dev:** Add passthrough for env vars ([#112](https://github.com/wandb/terraform-google-wandb/issues/112)) ([02278b0](https://github.com/wandb/terraform-google-wandb/commit/02278b0772337dbad615be13a67caf96d67ac2b3))
+
+## [3.0.0](https://github.com/wandb/terraform-google-wandb/compare/v2.0.1...v3.0.0) (2024-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Enable operator as default (#114)
+
+### Features
+
+* Enable operator as default ([#114](https://github.com/wandb/terraform-google-wandb/issues/114)) ([10b501b](https://github.com/wandb/terraform-google-wandb/commit/10b501b6fb77c4ee8def6d5a7a1cdc86fd97afb8))
+
+### [2.0.1](https://github.com/wandb/terraform-google-wandb/compare/v2.0.0...v2.0.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Bump controller image and readd chart version ([#108](https://github.com/wandb/terraform-google-wandb/issues/108)) ([92a9bb4](https://github.com/wandb/terraform-google-wandb/commit/92a9bb4e991556bc4ecb86d4d588f115452ba3c9))
+
+## [2.0.0](https://github.com/wandb/terraform-google-wandb/compare/v1.24.2...v2.0.0) (2024-03-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump operator chart version (#105)
+
+### Features
+
+* Bump operator chart version ([#105](https://github.com/wandb/terraform-google-wandb/issues/105)) ([3fde6be](https://github.com/wandb/terraform-google-wandb/commit/3fde6be607a0e7728ffb0949e836e00573d78a6c))
+
+### [1.24.2](https://github.com/wandb/terraform-google-wandb/compare/v1.24.1...v1.24.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* Add ingress name ([#107](https://github.com/wandb/terraform-google-wandb/issues/107)) ([e659c40](https://github.com/wandb/terraform-google-wandb/commit/e659c4085ec96e9fa2605e2729e54d3127d8ad53))
+
+### [1.24.1](https://github.com/wandb/terraform-google-wandb/compare/v1.24.0...v1.24.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* Add oidc secret ([#106](https://github.com/wandb/terraform-google-wandb/issues/106)) ([19cdd25](https://github.com/wandb/terraform-google-wandb/commit/19cdd250aee1826ab7a34b96627e80b5f5eb5ee3))
+
+## [1.24.0](https://github.com/wandb/terraform-google-wandb/compare/v1.23.3...v1.24.0) (2024-03-04)
+
+
+### Features
+
+* Add operator helm release ([#98](https://github.com/wandb/terraform-google-wandb/issues/98)) ([e3916a7](https://github.com/wandb/terraform-google-wandb/commit/e3916a76b47ea2afc2cc5b3dfae8b0e0bffd5dd7)), closes [#92](https://github.com/wandb/terraform-google-wandb/issues/92) [#101](https://github.com/wandb/terraform-google-wandb/issues/101) [#101](https://github.com/wandb/terraform-google-wandb/issues/101) [#102](https://github.com/wandb/terraform-google-wandb/issues/102)
+
+### [1.23.3](https://github.com/wandb/terraform-google-wandb/compare/v1.23.2...v1.23.3) (2024-03-01)
+
+
+### Bug Fixes
+
+* Fix Redis Tier ([#103](https://github.com/wandb/terraform-google-wandb/issues/103)) ([432517e](https://github.com/wandb/terraform-google-wandb/commit/432517ef30460f6c0bf63e0b117f6f3db9347540))
+
+### [1.23.2](https://github.com/wandb/terraform-google-wandb/compare/v1.23.1...v1.23.2) (2024-02-22)
+
+
+### Bug Fixes
+
+* Backwards compatibility fix to avoid changes in nodegroups. ([#102](https://github.com/wandb/terraform-google-wandb/issues/102)) ([c331853](https://github.com/wandb/terraform-google-wandb/commit/c3318536187b9cd17d9371c64b602e3aa8f5c399))
+
+### [1.23.1](https://github.com/wandb/terraform-google-wandb/compare/v1.23.0...v1.23.1) (2024-02-21)
+
+
+### Bug Fixes
+
+* Backwards compatibility for t-shirt-sized deployments ([#101](https://github.com/wandb/terraform-google-wandb/issues/101)) ([f812f81](https://github.com/wandb/terraform-google-wandb/commit/f812f810ec6addd3f8a18fe114d320245d64c9da))
+
+## [1.23.0](https://github.com/wandb/terraform-google-wandb/compare/v1.22.0...v1.23.0) (2024-02-21)
+
+
+### Features
+
+* Add support for t-shirt-sized deployments ([#91](https://github.com/wandb/terraform-google-wandb/issues/91)) ([5432961](https://github.com/wandb/terraform-google-wandb/commit/5432961f6688a5eed5a646d7ab772f28844d4bf7)), closes [#92](https://github.com/wandb/terraform-google-wandb/issues/92)
+
 ## [1.22.0](https://github.com/wandb/terraform-google-wandb/compare/v1.21.0...v1.22.0) (2023-12-15)
 
 

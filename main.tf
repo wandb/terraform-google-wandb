@@ -80,13 +80,13 @@ locals {
 module "app_gke" {
   source          = "./modules/app_gke"
   namespace       = var.namespace
-  machine_type    = var.gke_machine_type
+  machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
   network         = local.network
   subnetwork      = local.subnetwork
   service_account = module.service_accounts.service_account
   depends_on      = [module.project_factory_project_services]
 }
-
 
 module "app_lb" {
   source                = "./modules/app_lb"
@@ -107,7 +107,7 @@ module "database" {
   namespace           = var.namespace
   database_version    = var.database_version
   force_ssl           = var.force_ssl
-  tier                = var.database_machine_type
+  tier                = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
@@ -116,13 +116,15 @@ module "database" {
 }
 
 module "redis" {
-  count             = var.create_redis ? 1 : 0
-  source            = "./modules/redis"
-  namespace         = var.namespace
-  memory_size_gb    = 4
+  count     = var.create_redis ? 1 : 0
+  source    = "./modules/redis"
+  namespace = var.namespace
+  ### here we set the default to 6gb, which is = setting for "small" standard size
+  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
+  tier              = var.redis_tier
 }
 
 locals {
@@ -136,7 +138,7 @@ locals {
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
-  version = "1.13.0"
+  version = "1.14.1"
 
   license = var.license
 
@@ -152,13 +154,16 @@ module "gke_app" {
   oidc_auth_method = var.oidc_auth_method
   oidc_secret      = var.oidc_secret
   local_restore    = var.local_restore
+
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
-    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source
+    "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+    "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
 
-  wandb_image   = var.wandb_image
-  wandb_version = var.wandb_version
+  wandb_image    = var.wandb_image
+  wandb_version  = var.wandb_version
+  wandb_replicas = 0
 
   resource_limits   = var.resource_limits
   resource_requests = var.resource_requests
@@ -170,5 +175,95 @@ module "gke_app" {
     module.redis,
     module.storage,
     module.app_gke
+  ]
+}
+
+locals {
+  oidc_envs = var.oidc_issuer != "" ? {
+    "OIDC_ISSUER"      = var.oidc_issuer
+    "OIDC_CLIENT_ID"   = var.oidc_client_id
+    "OIDC_AUTH_METHOD" = var.oidc_auth_method
+    "OIDC_SECRET"      = var.oidc_secret
+  } : {}
+}
+
+module "wandb" {
+  source  = "wandb/wandb/helm"
+  version = "1.2.0"
+
+  spec = {
+    values = {
+      global = {
+        host    = local.url
+        license = var.license
+
+        extraEnv = merge({
+          "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
+          "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
+          "TAG_CUSTOMER_NS"                      = var.namespace
+        }, var.other_wandb_env, local.oidc_envs)
+
+        bucket = {
+          provider = "gcs"
+          name     = local.bucket
+        }
+
+        mysql = {
+          name     = module.database.database_name
+          user     = module.database.username
+          password = module.database.password
+          database = module.database.database_name
+          host     = module.database.private_ip_address
+          port     = 3306
+        }
+
+        redis = var.create_redis ? {
+          password = module.redis.0.auth_string
+          host     = module.redis.0.host
+          port     = module.redis.0.port
+          caCert   = module.redis.0.ca_cert
+          params = {
+            tls          = true
+            ttlInSeconds = 604800
+            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+          }
+        } : null
+      }
+
+      app = {
+        extraEnvs = var.app_wandb_env
+      }
+
+      ingress = {
+        nameOverride = var.namespace
+        annotations = {
+          "kubernetes.io/ingress.class"                 = "gce"
+          "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
+          "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
+        }
+      }
+
+      redis = { install = false }
+      mysql = { install = false }
+
+      weave = {
+        extraEnvs = var.weave_wandb_env
+      }
+
+      parquet = {
+        extraEnvs = var.parquet_wandb_env
+      }
+    }
+  }
+
+  controller_image_tag   = "1.11.1"
+  operator_chart_version = "1.1.2"
+
+  # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
+  # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
+  # mitigates the risk of "insufficient CPU" errors by facilitating controlled pod scheduling across nodes.
+  # TODO: Remove `depends_on` for phase 3
+  depends_on = [
+    module.gke_app
   ]
 }

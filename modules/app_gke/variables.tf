@@ -19,6 +19,28 @@ variable "subnetwork" {
 }
 
 variable "machine_type" {
-  type    = string
-  default = "n1-standard-4"
+  type = string
+}
+
+variable "weave_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "app_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+variable "parquet_wandb_env" {
+  type        = map(string)
+  description = "Extra environment variables for W&B"
+  default     = {}
+}
+
+
+variable "node_count" {
+  type = number
 }
