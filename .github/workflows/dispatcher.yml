@@ -1,4 +1,4 @@
-name: Pull Request Dispatcher
+name: ChatOps Dispatcher
 
 on:
   issue_comment:
@@ -6,7 +6,7 @@ on:
       - created
 
 jobs:
-  slash_command_dispatch:
+  slash-command-dispatch:
     name: Slash Command Dispatcher
     runs-on: ubuntu-latest
     permissions:
