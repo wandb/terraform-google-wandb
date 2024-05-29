@@ -1,0 +1,72 @@
+name: Pull Request Test Handler
+
+on:
+  repository_dispatch:
+    types:
+      - test-command
+
+env:
+  GOOGLE_SERVICE_ACCOUNT: "terraform-google-testing@playground-111.iam.gserviceaccount.com"
+  TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
+
+jobs:
+  public-dns-with-cloud-dns:
+    name: Public DNS with Cloud DNS
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./tests/public-dns
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.client_payload.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "~1"
+
+      - name: Install k6 for load testing
+        env:
+          K6_URL: https://github.com/loadimpact/k6/releases/download/v0.31.1/k6-v0.31.1-linux64.tar.gz
+        run: |
+          sudo apt-get install jq
+          curl -L $K6_URL | tar -xz --strip-components=1
+
+      - name: Authenticate with Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: "${{ secrets.GOOGLE_TESTING_SA_CREDENTIALS }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          version: ">= 363.0.0"
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -input=false -no-color
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -input=false -no-color
+
+      - name: Retrieve Health Check URL
+        id: retrieve-health-check-url
+        run: |
+          terraform output -no-color -raw health_check_url
+
+      - name: Terraform Destroy
+        id: destroy
+        if: ${{ always() }}
+        run: terraform destroy -auto-approve -input=false -no-color
