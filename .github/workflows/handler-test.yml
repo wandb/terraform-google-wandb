@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Create URL to the run output
         id: vars
-        run: echo "run-url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+        run: echo ::set-output name=run-url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
       - name: Display Action URL
         if: ${{ always() }}
@@ -93,7 +93,6 @@ jobs:
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
           comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
           body: |
-            ---
 
             ${{ format('- {0} Terraform Init', steps.init.outcome == 'success' && ':white_check_mark:' || ':x:') }}
 
