@@ -19,16 +19,28 @@ jobs:
         working-directory: ./tests/public-dns
 
     steps:
+      - name: Create URL to the run output
+        id: vars
+        run: echo "run-url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+
+      - name: Display Action URL
+        if: ${{ always() }}
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.WANDB_RELEASE_TOKEN }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          body: |
+            ${{ format('### Public DNS Terraform Google - Test Report', job.status == 'success' && ':white_check_mark:' || ':x:')  }}
+
+            ${{ format(':link: [Action Summary Page]({0})', steps.vars.outputs.run-url) }}
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.sha }}
           persist-credentials: false
-
-      - name: Create URL to the run output
-        id: vars
-        run: echo ::set-output name=run-url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -75,16 +87,12 @@ jobs:
 
       - name: Update comment
         if: ${{ always() }}
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WANDB_RELEASE_TOKEN }}
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
           comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
           body: |
-            ${{ format('### Public DNS Terraform Google - Test Report', job.status == 'success' && ':white_check_mark:' || ':x:')  }}
-
-            ${{ format(':link: [Action Summary Page]({0})', steps.vars.outputs.run-url) }}
-
             ${{ format('- {0} Terraform Init', steps.init.outcome == 'success' && ':white_check_mark:' || ':x:') }}
 
             ${{ format('- {0} Terraform Validate', steps.validate.outcome == 'success' && ':white_check_mark:' || ':x:') }}

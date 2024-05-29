@@ -20,6 +20,7 @@ jobs:
           commands: |
             test
             destroy
+            help
           permission: maintain
           issue-type: pull-request
           event-type-suffix: -command

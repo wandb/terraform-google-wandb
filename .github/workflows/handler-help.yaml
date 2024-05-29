@@ -1,0 +1,27 @@
+name: Pull Request Help Handler
+
+on:
+  repository_dispatch:
+    types:
+      - help-command
+
+jobs:
+  help:
+    name: Run help
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
+        with:
+          token: ${{ secrets.WANDB_RELEASE_TOKEN }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          body: |
+            > | Command | Description |
+            > | ------- | ----------- |
+            > | /test [destroy=false] | Run the Terraform test workflow on the modules in the tests/ The named argument "destroy=false" will disable the destruction of test infrastructure for debugging purposes. |
+            > | /destroy | Destroy any resources that may still be in Terraform state from previous tests |
+            > | /help | Shows this help message |
+          reactions: confused
