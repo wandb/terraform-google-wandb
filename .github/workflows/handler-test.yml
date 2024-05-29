@@ -93,6 +93,8 @@ jobs:
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
           comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
           body: |
+            ---
+
             ${{ format('- {0} Terraform Init', steps.init.outcome == 'success' && ':white_check_mark:' || ':x:') }}
 
             ${{ format('- {0} Terraform Validate', steps.validate.outcome == 'success' && ':white_check_mark:' || ':x:') }}
