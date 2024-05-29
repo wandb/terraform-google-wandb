@@ -22,18 +22,18 @@ locals {
   }
 
   subdomain = "tgw-pd"
+
+  project = "playground-111"
 }
 
-data "google_client_config" "current" {}
-
 data "google_dns_managed_zone" "default" {
-  project = data.google_client_config.current.project
+  project = local.project
   name    = "wandb-ml"
 }
 
 # Create A record which points to lb ip address
 resource "google_dns_record_set" "a" {
-  project      = data.google_client_config.current.project
+  project      = local.project
   name         = "${local.subdomain}.${data.google_dns_managed_zone.default.dns_name}"
   managed_zone = data.google_dns_managed_zone.default.name
   type         = "A"
@@ -42,7 +42,7 @@ resource "google_dns_record_set" "a" {
 }
 
 module "wandb" {
-  source = "../../"
+  source = "../.."
 
   namespace   = random_pet.main.id
   license     = var.license
