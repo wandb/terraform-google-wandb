@@ -7,11 +7,16 @@ on:
 
 env:
   GOOGLE_SERVICE_ACCOUNT: "terraform-google-testing@playground-111.iam.gserviceaccount.com"
+  TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
 
 jobs:
   public-dns-with-cloud-dns:
     name: Public DNS with Cloud DNS
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./tests/public-dns
 
     steps:
       - name: Checkout code
@@ -47,6 +52,10 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -input=false -no-color
 
       - name: Retrieve Health Check URL
         id: retrieve-health-check-url
