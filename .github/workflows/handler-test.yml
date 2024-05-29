@@ -7,7 +7,7 @@ on:
 
 env:
   GOOGLE_SERVICE_ACCOUNT: "terraform-google-testing@playground-111.iam.gserviceaccount.com"
-  TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
+  TF_TOKEN_app_terraform_io: ${{ secrets.TFE_TOKEN }}
 
 jobs:
   public-dns-with-cloud-dns:
