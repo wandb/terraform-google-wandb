@@ -1,10 +1,5 @@
-provider "google" {
-  default_labels = local.labels
-}
-
-provider "google-beta" {
-  default_labels = local.labels
-}
+provider "google" {}
+provider "google-beta" {}
 
 resource "random_pet" "main" {
   length    = 1
