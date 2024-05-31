@@ -320,5 +320,5 @@ module "private_link" {
   allowed_projects  = var.allowed_projects
   psc_subnetwork    = var.psc_subnetwork_cidr
   proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [google_compute_subnetwork.proxy]
+  depends_on        = [google_compute_subnetwork.proxy,time_sleep.wait_seconds]
 }
