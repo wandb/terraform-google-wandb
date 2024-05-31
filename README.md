@@ -64,13 +64,14 @@ resources that lack official modules.
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.82 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | 0.11.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | ~> 4.82 |
-| <a name="provider_time"></a> [time](#provider\_time) | n/a |
+| <a name="provider_time"></a> [time](#provider\_time) | 0.11.2 |
 
 ## Modules
 
