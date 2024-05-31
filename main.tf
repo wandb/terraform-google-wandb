@@ -302,10 +302,10 @@ resource "google_compute_subnetwork" "proxy" {
 resource "time_sleep" "wait_seconds" {
   count = var.create_private_link ? 1 : 0
   triggers = {
-    always_run = "${timestamp()}"
+    always_run = timestamp()
   }
-  depends_on       = [module.wandb]
-  create_duration  = "400s"
+  depends_on      = [module.wandb]
+  create_duration = "400s"
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
@@ -320,5 +320,5 @@ module "private_link" {
   allowed_projects  = var.allowed_projects
   psc_subnetwork    = var.psc_subnetwork_cidr
   proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [google_compute_subnetwork.proxy,time_sleep.wait_seconds]
+  depends_on        = [google_compute_subnetwork.proxy, time_sleep.wait_seconds]
 }
