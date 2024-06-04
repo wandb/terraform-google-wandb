@@ -255,9 +255,9 @@ module "wandb" {
         }
         serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
         } : {
-        install        = false
-        stackdriver    = {}
-        serviceAccount = {}
+          install        = false
+          stackdriver    = {}
+          serviceAccount = {}
       }
 
       otel = {
