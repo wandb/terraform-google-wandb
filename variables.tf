@@ -253,3 +253,18 @@ variable "parquet_wandb_env" {
   description = "Extra environment variables for W&B"
   default     = {}
 }
+
+variable "enable_stackdriver" {
+  type = bool
+  default = false
+}
+
+variable "workload_account_id" {
+  type    = string
+  default = "stackdriver"
+}
+
+variable "service_account_name" {
+  type    = string
+  default = "stackdriver"
+}
