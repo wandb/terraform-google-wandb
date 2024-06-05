@@ -232,7 +232,17 @@ module "wandb" {
             ttlInSeconds = 604800
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
-        } : {}
+          } : {
+          password = ""
+          host     = ""
+          port     = 0
+          caCert   = ""
+          params = {
+            tls          = false
+            ttlInSeconds = 0
+            caCertPath   = ""
+          }
+        }
       }
 
       app = {
@@ -255,9 +265,9 @@ module "wandb" {
         }
         serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
         } : {
-          install        = false
-          stackdriver    = {}
-          serviceAccount = {}
+        install        = false
+        stackdriver    = {}
+        serviceAccount = {}
       }
 
       otel = {
