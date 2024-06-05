@@ -242,6 +242,7 @@ module "wandb" {
         }
       }
 
+      nginx = { install = false }
       redis = { install = false }
       mysql = { install = false }
 
