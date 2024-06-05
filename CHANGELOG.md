@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0](https://github.com/wandb/terraform-google-wandb/compare/v3.0.5...v3.1.0) (2024-06-05)
+
+
+### Features
+
+* added support for stackdriver and otel metrics ([#126](https://github.com/wandb/terraform-google-wandb/issues/126)) ([1e8777a](https://github.com/wandb/terraform-google-wandb/commit/1e8777af0f6bf6e8260a0faa488302f631b716b3))
+
 ### [3.0.5](https://github.com/wandb/terraform-google-wandb/compare/v3.0.4...v3.0.5) (2024-06-05)
 
 
