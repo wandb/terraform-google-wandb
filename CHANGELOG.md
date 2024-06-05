@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.0.5](https://github.com/wandb/terraform-google-wandb/compare/v3.0.4...v3.0.5) (2024-06-05)
+
+
+### Bug Fixes
+
+* Need the global redis helm values to not be null even when disabled ([#131](https://github.com/wandb/terraform-google-wandb/issues/131)) ([e8c4602](https://github.com/wandb/terraform-google-wandb/commit/e8c46022cbb5d9ca76f62ad14bded42279e5dfb6))
+
 ### [3.0.4](https://github.com/wandb/terraform-google-wandb/compare/v3.0.3...v3.0.4) (2024-04-12)
 
 
