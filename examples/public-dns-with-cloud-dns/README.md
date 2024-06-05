@@ -95,7 +95,7 @@ Note: The domain and subdomain association might take a few minutes to reflect.
   region                = "us-west4"
   zone                  = "us-west4-a"
   namespace             = "venky-unique-3"
-  license               = "eyJhbGciOiJS6InUzhEUXM1M0xQY09yNnZhaTdoSlduYnF1bTRZTlZWd1VwSWM9In0.eyJjb25jdXJyZW50QWdlbnRzIjoxMCwiZGVwbG95bWVudElkIjoiNGU0YWNiZmYtY2E5NS00MmRiLThmYmItMjliNmY5NTI2OWE0IiwibWF4VXNlcnMiOjQsIm1heFN0b3JhZ2VHYiI6MTAwMDAwMCwibWF4VGVhbXMiOjEsImV4cGlyZXNBdCI6IjIwMjItMTAtMjBUMTY6MjY6NTUuNzA3WiIsImZsYWdzIjpbIlNDQUxBQkxFIiwibXlzcWwiLCJzMyIsInJlZGlzIiwiTk9USUZJQ0FUSU9OUyIsInNsYWNrIiwibm90aWZpY2F0aW9ucyIsIk1BTkFHRU1FTlQiLCJvcmdfZGFzaCIsImF1dGgwIl0sInRyaWFsIjpmYWxzZSwiYWNjZXNzS2V5IjoiNzk3M2FkOWItNThmOC00OTUxLWJhOTctOGQ2NGFkYzI1ZThlIiwic2VhdHMiOjQsInRlYW1zIjoxLCJzdG9yYWdlR2lncyI6MTAwMDAwMCwiZXhwIjoxNjY2MjgzMjE1fQ.O_6D3Av9QoWI16ybg54KFvs7eGWugSXPxmfhobtZe3TBFvd8PwmSCAmMojmKWsqg6KNjLJ9sjxOP_3Pj9OAdrkx5WzU0KTcIByXD2hS9VwyYUOYEohBn65oCLnQJLYphXJBrB9JVS0GSUGxR1AzwnUK1PuKZ6jQFrpt-feQOD3rvCdyM1eBQ73rdHk6zfEBmdiZ7C4LiRLV8OEMxUfwxASvVF_cFUEeVQx82AaxRwfPBLZxXTL4qlQOIFjAKwGVyDMEWq04BhQ_ASdyND45w5qXiUOlvFOergrFyGBSHg-9yDT4fhdkDw5puGthDaMFsn02rr0eYHuxKFWSY958aig"
+  license               = "W&B-license-key goes here"
   subdomain             = "venky"
   domain_name           = "wandb.ml"
   allowed_inbound_cidrs = ["0.0.0.0/0"]
