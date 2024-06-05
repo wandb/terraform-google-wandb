@@ -226,7 +226,7 @@ module "wandb" {
             ttlInSeconds = 604800
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
-        } : null
+        } : {}
       }
 
       app = {
@@ -242,7 +242,7 @@ module "wandb" {
         }
       }
 
-      redis = { install = false }
+      redis = { install = !var.create_redis }
       mysql = { install = false }
 
       weave = {
