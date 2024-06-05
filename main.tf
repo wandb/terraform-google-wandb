@@ -29,10 +29,13 @@ locals {
 }
 
 module "service_accounts" {
-  source      = "./modules/service_accounts"
-  namespace   = var.namespace
-  bucket_name = var.bucket_name
-  depends_on  = [module.project_factory_project_services]
+  source               = "./modules/service_accounts"
+  namespace            = var.namespace
+  bucket_name          = var.bucket_name
+  account_id           = var.workload_account_id
+  service_account_name = var.service_account_name
+  enable_stackdriver   = var.enable_stackdriver
+  depends_on           = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -77,14 +80,15 @@ locals {
 }
 
 module "app_gke" {
-  source          = "./modules/app_gke"
-  namespace       = var.namespace
-  machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network         = local.network
-  subnetwork      = local.subnetwork
-  service_account = module.service_accounts.service_account
-  depends_on      = [module.project_factory_project_services]
+  source                   = "./modules/app_gke"
+  namespace                = var.namespace
+  machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  network                  = local.network
+  subnetwork               = local.subnetwork
+  service_account          = module.service_accounts.service_account
+  create_workload_identity = var.enable_stackdriver
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "app_lb" {
@@ -186,6 +190,8 @@ locals {
   } : {}
 }
 
+data "google_client_config" "current" {}
+
 module "wandb" {
   source  = "wandb/wandb/helm"
   version = "1.2.0"
@@ -239,6 +245,54 @@ module "wandb" {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
+        }
+      }
+      # To support otel rds and redis metrics need operator-wandb chart minimum version 0.13.8 ( stackdriver subchart)
+      stackdriver = var.enable_stackdriver ? {
+        install = true
+        stackdriver = {
+          projectId = data.google_client_config.current.project
+        }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
+        } : {
+          install        = false
+          stackdriver    = {}
+          serviceAccount = {}
+      }
+
+      otel = {
+        daemonset = var.enable_stackdriver ? {
+          config = {
+            receivers = {
+              prometheus = {
+                config = {
+                  scrape_configs = [
+                    { job_name     = "stackdriver"
+                      scheme       = "http"
+                      metrics_path = "/metrics"
+                      dns_sd_configs = [
+                        { names = ["stackdriver"]
+                          type  = "A"
+                          port  = 9255
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+            service = {
+              pipelines = {
+                metrics = {
+                  receivers = ["hostmetrics", "k8s_cluster", "kubeletstats", "prometheus"]
+                }
+              }
+            }
+          }
+          } : { config = {
+            receivers = {}
+            service   = {}
+          }
         }
       }
 
