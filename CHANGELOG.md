@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.1.1](https://github.com/wandb/terraform-google-wandb/compare/v3.1.0...v3.1.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* Consistent object type for redis ([#133](https://github.com/wandb/terraform-google-wandb/issues/133)) ([34c5d94](https://github.com/wandb/terraform-google-wandb/commit/34c5d94da5ba75d9d5c7ad6ebbd6aef66bf702c4))
+
 ## [3.1.0](https://github.com/wandb/terraform-google-wandb/compare/v3.0.5...v3.1.0) (2024-06-05)
 
 
