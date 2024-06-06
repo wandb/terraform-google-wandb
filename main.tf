@@ -87,7 +87,7 @@ module "app_gke" {
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
-  create_workload_identity = var.enable_stackdriver
+  create_workload_identity = var.create_workload_identity
   depends_on               = [module.project_factory_project_services]
 }
 
@@ -255,9 +255,9 @@ module "wandb" {
         }
         serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
         } : {
-          install        = false
-          stackdriver    = {}
-          serviceAccount = {}
+        install        = false
+        stackdriver    = {}
+        serviceAccount = {}
       }
 
       otel = {
