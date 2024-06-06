@@ -87,7 +87,7 @@ module "app_gke" {
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
-  create_workload_identity = var.create_workload_identity
+  create_workload_identity = var.enable_stackdriver
   depends_on               = [module.project_factory_project_services]
 }
 

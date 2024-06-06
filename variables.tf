@@ -268,9 +268,3 @@ variable "service_account_name" {
   type    = string
   default = "stackdriver"
 }
-
-variable "create_workload_identity" {
-  description = "Flag to indicate whether to create a workload identity for the service account."
-  type        = bool
-  default     = true
-}
