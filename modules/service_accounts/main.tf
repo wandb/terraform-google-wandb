@@ -67,20 +67,25 @@ resource "google_service_account" "workload-identity-user-sa" {
   count        = var.enable_stackdriver == true ? 1 : 0
   account_id   = "stackdriver"
   display_name = "Service Account For Workload Identity"
-
 }
 
 resource "google_project_iam_member" "monitoring-role" {
   count   = var.enable_stackdriver == true ? 1 : 0
   project = local.project_id
   role    = "roles/monitoring.viewer"
-  member  = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
+  member = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
 }
 
-
-resource "google_project_iam_member" "workload_identity-role" {
+resource "google_service_account_iam_member" "monitoring-role" {
   count   = var.enable_stackdriver == true ? 1 : 0
-  project = local.project_id
+  service_account_id = google_service_account.workload-identity-user-sa[count.index].id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
+}
+
+resource "google_service_account_iam_member" "workload_identity-role" {
+  count   = var.enable_stackdriver == true ? 1 : 0
+  service_account_id = google_service_account.workload-identity-user-sa[count.index].id
   role    = "roles/iam.workloadIdentityUser"
   member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.service_account_name}]"
 }
