@@ -256,7 +256,7 @@ variable "parquet_wandb_env" {
 
 variable "enable_stackdriver" {
   type = bool
-  default = true
+  default = false
 }
 
 variable "workload_account_id" {
