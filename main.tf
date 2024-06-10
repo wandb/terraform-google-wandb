@@ -21,12 +21,11 @@ module "project_factory_project_services" {
 }
 
 locals {
-  fqdn              = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
-  url_prefix        = var.ssl ? "https" : "http"
-  url               = "${local.url_prefix}://${local.fqdn}"
-  internal_app_port = 32543
-  create_bucket     = var.bucket_name == ""
-  create_network    = var.network == null
+  fqdn           = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
+  url_prefix     = var.ssl ? "https" : "http"
+  url            = "${local.url_prefix}://${local.fqdn}"
+  create_bucket  = var.bucket_name == ""
+  create_network = var.network == null
 }
 
 module "service_accounts" {
@@ -36,6 +35,9 @@ module "service_accounts" {
   kms_gcs_sa_id     = var.kms_gcs_sa_id
   kms_gcs_sa_name   = var.kms_gcs_sa_name
   workload_identity = var.create_workload_identity
+  account_id           = var.workload_account_id
+  service_account_name = var.service_account_name
+  enable_stackdriver   = var.enable_stackdriver
   depends_on        = [module.project_factory_project_services]
 }
 
@@ -48,7 +50,7 @@ module "kms" {
 }
 
 locals {
-  crypto_key = var.use_internal_queue ? null : module.kms.0.crypto_key
+  crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
 }
 
 module "storage" {
@@ -75,9 +77,9 @@ module "networking" {
 }
 
 locals {
-  network_connection = try(module.networking.0.connection, { network = var.network })
-  network            = try(module.networking.0.network, { self_link = var.network })
-  subnetwork         = try(module.networking.0.subnetwork, { self_link = var.subnetwork })
+  network_connection = try(module.networking[0].connection, { network = var.network })
+  network            = try(module.networking[0].network, { self_link = var.network })
+  subnetwork         = try(module.networking[0].subnetwork, { self_link = var.subnetwork })
 }
 
 module "app_gke" {
@@ -88,7 +90,7 @@ module "app_gke" {
   network           = local.network
   subnetwork        = local.subnetwork
   service_account   = module.service_accounts.service_account
-  workload_identity = var.create_workload_identity
+  create_workload_identity = var.create_workload_identity
   depends_on        = [module.project_factory_project_services]
 }
 
@@ -132,10 +134,10 @@ module "redis" {
 }
 
 locals {
-  redis_certificate       = var.create_redis ? module.redis.0.ca_cert : null
-  redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
-  bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
-  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
+  redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
+  redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
+  bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
+  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
@@ -185,6 +187,17 @@ module "gke_app" {
   ]
 }
 
+locals {
+  oidc_envs = var.oidc_issuer != "" ? {
+    "OIDC_ISSUER"      = var.oidc_issuer
+    "OIDC_CLIENT_ID"   = var.oidc_client_id
+    "OIDC_AUTH_METHOD" = var.oidc_auth_method
+    "OIDC_SECRET"      = var.oidc_secret
+  } : {}
+}
+
+data "google_client_config" "current" {}
+
 module "wandb" {
   source  = "wandb/wandb/helm"
   version = "1.2.0"
@@ -199,11 +212,7 @@ module "wandb" {
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
           "TAG_CUSTOMER_NS"                      = var.namespace
-          "OIDC_ISSUER"                          = var.oidc_issuer
-          "OIDC_CLIENT_ID"                       = var.oidc_client_id
-          "OIDC_AUTH_METHOD"                     = var.oidc_auth_method
-          "OIDC_SECRET"                          = var.oidc_secret
-        }, var.other_wandb_env)
+        }, var.other_wandb_env, local.oidc_envs)
 
         bucket = {
           provider = "gcs"
@@ -220,16 +229,26 @@ module "wandb" {
         }
 
         redis = var.create_redis ? {
-          password = module.redis.0.auth_string
-          host     = module.redis.0.host
-          port     = module.redis.0.port
-          caCert   = module.redis.0.ca_cert
+          password = module.redis[0].auth_string
+          host     = module.redis[0].host
+          port     = module.redis[0].port
+          caCert   = module.redis[0].ca_cert
           params = {
             tls          = true
             ttlInSeconds = 604800
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
-        } : null
+          } : {
+          password = ""
+          host     = ""
+          port     = 0
+          caCert   = ""
+          params = {
+            tls          = false
+            ttlInSeconds = 0
+            caCertPath   = ""
+          }
+        }
       }
 
       app = {
@@ -244,8 +263,56 @@ module "wandb" {
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
       }
+      # To support otel rds and redis metrics need operator-wandb chart minimum version 0.13.8 ( stackdriver subchart)
+      stackdriver = var.enable_stackdriver ? {
+        install = true
+        stackdriver = {
+          projectId = data.google_client_config.current.project
+        }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
+        } : {
+        install        = false
+        stackdriver    = {}
+        serviceAccount = {}
+      }
 
-      redis = { install = false }
+      otel = {
+        daemonset = var.enable_stackdriver ? {
+          config = {
+            receivers = {
+              prometheus = {
+                config = {
+                  scrape_configs = [
+                    { job_name     = "stackdriver"
+                      scheme       = "http"
+                      metrics_path = "/metrics"
+                      dns_sd_configs = [
+                        { names = ["stackdriver"]
+                          type  = "A"
+                          port  = 9255
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+            service = {
+              pipelines = {
+                metrics = {
+                  receivers = ["hostmetrics", "k8s_cluster", "kubeletstats", "prometheus"]
+                }
+              }
+            }
+          }
+          } : { config = {
+            receivers = {}
+            service   = {}
+          }
+        }
+      }
+
+      redis = { install = !var.create_redis }
       mysql = { install = false }
 
       weave = {

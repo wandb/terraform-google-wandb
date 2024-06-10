@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0](https://github.com/wandb/terraform-google-wandb/compare/v3.1.1...v3.2.0) (2024-06-07)
+
+
+### Features
+
+* Track the otel and stackdriver sa issue ([#134](https://github.com/wandb/terraform-google-wandb/issues/134)) ([08abe84](https://github.com/wandb/terraform-google-wandb/commit/08abe848938ba80d48c2e747b5e9f229dd01eda4))
+
+### [3.1.1](https://github.com/wandb/terraform-google-wandb/compare/v3.1.0...v3.1.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* Consistent object type for redis ([#133](https://github.com/wandb/terraform-google-wandb/issues/133)) ([34c5d94](https://github.com/wandb/terraform-google-wandb/commit/34c5d94da5ba75d9d5c7ad6ebbd6aef66bf702c4))
+
+## [3.1.0](https://github.com/wandb/terraform-google-wandb/compare/v3.0.5...v3.1.0) (2024-06-05)
+
+
+### Features
+
+* added support for stackdriver and otel metrics ([#126](https://github.com/wandb/terraform-google-wandb/issues/126)) ([1e8777a](https://github.com/wandb/terraform-google-wandb/commit/1e8777af0f6bf6e8260a0faa488302f631b716b3))
+
+### [3.0.5](https://github.com/wandb/terraform-google-wandb/compare/v3.0.4...v3.0.5) (2024-06-05)
+
+
+### Bug Fixes
+
+* Need the global redis helm values to not be null even when disabled ([#131](https://github.com/wandb/terraform-google-wandb/issues/131)) ([e8c4602](https://github.com/wandb/terraform-google-wandb/commit/e8c46022cbb5d9ca76f62ad14bded42279e5dfb6))
+
+### [3.0.4](https://github.com/wandb/terraform-google-wandb/compare/v3.0.3...v3.0.4) (2024-04-12)
+
+
+### Bug Fixes
+
+* Pass through env vars for services ([#117](https://github.com/wandb/terraform-google-wandb/issues/117)) ([35e15c0](https://github.com/wandb/terraform-google-wandb/commit/35e15c096372e549656877137c08529e2b32bcec))
+
+### [3.0.3](https://github.com/wandb/terraform-google-wandb/compare/v3.0.2...v3.0.3) (2024-04-10)
+
+
+### Bug Fixes
+
+* Remove passthrough vars for old module ([#119](https://github.com/wandb/terraform-google-wandb/issues/119)) ([5b61465](https://github.com/wandb/terraform-google-wandb/commit/5b614651a50562e82a7506b76b0fece2035bf68c))
+
+### [3.0.2](https://github.com/wandb/terraform-google-wandb/compare/v3.0.1...v3.0.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* Conditionally set oidc envs ([#118](https://github.com/wandb/terraform-google-wandb/issues/118)) ([0df0ec8](https://github.com/wandb/terraform-google-wandb/commit/0df0ec8fb47fb18bf8cd4d6f8dc108f3e2ee5458))
+
 ### [3.0.1](https://github.com/wandb/terraform-google-wandb/compare/v3.0.0...v3.0.1) (2024-03-22)
 
 

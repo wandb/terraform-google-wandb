@@ -8,17 +8,35 @@ variable "bucket_name" {
   description = "Existing bucket the service account will access"
   default     = ""
 }
+
+
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
+  default     = false
+}
+
 variable "kms_gcs_sa_id" {
-  description = "The ID of the Google Cloud Platform (GCP) account."
-  type        = string
+  type    = string
+  default = "wandb-serviceaccount"
 }
 
 variable "kms_gcs_sa_name" {
-  description = "The name of the service account."
-  type        = string
+  type    = string
+  default = "wandb-serviceaccount"
 }
 
-variable "workload_identity" {
-  description = "Flag to indicate whether to enable workload identity for the service account."
-  type        = bool
+variable "enable_stackdriver" {
+  type = bool
+  default = false
+}
+
+variable "workload_account_id" {
+  type    = string
+  default = "stackdriver"
+}
+
+variable "service_account_name" {
+  type    = string
+  default = "stackdriver"
 }

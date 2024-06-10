@@ -24,7 +24,14 @@ resource "google_container_cluster" "default" {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
   }
 
-
+  # Conditionally enable workload identity
+  dynamic "workload_identity_config" {
+    for_each = var.create_workload_identity == true ? [1] : []
+    content {
+      workload_pool = "${local.project_id}.svc.id.goog"
+    }
+  }
+  
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
     services_ipv4_cidr_block = "/19"

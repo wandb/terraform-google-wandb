@@ -49,8 +49,8 @@ module "wandb" {
 
 ## Examples
 
-We have included documentation and reference examples for additional common
-installation scenarios for Weights & Biases, as well as examples for supporting
+We have included documentation and reference examples for common
+installation scenarios, as well as examples for supporting
 resources that lack official modules.
 
 - [Public Instance with HTTPS using Cloud DNS](examples/public-dns-with-cloud-dns)
@@ -67,7 +67,9 @@ resources that lack official modules.
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.82 |
 
 ## Modules
 
@@ -87,7 +89,9 @@ No providers.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
 
 ## Inputs
 
@@ -104,6 +108,7 @@ No resources.
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
+| <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `false` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"n1-standard-4"` | no |
 | <a name="input_gke_node_count"></a> [gke\_node\_count](#input\_gke\_node\_count) | n/a | `number` | `2` | no |
@@ -131,7 +136,8 @@ No resources.
 | <a name="input_wandb_image"></a> [wandb\_image](#input\_wandb\_image) | Docker repository of to pull the wandb image from. | `string` | `"wandb/local"` | no |
 | <a name="input_wandb_version"></a> [wandb\_version](#input\_wandb\_version) | The version of Weights & Biases local to deploy. | `string` | `"latest"` | no |
 | <a name="input_weave_wandb_env"></a> [weave\_wandb\_env](#input\_weave\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
-| <a name="input_workload_account_id"></a> [workload\_account\_id](#input\_workload\_account\_id) | n/a | `string` | `"workload-identity"` | no |
+| <a name="input_workload_account_id"></a> [workload\_account\_id](#input\_workload\_account\_id) | n/a | `string` | `"stackdriver"` | no |
+
 
 ## Outputs
 
