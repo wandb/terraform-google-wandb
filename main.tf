@@ -29,16 +29,14 @@ locals {
 }
 
 module "service_accounts" {
-  source            = "./modules/service_accounts"
-  namespace         = var.namespace
-  bucket_name       = var.bucket_name
-  kms_gcs_sa_id     = var.kms_gcs_sa_id
-  kms_gcs_sa_name   = var.kms_gcs_sa_name
-  workload_identity = var.create_workload_identity
-  account_id           = var.workload_account_id
-  service_account_name = var.service_account_name
-  enable_stackdriver   = var.enable_stackdriver
-  depends_on        = [module.project_factory_project_services]
+  source                   = "./modules/service_accounts"
+  namespace                = var.namespace
+  bucket_name              = var.bucket_name
+  kms_gcs_sa_name          = var.kms_gcs_sa_name
+  create_workload_identity = var.create_workload_identity
+  stackdriver_sa_name      = var.stackdriver_sa_name
+  enable_stackdriver       = var.enable_stackdriver
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -83,15 +81,15 @@ locals {
 }
 
 module "app_gke" {
-  source            = "./modules/app_gke"
-  namespace         = var.namespace
-  machine_type      = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count        = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network           = local.network
-  subnetwork        = local.subnetwork
-  service_account   = module.service_accounts.service_account
+  source                   = "./modules/app_gke"
+  namespace                = var.namespace
+  machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  network                  = local.network
+  subnetwork               = local.subnetwork
+  service_account          = module.service_accounts.service_account
   create_workload_identity = var.create_workload_identity
-  depends_on        = [module.project_factory_project_services]
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "app_lb" {
@@ -267,9 +265,10 @@ module "wandb" {
       stackdriver = var.enable_stackdriver ? {
         install = true
         stackdriver = {
-          projectId = data.google_client_config.current.project
+          projectId          = data.google_client_config.current.project
+          serviceAccountName = var.stackdriver_sa_name
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
         } : {
         install        = false
         stackdriver    = {}

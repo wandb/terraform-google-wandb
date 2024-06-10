@@ -7,9 +7,9 @@ locals {
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
-  network         = var.network.self_link
-  subnetwork      = var.subnetwork.self_link
-  networking_mode = "VPC_NATIVE"
+  network                     = var.network.self_link
+  subnetwork                  = var.subnetwork.self_link
+  networking_mode             = "VPC_NATIVE"
   enable_intranode_visibility = true
 
   # Conditionally enable workload identity
@@ -31,7 +31,7 @@ resource "google_container_cluster" "default" {
       workload_pool = "${local.project_id}.svc.id.goog"
     }
   }
-  
+
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
     services_ipv4_cidr_block = "/19"

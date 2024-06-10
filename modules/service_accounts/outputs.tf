@@ -6,10 +6,9 @@ output "service_account" {
 
 
 output "sa_account_email" {
-  value = var.workload_identity == true ? google_service_account.kms_gcs_sa[0].email : null
+  value = var.create_workload_identity == true ? google_service_account.kms_gcs_sa[0].email : null
 }
 
-output "monitoring_role" {
-  value = var.enable_stackdriver == true ? google_service_account.workload-identity-user-sa[0].email : null
-
+output "stackdriver_email" {
+  value = var.enable_stackdriver == true ? google_service_account.stackdriver[0].email : null
 }
