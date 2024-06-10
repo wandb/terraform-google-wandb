@@ -126,7 +126,7 @@ resources that lack official modules.
 | <a name="input_redis_tier"></a> [redis\_tier](#input\_redis\_tier) | Specifies the tier for this Redis instance | `string` | `"STANDARD_HA"` | no |
 | <a name="input_resource_limits"></a> [resource\_limits](#input\_resource\_limits) | Specifies the resource limits for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
 | <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": "2000m",<br>  "memory": "2G"<br>}</pre> | no |
-| <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | n/a | `string` | `"stackdriver"` | no |
+| <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | n/a | `string` | `"wandb-stackdriver"` | no |
 | <a name="input_size"></a> [size](#input\_size) | Deployment size for the instance | `string` | `null` | no |
 | <a name="input_ssl"></a> [ssl](#input\_ssl) | Enable SSL certificate | `bool` | `true` | no |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route. | `string` | `null` | no |
@@ -135,7 +135,7 @@ resources that lack official modules.
 | <a name="input_wandb_image"></a> [wandb\_image](#input\_wandb\_image) | Docker repository of to pull the wandb image from. | `string` | `"wandb/local"` | no |
 | <a name="input_wandb_version"></a> [wandb\_version](#input\_wandb\_version) | The version of Weights & Biases local to deploy. | `string` | `"latest"` | no |
 | <a name="input_weave_wandb_env"></a> [weave\_wandb\_env](#input\_weave\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
-| <a name="input_workload_account_id"></a> [workload\_account\_id](#input\_workload\_account\_id) | n/a | `string` | `"stackdriver"` | no |
+| <a name="input_workload_account_id"></a> [workload\_account\_id](#input\_workload\_account\_id) | n/a | `string` | `"wandb-stackdriver"` | no |
 
 ## Outputs
 
