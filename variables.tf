@@ -242,14 +242,14 @@ variable "create_workload_identity" {
   default     = true
 }
 
-variable "workload_account_id" {
+variable "kms_gcs_sa_id" {
   type    = string
-  default = "workload-identity"
+  default = "wandb-serviceaccount"
 }
 
-variable "service_account_name" {
+variable "kms_gcs_sa_name" {
   type    = string
-  default = "workload-identity-sa"
+  default = "wandb-serviceaccount"
 }
 
 variable "weave_wandb_env" {

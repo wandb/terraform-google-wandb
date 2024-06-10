@@ -8,12 +8,12 @@ variable "bucket_name" {
   description = "Existing bucket the service account will access"
   default     = ""
 }
-variable "account_id" {
+variable "kms_gcs_sa_id" {
   description = "The ID of the Google Cloud Platform (GCP) account."
   type        = string
 }
 
-variable "service_account_name" {
+variable "kms_gcs_sa_name" {
   description = "The name of the service account."
   type        = string
 }

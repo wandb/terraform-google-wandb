@@ -61,28 +61,37 @@ resource "google_project_iam_member" "secretmanager_admin" {
   role    = "roles/secretmanager.admin"
 }
 
-resource "google_service_account" "workload-identity-user-sa" {
+####### service account for kms and gcs cross project access
+resource "google_service_account" "kms_gcs_sa" {
   count        = var.workload_identity == true ? 1 : 0
-  account_id   = var.account_id
+  account_id   = var.kms_gcs_sa_id
   display_name = "Service Account For Workload Identity"
 }
 
-resource "google_project_iam_member" "storage-role" {
+resource "google_project_iam_member" "storage" {
   count   = var.workload_identity == true ? 1 : 0
   project = local.project_id
   role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[count.index].email}"
 }
 
-resource "google_project_iam_member" "kms-role" {
+resource "google_project_iam_member" "kms" {
   count   = var.workload_identity == true ? 1 : 0
   project = local.project_id
   role    = "roles/cloudkms.admin"
-  member  = "serviceAccount:${google_service_account.workload-identity-user-sa[count.index].email}"
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[count.index].email}"
 }
-resource "google_project_iam_member" "workload_identity-role" {
+
+resource "google_service_account_iam_member" "token_creator_binding" {
   count   = var.workload_identity == true ? 1 : 0
-  project = local.project_id
+  service_account_id = google_service_account.kms_gcs_sa[count.index].id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member = "serviceAccount:${google_service_account.kms_gcs_sa[count.index].email}"
+}
+
+resource "google_service_account_iam_member" "workload_binding" {
+  count   = var.workload_identity == true ? 1 : 0
+  service_account_id = google_service_account.kms_gcs_sa[count.index].id
   role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.service_account_name}]"
+  member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.kms_gcs_sa_name}]"
 }

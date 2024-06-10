@@ -30,13 +30,13 @@ locals {
 }
 
 module "service_accounts" {
-  source               = "./modules/service_accounts"
-  namespace            = var.namespace
-  bucket_name          = var.bucket_name
-  account_id           = var.workload_account_id
-  service_account_name = var.service_account_name
-  workload_identity    = var.create_workload_identity
-  depends_on           = [module.project_factory_project_services]
+  source            = "./modules/service_accounts"
+  namespace         = var.namespace
+  bucket_name       = var.bucket_name
+  kms_gcs_sa_id     = var.kms_gcs_sa_id
+  kms_gcs_sa_name   = var.kms_gcs_sa_name
+  workload_identity = var.create_workload_identity
+  depends_on        = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -152,9 +152,9 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-  service_account_name       = var.service_account_name
+  service_account_name       = var.kms_gcs_sa_name
   service_account_annotations = var.create_workload_identity ? {
-    "iam.gke.io/gcp-service-account": module.service_accounts.sa_account_email
+    "iam.gke.io/gcp-service-account" : module.service_accounts.sa_account_email
   } : {}
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
@@ -167,12 +167,6 @@ module "gke_app" {
     "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
     "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
-
-  weave_wandb_env = var.weave_wandb_env
-
-  app_wandb_env = var.app_wandb_env
-
-  parquet_wandb_env = var.parquet_wandb_env
 
   wandb_image    = var.wandb_image
   wandb_version  = var.wandb_version
