@@ -262,6 +262,7 @@ module "wandb" {
         install = true
         stackdriver = {
           projectId = data.google_client_config.current.project
+          serviceAccountName = var.service_account_name
         }
         serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
         } : {

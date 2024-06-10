@@ -65,7 +65,7 @@ resource "google_project_iam_member" "secretmanager_admin" {
 
 resource "google_service_account" "workload-identity-user-sa" {
   count        = var.enable_stackdriver == true ? 1 : 0
-  account_id   = "stackdriver"
+  account_id   = var.account_id
   display_name = "Service Account For Workload Identity"
 }
 
@@ -87,5 +87,5 @@ resource "google_service_account_iam_member" "workload_identity-role" {
   count   = var.enable_stackdriver == true ? 1 : 0
   service_account_id = google_service_account.workload-identity-user-sa[count.index].id
   role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.project_id}.svc.id.goog[${var.namespace}/${var.service_account_name}]"
+  member  = "serviceAccount:${local.project_id}.svc.id.goog[${var.stackdriver_namespace}/${var.service_account_name}]"
 }

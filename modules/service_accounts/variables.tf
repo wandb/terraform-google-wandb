@@ -23,3 +23,8 @@ variable "enable_stackdriver" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
 }
+
+variable "stackdriver_namespace" {
+  type = string
+  default = "default"
+}

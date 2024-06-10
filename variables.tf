@@ -261,10 +261,10 @@ variable "enable_stackdriver" {
 
 variable "workload_account_id" {
   type    = string
-  default = "stackdriver"
+  default = "wandb-stackdriver"
 }
 
 variable "service_account_name" {
   type    = string
-  default = "stackdriver"
+  default = "wandb-stackdriver"
 }
