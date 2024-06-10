@@ -29,13 +29,12 @@ locals {
 }
 
 module "service_accounts" {
-  source               = "./modules/service_accounts"
-  namespace            = var.namespace
-  bucket_name          = var.bucket_name
-  account_id           = var.workload_account_id
-  service_account_name = var.service_account_name
-  enable_stackdriver   = var.enable_stackdriver
-  depends_on           = [module.project_factory_project_services]
+  source              = "./modules/service_accounts"
+  namespace           = var.namespace
+  bucket_name         = var.bucket_name
+  stackdriver_sa_name = var.stackdriver_sa_name
+  enable_stackdriver  = var.enable_stackdriver
+  depends_on          = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -87,7 +86,7 @@ module "app_gke" {
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
-  create_workload_identity = var.enable_stackdriver
+  create_workload_identity = var.create_workload_identity
   depends_on               = [module.project_factory_project_services]
 }
 
@@ -261,10 +260,10 @@ module "wandb" {
       stackdriver = var.enable_stackdriver ? {
         install = true
         stackdriver = {
-          projectId = data.google_client_config.current.project
-          serviceAccountName = var.service_account_name
+          projectId          = data.google_client_config.current.project
+          serviceAccountName = var.stackdriver_sa_name
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
         } : {
         install        = false
         stackdriver    = {}

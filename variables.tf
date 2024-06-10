@@ -256,15 +256,16 @@ variable "parquet_wandb_env" {
 
 variable "enable_stackdriver" {
   type = bool
-  default = false
+  default = true
 }
 
-variable "workload_account_id" {
-  type    = string
-  default = "wandb-stackdriver"
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
+  default     = true
 }
 
-variable "service_account_name" {
+variable "stackdriver_sa_name" {
   type    = string
   default = "wandb-stackdriver"
 }
