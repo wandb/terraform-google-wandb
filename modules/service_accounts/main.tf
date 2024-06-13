@@ -62,7 +62,6 @@ resource "google_project_iam_member" "secretmanager_admin" {
   role    = "roles/secretmanager.admin"
 }
 
-
 ####### service account for kms and gcs cross project access
 resource "google_service_account" "kms_gcs_sa" {
   count        = var.create_workload_identity == true ? 1 : 0

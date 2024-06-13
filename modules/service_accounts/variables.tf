@@ -13,7 +13,6 @@ variable "bucket_name" {
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
   type        = bool
-  default = false
 }
 
 variable "kms_gcs_sa_name" {
@@ -30,5 +29,4 @@ variable "stackdriver_sa_name" {
 variable "enable_stackdriver" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
-  default = false
 }

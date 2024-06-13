@@ -79,11 +79,11 @@ resource "google_container_node_pool" "default" {
     ]
 
      dynamic "workload_metadata_config" {
-    for_each = var.create_workload_identity == true ? [1] : []
-      content {
-        mode = "GKE_METADATA"
+       for_each = var.create_workload_identity == true ? [1] : []
+        content {
+          mode = "GKE_METADATA"
+        }
       }
-    }
     
     shielded_instance_config {
       enable_secure_boot = true
