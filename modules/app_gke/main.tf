@@ -7,11 +7,11 @@ locals {
 resource "google_container_cluster" "default" {
   name = "${var.namespace}-cluster"
 
-  network         = var.network.self_link
-  subnetwork      = var.subnetwork.self_link
-  networking_mode = "VPC_NATIVE"
-
+  network                     = var.network.self_link
+  subnetwork                  = var.subnetwork.self_link
+  networking_mode             = "VPC_NATIVE"
   enable_intranode_visibility = true
+
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
@@ -24,7 +24,7 @@ resource "google_container_cluster" "default" {
       workload_pool = "${local.project_id}.svc.id.goog"
     }
   }
-  
+
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
     services_ipv4_cidr_block = "/19"
@@ -78,12 +78,13 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
 
-    dynamic "workload_metadata_config" {
-    for_each = var.create_workload_identity == true ? [1] : []
-      content {
-        mode = "GKE_METADATA"
+     dynamic "workload_metadata_config" {
+       for_each = var.create_workload_identity == true ? [1] : []
+        content {
+          mode = "GKE_METADATA"
+        }
       }
-    }
+    
     shielded_instance_config {
       enable_secure_boot = true
     }

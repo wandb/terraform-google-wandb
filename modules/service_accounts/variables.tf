@@ -10,9 +10,20 @@ variable "bucket_name" {
 }
 
 
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
+}
+
+variable "kms_gcs_sa_name" {
+  type    = string
+  default = "wandb-serviceaccount"
+}
+
 variable "stackdriver_sa_name" {
   description = "The name of the service account."
   type        = string
+  default = "wandb-stackdriver"
 }
 
 variable "enable_stackdriver" {

@@ -29,12 +29,14 @@ locals {
 }
 
 module "service_accounts" {
-  source              = "./modules/service_accounts"
-  namespace           = var.namespace
-  bucket_name         = var.bucket_name
-  stackdriver_sa_name = var.stackdriver_sa_name
-  enable_stackdriver  = var.enable_stackdriver
-  depends_on          = [module.project_factory_project_services]
+  source                   = "./modules/service_accounts"
+  namespace                = var.namespace
+  bucket_name              = var.bucket_name
+  kms_gcs_sa_name          = var.kms_gcs_sa_name
+  create_workload_identity = var.create_workload_identity
+  stackdriver_sa_name      = var.stackdriver_sa_name
+  enable_stackdriver       = var.enable_stackdriver
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -150,7 +152,10 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-
+  service_account_name       = var.kms_gcs_sa_name
+  service_account_annotations = var.create_workload_identity ? {
+    "iam.gke.io/gcp-service-account" : module.service_accounts.sa_account_email
+  } : {}
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
   oidc_auth_method = var.oidc_auth_method
@@ -246,6 +251,15 @@ module "wandb" {
 
       app = {
         extraEnvs = var.app_wandb_env
+        serviceaccount = var.create_workload_identity ? {
+          create      = false
+          name        = var.kms_gcs_sa_name
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email }
+          } : {
+          create      = true
+          name        = ""
+          annotations = {}
+        }
       }
 
       ingress = {
