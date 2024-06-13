@@ -83,6 +83,29 @@ resource "google_storage_bucket_iam_member" "gcs_admin" {
   role   = "roles/storage.objectAdmin"
 }
 
+resource "google_project_iam_member" "cloudsql_client_gcs" {
+  project = local.project_id
+  role    = "roles/cloudsql.client"
+  member  = google_service_account.kms_gcs_sa[count.index].email
+}
+
+# For some reason we need this permission otherwise backend is throwing an error
+# hopfully this is a short term fix.
+resource "google_project_iam_member" "log_writer_gcs" {
+  project = local.project_id
+  role    = "roles/logging.logWriter"
+  member  = google_service_account.kms_gcs_sa[count.index].email
+}
+
+
+# Required for W&B Secrets
+resource "google_project_iam_member" "secretmanager_admin_gcs" {
+  project = local.project_id
+  member  = google_service_account.kms_gcs_sa[count.index].email
+  role    = "roles/secretmanager.admin"
+}
+
+
 resource "google_project_iam_member" "kms" {
   count   = var.create_workload_identity == true ? 1 : 0
   project = local.project_id
