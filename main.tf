@@ -251,6 +251,15 @@ module "wandb" {
 
       app = {
         extraEnvs = var.app_wandb_env
+        serviceaccount = var.create_workload_identity ? {
+          create      = false
+          name        = var.kms_gcs_sa_name
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email }
+          } : {
+          create      = true
+          name        = ""
+          annotations = {}
+        }
       }
 
       ingress = {

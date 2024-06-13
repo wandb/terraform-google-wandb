@@ -12,13 +12,6 @@ resource "google_container_cluster" "default" {
   networking_mode             = "VPC_NATIVE"
   enable_intranode_visibility = true
 
-  # Conditionally enable workload identity
-  dynamic "workload_identity_config" {
-    for_each = var.workload_identity == true ? [1] : []
-    content {
-      workload_pool = "${local.project_id}.svc.id.goog"
-    }
-  }
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
@@ -84,6 +77,14 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
+
+     dynamic "workload_metadata_config" {
+    for_each = var.create_workload_identity == true ? [1] : []
+      content {
+        mode = "GKE_METADATA"
+      }
+    }
+    
     shielded_instance_config {
       enable_secure_boot = true
     }
