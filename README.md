@@ -112,7 +112,7 @@ resources that lack official modules.
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"n1-standard-4"` | no |
 | <a name="input_gke_node_count"></a> [gke\_node\_count](#input\_gke\_node\_count) | n/a | `number` | `2` | no |
-| <a name="input_kms_gcs_sa_name"></a> [kms\_gcs\_sa\_name](#input\_kms\_gcs\_sa\_name) | n/a | `string` | `"wandb-serviceaccount"` | no |
+| <a name="input_kms_gcs_sa_name"></a> [kms\_gcs\_sa\_name](#input\_kms\_gcs\_sa\_name) | n/a | `string` | `"wandb-app"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
 | <a name="input_local_restore"></a> [local\_restore](#input\_local\_restore) | Restores W&B to a stable state if needed | `bool` | `false` | no |
