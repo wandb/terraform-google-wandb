@@ -61,7 +61,7 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.82 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
 
@@ -69,7 +69,7 @@ resources that lack official modules.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.82 |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 5.30 |
 
 ## Modules
 
@@ -81,7 +81,7 @@ resources that lack official modules.
 | <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.14.1 |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
-| <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 13.0 |
+| <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 15.0 |
 | <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
