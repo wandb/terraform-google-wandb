@@ -69,40 +69,41 @@ resource "google_service_account" "kms_gcs_sa" {
   display_name = "Service Account For Workload Identity"
 }
 
-resource "google_project_iam_member" "storage" {
+resource "google_project_iam_member" "cloudsql_client_gcs" {
   count   = var.create_workload_identity == true ? 1 : 0
   project = local.project_id
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.kms_gcs_sa[count.index].email}"
-}
-
-resource "google_storage_bucket_iam_member" "gcs_admin" {
-  count  = var.bucket_name != "" ? 1 : 0
-  bucket = var.bucket_name
-  member = google_service_account.kms_gcs_sa[count.index].email
-  role   = "roles/storage.objectAdmin"
-}
-
-resource "google_project_iam_member" "cloudsql_client_gcs" {
-  project = local.project_id
   role    = "roles/cloudsql.client"
-  member  = google_service_account.kms_gcs_sa[count.index].email
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
+}
+
+resource "google_project_iam_member" "secretmanager_admin_gcs" {
+  count   = var.create_workload_identity == true ? 1 : 0
+  project = local.project_id
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
+  role    = "roles/secretmanager.admin"
 }
 
 # For some reason we need this permission otherwise backend is throwing an error
 # hopfully this is a short term fix.
 resource "google_project_iam_member" "log_writer_gcs" {
+  count   = var.create_workload_identity == true ? 1 : 0
   project = local.project_id
   role    = "roles/logging.logWriter"
-  member  = google_service_account.kms_gcs_sa[count.index].email
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
 }
 
-
-# Required for W&B Secrets
-resource "google_project_iam_member" "secretmanager_admin_gcs" {
+resource "google_project_iam_member" "storage" {
+  count   = var.create_workload_identity == true ? 1 : 0
   project = local.project_id
-  member  = google_service_account.kms_gcs_sa[count.index].email
-  role    = "roles/secretmanager.admin"
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
+}
+
+resource "google_storage_bucket_iam_member" "gcs_admin" {
+  count  = var.bucket_name != "" ? 1 : 0
+  bucket = var.bucket_name
+  member = google_service_account.kms_gcs_sa[0].email
+  role   = "roles/storage.objectAdmin"
 }
 
 
@@ -110,19 +111,19 @@ resource "google_project_iam_member" "kms" {
   count   = var.create_workload_identity == true ? 1 : 0
   project = local.project_id
   role    = "roles/cloudkms.admin"
-  member  = "serviceAccount:${google_service_account.kms_gcs_sa[count.index].email}"
+  member  = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
 }
 
 resource "google_service_account_iam_member" "token_creator_binding" {
   count   = var.create_workload_identity == true ? 1 : 0
-  service_account_id = google_service_account.kms_gcs_sa[count.index].id
+  service_account_id = google_service_account.kms_gcs_sa[0].id
   role    = "roles/iam.serviceAccountTokenCreator"
-  member = "serviceAccount:${google_service_account.kms_gcs_sa[count.index].email}"
+  member = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
 }
 
 resource "google_service_account_iam_member" "workload_binding" {
   count   = var.create_workload_identity == true ? 1 : 0
-  service_account_id = google_service_account.kms_gcs_sa[count.index].id
+  service_account_id = google_service_account.kms_gcs_sa[0].id
   role    = "roles/iam.workloadIdentityUser"
   member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.kms_gcs_sa_name}]"
 }
@@ -139,19 +140,19 @@ resource "google_project_iam_member" "monitoring" {
   count   = var.enable_stackdriver == true ? 1 : 0
   project = local.project_id
   role    = "roles/monitoring.viewer"
-  member = "serviceAccount:${google_service_account.stackdriver[count.index].email}"
+  member = "serviceAccount:${google_service_account.stackdriver[0].email}"
 }
 
 resource "google_service_account_iam_member" "stackdriver_token_creator" {
   count   = var.enable_stackdriver == true ? 1 : 0
-  service_account_id = google_service_account.stackdriver[count.index].id
+  service_account_id = google_service_account.stackdriver[0].id
   role    = "roles/iam.serviceAccountTokenCreator"
-  member = "serviceAccount:${google_service_account.stackdriver[count.index].email}"
+  member = "serviceAccount:${google_service_account.stackdriver[0].email}"
 }
 
 resource "google_service_account_iam_member" "stackdriver_binding" {
   count   = var.enable_stackdriver == true ? 1 : 0
-  service_account_id = google_service_account.stackdriver[count.index].id
+  service_account_id = google_service_account.stackdriver[0].id
   role    = "roles/iam.workloadIdentityUser"
   member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.stackdriver_sa_name}]"
 }

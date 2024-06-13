@@ -17,13 +17,11 @@ variable "create_workload_identity" {
 
 variable "kms_gcs_sa_name" {
   type    = string
-  default = "wandb-serviceaccount"
 }
 
 variable "stackdriver_sa_name" {
   description = "The name of the service account."
   type        = string
-  default = "wandb-stackdriver"
 }
 
 variable "enable_stackdriver" {
