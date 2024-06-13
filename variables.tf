@@ -262,7 +262,7 @@ variable "create_workload_identity" {
 
 variable "kms_gcs_sa_name" {
   type    = string
-  default = "wandb-serviceaccount"
+  default = "wandb-app"
 }
 
 variable "enable_stackdriver" {
