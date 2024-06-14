@@ -89,6 +89,6 @@ output "private_attachement_id" {
   value = var.create_private_link ? module.private_link[0].private_attachement_id : null
 }
 
-output "kubernetes_ingress" {
-  value = module.private_link.kubernetes
-}
+# output "kubernetes_ingress" {
+#   value = module.private_link.kubernetes
+# }

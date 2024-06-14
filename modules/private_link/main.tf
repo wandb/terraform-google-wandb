@@ -4,6 +4,7 @@ data "kubernetes_ingress_v1" "ingress" {
   metadata {
     name = var.ingress_name
   }
+  depends_on = [ google_compute_firewall.default ]
 }
 
 locals {
