@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0](https://github.com/wandb/terraform-google-wandb/compare/v3.1.1...v3.2.0) (2024-06-07)
+
+
+### Features
+
+* Track the otel and stackdriver sa issue ([#134](https://github.com/wandb/terraform-google-wandb/issues/134)) ([08abe84](https://github.com/wandb/terraform-google-wandb/commit/08abe848938ba80d48c2e747b5e9f229dd01eda4))
+
+### [3.1.1](https://github.com/wandb/terraform-google-wandb/compare/v3.1.0...v3.1.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* Consistent object type for redis ([#133](https://github.com/wandb/terraform-google-wandb/issues/133)) ([34c5d94](https://github.com/wandb/terraform-google-wandb/commit/34c5d94da5ba75d9d5c7ad6ebbd6aef66bf702c4))
+
+## [3.1.0](https://github.com/wandb/terraform-google-wandb/compare/v3.0.5...v3.1.0) (2024-06-05)
+
+
+### Features
+
+* added support for stackdriver and otel metrics ([#126](https://github.com/wandb/terraform-google-wandb/issues/126)) ([1e8777a](https://github.com/wandb/terraform-google-wandb/commit/1e8777af0f6bf6e8260a0faa488302f631b716b3))
+
+### [3.0.5](https://github.com/wandb/terraform-google-wandb/compare/v3.0.4...v3.0.5) (2024-06-05)
+
+
+### Bug Fixes
+
+* Need the global redis helm values to not be null even when disabled ([#131](https://github.com/wandb/terraform-google-wandb/issues/131)) ([e8c4602](https://github.com/wandb/terraform-google-wandb/commit/e8c46022cbb5d9ca76f62ad14bded42279e5dfb6))
+
 ### [3.0.4](https://github.com/wandb/terraform-google-wandb/compare/v3.0.3...v3.0.4) (2024-04-12)
 
 

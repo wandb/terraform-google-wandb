@@ -44,3 +44,8 @@ variable "parquet_wandb_env" {
 variable "node_count" {
   type = number
 }
+
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to enable workload identity for the service account."
+  type        = bool
+}

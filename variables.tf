@@ -254,6 +254,7 @@ variable "parquet_wandb_env" {
   default     = {}
 }
 
+
 ##########################################
 # private link                           #
 ##########################################
@@ -263,7 +264,7 @@ variable "parquet_wandb_env" {
 variable "create_private_link" {
   type        = bool
   description = "Whether to create a private link service."
-  default     = true
+  default     = false
 }
 
 variable "public_access" {
@@ -290,4 +291,19 @@ variable "ilb_proxynetwork_cidr" {
   default     = "10.127.0.0/24"
   description = "Internal load balancer proxy subnetwork"
   type        = string
+}
+
+variable "enable_stackdriver" {
+  type = bool
+  default = false
+}
+
+variable "workload_account_id" {
+  type    = string
+  default = "stackdriver"
+}
+
+variable "service_account_name" {
+  type    = string
+  default = "stackdriver"
 }
