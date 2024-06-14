@@ -73,7 +73,6 @@ resources that lack official modules.
 | <a name="provider_google"></a> [google](#provider\_google) | ~> 4.82 |
 | <a name="provider_time"></a> [time](#provider\_time) | 0.11.2 |
 
-
 ## Modules
 
 | Name | Source | Version |
@@ -95,9 +94,7 @@ resources that lack official modules.
 
 | Name | Type |
 |------|------|
-
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
-
 
 ## Inputs
 
@@ -107,7 +104,7 @@ resources that lack official modules.
 | <a name="input_allowed_projects"></a> [allowed\_projects](#input\_allowed\_projects) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
-| <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `true` | no |
+| <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
 | <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"db-n1-standard-2"` | no |
 | <a name="input_database_sort_buffer_size"></a> [database\_sort\_buffer\_size](#input\_database\_sort\_buffer\_size) | Specifies the sort\_buffer\_size value to set for the database | `number` | `67108864` | no |
