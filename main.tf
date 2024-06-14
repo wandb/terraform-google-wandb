@@ -289,7 +289,7 @@ module "wandb" {
                       scheme       = "http"
                       metrics_path = "/metrics"
                       dns_sd_configs = [
-                        { names = ["stackdriver"]
+                        { names = ["wandb-stackdriver"]
                           type  = "A"
                           port  = 9255
                         }
