@@ -371,7 +371,7 @@ resource "time_sleep" "wait_seconds" {
     always_run = timestamp()
   }
   depends_on      = [module.wandb]
-  create_duration = "400s"
+  create_duration = "600s"
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
