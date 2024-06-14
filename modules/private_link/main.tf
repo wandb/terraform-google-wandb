@@ -7,10 +7,7 @@ data "kubernetes_ingress_v1" "ingress" {
 }
 
 locals {
-   forwardingRules = try(
-    data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"],
-    ""
-  )
+   forwardingRules = data.kubernetes_ingress_v1.ingress.metadata[0].annotations["ingress.kubernetes.io/forwarding-rule"]
 }
 
 resource "google_compute_service_attachment" "default" {
