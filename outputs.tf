@@ -90,5 +90,5 @@ output "private_attachement_id" {
 }
 
 output "kubernetes_ingress" {
-  value = data.kubernetes_ingress_v1.ingress.metadata
+  value = module.private_link.kubernetes
 }
