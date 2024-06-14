@@ -88,3 +88,7 @@ output "database_instance_type" {
 output "private_attachement_id" {
   value = var.create_private_link ? module.private_link[0].private_attachement_id : null
 }
+
+output "kubernetes_ingress" {
+  value = data.kubernetes_ingress_v1.ingress.metadata
+}

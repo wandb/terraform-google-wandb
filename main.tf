@@ -374,6 +374,12 @@ resource "time_sleep" "wait_seconds" {
   create_duration = "600s"
 }
 
+data "kubernetes_ingress_v1" "ingress" {
+  metadata {
+    name = "${var.namespace}-internal"
+  }
+}
+
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
 
 module "private_link" {
