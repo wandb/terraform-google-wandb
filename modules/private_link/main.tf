@@ -8,11 +8,9 @@ resource "null_resource" "install_dependencies" {
       chmod 0755 jq
       # Download and install gcloud SDK
       curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-387.0.0-linux-x86_64.tar.gz
-      ls -lart
-      gcloud --help
-      # tar -xf google-cloud-cli-387.0.0-linux-x86.tar.gz
-      # ./google-cloud-sdk/install.sh -q
-      # ./google-cloud-sdk/bin/gcloud init --skip-diagnostics --install-dir=$(pwd)/google-cloud-sdk
+      tar -xf google-cloud-cli-387.0.0-linux-x86_64.tar.gz
+      ./google-cloud-sdk/install.sh -q
+      ./google-cloud-sdk/bin/gcloud init --skip-diagnostics --install-dir=$(pwd)/google-cloud-sdk
     EOT
   }
 }
