@@ -1,5 +1,11 @@
 data "google_client_config" "current" {}
 
+resource "null_resource" "default" {
+  provisioner "local-exec" {
+    command = "gcloud compute instances list"
+  }
+}
+
 # Module to manage gcloud
 module "gcloud" {
   source  = "terraform-google-modules/gcloud/google"
@@ -7,8 +13,6 @@ module "gcloud" {
   platform = "linux"
   create_cmd_entrypoint  = "gcloud"
   create_cmd_body  = "compute forwarding-rules list --format=json > lb_details.json"
-  destroy_cmd_entrypoint = "gcloud"
-  destroy_cmd_body       = "version"
 }
 
 # Fetch Load Balancer Details using gcloud module
