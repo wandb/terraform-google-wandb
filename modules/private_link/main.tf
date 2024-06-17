@@ -18,7 +18,6 @@ resource "null_resource" "fetch_lb_details" {
       cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
     EOT
   }
-  depends_on = [ module.gcloud ]
 }
 
 # resource "null_resource" "install_dependencies" {
