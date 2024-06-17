@@ -10,7 +10,6 @@ resource "null_resource" "install_dependencies" {
       curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-387.0.0-linux-x86_64.tar.gz
       tar -xf google-cloud-cli-387.0.0-linux-x86_64.tar.gz
       ./google-cloud-sdk/install.sh -q
-      which gcloud 
     EOT
   }
 }
