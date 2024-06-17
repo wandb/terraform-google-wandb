@@ -30,7 +30,7 @@ data "google_client_config" "current" {}
 # }
 
 locals {
-  forwardingRules = data.external.filtered_lb_names.result["load_balancer_name"]
+  forwardingRules = try(data.external.filtered_lb_names.result["load_balancer_name"],"")
 }
 
 
