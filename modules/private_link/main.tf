@@ -4,11 +4,8 @@ data "google_client_config" "current" {}
 module "gcloud" {
   source  = "terraform-google-modules/gcloud/google"
   version = "~> 3.4"
-
   platform = "linux"
-  # additional_components = ["kubectl", "beta"]
-
-  create_cmd_entrypoint  = "gcloud"
+  create_cmd_entrypoint  = "${path.module}/script.sh"
   create_cmd_body        = "version"
 }
 
@@ -16,7 +13,7 @@ module "gcloud" {
 resource "null_resource" "fetch_lb_details" {
   provisioner "local-exec" {
     command = <<EOT
-      gcloud compute forwarding-rules list --format="json" > lb_details.json
+      ls -lrt
       cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
     EOT
   }
