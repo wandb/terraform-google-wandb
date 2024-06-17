@@ -1,25 +1,20 @@
 data "google_client_config" "current" {}
 
-resource "null_resource" "default" {
-  provisioner "local-exec" {
-    command = "gcloud compute instances list"
-  }
-}
-
 # Module to manage gcloud
-module "gcloud" {
-  source  = "terraform-google-modules/gcloud/google"
-  version = "~> 3.4"
-  platform = "linux"
-  create_cmd_entrypoint  = "gcloud"
-  create_cmd_body  = "compute forwarding-rules list --format=json > lb_details.json"
-}
+# module "gcloud" {
+#   source  = "terraform-google-modules/gcloud/google"
+#   version = "~> 3.4"
+#   platform = "linux"
+#   create_cmd_entrypoint  = "gcloud"
+#   create_cmd_body  = "compute forwarding-rules list --format=json > lb_details.json"
+# }
 
 # Fetch Load Balancer Details using gcloud module
 resource "null_resource" "fetch_lb_details" {
   provisioner "local-exec" {
     command = <<EOT
       ls -lrt
+      gcloud version
       cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
     EOT
   }
