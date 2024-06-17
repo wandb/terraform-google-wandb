@@ -15,19 +15,19 @@ data "google_client_config" "current" {}
 # }
 
 
-# resource "null_resource" "fetch_lb_details" {
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       gcloud compute forwarding-rules list --format="json" > lb_details.json
-#       cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
-#     EOT
-#   }
-# }
+resource "null_resource" "fetch_lb_details" {
+  provisioner "local-exec" {
+    command = <<EOT
+      gcloud compute forwarding-rules list --format="json" > lb_details.json
+      cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
+    EOT
+  }
+}
 
-# data "external" "filtered_lb_names" {
-#   program    = ["sh", "-c", "cat filtered_lb_names.txt | jq -R -s '{\"load_balancer_name\": .}'"]
-#   depends_on = [null_resource.fetch_lb_details]
-# }
+data "external" "filtered_lb_names" {
+  program    = ["sh", "-c", "cat filtered_lb_names.txt | jq -R -s '{\"load_balancer_name\": .}'"]
+  depends_on = [null_resource.fetch_lb_details]
+}
 
 locals {
   forwardingRules = try(data.external.filtered_lb_names.result["load_balancer_name"],"")
