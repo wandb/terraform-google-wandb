@@ -28,15 +28,13 @@ variable "allowed_projects" {
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
 
-variable "ingress_name" {
-  description = "Name of the ingress resources which was created by wandb module"
-  type        = string
-}
-
 variable "psc_subnetwork" {
   type        = string
+  description = "Private link service reserved subnetwork"
 }
+
 variable "proxynetwork_cidr" {
   type        = string
+  description = "Internal load balancer proxy subnetwork"
   default = ""
 }
