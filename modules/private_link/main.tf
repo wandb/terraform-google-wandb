@@ -6,7 +6,7 @@ module "gcloud" {
   version = "~> 3.4"
 
   platform = "linux"
-  additional_components = ["kubectl", "beta"]
+  # additional_components = ["kubectl", "beta"]
 
   create_cmd_entrypoint  = "gcloud"
   create_cmd_body        = "version"
