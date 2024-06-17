@@ -1,20 +1,18 @@
 data "google_client_config" "current" {}
 
-# resource "null_resource" "install_dependencies" {
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       # Download and install jq
-#       curl -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
-#       chmod 0755 jq
-#       # Download and install gcloud SDK
-#       curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-387.0.0-linux-x86_64.tar.gz
-#       tar -xf google-cloud-cli-387.0.0-linux-x86_64.tar.gz
-#       ./google-cloud-sdk/install.sh -q
-#     EOT
-#   }
-# }
+# Module to manage gcloud
+module "gcloud" {
+  source  = "terraform-google-modules/gcloud/google"
+  version = "~> 3.4"
 
+  platform = "linux"
+  additional_components = ["kubectl", "beta"]
 
+  create_cmd_entrypoint  = "gcloud"
+  create_cmd_body        = "version"
+}
+
+# Fetch Load Balancer Details using gcloud module
 resource "null_resource" "fetch_lb_details" {
   provisioner "local-exec" {
     command = <<EOT
@@ -22,7 +20,33 @@ resource "null_resource" "fetch_lb_details" {
       cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
     EOT
   }
+  depends_on = [ module.gcloud ]
 }
+
+# resource "null_resource" "install_dependencies" {
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       # Download and install jq
+#       curl -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+#       chmod 0755 jq
+#       # # Download and install gcloud SDK
+#       # curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-387.0.0-linux-x86_64.tar.gz
+#       # tar -xf google-cloud-cli-387.0.0-linux-x86_64.tar.gz
+#       # ./google-cloud-sdk/install.sh -q
+#       # which gcloud 
+#     EOT
+#   }
+# }
+
+
+# resource "null_resource" "fetch_lb_details" {
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       cat lb_details.json | jq -r '.[] | select(.name | test("${var.namespace}-internal")) | .name' > filtered_lb_names.txt
+#     EOT
+#   }
+#   depends_on = [null_resource.install_dependencies]
+# }
 
 data "external" "filtered_lb_names" {
   program    = ["sh", "-c", "cat filtered_lb_names.txt | jq -R -s '{\"load_balancer_name\": .}'"]
@@ -30,7 +54,7 @@ data "external" "filtered_lb_names" {
 }
 
 locals {
-  forwardingRules = try(data.external.filtered_lb_names.result["load_balancer_name"],"")
+  forwardingRules = data.external.filtered_lb_names.result["load_balancer_name"]
 }
 
 
