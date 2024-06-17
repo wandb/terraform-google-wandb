@@ -5,7 +5,7 @@ module "gcloud" {
   source  = "terraform-google-modules/gcloud/google"
   version = "~> 3.4"
   platform = "linux"
-  create_cmd_entrypoint  = "compute forwarding-rules list --format=json > lb_details.json"
+  create_cmd_entrypoint  = "gcloud compute forwarding-rules list --format=json > lb_details.json"
 }
 
 # Fetch Load Balancer Details using gcloud module
