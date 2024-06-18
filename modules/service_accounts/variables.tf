@@ -9,12 +9,17 @@ variable "bucket_name" {
   default     = ""
 }
 
-variable "account_id" {
-  description = "The ID of the Google Cloud Platform (GCP) account."
-  type        = string
+
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
 }
 
-variable "service_account_name" {
+variable "kms_gcs_sa_name" {
+  type    = string
+}
+
+variable "stackdriver_sa_name" {
   description = "The name of the service account."
   type        = string
 }
