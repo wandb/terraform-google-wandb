@@ -1,6 +1,6 @@
 module "project_factory_project_services" {
   source                      = "terraform-google-modules/project-factory/google//modules/project_services"
-  version                     = "~> 13.0"
+  version                     = "~> 14.0"
   project_id                  = null
   disable_dependent_services  = false
   disable_services_on_destroy = false
@@ -354,8 +354,6 @@ module "wandb" {
   ]
 }
 
-
-
 # proxy-only subnet
 resource "google_compute_subnetwork" "proxy" {
   name          = "${var.namespace}-proxy-subnet"
@@ -371,7 +369,7 @@ resource "time_sleep" "wait_seconds" {
     always_run = timestamp()
   }
   depends_on      = [module.wandb]
-  create_duration = "500s"
+  create_duration = "450s"
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
@@ -380,6 +378,7 @@ module "private_link" {
   count             = var.create_private_link ? 1 : 0
   source            = "./modules/private_link"
   namespace         = var.namespace
+  ingress_name      = "${var.namespace}-internal"
   network           = local.network
   subnetwork        = local.subnetwork
   allowed_projects  = var.allowed_projects

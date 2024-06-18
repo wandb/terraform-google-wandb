@@ -36,5 +36,9 @@ variable "psc_subnetwork" {
 variable "proxynetwork_cidr" {
   type        = string
   description = "Internal load balancer proxy subnetwork"
-  default = ""
+}
+
+variable "ingress_name" {
+  type = string
+  description = "Ingress name contains the regex pattern of forwarding rule"
 }
