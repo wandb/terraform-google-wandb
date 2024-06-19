@@ -367,6 +367,7 @@ resource "google_compute_subnetwork" "proxy" {
 
 module "sleep" {
   source = "matti/resource/shell"
+  version = "1.5.0"
 
   environment = {
     TIME = timestamp()
