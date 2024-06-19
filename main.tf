@@ -363,26 +363,43 @@ resource "google_compute_subnetwork" "proxy" {
   network       = local.network.id
 }
 
-resource "time_sleep" "wait_seconds" {
-  count = var.create_private_link ? 1 : 0
-  triggers = {
-    always_run = timestamp()
+## In order to support private link required min version 0.13.0 of operator-wandb chart
+
+module "sleep" {
+  source = "matti/resource/shell"
+
+  environment = {
+    TIME = timestamp()
   }
-  depends_on      = [module.wandb]
-  create_duration = "450s"
+  command              = "sleep 450; date +%s"
+  command_when_destroy = "sleep 450"
+  trigger              = timestamp()
+  working_dir          = "/tmp"
+
+  depends = [
+    module.wandb
+  ]
 }
 
-## In order to support private link required min version 0.13.0 of operator-wandb chart
+data "google_compute_forwarding_rules" "my_forwarding_rules" {
+  depends_on = [module.sleep.stdout]
+}
+
+locals {
+  regex_pattern       = "${var.namespace}-internal"
+  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.my_forwarding_rules.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
+  forwarding_rule     = join(", ", local.filtered_rule_names)
+}
 
 module "private_link" {
   count             = var.create_private_link ? 1 : 0
   source            = "./modules/private_link"
   namespace         = var.namespace
-  ingress_name      = "${var.namespace}-internal"
+  forwarding_rule   = local.forwarding_rule
   network           = local.network
   subnetwork        = local.subnetwork
   allowed_projects  = var.allowed_projects
   psc_subnetwork    = var.psc_subnetwork_cidr
   proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [google_compute_subnetwork.proxy]
+  depends_on        = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.my_forwarding_rules]
 }

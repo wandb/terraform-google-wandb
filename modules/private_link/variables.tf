@@ -38,7 +38,7 @@ variable "proxynetwork_cidr" {
   description = "Internal load balancer proxy subnetwork"
 }
 
-variable "ingress_name" {
+variable "forwarding_rule" {
   type = string
-  description = "Ingress name contains the regex pattern of forwarding rule"
+  description = "forwarding rule name used in private service connect as a target"
 }
