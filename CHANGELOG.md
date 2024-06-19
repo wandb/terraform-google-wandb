@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.3.0](https://github.com/wandb/terraform-google-wandb/compare/v3.2.0...v3.3.0) (2024-06-18)
+
+
+### Features
+
+* Added service account name in stackdriver conf ([#136](https://github.com/wandb/terraform-google-wandb/issues/136)) ([87aa2b9](https://github.com/wandb/terraform-google-wandb/commit/87aa2b9a6f59aa9364f17b2087fde8df6a51acbe)), closes [#113](https://github.com/wandb/terraform-google-wandb/issues/113)
+
 ## [3.2.0](https://github.com/wandb/terraform-google-wandb/compare/v3.1.1...v3.2.0) (2024-06-07)
 
 
