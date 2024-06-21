@@ -95,14 +95,14 @@ resources that lack official modules.
 | Name | Type |
 |------|------|
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
-| [google_compute_forwarding_rules.my_forwarding_rules](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_forwarding_rules) | data source |
+| [google_compute_forwarding_rules.all](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_forwarding_rules) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allowed_inbound_cidrs"></a> [allowed\_inbound\_cidrs](#input\_allowed\_inbound\_cidrs) | Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to ["*"] | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
-| <a name="input_allowed_projects"></a> [allowed\_projects](#input\_allowed\_projects) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
+| <a name="input_allowed_project_names"></a> [allowed\_project\_names](#input\_allowed\_project\_names) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
