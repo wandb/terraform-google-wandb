@@ -254,17 +254,24 @@ variable "parquet_wandb_env" {
   default     = {}
 }
 
+variable "create_workload_identity" {
+  description = "Flag to indicate whether to create a workload identity for the service account."
+  type        = bool
+  default     = true
+}
+
+variable "kms_gcs_sa_name" {
+  type    = string
+  default = "wandb-app"
+}
+
 variable "enable_stackdriver" {
   type = bool
-  default = false
+  default = true
 }
 
-variable "workload_account_id" {
+variable "stackdriver_sa_name" {
   type    = string
-  default = "stackdriver"
+  default = "wandb-stackdriver"
 }
 
-variable "service_account_name" {
-  type    = string
-  default = "stackdriver"
-}

@@ -29,13 +29,14 @@ locals {
 }
 
 module "service_accounts" {
-  source               = "./modules/service_accounts"
-  namespace            = var.namespace
-  bucket_name          = var.bucket_name
-  account_id           = var.workload_account_id
-  service_account_name = var.service_account_name
-  enable_stackdriver   = var.enable_stackdriver
-  depends_on           = [module.project_factory_project_services]
+  source                   = "./modules/service_accounts"
+  namespace                = var.namespace
+  bucket_name              = var.bucket_name
+  kms_gcs_sa_name          = var.kms_gcs_sa_name
+  create_workload_identity = var.create_workload_identity
+  stackdriver_sa_name      = var.stackdriver_sa_name
+  enable_stackdriver       = var.enable_stackdriver
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "kms" {
@@ -87,7 +88,7 @@ module "app_gke" {
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
-  create_workload_identity = var.enable_stackdriver
+  create_workload_identity = var.create_workload_identity
   depends_on               = [module.project_factory_project_services]
 }
 
@@ -151,7 +152,6 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
   oidc_auth_method = var.oidc_auth_method
@@ -247,6 +247,13 @@ module "wandb" {
 
       app = {
         extraEnvs = var.app_wandb_env
+        serviceAccount = var.create_workload_identity ? {
+          name        = var.kms_gcs_sa_name
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email }
+          } : {
+          name        = ""
+          annotations = {}
+        }
       }
 
       ingress = {
@@ -261,9 +268,10 @@ module "wandb" {
       stackdriver = var.enable_stackdriver ? {
         install = true
         stackdriver = {
-          projectId = data.google_client_config.current.project
+          projectId          = data.google_client_config.current.project
+          serviceAccountName = var.stackdriver_sa_name
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.monitoring_role } }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
         } : {
         install        = false
         stackdriver    = {}
@@ -281,7 +289,7 @@ module "wandb" {
                       scheme       = "http"
                       metrics_path = "/metrics"
                       dns_sd_configs = [
-                        { names = ["stackdriver"]
+                        { names = ["wandb-stackdriver"]
                           type  = "A"
                           port  = 9255
                         }
