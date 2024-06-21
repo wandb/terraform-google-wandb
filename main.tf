@@ -1,6 +1,6 @@
 module "project_factory_project_services" {
   source                      = "terraform-google-modules/project-factory/google//modules/project_services"
-  version                     = "~> 13.0"
+  version                     = "~> 15.0"
   project_id                  = null
   disable_dependent_services  = false
   disable_services_on_destroy = false
