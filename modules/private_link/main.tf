@@ -8,7 +8,7 @@ resource "google_compute_service_attachment" "default" {
   target_service        = "https://www.googleapis.com/compute/v1/projects/${data.google_client_config.current.project}/regions/${data.google_client_config.current.region}/forwardingRules/${var.forwarding_rule}"
 
   dynamic "consumer_accept_lists" {
-    for_each = var.allowed_projects != {} ? var.allowed_projects : {}
+    for_each = var.allowed_project_names != {} ? var.allowed_project_names : {}
     content {
       project_id_or_num = consumer_accept_lists.key
       connection_limit  = consumer_accept_lists.value

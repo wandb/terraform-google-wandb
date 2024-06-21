@@ -22,7 +22,7 @@ variable "subnetwork" {
   description = "The subnetwork object containing the self-link of the subnetwork."
 }
 
-variable "allowed_projects" {
+variable "allowed_project_names" {
   type = map(number)
   default = {}
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."

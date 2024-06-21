@@ -140,7 +140,6 @@ locals {
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
 
-
 resource "google_compute_address" "default" {
   count        = var.create_private_link ? 1 : 0
   name         = "${var.namespace}-ip-address"
@@ -148,9 +147,6 @@ resource "google_compute_address" "default" {
   address_type = "INTERNAL"
   purpose      = "GCE_ENDPOINT"
 }
-
-
-
 
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
@@ -164,11 +160,11 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-  oidc_client_id   = var.oidc_client_id
-  oidc_issuer      = var.oidc_issuer
-  oidc_auth_method = var.oidc_auth_method
-  oidc_secret      = var.oidc_secret
-  local_restore    = var.local_restore
+  oidc_client_id             = var.oidc_client_id
+  oidc_issuer                = var.oidc_issuer
+  oidc_auth_method           = var.oidc_auth_method
+  oidc_secret                = var.oidc_secret
+  local_restore              = var.local_restore
 
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
@@ -200,6 +196,7 @@ locals {
     "OIDC_AUTH_METHOD" = var.oidc_auth_method
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
+  internal_lb_name = "${var.namespace}-internal"
 }
 
 data "google_client_config" "current" {}
@@ -279,7 +276,7 @@ module "wandb" {
         ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
         secondary = {
           create       = var.create_private_link # internal ingress for private link connections
-          nameOverride = "${var.namespace}-internal"
+          nameOverride = local.internal_lb_name
           annotations = {
             "kubernetes.io/ingress.class"                   = "gce-internal"
             "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
@@ -362,7 +359,7 @@ module "wandb" {
   ]
 }
 
-# proxy-only subnet
+# proxy-only subnet used by internal load balancer
 resource "google_compute_subnetwork" "proxy" {
   name          = "${var.namespace}-proxy-subnet"
   ip_cidr_range = var.ilb_proxynetwork_cidr
@@ -371,10 +368,9 @@ resource "google_compute_subnetwork" "proxy" {
   network       = local.network.id
 }
 
-## In order to support private link required min version 0.13.0 of operator-wandb chart
-
+## This ensures that the private link resource does not fail during the provisioning process.
 module "sleep" {
-  source = "matti/resource/shell"
+  source  = "matti/resource/shell"
   version = "1.5.0"
 
   environment = {
@@ -390,25 +386,26 @@ module "sleep" {
   ]
 }
 
-data "google_compute_forwarding_rules" "my_forwarding_rules" {
+data "google_compute_forwarding_rules" "all" {
   depends_on = [module.sleep.stdout]
 }
 
 locals {
-  regex_pattern       = "${var.namespace}-internal"
-  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.my_forwarding_rules.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
+  regex_pattern       = local.internal_lb_name
+  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
   forwarding_rule     = join(", ", local.filtered_rule_names)
 }
 
+## In order to support private link required min version 0.13.0 of operator-wandb chart
 module "private_link" {
-  count             = var.create_private_link ? 1 : 0
-  source            = "./modules/private_link"
-  namespace         = var.namespace
-  forwarding_rule   = local.forwarding_rule
-  network           = local.network
-  subnetwork        = local.subnetwork
-  allowed_projects  = var.allowed_projects
-  psc_subnetwork    = var.psc_subnetwork_cidr
-  proxynetwork_cidr = var.ilb_proxynetwork_cidr
-  depends_on        = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.my_forwarding_rules]
+  count                 = var.create_private_link ? 1 : 0
+  source                = "./modules/private_link"
+  namespace             = var.namespace
+  forwarding_rule       = local.forwarding_rule
+  network               = local.network
+  subnetwork            = local.subnetwork
+  allowed_project_names = var.allowed_project_names
+  psc_subnetwork        = var.psc_subnetwork_cidr
+  proxynetwork_cidr     = var.ilb_proxynetwork_cidr
+  depends_on            = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.all]
 }

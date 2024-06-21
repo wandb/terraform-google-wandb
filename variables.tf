@@ -272,10 +272,10 @@ variable "public_access" {
   default = true
 }
 
-variable "allowed_projects" {
+variable "allowed_project_names" {
   type = map(number)
   default = {
-    # "482878270665" = 4
+    # "project_ID" = 4 
   }
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
