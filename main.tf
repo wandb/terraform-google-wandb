@@ -16,16 +16,19 @@ module "project_factory_project_services" {
     "cloudkms.googleapis.com",          // KMS
     "compute.googleapis.com",           // required for datadog monitoring
     "cloudasset.googleapis.com",        // required for datadog monitoring
-    "secretmanager.googleapis.com"      // required for secrets
+    "secretmanager.googleapis.com",
+    "cloudresourcemanager.googleapis.com" // required for secrets
   ]
 }
 
 locals {
-  fqdn           = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
-  url_prefix     = var.ssl ? "https" : "http"
-  url            = "${local.url_prefix}://${local.fqdn}"
-  create_bucket  = var.bucket_name == ""
-  create_network = var.network == null
+  fqdn            = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
+  url_prefix      = var.ssl ? "https" : "http"
+  url             = "${local.url_prefix}://${local.fqdn}"
+  create_bucket   = var.bucket_name == ""
+  create_network  = var.network == null
+  bucket_location = var.bucket_location == "" ? "US" : var.bucket_location
+  database_region = var.database_region == "" ? "us-central1" : var.database_region
 }
 
 module "service_accounts" {
@@ -39,31 +42,41 @@ module "service_accounts" {
   depends_on               = [module.project_factory_project_services]
 }
 
-module "kms" {
-  # KMS is currently only used to encrypt pubsub queue. Disable it if we dont use it.
-  count               = var.use_internal_queue ? 0 : 1
-  source              = "./modules/kms"
-  namespace           = var.namespace
-  deletion_protection = var.deletion_protection
+module "kms_default_bucket" {
+  count                          = var.bucket_kms_key_id == "" ? 1 : 0
+  source                         = "./modules/kms"
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  key_location                   = lower(local.bucket_location)
+  bind_pubsub_service_to_kms_key = !var.use_internal_queue
+}
+
+module "kms_default_sql" {
+
+  count                          = var.db_kms_key_id == "" ? 1 : 0
+  source                         = "./modules/kms"
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  key_location                   = local.database_region
+  bind_pubsub_service_to_kms_key = false
 }
 
 locals {
-  crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
+  bucket_crypto_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
+  sql_crypto_key    = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
 }
 
 module "storage" {
-  count     = local.create_bucket ? 1 : 0
-  source    = "./modules/storage"
-  namespace = var.namespace
-  labels    = var.labels
-
-  create_queue    = !var.use_internal_queue
-  bucket_location = "US"
-  service_account = module.service_accounts.service_account
-  crypto_key      = local.crypto_key
-
+  count               = local.create_bucket ? 1 : 0
+  source              = "./modules/storage"
+  namespace           = var.namespace
+  labels              = var.labels
+  create_queue        = !var.use_internal_queue
+  bucket_location     = local.bucket_location
+  service_account     = module.service_accounts.service_account
+  crypto_key          = local.bucket_crypto_key
   deletion_protection = var.deletion_protection
-  depends_on          = [module.project_factory_project_services]
+  depends_on          = [module.project_factory_project_services, module.kms_default_bucket.google_kms_crypto_key_iam_binding]
 }
 
 module "networking" {
@@ -116,7 +129,9 @@ module "database" {
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
-  depends_on          = [module.project_factory_project_services]
+  crypto_key          = local.sql_crypto_key
+  region              = local.database_region
+  depends_on          = [module.project_factory_project_services, module.kms_default_sql.google_kms_crypto_key_iam_binding]
 }
 
 module "redis" {
@@ -128,7 +143,11 @@ module "redis" {
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
-  tier              = var.redis_tier
+  depends_on        = [module.project_factory_project_services]
+  tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
+  crypto_key        = local.sql_crypto_key
+  region            = local.database_region
+
 }
 
 locals {
@@ -152,11 +171,11 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-  oidc_client_id   = var.oidc_client_id
-  oidc_issuer      = var.oidc_issuer
-  oidc_auth_method = var.oidc_auth_method
-  oidc_secret      = var.oidc_secret
-  local_restore    = var.local_restore
+  oidc_client_id             = var.oidc_client_id
+  oidc_issuer                = var.oidc_issuer
+  oidc_auth_method           = var.oidc_auth_method
+  oidc_secret                = var.oidc_secret
+  local_restore              = var.local_restore
 
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
