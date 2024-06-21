@@ -33,10 +33,14 @@ locals {
 }
 
 module "service_accounts" {
-  source      = "./modules/service_accounts"
-  namespace   = var.namespace
-  bucket_name = var.bucket_name
-  depends_on  = [module.project_factory_project_services]
+  source                   = "./modules/service_accounts"
+  namespace                = var.namespace
+  bucket_name              = var.bucket_name
+  kms_gcs_sa_name          = var.kms_gcs_sa_name
+  create_workload_identity = var.create_workload_identity
+  stackdriver_sa_name      = var.stackdriver_sa_name
+  enable_stackdriver       = var.enable_stackdriver
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "kms_default_bucket" {
@@ -85,20 +89,21 @@ module "networking" {
 }
 
 locals {
-  network_connection = try(module.networking.0.connection, { network = var.network })
-  network            = try(module.networking.0.network, { self_link = var.network })
-  subnetwork         = try(module.networking.0.subnetwork, { self_link = var.subnetwork })
+  network_connection = try(module.networking[0].connection, { network = var.network })
+  network            = try(module.networking[0].network, { self_link = var.network })
+  subnetwork         = try(module.networking[0].subnetwork, { self_link = var.subnetwork })
 }
 
 module "app_gke" {
-  source          = "./modules/app_gke"
-  namespace       = var.namespace
-  machine_type    = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count      = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
-  network         = local.network
-  subnetwork      = local.subnetwork
-  service_account = module.service_accounts.service_account
-  depends_on      = [module.project_factory_project_services]
+  source                   = "./modules/app_gke"
+  namespace                = var.namespace
+  machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  network                  = local.network
+  subnetwork               = local.subnetwork
+  service_account          = module.service_accounts.service_account
+  create_workload_identity = var.create_workload_identity
+  depends_on               = [module.project_factory_project_services]
 }
 
 module "app_lb" {
@@ -147,10 +152,10 @@ module "redis" {
 }
 
 locals {
-  redis_certificate       = var.create_redis ? module.redis.0.ca_cert : null
-  redis_connection_string = var.create_redis ? "redis://:${module.redis.0.auth_string}@${module.redis.0.connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
-  bucket                  = local.create_bucket ? module.storage.0.bucket_name : var.bucket_name
-  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.0.bucket_queue_name}"
+  redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
+  redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
+  bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
+  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
@@ -167,7 +172,6 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-
   oidc_client_id   = var.oidc_client_id
   oidc_issuer      = var.oidc_issuer
   oidc_auth_method = var.oidc_auth_method
@@ -179,12 +183,6 @@ module "gke_app" {
     "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
     "GORILLA_GLUE_LIST"                    = true
   }, var.other_wandb_env)
-
-  weave_wandb_env = var.weave_wandb_env
-
-  app_wandb_env = var.app_wandb_env
-
-  parquet_wandb_env = var.parquet_wandb_env
 
   wandb_image    = var.wandb_image
   wandb_version  = var.wandb_version
@@ -203,6 +201,17 @@ module "gke_app" {
   ]
 }
 
+locals {
+  oidc_envs = var.oidc_issuer != "" ? {
+    "OIDC_ISSUER"      = var.oidc_issuer
+    "OIDC_CLIENT_ID"   = var.oidc_client_id
+    "OIDC_AUTH_METHOD" = var.oidc_auth_method
+    "OIDC_SECRET"      = var.oidc_secret
+  } : {}
+}
+
+data "google_client_config" "current" {}
+
 module "wandb" {
   source  = "wandb/wandb/helm"
   version = "1.2.0"
@@ -217,11 +226,7 @@ module "wandb" {
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
           "TAG_CUSTOMER_NS"                      = var.namespace
-          "OIDC_ISSUER"                          = var.oidc_issuer
-          "OIDC_CLIENT_ID"                       = var.oidc_client_id
-          "OIDC_AUTH_METHOD"                     = var.oidc_auth_method
-          "OIDC_SECRET"                          = var.oidc_secret
-        }, var.other_wandb_env)
+        }, var.other_wandb_env, local.oidc_envs)
 
         bucket = {
           provider = "gcs"
@@ -238,20 +243,37 @@ module "wandb" {
         }
 
         redis = var.create_redis ? {
-          password = module.redis.0.auth_string
-          host     = module.redis.0.host
-          port     = module.redis.0.port
-          caCert   = module.redis.0.ca_cert
+          password = module.redis[0].auth_string
+          host     = module.redis[0].host
+          port     = module.redis[0].port
+          caCert   = module.redis[0].ca_cert
           params = {
             tls          = true
             ttlInSeconds = 604800
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
-        } : null
+          } : {
+          password = ""
+          host     = ""
+          port     = 0
+          caCert   = ""
+          params = {
+            tls          = false
+            ttlInSeconds = 0
+            caCertPath   = ""
+          }
+        }
       }
 
       app = {
         extraEnvs = var.app_wandb_env
+        serviceAccount = var.create_workload_identity ? {
+          name        = var.kms_gcs_sa_name
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email }
+          } : {
+          name        = ""
+          annotations = {}
+        }
       }
 
       ingress = {
@@ -262,8 +284,57 @@ module "wandb" {
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
       }
+      # To support otel rds and redis metrics need operator-wandb chart minimum version 0.13.8 ( stackdriver subchart)
+      stackdriver = var.enable_stackdriver ? {
+        install = true
+        stackdriver = {
+          projectId          = data.google_client_config.current.project
+          serviceAccountName = var.stackdriver_sa_name
+        }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
+        } : {
+        install        = false
+        stackdriver    = {}
+        serviceAccount = {}
+      }
 
-      redis = { install = false }
+      otel = {
+        daemonset = var.enable_stackdriver ? {
+          config = {
+            receivers = {
+              prometheus = {
+                config = {
+                  scrape_configs = [
+                    { job_name     = "stackdriver"
+                      scheme       = "http"
+                      metrics_path = "/metrics"
+                      dns_sd_configs = [
+                        { names = ["wandb-stackdriver"]
+                          type  = "A"
+                          port  = 9255
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+            service = {
+              pipelines = {
+                metrics = {
+                  receivers = ["hostmetrics", "k8s_cluster", "kubeletstats", "prometheus"]
+                }
+              }
+            }
+          }
+          } : { config = {
+            receivers = {}
+            service   = {}
+          }
+        }
+      }
+
+      redis = { install = !var.create_redis }
       mysql = { install = false }
 
       weave = {

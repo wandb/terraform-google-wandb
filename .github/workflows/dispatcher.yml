@@ -1,0 +1,26 @@
+name: ChatOps Dispatcher
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  slash-command-dispatch:
+    name: Slash Command Dispatcher
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v4
+        with:
+          token: ${{ secrets.WANDB_RELEASE_TOKEN }}
+          reaction-token: ${{ secrets.WANDB_RELEASE_TOKEN }}
+          commands: |
+            test
+            destroy
+            help
+          permission: maintain
+          issue-type: pull-request
+          event-type-suffix: -command
