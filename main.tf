@@ -22,14 +22,13 @@ module "project_factory_project_services" {
 }
 
 locals {
-  fqdn              = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
-  url_prefix        = var.ssl ? "https" : "http"
-  url               = "${local.url_prefix}://${local.fqdn}"
-  internal_app_port = 32543
-  create_bucket     = var.bucket_name == ""
-  create_network    = var.network == null
-  bucket_location   = var.bucket_location == "" ? "US" : var.bucket_location
-  database_region   = var.database_region == "" ? "us-central1" : var.database_region
+  fqdn            = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
+  url_prefix      = var.ssl ? "https" : "http"
+  url             = "${local.url_prefix}://${local.fqdn}"
+  create_bucket   = var.bucket_name == ""
+  create_network  = var.network == null
+  bucket_location = var.bucket_location == "" ? "US" : var.bucket_location
+  database_region = var.database_region == "" ? "us-central1" : var.database_region
 }
 
 module "service_accounts" {
@@ -172,11 +171,11 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-  oidc_client_id   = var.oidc_client_id
-  oidc_issuer      = var.oidc_issuer
-  oidc_auth_method = var.oidc_auth_method
-  oidc_secret      = var.oidc_secret
-  local_restore    = var.local_restore
+  oidc_client_id             = var.oidc_client_id
+  oidc_issuer                = var.oidc_issuer
+  oidc_auth_method           = var.oidc_auth_method
+  oidc_secret                = var.oidc_secret
+  local_restore              = var.local_restore
 
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
