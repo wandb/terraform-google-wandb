@@ -77,6 +77,7 @@ output "gke_node_count" {
   value = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
 }
 
+
 output "gke_node_instance_type" {
   value = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
 }
