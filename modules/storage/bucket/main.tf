@@ -14,6 +14,18 @@ resource "google_storage_bucket" "file_storage" {
   uniform_bucket_level_access = true
   force_destroy               = !var.deletion_protection
 
+  versioning {
+    enabled = true
+  }
+  lifecycle_rule {
+    condition {
+      days_since_noncurrent_time = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
   labels = var.labels
 
   cors {
