@@ -279,7 +279,6 @@ module "wandb" {
           serviceAccount = {}
           }
         }
-
       otel = {
         daemonset = var.enable_stackdriver ? {
           config = {
