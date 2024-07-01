@@ -265,18 +265,20 @@ module "wandb" {
         }
       }
       # To support otel rds and redis metrics need operator-wandb chart minimum version 0.13.8 ( stackdriver subchart)
-      stackdriver = var.enable_stackdriver ? {
-        install = true
-        stackdriver = {
-          projectId          = data.google_client_config.current.project
-          serviceAccountName = var.stackdriver_sa_name
+      prometheus = {
+        stackdriver = var.enable_stackdriver ? {
+          install = true
+          stackdriver = {
+            projectId          = data.google_client_config.current.project
+            serviceAccountName = var.stackdriver_sa_name
+          }
+          serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
+          } : {
+          install        = false
+          stackdriver    = {}
+          serviceAccount = {}
+          }
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
-        } : {
-        install        = false
-        stackdriver    = {}
-        serviceAccount = {}
-      }
 
       otel = {
         daemonset = var.enable_stackdriver ? {
