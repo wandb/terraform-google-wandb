@@ -83,8 +83,8 @@ locals {
 module "app_gke" {
   source                   = "./modules/app_gke"
   namespace                = var.namespace
-  machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  machine_type             = var.gke_machine_type
+  node_count               = var.gke_node_count
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
@@ -111,7 +111,7 @@ module "database" {
   namespace           = var.namespace
   database_version    = var.database_version
   force_ssl           = var.force_ssl
-  tier                = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
+  tier                = var.database_machine_type
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
@@ -124,7 +124,7 @@ module "redis" {
   source    = "./modules/redis"
   namespace = var.namespace
   ### here we set the default to 6gb, which is = setting for "small" standard size
-  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
+  memory_size_gb    = var.redis_memory_size
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
