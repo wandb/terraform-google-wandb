@@ -84,7 +84,8 @@ module "app_gke" {
   source                   = "./modules/app_gke"
   namespace                = var.namespace
   machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  min_node_count           = coalesce(try(local.deployment_size[var.size].min_node_count, null), var.gke_min_node_count)
+  max_node_count           = coalesce(try(local.deployment_size[var.size].max_node_count, null), var.gke_max_node_count)
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
@@ -152,11 +153,11 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-  oidc_client_id   = var.oidc_client_id
-  oidc_issuer      = var.oidc_issuer
-  oidc_auth_method = var.oidc_auth_method
-  oidc_secret      = var.oidc_secret
-  local_restore    = var.local_restore
+  oidc_client_id             = var.oidc_client_id
+  oidc_issuer                = var.oidc_issuer
+  oidc_auth_method           = var.oidc_auth_method
+  oidc_secret                = var.oidc_secret
+  local_restore              = var.local_restore
 
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,

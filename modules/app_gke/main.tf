@@ -57,9 +57,13 @@ resource "random_pet" "node_pool" {
 }
 
 resource "google_container_node_pool" "default" {
-  name       = "default-pool-${random_pet.node_pool.id}"
-  cluster    = google_container_cluster.default.id
-  node_count = var.node_count
+  name    = "default-pool-${random_pet.node_pool.id}"
+  cluster = google_container_cluster.default.id
+
+  autoscaling {
+    min_node_count = var.min_node_count
+    max_node_count = var.max_node_count
+  }
 
   node_config {
     image_type      = "COS_CONTAINERD"
@@ -78,13 +82,13 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
 
-     dynamic "workload_metadata_config" {
-       for_each = var.create_workload_identity == true ? [1] : []
-        content {
-          mode = "GKE_METADATA"
-        }
+    dynamic "workload_metadata_config" {
+      for_each = var.create_workload_identity == true ? [1] : []
+      content {
+        mode = "GKE_METADATA"
       }
-    
+    }
+
     shielded_instance_config {
       enable_secure_boot = true
     }

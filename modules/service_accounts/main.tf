@@ -115,17 +115,17 @@ resource "google_project_iam_member" "kms" {
 }
 
 resource "google_service_account_iam_member" "token_creator_binding" {
-  count   = var.create_workload_identity == true ? 1 : 0
+  count              = var.create_workload_identity == true ? 1 : 0
   service_account_id = google_service_account.kms_gcs_sa[0].id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
 }
 
 resource "google_service_account_iam_member" "workload_binding" {
-  count   = var.create_workload_identity == true ? 1 : 0
+  count              = var.create_workload_identity == true ? 1 : 0
   service_account_id = google_service_account.kms_gcs_sa[0].id
-  role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.kms_gcs_sa_name}]"
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.kms_gcs_sa_name}]"
 }
 
 
@@ -140,19 +140,19 @@ resource "google_project_iam_member" "monitoring" {
   count   = var.enable_stackdriver == true ? 1 : 0
   project = local.project_id
   role    = "roles/monitoring.viewer"
-  member = "serviceAccount:${google_service_account.stackdriver[0].email}"
+  member  = "serviceAccount:${google_service_account.stackdriver[0].email}"
 }
 
 resource "google_service_account_iam_member" "stackdriver_token_creator" {
-  count   = var.enable_stackdriver == true ? 1 : 0
+  count              = var.enable_stackdriver == true ? 1 : 0
   service_account_id = google_service_account.stackdriver[0].id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member = "serviceAccount:${google_service_account.stackdriver[0].email}"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${google_service_account.stackdriver[0].email}"
 }
 
 resource "google_service_account_iam_member" "stackdriver_binding" {
-  count   = var.enable_stackdriver == true ? 1 : 0
+  count              = var.enable_stackdriver == true ? 1 : 0
   service_account_id = google_service_account.stackdriver[0].id
-  role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.stackdriver_sa_name}]"
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.stackdriver_sa_name}]"
 }

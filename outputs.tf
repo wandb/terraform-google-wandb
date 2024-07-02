@@ -73,10 +73,13 @@ output "standardized_size" {
   value = var.size
 }
 
-output "gke_node_count" {
-  value = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+output "gke_min_node_count" {
+  value = coalesce(try(local.deployment_size[var.size].min_node_count, null), var.gke_min_node_count)
 }
 
+output "gke_max_node_count" {
+  value = coalesce(try(local.deployment_size[var.size].max_node_count, null), var.gke_max_node_count)
+}
 
 output "gke_node_instance_type" {
   value = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
@@ -87,6 +90,6 @@ output "database_instance_type" {
 }
 
 output "sa_account_email" {
-  description =  "This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null"
-  value = var.create_workload_identity == true ? module.service_accounts.sa_account_email : null
+  description = "This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null"
+  value       = var.create_workload_identity == true ? module.service_accounts.sa_account_email : null
 }

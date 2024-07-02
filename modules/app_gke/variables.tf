@@ -40,9 +40,14 @@ variable "parquet_wandb_env" {
   default     = {}
 }
 
+variable "min_node_count" {
+  description = "Minimum number of nodes in the node pool"
+  type        = number
+}
 
-variable "node_count" {
-  type = number
+variable "max_node_count" {
+  description = "Maximum number of nodes in the node pool"
+  type        = number
 }
 
 variable "create_workload_identity" {

@@ -209,9 +209,14 @@ variable "gke_machine_type" {
 }
 
 
-variable "gke_node_count" {
+variable "gke_min_node_count" {
   type    = number
   default = 2
+}
+
+variable "gke_max_node_count" {
+  type    = number
+  default = 5
 }
 
 ##########################################
@@ -266,7 +271,7 @@ variable "kms_gcs_sa_name" {
 }
 
 variable "enable_stackdriver" {
-  type = bool
+  type    = bool
   default = true
 }
 
