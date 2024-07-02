@@ -186,6 +186,12 @@ variable "redis_tier" {
   default     = "STANDARD_HA"
 }
 
+variable "redis_memory_size" {
+    type        = number
+    description = "Specifies the memory size for this Redis instance"
+    default     = 6
+}
+
 ##########################################
 # External Bucket                        #
 ##########################################
@@ -228,12 +234,6 @@ variable "other_wandb_env" {
   type        = map(string)
   description = "Extra environment variables for W&B"
   default     = {}
-}
-
-variable "size" {
-  description = "Deployment size for the instance"
-  type        = string
-  default     = null
 }
 
 variable "weave_wandb_env" {
