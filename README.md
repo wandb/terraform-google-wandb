@@ -111,7 +111,8 @@ resources that lack official modules.
 | <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `true` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"n1-standard-4"` | no |
-| <a name="input_gke_node_count"></a> [gke\_node\_count](#input\_gke\_node\_count) | n/a | `number` | `2` | no |
+| <a name="input_gke_max_node_count"></a> [gke\_max\_node\_count](#input\_gke\_max\_node\_count) | n/a | `number` | `5` | no |
+| <a name="input_gke_min_node_count"></a> [gke\_min\_node\_count](#input\_gke\_min\_node\_count) | n/a | `number` | `2` | no |
 | <a name="input_kms_gcs_sa_name"></a> [kms\_gcs\_sa\_name](#input\_kms\_gcs\_sa\_name) | n/a | `string` | `"wandb-app"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
@@ -156,7 +157,8 @@ resources that lack official modules.
 | <a name="output_database_connection_string"></a> [database\_connection\_string](#output\_database\_connection\_string) | Full database connection string. You must be in the VPC to access the database. |
 | <a name="output_database_instance_type"></a> [database\_instance\_type](#output\_database\_instance\_type) | n/a |
 | <a name="output_fqdn"></a> [fqdn](#output\_fqdn) | The FQDN to the W&B application |
-| <a name="output_gke_node_count"></a> [gke\_node\_count](#output\_gke\_node\_count) | n/a |
+| <a name="output_gke_max_node_count"></a> [gke\_max\_node\_count](#output\_gke\_max\_node\_count) | n/a |
+| <a name="output_gke_min_node_count"></a> [gke\_min\_node\_count](#output\_gke\_min\_node\_count) | n/a |
 | <a name="output_gke_node_instance_type"></a> [gke\_node\_instance\_type](#output\_gke\_node\_instance\_type) | n/a |
 | <a name="output_sa_account_email"></a> [sa\_account\_email](#output\_sa\_account\_email) | This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null |
 | <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Weights & Biases service account used to manage resources. |
