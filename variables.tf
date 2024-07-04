@@ -295,7 +295,7 @@ variable "ilb_proxynetwork_cidr" {
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "kms_gcs_sa_name" {
@@ -305,7 +305,7 @@ variable "kms_gcs_sa_name" {
 
 variable "enable_stackdriver" {
   type = bool
-  default = true
+  default = false
 }
 
 variable "stackdriver_sa_name" {
