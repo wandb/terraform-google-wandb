@@ -361,23 +361,28 @@ module "wandb" {
 
 # proxy-only subnet used by internal load balancer
 resource "google_compute_subnetwork" "proxy" {
+  count         = var.create_private_link ? 1 : 0
   name          = "${var.namespace}-proxy-subnet"
   ip_cidr_range = var.ilb_proxynetwork_cidr
   purpose       = "REGIONAL_MANAGED_PROXY"
   role          = "ACTIVE"
   network       = local.network.id
+  timeouts {
+    delete = "2m"
+  }
 }
 
 ## This ensures that the private link resource does not fail during the provisioning process.
 module "sleep" {
+  count   = var.create_private_link ? 1 : 0
   source  = "matti/resource/shell"
   version = "1.5.0"
 
   environment = {
     TIME = timestamp()
   }
-  command              = "sleep 450; date +%s"
-  command_when_destroy = "sleep 450"
+  command              = "sleep 400; date +%s"
+  command_when_destroy = "sleep 400"
   trigger              = timestamp()
   working_dir          = "/tmp"
 
