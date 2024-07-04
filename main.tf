@@ -1,6 +1,6 @@
 module "project_factory_project_services" {
   source                      = "terraform-google-modules/project-factory/google//modules/project_services"
-  version                     = "~> 13.0"
+  version                     = "~> 14.0"
   project_id                  = null
   disable_dependent_services  = false
   disable_services_on_destroy = false
@@ -140,6 +140,14 @@ locals {
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
 
+resource "google_compute_address" "default" {
+  count        = var.create_private_link ? 1 : 0
+  name         = "${var.namespace}-ip-address"
+  subnetwork   = local.subnetwork.name
+  address_type = "INTERNAL"
+  purpose      = "GCE_ENDPOINT"
+}
+
 module "gke_app" {
   source  = "wandb/wandb/kubernetes"
   version = "1.14.1"
@@ -152,11 +160,11 @@ module "gke_app" {
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
   redis_ca_cert              = local.redis_certificate
-  oidc_client_id   = var.oidc_client_id
-  oidc_issuer      = var.oidc_issuer
-  oidc_auth_method = var.oidc_auth_method
-  oidc_secret      = var.oidc_secret
-  local_restore    = var.local_restore
+  oidc_client_id             = var.oidc_client_id
+  oidc_issuer                = var.oidc_issuer
+  oidc_auth_method           = var.oidc_auth_method
+  oidc_secret                = var.oidc_secret
+  local_restore              = var.local_restore
 
   other_wandb_env = merge({
     "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
@@ -188,6 +196,7 @@ locals {
     "OIDC_AUTH_METHOD" = var.oidc_auth_method
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
+  internal_lb_name = "${var.namespace}-internal"
 }
 
 data "google_client_config" "current" {}
@@ -257,13 +266,24 @@ module "wandb" {
       }
 
       ingress = {
+        create       = var.public_access # external ingress for public connection
         nameOverride = var.namespace
         annotations = {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
+        ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
+        secondary = {
+          create       = var.create_private_link # internal ingress for private link connections
+          nameOverride = local.internal_lb_name
+          annotations = {
+            "kubernetes.io/ingress.class"                   = "gce-internal"
+            "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
+          }
+        }
       }
+
       # To support otel rds and redis metrics need operator-wandb chart minimum version 0.13.8 ( stackdriver subchart)
       stackdriver = var.enable_stackdriver ? {
         install = true
@@ -337,4 +357,60 @@ module "wandb" {
   depends_on = [
     module.gke_app
   ]
+}
+
+# proxy-only subnet used by internal load balancer
+resource "google_compute_subnetwork" "proxy" {
+  count         = var.create_private_link ? 1 : 0
+  name          = "${var.namespace}-proxy-subnet"
+  ip_cidr_range = var.ilb_proxynetwork_cidr
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  role          = "ACTIVE"
+  network       = local.network.id
+  timeouts {
+    delete = "2m"
+  }
+}
+
+## This ensures that the private link resource does not fail during the provisioning process.
+module "sleep" {
+  count   = var.create_private_link ? 1 : 0
+  source  = "matti/resource/shell"
+  version = "1.5.0"
+
+  environment = {
+    TIME = timestamp()
+  }
+  command              = "sleep 400; date +%s"
+  command_when_destroy = "sleep 400"
+  trigger              = timestamp()
+  working_dir          = "/tmp"
+
+  depends = [
+    module.wandb
+  ]
+}
+
+data "google_compute_forwarding_rules" "all" {
+  depends_on = [module.sleep.stdout]
+}
+
+locals {
+  regex_pattern       = local.internal_lb_name
+  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
+  forwarding_rule     = join(", ", local.filtered_rule_names)
+}
+
+## In order to support private link required min version 0.13.0 of operator-wandb chart
+module "private_link" {
+  count                 = var.create_private_link ? 1 : 0
+  source                = "./modules/private_link"
+  namespace             = var.namespace
+  forwarding_rule       = local.forwarding_rule
+  network               = local.network
+  subnetwork            = local.subnetwork
+  allowed_project_names = var.allowed_project_names
+  psc_subnetwork        = var.psc_subnetwork_cidr
+  proxynetwork_cidr     = var.ilb_proxynetwork_cidr
+  depends_on            = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.all]
 }
