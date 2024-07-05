@@ -32,4 +32,6 @@ output "instance_group_url" {
 output "node_pool" {
   value = google_container_node_pool.default
 }
-
+output "mig_instance_group_id" {
+  value = google_container_node_pool.default.managed_instance_group_urls[0]
+}
