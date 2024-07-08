@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.6.0](https://github.com/wandb/terraform-google-wandb/compare/v3.5.0...v3.6.0) (2024-07-04)
+
+
+### Features
+
+* Added support for GCP Private Service Connect ([#115](https://github.com/wandb/terraform-google-wandb/issues/115)) ([4c47c0a](https://github.com/wandb/terraform-google-wandb/commit/4c47c0aa41cd3f3b9392dd2a84dc3d583bb096c8))
+
+## [3.5.0](https://github.com/wandb/terraform-google-wandb/compare/v3.4.0...v3.5.0) (2024-06-21)
+
+
+### Features
+
+* Added examples ([#123](https://github.com/wandb/terraform-google-wandb/issues/123)) ([083d6cc](https://github.com/wandb/terraform-google-wandb/commit/083d6cce70306359727648b83ff5189b2b69a9cc))
+
+## [3.4.0](https://github.com/wandb/terraform-google-wandb/compare/v3.3.0...v3.4.0) (2024-06-21)
+
+
+### Features
+
+* Added t-shirt size support ([#135](https://github.com/wandb/terraform-google-wandb/issues/135)) ([f8a3a2f](https://github.com/wandb/terraform-google-wandb/commit/f8a3a2fa8bf95f594dc9525ce568097abbb0dd42))
+
 ## [3.3.0](https://github.com/wandb/terraform-google-wandb/compare/v3.2.0...v3.3.0) (2024-06-18)
 
 
