@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.6.0](https://github.com/wandb/terraform-google-wandb/compare/v3.5.0...v3.6.0) (2024-07-04)
+
+
+### Features
+
+* Added support for GCP Private Service Connect ([#115](https://github.com/wandb/terraform-google-wandb/issues/115)) ([4c47c0a](https://github.com/wandb/terraform-google-wandb/commit/4c47c0aa41cd3f3b9392dd2a84dc3d583bb096c8))
+
 ## [3.5.0](https://github.com/wandb/terraform-google-wandb/compare/v3.4.0...v3.5.0) (2024-06-21)
 
 

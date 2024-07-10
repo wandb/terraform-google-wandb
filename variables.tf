@@ -282,10 +282,48 @@ variable "parquet_wandb_env" {
   default     = {}
 }
 
+##########################################
+# private link                           #
+##########################################
+
+## In order to support private link required min version 0.13.0 of operator-wandb chart
+
+variable "create_private_link" {
+  type        = bool
+  description = "Whether to create a private link service."
+  default     = false
+}
+
+variable "public_access" {
+  type        = bool
+  description = "Whether to create a public endpoint for wandb access."
+  default = true
+}
+
+variable "allowed_project_names" {
+  type = map(number)
+  default = {
+    # "project_ID" = 4 
+  }
+  description = "A map of allowed projects where each key is a project number and the value is the connection limit."
+}
+
+variable "psc_subnetwork_cidr" {
+  default     = "192.168.0.0/24"
+  description = "Private link service reserved subnetwork"
+  type        = string
+}
+
+variable "ilb_proxynetwork_cidr" {
+  default     = "10.127.0.0/24"
+  description = "Internal load balancer proxy subnetwork"
+  type        = string
+}
+
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "kms_gcs_sa_name" {
@@ -295,7 +333,7 @@ variable "kms_gcs_sa_name" {
 
 variable "enable_stackdriver" {
   type = bool
-  default = true
+  default = false
 }
 
 variable "stackdriver_sa_name" {
