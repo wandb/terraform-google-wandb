@@ -36,6 +36,7 @@ module "service_accounts" {
   create_workload_identity = var.create_workload_identity
   stackdriver_sa_name      = var.stackdriver_sa_name
   enable_stackdriver       = var.enable_stackdriver
+  customer_name            = var.customer_name
   depends_on               = [module.project_factory_project_services]
 }
 
