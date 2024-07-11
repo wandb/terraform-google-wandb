@@ -65,7 +65,7 @@ resource "google_project_iam_member" "secretmanager_admin" {
 ####### service account for kms and gcs cross project access
 resource "google_service_account" "kms_gcs_sa" {
   count        = var.create_workload_identity == true ? 1 : 0
-  account_id   = var.kms_gcs_sa_name
+  account_id   = substr("kms-gcs-${random_id.main.hex}", 0, 30)
   display_name = "Service Account For Workload Identity"
 }
 
@@ -132,7 +132,7 @@ resource "google_service_account_iam_member" "workload_binding" {
 ### service account for stackdriver
 resource "google_service_account" "stackdriver" {
   count        = var.enable_stackdriver == true ? 1 : 0
-  account_id   = var.stackdriver_sa_name
+  account_id   = substr("stackdriver-${random_id.main.hex}", 0, 30)
   display_name = "Service Account For Workload Identity"
 }
 
