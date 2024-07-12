@@ -215,7 +215,7 @@ module "wandb" {
         pod = { labels = { workload_hash: local.workload_hash } }
         host    = local.url
         license = var.license
-
+        cloudProvider = "gcp"
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
