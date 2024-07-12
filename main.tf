@@ -212,7 +212,7 @@ module "wandb" {
   spec = {
     values = {
       global = {
-        pod = { labels = { "workload_hash": "${local.workload_hash}" } }
+        pod = { labels = { workload_hash: local.workload_hash } }
         host    = local.url
         license = var.license
 
