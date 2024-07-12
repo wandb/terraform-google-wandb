@@ -9,7 +9,6 @@ variable "bucket_name" {
   default     = ""
 }
 
-
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
   type        = bool
@@ -27,8 +26,4 @@ variable "stackdriver_sa_name" {
 variable "enable_stackdriver" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
-}
-
-variable "customer_name" {
-  type = string
 }

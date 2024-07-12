@@ -312,9 +312,3 @@ variable "stackdriver_sa_name" {
   type    = string
   default = "wandb-stackdriver"
 }
-
-variable "customer_name" {
-  description = "Customer name for identifying service accounts"
-  type = string
-  default = "wandb"
-}
