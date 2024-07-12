@@ -89,6 +89,10 @@ output "database_instance_type" {
   value = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
 }
 
+output "private_attachement_id" {
+  value = var.create_private_link ? module.private_link[0].private_attachement_id : null
+}
+  
 output "sa_account_email" {
   description = "This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null"
   value       = var.create_workload_identity == true ? module.service_accounts.sa_account_email : null

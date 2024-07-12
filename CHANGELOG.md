@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+### [3.6.1](https://github.com/wandb/terraform-google-wandb/compare/v3.6.0...v3.6.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* Pass cloudprovider value to the helm charts ([#143](https://github.com/wandb/terraform-google-wandb/issues/143)) ([3037416](https://github.com/wandb/terraform-google-wandb/commit/3037416ec24dff0f55223383be9dc7dd380248a8))
+
+## [3.6.0](https://github.com/wandb/terraform-google-wandb/compare/v3.5.0...v3.6.0) (2024-07-04)
+
+
+### Features
+
+* Added support for GCP Private Service Connect ([#115](https://github.com/wandb/terraform-google-wandb/issues/115)) ([4c47c0a](https://github.com/wandb/terraform-google-wandb/commit/4c47c0aa41cd3f3b9392dd2a84dc3d583bb096c8))
+
 ## [3.5.0](https://github.com/wandb/terraform-google-wandb/compare/v3.4.0...v3.5.0) (2024-06-21)
 
 
