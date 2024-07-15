@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/wandb/terraform-google-wandb/compare/v3.7.0...v4.0.0) (2024-07-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Index error and missing breaking change (#146)
+
+### Bug Fixes
+
+* Index error and missing breaking change ([#146](https://github.com/wandb/terraform-google-wandb/issues/146)) ([3e2c484](https://github.com/wandb/terraform-google-wandb/commit/3e2c48477117cb39687e68d08d5b06c7d595cbde))
+
 ## [3.7.0](https://github.com/wandb/terraform-google-wandb/compare/v3.6.1...v3.7.0) (2024-07-15)
 
 
