@@ -62,10 +62,11 @@ resource "google_project_iam_member" "secretmanager_admin" {
   role    = "roles/secretmanager.admin"
 }
 
-####### service account for kms and gcs cross project access
+
+####### service account for kms and gcs
 resource "google_service_account" "kms_gcs_sa" {
   count        = var.create_workload_identity == true ? 1 : 0
-  account_id   = var.kms_gcs_sa_name
+  account_id   = substr("kms-gcs-${random_id.main.dec}", 0, 30)
   display_name = "Service Account For Workload Identity"
 }
 
@@ -83,8 +84,6 @@ resource "google_project_iam_member" "secretmanager_admin_gcs" {
   role    = "roles/secretmanager.admin"
 }
 
-# For some reason we need this permission otherwise backend is throwing an error
-# hopfully this is a short term fix.
 resource "google_project_iam_member" "log_writer_gcs" {
   count   = var.create_workload_identity == true ? 1 : 0
   project = local.project_id
@@ -131,7 +130,7 @@ resource "google_service_account_iam_member" "workload_binding" {
 ### service account for stackdriver
 resource "google_service_account" "stackdriver" {
   count        = var.enable_stackdriver == true ? 1 : 0
-  account_id   = var.stackdriver_sa_name
+  account_id   = substr("stackdriver-${random_id.main.dec}", 0, 30)
   display_name = "Service Account For Workload Identity"
 }
 

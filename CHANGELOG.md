@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.7.0](https://github.com/wandb/terraform-google-wandb/compare/v3.6.1...v3.7.0) (2024-07-15)
+
+
+### Features
+
+* Added namespace as a prefix in stackdriver sa name ([#144](https://github.com/wandb/terraform-google-wandb/issues/144)) ([af49f8b](https://github.com/wandb/terraform-google-wandb/commit/af49f8b2afe67f14d0b9f4648a7133985cc4626d))
+
 ### [3.6.1](https://github.com/wandb/terraform-google-wandb/compare/v3.6.0...v3.6.1) (2024-07-11)
 
 

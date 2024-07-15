@@ -92,5 +92,5 @@ output "private_attachement_id" {
   
 output "sa_account_email" {
   description =  "This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null"
-  value = var.create_workload_identity == true ? module.service_accounts.sa_account_email : null
+  value = var.create_workload_identity == true ? module.service_accounts.sa_account_role : null
 }
