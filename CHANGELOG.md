@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.0.1](https://github.com/wandb/terraform-google-wandb/compare/v4.0.0...v4.0.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* Stackdriver SA regex ([#147](https://github.com/wandb/terraform-google-wandb/issues/147)) ([aa9dfc5](https://github.com/wandb/terraform-google-wandb/commit/aa9dfc52c95f8355e216f4dab5b3f428d17931cf))
+
 ## [4.0.0](https://github.com/wandb/terraform-google-wandb/compare/v3.7.0...v4.0.0) (2024-07-15)
 
 
