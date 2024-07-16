@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/wandb/terraform-google-wandb/compare/v3.7.0...v4.0.0) (2024-07-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Index error and missing breaking change (#146)
+
+### Bug Fixes
+
+* Index error and missing breaking change ([#146](https://github.com/wandb/terraform-google-wandb/issues/146)) ([3e2c484](https://github.com/wandb/terraform-google-wandb/commit/3e2c48477117cb39687e68d08d5b06c7d595cbde))
+
+## [3.7.0](https://github.com/wandb/terraform-google-wandb/compare/v3.6.1...v3.7.0) (2024-07-15)
+
+
+### Features
+
+* Added namespace as a prefix in stackdriver sa name ([#144](https://github.com/wandb/terraform-google-wandb/issues/144)) ([af49f8b](https://github.com/wandb/terraform-google-wandb/commit/af49f8b2afe67f14d0b9f4648a7133985cc4626d))
+
+### [3.6.1](https://github.com/wandb/terraform-google-wandb/compare/v3.6.0...v3.6.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* Pass cloudprovider value to the helm charts ([#143](https://github.com/wandb/terraform-google-wandb/issues/143)) ([3037416](https://github.com/wandb/terraform-google-wandb/commit/3037416ec24dff0f55223383be9dc7dd380248a8))
+
 ## [3.6.0](https://github.com/wandb/terraform-google-wandb/compare/v3.5.0...v3.6.0) (2024-07-04)
 
 

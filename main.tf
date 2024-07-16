@@ -218,6 +218,10 @@ locals {
   internal_lb_name = "${var.namespace}-internal"
 }
 
+locals {
+  workload_hash = var.create_workload_identity ? substr(sha256("yes"), 0, 50) : null
+}
+
 data "google_client_config" "current" {}
 
 module "wandb" {
@@ -227,9 +231,10 @@ module "wandb" {
   spec = {
     values = {
       global = {
+        pod = { labels = { workload_hash: local.workload_hash } }
         host    = local.url
         license = var.license
-
+        cloudProvider = "gcp"
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
@@ -277,7 +282,7 @@ module "wandb" {
         extraEnvs = var.app_wandb_env
         serviceAccount = var.create_workload_identity ? {
           name        = var.kms_gcs_sa_name
-          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_email }
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
           name        = ""
           annotations = {}
@@ -310,7 +315,7 @@ module "wandb" {
           projectId          = data.google_client_config.current.project
           serviceAccountName = var.stackdriver_sa_name
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_email } }
+        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_role } }
         } : {
         install        = false
         stackdriver    = {}
