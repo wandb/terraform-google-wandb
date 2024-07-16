@@ -130,7 +130,7 @@ resource "google_service_account_iam_member" "workload_binding" {
 ### service account for stackdriver
 resource "google_service_account" "stackdriver" {
   count        = var.enable_stackdriver == true ? 1 : 0
-  account_id   = substr("stackdriver-${random_id.main.dec}", 0, 30)
+  account_id   = substr("${random_id.main.dec}-stackdriver", 0, 30)
   display_name = "Service Account For Workload Identity"
 }
 
