@@ -207,11 +207,11 @@ variable "bucket_location" {
 ##########################################
 # Bucket Subpath                         #
 ##########################################
-# Most users will not need this setting. It is meant for users who want to store
-# all of their instance-level bucket's data at a specific subpath. It can be set both for
+# This setting is meant for users who want to store all of their instance-level
+# bucket's data at a specific path within their bucket. It can be set both for
 # external buckets or the bucket created by this module.
-variable "subpath" {
-  description = "subpath of where to store data for the instance-level bucket"
+variable "path" {
+  description = "path of where to store data for the instance-level bucket"
   type        = string
   default     = ""
 }
