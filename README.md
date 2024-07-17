@@ -80,6 +80,7 @@ resources that lack official modules.
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
 | <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.14.1 |
+| <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
 | <a name="module_kms_default_bucket"></a> [kms\_default\_bucket](#module\_kms\_default\_bucket) | ./modules/kms | n/a |
 | <a name="module_kms_default_sql"></a> [kms\_default\_sql](#module\_kms\_default\_sql) | ./modules/kms | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
@@ -105,6 +106,7 @@ resources that lack official modules.
 | <a name="input_allowed_inbound_cidrs"></a> [allowed\_inbound\_cidrs](#input\_allowed\_inbound\_cidrs) | Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to ["*"] | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_allowed_project_names"></a> [allowed\_project\_names](#input\_allowed\_project\_names) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
+| <a name="input_bucket_default_encryption"></a> [bucket\_default\_encryption](#input\_bucket\_default\_encryption) | n/a | `bool` | `false` | no |
 | <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key. | `string` | `""` | no |
 | <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket where the KMS key will be used. If not provided (empty string), the default location will be used. | `string` | `""` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
@@ -140,9 +142,11 @@ resources that lack official modules.
 | <a name="input_public_access"></a> [public\_access](#input\_public\_access) | Whether to create a public endpoint for wandb access. | `bool` | `true` | no |
 | <a name="input_redis_reserved_ip_range"></a> [redis\_reserved\_ip\_range](#input\_redis\_reserved\_ip\_range) | Reserved IP range for REDIS peering connection | `string` | `"10.30.0.0/16"` | no |
 | <a name="input_redis_tier"></a> [redis\_tier](#input\_redis\_tier) | Specifies the tier for this Redis instance | `string` | `"STANDARD_HA"` | no |
+| <a name="input_region"></a> [region](#input\_region) | n/a | `string` | n/a | yes |
 | <a name="input_resource_limits"></a> [resource\_limits](#input\_resource\_limits) | Specifies the resource limits for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
 | <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": "2000m",<br>  "memory": "2G"<br>}</pre> | no |
 | <a name="input_size"></a> [size](#input\_size) | Deployment size for the instance | `string` | `null` | no |
+| <a name="input_sql_default_encryption"></a> [sql\_default\_encryption](#input\_sql\_default\_encryption) | ######################################### KMS                                    # ######################################### | `bool` | `false` | no |
 | <a name="input_ssl"></a> [ssl](#input\_ssl) | Enable SSL certificate | `bool` | `true` | no |
 | <a name="input_stackdriver_sa_name"></a> [stackdriver\_sa\_name](#input\_stackdriver\_sa\_name) | n/a | `string` | `"wandb-stackdriver"` | no |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route. | `string` | `null` | no |
