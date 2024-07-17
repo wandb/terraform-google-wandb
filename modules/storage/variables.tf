@@ -36,6 +36,12 @@ variable "crypto_key" {
   description = "Key used to encrypt and decrypt pubsub."
 }
 
+variable "bucket_crypto_key" {
+  type        = string
+  default     = null
+  description = "Key used to encrypt and decrypt storage bucket."
+}
+
 variable "project_id" {
   type        = string
   default     = null

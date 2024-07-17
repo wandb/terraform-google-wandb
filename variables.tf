@@ -245,6 +245,15 @@ variable "other_wandb_env" {
 ##########################################
 # KMS                                    #
 ##########################################
+variable "sql_default_encryption" {
+  type = bool
+  default = false
+}
+
+variable "bucket_default_encryption" {
+  type = bool
+  default = false
+}
 
 variable "db_kms_key_id" {
   type        = string
@@ -339,4 +348,8 @@ variable "enable_stackdriver" {
 variable "stackdriver_sa_name" {
   type    = string
   default = "wandb-stackdriver"
+}
+
+variable "region" {
+  type = string
 }

@@ -17,9 +17,12 @@ resource "google_storage_bucket" "file_storage" {
   force_destroy               = !var.deletion_protection
 
   labels = var.labels
-
-  encryption {
-    default_kms_key_name = var.crypto_key
+  
+   dynamic "encryption" {
+    for_each = var.crypto_key != null ? [1] : []
+    content {
+      default_kms_key_name = var.crypto_key
+    }
   }
 
   cors {

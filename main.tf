@@ -28,7 +28,7 @@ locals {
   create_bucket   = var.bucket_name == ""
   create_network  = var.network == null
   bucket_location = var.bucket_location == "" ? "US" : var.bucket_location
-  database_region = var.database_region == "" ? "us-central1" : var.database_region
+  database_region = var.database_region == "" ? var.region : var.database_region
 }
 
 module "service_accounts" {
@@ -42,18 +42,25 @@ module "service_accounts" {
   depends_on               = [module.project_factory_project_services]
 }
 
+module "kms" {
+  # KMS is currently only used to encrypt pubsub queue. Disable it if we dont use it.
+  count               = var.use_internal_queue ? 0 : 1
+  source              = "./modules/kms"
+  namespace           = var.namespace
+  deletion_protection = var.deletion_protection
+}
+
 module "kms_default_bucket" {
-  count                          = var.bucket_kms_key_id == "" ? 1 : 0
+  count                          = var.bucket_default_encryption ? 1 : 0
   source                         = "./modules/kms"
   namespace                      = var.namespace
   deletion_protection            = var.deletion_protection
   key_location                   = lower(local.bucket_location)
-  bind_pubsub_service_to_kms_key = !var.use_internal_queue
+  bind_pubsub_service_to_kms_key = false
 }
 
 module "kms_default_sql" {
-
-  count                          = var.db_kms_key_id == "" ? 1 : 0
+  count                          = var.sql_default_encryption ? 1 : 0
   source                         = "./modules/kms"
   namespace                      = var.namespace
   deletion_protection            = var.deletion_protection
@@ -62,6 +69,7 @@ module "kms_default_sql" {
 }
 
 locals {
+  crypto_key        = var.use_internal_queue ? null : module.kms[0].crypto_key
   bucket_crypto_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
   sql_crypto_key    = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
 }
@@ -74,7 +82,8 @@ module "storage" {
   create_queue        = !var.use_internal_queue
   bucket_location     = local.bucket_location
   service_account     = module.service_accounts.service_account
-  crypto_key          = local.bucket_crypto_key
+  bucket_crypto_key   = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.bucket_crypto_key : null
+  crypto_key          = local.crypto_key
   deletion_protection = var.deletion_protection
   depends_on          = [module.project_factory_project_services, module.kms_default_bucket.google_kms_crypto_key_iam_binding]
 }
@@ -115,8 +124,7 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-
-  depends_on = [module.project_factory_project_services, module.app_gke]
+  depends_on            = [module.project_factory_project_services, module.app_gke]
 }
 
 module "database" {
@@ -129,7 +137,7 @@ module "database" {
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
-  crypto_key          = local.sql_crypto_key
+  crypto_key          = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
   region              = local.database_region
   depends_on          = [module.project_factory_project_services, module.kms_default_sql.google_kms_crypto_key_iam_binding]
 }
@@ -145,7 +153,7 @@ module "redis" {
   labels            = var.labels
   depends_on        = [module.project_factory_project_services]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
-  crypto_key        = local.sql_crypto_key
+  crypto_key        = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
   region            = local.database_region
 
 }
@@ -231,9 +239,9 @@ module "wandb" {
   spec = {
     values = {
       global = {
-        pod = { labels = { workload_hash: local.workload_hash } }
-        host    = local.url
-        license = var.license
+        pod           = { labels = { workload_hash : local.workload_hash } }
+        host          = local.url
+        license       = var.license
         cloudProvider = "gcp"
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
