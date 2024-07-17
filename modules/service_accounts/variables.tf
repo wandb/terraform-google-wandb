@@ -9,7 +9,6 @@ variable "bucket_name" {
   default     = ""
 }
 
-
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
   type        = bool

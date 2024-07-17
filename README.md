@@ -175,3 +175,10 @@ resources that lack official modules.
 | <a name="output_standardized_size"></a> [standardized\_size](#output\_standardized\_size) | n/a |
 | <a name="output_url"></a> [url](#output\_url) | The URL to the W&B application |
 <!-- END_TF_DOCS -->
+
+## Migrations
+
+### 3.x -> 4.x 
+
+3.6.0 introduced a change in the Google Provider that isn't backwards compatible with prior versions. 
+Nothing needs to be done to upgrade, but it is not backwards compatible. 
