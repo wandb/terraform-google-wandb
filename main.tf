@@ -270,6 +270,17 @@ module "wandb" {
         }
       }
 
+       flat-run-fields-updater = {
+        extraEnvs = var.app_wandb_env
+        serviceAccount = var.create_workload_identity ? {
+          name        = var.kms_gcs_sa_name
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = ""
+          annotations = {}
+        }
+      }
+
       ingress = {
         create       = var.public_access # external ingress for public connection
         nameOverride = var.namespace
