@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.0.3](https://github.com/wandb/terraform-google-wandb/compare/v4.0.2...v4.0.3) (2024-07-18)
+
+
+### Bug Fixes
+
+* Kms sa name ([#150](https://github.com/wandb/terraform-google-wandb/issues/150)) ([1a70cdf](https://github.com/wandb/terraform-google-wandb/commit/1a70cdff42ef3b35386386b674af5643e23fbd00))
+
 ### [4.0.2](https://github.com/wandb/terraform-google-wandb/compare/v4.0.1...v4.0.2) (2024-07-17)
 
 
