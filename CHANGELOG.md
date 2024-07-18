@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [4.0.2](https://github.com/wandb/terraform-google-wandb/compare/v4.0.1...v4.0.2) (2024-07-17)
+
+
+### Bug Fixes
+
+* Stackdriver SA name ([#148](https://github.com/wandb/terraform-google-wandb/issues/148)) ([e67c9fc](https://github.com/wandb/terraform-google-wandb/commit/e67c9fc5a09459893ebc7960e9c40a315cc9e6f3))
+
 ### [4.0.1](https://github.com/wandb/terraform-google-wandb/compare/v4.0.0...v4.0.1) (2024-07-16)
 
 
