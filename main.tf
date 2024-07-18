@@ -84,7 +84,8 @@ module "app_gke" {
   source                   = "./modules/app_gke"
   namespace                = var.namespace
   machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  min_node_count           = coalesce(try(local.deployment_size[var.size].min_node_count, null), var.gke_min_node_count)
+  max_node_count           = coalesce(try(local.deployment_size[var.size].max_node_count, null), var.gke_max_node_count)
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account

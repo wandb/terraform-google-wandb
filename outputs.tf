@@ -73,10 +73,13 @@ output "standardized_size" {
   value = var.size
 }
 
-output "gke_node_count" {
-  value = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+output "gke_min_node_count" {
+  value = coalesce(try(local.deployment_size[var.size].min_node_count, null), var.gke_min_node_count)
 }
 
+output "gke_max_node_count" {
+  value = coalesce(try(local.deployment_size[var.size].max_node_count, null), var.gke_max_node_count)
+}
 
 output "gke_node_instance_type" {
   value = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)

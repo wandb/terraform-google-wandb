@@ -4,5 +4,5 @@ data "google_compute_network" "network" {
 
 
 data "google_compute_subnetwork" "subnetwork" {
-  name   = var.subnetwork
+  name = var.subnetwork
 }

@@ -52,8 +52,8 @@ locals {
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
   create_bucket     = var.bucket_name == ""
-  network         = data.google_compute_network.default
-  subnetwork      = data.google_compute_subnetwork.default
+  network           = data.google_compute_network.default
+  subnetwork        = data.google_compute_subnetwork.default
 }
 
 module "service_accounts" {

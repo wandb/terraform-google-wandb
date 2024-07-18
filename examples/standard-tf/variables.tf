@@ -15,31 +15,31 @@ variable "create_redis" {
 variable "project_id" {
   type        = string
   description = "Project ID"
-  default = ""
+  default     = ""
 }
 
 variable "region" {
   type        = string
   description = "Google region"
-  default = "us-central1"
+  default     = "us-central1"
 }
 
 variable "zone" {
   type        = string
   description = "Google zone"
-  default = "us-central1-b"
+  default     = "us-central1-b"
 }
 
 variable "namespace" {
   type        = string
   description = "Namespace prefix used for resources"
-  default = ""
+  default     = ""
 }
 
 variable "domain_name" {
   type        = string
   description = "Domain name for accessing the Weights & Biases UI."
-  default = ""
+  default     = ""
 }
 
 variable "subdomain" {
@@ -55,9 +55,9 @@ variable "gke_machine_type" {
 }
 
 variable "license" {
-  type = string
+  type    = string
   default = ""
-  }
+}
 
 variable "wandb_version" {
   description = "The version of Weights & Biases local to deploy."
