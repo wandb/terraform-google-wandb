@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.0.0](https://github.com/wandb/terraform-google-wandb/compare/v4.0.3...v5.0.0) (2024-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Service Account Mapping (#151)
+
+### Features
+
+* Service Account Mapping ([#151](https://github.com/wandb/terraform-google-wandb/issues/151)) ([8930eaf](https://github.com/wandb/terraform-google-wandb/commit/8930eafde09a7013d57e2dec045685765d2d84c4))
+
 ### [4.0.3](https://github.com/wandb/terraform-google-wandb/compare/v4.0.2...v4.0.3) (2024-07-18)
 
 
