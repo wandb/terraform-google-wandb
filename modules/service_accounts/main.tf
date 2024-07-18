@@ -66,7 +66,7 @@ resource "google_project_iam_member" "secretmanager_admin" {
 ####### service account for kms and gcs
 resource "google_service_account" "kms_gcs_sa" {
   count        = var.create_workload_identity == true ? 1 : 0
-  account_id   = substr("kms-gcs-${random_id.main.dec}", 0, 30)
+  account_id   = format("%s-kms-gcs", substr(random_id.main.dec, 0, 22))
   display_name = "Service Account For Workload Identity"
 }
 
