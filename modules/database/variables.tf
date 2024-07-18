@@ -30,9 +30,6 @@ variable "availability_type" {
   default = "REGIONAL"
 }
 
-variable "region" {
-   type    = string
-}
 
 variable "maintenance_window_day" {
   description = "The day of week (1-7) for the master instance maintenance."

@@ -34,8 +34,3 @@ variable "crypto_key" {
   default     = null
   description = "Key used to encrypt and decrypt redis."
 }
-
-variable "region" {
-  type        = string
-  description = "Specifies the region for this Redis instance"
-}

@@ -28,7 +28,6 @@ locals {
   create_bucket   = var.bucket_name == ""
   create_network  = var.network == null
   bucket_location = var.bucket_location == "" ? "US" : var.bucket_location
-  database_region = var.database_region == "" ? var.region : var.database_region
 }
 
 module "service_accounts" {
@@ -64,7 +63,7 @@ module "kms_default_sql" {
   source                         = "./modules/kms"
   namespace                      = var.namespace
   deletion_protection            = var.deletion_protection
-  key_location                   = local.database_region
+  key_location                   = data.google_client_config.current.region
   bind_pubsub_service_to_kms_key = false
 }
 
@@ -138,8 +137,7 @@ module "database" {
   deletion_protection = var.deletion_protection
   labels              = var.labels
   crypto_key          = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
-  region              = local.database_region
-  depends_on          = [module.project_factory_project_services, module.kms_default_sql.google_kms_crypto_key_iam_binding]
+  depends_on = [module.project_factory_project_services, module.kms_default_sql.google_kms_crypto_key_iam_binding]
 }
 
 module "redis" {
@@ -154,8 +152,6 @@ module "redis" {
   depends_on        = [module.project_factory_project_services]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
   crypto_key        = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
-  region            = local.database_region
-
 }
 
 locals {
