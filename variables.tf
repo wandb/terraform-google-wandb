@@ -210,7 +210,7 @@ variable "bucket_location" {
 # This setting is meant for users who want to store all of their instance-level
 # bucket's data at a specific path within their bucket. It can be set both for
 # external buckets or the bucket created by this module.
-variable "path" {
+variable "bucket_path" {
   description = "path of where to store data for the instance-level bucket"
   type        = string
   default     = ""
