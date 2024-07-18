@@ -108,13 +108,11 @@ resources that lack official modules.
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_bucket_default_encryption"></a> [bucket\_default\_encryption](#input\_bucket\_default\_encryption) | n/a | `bool` | `false` | no |
 | <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key. | `string` | `""` | no |
-| <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket where the KMS key will be used. If not provided (empty string), the default location will be used. | `string` | `""` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
 | <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_workload_identity"></a> [create\_workload\_identity](#input\_create\_workload\_identity) | Flag to indicate whether to create a workload identity for the service account. | `bool` | `false` | no |
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"db-n1-standard-2"` | no |
-| <a name="input_database_region"></a> [database\_region](#input\_database\_region) | Region where the database is located. | `string` | `""` | no |
 | <a name="input_database_sort_buffer_size"></a> [database\_sort\_buffer\_size](#input\_database\_sort\_buffer\_size) | Specifies the sort\_buffer\_size value to set for the database | `number` | `67108864` | no |
 | <a name="input_database_version"></a> [database\_version](#input\_database\_version) | Version for MySQL | `string` | `"MYSQL_8_0_31"` | no |
 | <a name="input_db_kms_key_id"></a> [db\_kms\_key\_id](#input\_db\_kms\_key\_id) | ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key. | `string` | `""` | no |
