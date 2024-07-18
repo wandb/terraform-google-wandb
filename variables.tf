@@ -165,13 +165,6 @@ variable "force_ssl" {
   default     = false
 }
 
-
-variable "database_region" {
-  type        = string
-  description = "Region where the database is located."
-  default     = ""
-}
-
 ##########################################
 # Redis                                  #
 ##########################################
@@ -205,11 +198,6 @@ variable "bucket_name" {
   default     = ""
 }
 
-variable "bucket_location" {
-  type        = string
-  default     = ""
-  description = "Location of the bucket where the KMS key will be used. If not provided (empty string), the default location will be used."
-}
 ##########################################
 # K8s                                    #
 ##########################################
