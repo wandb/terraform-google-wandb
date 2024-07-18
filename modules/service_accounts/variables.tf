@@ -14,8 +14,8 @@ variable "create_workload_identity" {
   type        = bool
 }
 
-variable "kms_gcs_sa_name" {
-  type    = string
+variable "kms_gcs_sa_list" {
+  type = list(string)
 }
 
 variable "stackdriver_sa_name" {

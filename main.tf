@@ -26,13 +26,18 @@ locals {
   url            = "${local.url_prefix}://${local.fqdn}"
   create_bucket  = var.bucket_name == ""
   create_network = var.network == null
+  k8s_sa_map = {
+    app       = "wandb-app"
+    parquet   = "wandb-parquet"
+    flat_runs = "wandb-flat-runs-fields-updater"
+  }
 }
 
 module "service_accounts" {
   source                   = "./modules/service_accounts"
   namespace                = var.namespace
   bucket_name              = var.bucket_name
-  kms_gcs_sa_name          = var.kms_gcs_sa_name
+  kms_gcs_sa_list          = values(local.k8s_sa_map)
   create_workload_identity = var.create_workload_identity
   stackdriver_sa_name      = var.stackdriver_sa_name
   enable_stackdriver       = var.enable_stackdriver
@@ -212,9 +217,9 @@ module "wandb" {
   spec = {
     values = {
       global = {
-        pod = { labels = { workload_hash: local.workload_hash } }
-        host    = local.url
-        license = var.license
+        pod           = { labels = { workload_hash : local.workload_hash } }
+        host          = local.url
+        license       = var.license
         cloudProvider = "gcp"
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
@@ -262,7 +267,7 @@ module "wandb" {
       app = {
         extraEnvs = var.app_wandb_env
         serviceAccount = var.create_workload_identity ? {
-          name        = var.kms_gcs_sa_name
+          name        = local.k8s_sa_map.app
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
           name        = ""
@@ -348,6 +353,23 @@ module "wandb" {
 
       parquet = {
         extraEnvs = var.parquet_wandb_env
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.parquet
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      flat-runs-fields-updater = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.flat_runs
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
       }
     }
   }
