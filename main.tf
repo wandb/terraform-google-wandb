@@ -29,7 +29,7 @@ locals {
   k8s_sa_map = {
     app       = "wandb-app"
     parquet   = "wandb-parquet"
-    flat_runs = "wandb-flat-runs-fields-updater"
+    flat_runs = "wandb-flat-run-fields-updater"
   }
 }
 
