@@ -16,8 +16,7 @@ module "project_factory_project_services" {
     "cloudkms.googleapis.com",          // KMS
     "compute.googleapis.com",           // required for datadog monitoring
     "cloudasset.googleapis.com",        // required for datadog monitoring
-    "secretmanager.googleapis.com",
-    "cloudresourcemanager.googleapis.com" // required for secrets
+    "secretmanager.googleapis.com"      // required for secrets
   ]
 }
 
@@ -84,7 +83,7 @@ module "storage" {
   bucket_crypto_key   = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.bucket_crypto_key : null
   crypto_key          = local.crypto_key
   deletion_protection = var.deletion_protection
-  depends_on          = [module.project_factory_project_services, module.kms_default_bucket.google_kms_crypto_key_iam_binding]
+  depends_on          = [module.project_factory_project_services, module.kms_default_bucket]
 }
 
 module "networking" {
@@ -137,7 +136,7 @@ module "database" {
   deletion_protection = var.deletion_protection
   labels              = var.labels
   crypto_key          = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
-  depends_on = [module.project_factory_project_services, module.kms_default_sql.google_kms_crypto_key_iam_binding]
+  depends_on = [module.project_factory_project_services, module.kms_default_sql]
 }
 
 module "redis" {
@@ -149,7 +148,7 @@ module "redis" {
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
-  depends_on        = [module.project_factory_project_services]
+  depends_on        = [module.project_factory_project_services, module.kms_default_sql]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
   crypto_key        = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
 }
