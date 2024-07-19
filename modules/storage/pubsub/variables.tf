@@ -26,8 +26,8 @@ variable "bucket" {
 }
 
 variable "crypto_key" {
-  type        = string
-  default     = null
+  type        = object({ id = string })
+  default     = { id = null }
   description = "Key used to encrypt and decrypt pubsub."
 }
 
