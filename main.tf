@@ -27,7 +27,7 @@ locals {
   url             = "${local.url_prefix}://${local.fqdn}"
   create_bucket   = var.bucket_name == ""
   create_network  = var.network == null
-  bucket_location = var.bucket_location == "" ? "US" : var.bucket_location
+  bucket_location = "US" 
 }
 
 module "service_accounts" {
