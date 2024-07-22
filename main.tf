@@ -30,6 +30,7 @@ locals {
     app       = "wandb-app"
     parquet   = "wandb-parquet"
     flat_runs = "wandb-flat-run-fields-updater"
+    weave     = "wandb-weave"
   }
 }
 
