@@ -27,9 +27,11 @@ locals {
   create_bucket  = var.bucket_name == ""
   create_network = var.network == null
   k8s_sa_map = {
-    app       = "wandb-app"
-    parquet   = "wandb-parquet"
-    flat_runs = "wandb-flat-run-fields-updater"
+    app         = "wandb-app"
+    parquet     = "wandb-parquet"
+    flat_runs   = "wandb-flat-run-fields-updater"
+    weave       = "wandb-weave"
+    weave_trace = "wandb-weave-trace"
   }
 }
 
@@ -370,6 +372,23 @@ module "wandb" {
 
       weave = {
         extraEnvs = var.weave_wandb_env
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.weave
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      weave-trace = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.weave_trace
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
       }
 
       parquet = {
