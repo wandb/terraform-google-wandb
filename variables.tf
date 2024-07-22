@@ -240,25 +240,27 @@ variable "other_wandb_env" {
 # KMS                                    #
 ##########################################
 variable "sql_default_encryption" {
-  type    = bool
-  default = false
+  description = "Boolean to determine if a default SQL encryption key should be used. If true, a default key will be created."
+  type        = bool
+  default     = false
 }
 
 variable "bucket_default_encryption" {
-  type    = bool
-  default = false
+  description = "Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created."
+  type        = bool
+  default     = false
 }
 
 variable "db_kms_key_id" {
+  description = "ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key."
   type        = string
   default     = ""
-  description = "ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key."
 }
 
 variable "bucket_kms_key_id" {
+  description = "ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key."
   type        = string
   default     = ""
-  description = "ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key."
 }
 
 variable "size" {

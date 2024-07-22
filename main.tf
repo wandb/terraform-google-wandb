@@ -71,11 +71,11 @@ module "kms_default_sql" {
   key_location                   = data.google_client_config.current.region
   bind_pubsub_service_to_kms_key = false
 }
-
 locals {
-  crypto_key        = var.use_internal_queue ? null : module.kms[0].crypto_key
-  bucket_crypto_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
-  sql_crypto_key    = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
+  default_bucket_key   = var.bucket_default_encryption && length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
+  default_sql_key      = var.sql_default_encryption && length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
+  effective_crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
+  effective_bucket_key = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.default_bucket_key : null
 }
 
 module "storage" {
@@ -86,8 +86,8 @@ module "storage" {
   create_queue        = !var.use_internal_queue
   bucket_location     = var.bucket_location
   service_account     = module.service_accounts.service_account
-  bucket_crypto_key   = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.bucket_crypto_key : null
-  crypto_key          = local.crypto_key
+  bucket_crypto_key   = local.effective_bucket_key
+  crypto_key          = local.effective_crypto_key
   deletion_protection = var.deletion_protection
   depends_on          = [module.project_factory_project_services, module.kms_default_bucket]
 }
@@ -141,7 +141,7 @@ module "database" {
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
-  crypto_key          = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
+  crypto_key          = local.default_sql_key
   depends_on          = [module.project_factory_project_services, module.kms_default_sql]
 }
 
@@ -156,7 +156,7 @@ module "redis" {
   labels            = var.labels
   depends_on        = [module.project_factory_project_services, module.kms_default_sql]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
-  crypto_key        = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
+  crypto_key        = local.default_sql_key
 }
 
 locals {
