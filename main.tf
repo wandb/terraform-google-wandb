@@ -73,9 +73,8 @@ module "kms_default_sql" {
 }
 locals {
   default_bucket_key   = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
-  effective_bucket_key = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.default_bucket_key : null
   default_sql_key      = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
-  effective_crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
+  effective_crypto_key = var.use_internal_queue ? null : (var.db_kms_key_id != null ? local.default_sql_key : module.kms[0].crypto_key)
 }
 
 module "storage" {
@@ -86,7 +85,7 @@ module "storage" {
   create_queue        = !var.use_internal_queue
   bucket_location     = var.bucket_location
   service_account     = module.service_accounts.service_account
-  bucket_crypto_key   = local.effective_bucket_key
+  bucket_crypto_key   = local.default_bucket_key
   crypto_key          = local.effective_crypto_key
   deletion_protection = var.deletion_protection
   depends_on          = [module.project_factory_project_services, module.kms_default_bucket]
