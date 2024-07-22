@@ -107,7 +107,7 @@ resources that lack official modules.
 | <a name="input_allowed_project_names"></a> [allowed\_project\_names](#input\_allowed\_project\_names) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_bucket_default_encryption"></a> [bucket\_default\_encryption](#input\_bucket\_default\_encryption) | Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created. | `bool` | `false` | no |
-| <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. If not provided (empty string), the module will create a new key. | `string` | `""` | no |
+| <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. If not provided (empty string),  the module will create a new key unless `use_internal_queue` is `true`. | `string` | `""` | no |
 | <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket (US, EU, ASIA) | `string` | `"US"` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
@@ -116,7 +116,7 @@ resources that lack official modules.
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"db-n1-standard-2"` | no |
 | <a name="input_database_sort_buffer_size"></a> [database\_sort\_buffer\_size](#input\_database\_sort\_buffer\_size) | Specifies the sort\_buffer\_size value to set for the database | `number` | `67108864` | no |
 | <a name="input_database_version"></a> [database\_version](#input\_database\_version) | Version for MySQL | `string` | `"MYSQL_8_0_31"` | no |
-| <a name="input_db_kms_key_id"></a> [db\_kms\_key\_id](#input\_db\_kms\_key\_id) | ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key. | `string` | `""` | no |
+| <a name="input_db_kms_key_id"></a> [db\_kms\_key\_id](#input\_db\_kms\_key\_id) | ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key unless `use_internal_queue` is `true`. | `string` | `""` | no |
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |

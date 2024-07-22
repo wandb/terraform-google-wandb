@@ -141,7 +141,7 @@ module "database" {
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
-  crypto_key          = local.default_sql_key
+  crypto_key          = local.effective_crypto_key
   depends_on          = [module.project_factory_project_services, module.kms_default_sql]
 }
 
@@ -156,7 +156,7 @@ module "redis" {
   labels            = var.labels
   depends_on        = [module.project_factory_project_services, module.kms_default_sql]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
-  crypto_key        = local.default_sql_key
+  crypto_key        = local.effective_crypto_key
 }
 
 locals {
