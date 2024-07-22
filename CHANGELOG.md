@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.0.1](https://github.com/wandb/terraform-google-wandb/compare/v5.0.0...v5.0.1) (2024-07-22)
+
+
+### Bug Fixes
+
+* Weave SA ([#152](https://github.com/wandb/terraform-google-wandb/issues/152)) ([81aca11](https://github.com/wandb/terraform-google-wandb/commit/81aca117e939d93cc4769ae3106fda706cb62f60))
+
 ## [5.0.0](https://github.com/wandb/terraform-google-wandb/compare/v4.0.3...v5.0.0) (2024-07-18)
 
 
