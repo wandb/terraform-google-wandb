@@ -240,13 +240,13 @@ variable "other_wandb_env" {
 # KMS                                    #
 ##########################################
 variable "sql_default_encryption" {
-  description = "Boolean to determine if a default SQL encryption key should be used. If true, a default key will be created."
+  description = "Boolean to determine if a default SQL encryption key should be used. If true, a default key will be created. Takes precedence over `db_kms_key_id`."
   type        = bool
   default     = false
 }
 
 variable "bucket_default_encryption" {
-  description = "Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created."
+  description = "Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created. Takes precedence over `bucket_kms_key_id`."
   type        = bool
   default     = false
 }

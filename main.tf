@@ -72,10 +72,10 @@ module "kms_default_sql" {
   bind_pubsub_service_to_kms_key = false
 }
 locals {
-  default_bucket_key   = var.bucket_default_encryption && length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
-  default_sql_key      = var.sql_default_encryption && length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
-  effective_crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
+  default_bucket_key   = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
   effective_bucket_key = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.default_bucket_key : null
+  default_sql_key      = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
+  effective_crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
 }
 
 module "storage" {
