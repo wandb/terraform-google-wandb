@@ -70,7 +70,7 @@ resources that lack official modules.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | ~> 5.30 |
+| <a name="provider_google"></a> [google](#provider\_google) | 5.38.0 |
 
 ## Modules
 
