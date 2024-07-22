@@ -74,7 +74,7 @@ module "kms_default_sql" {
 locals {
   default_bucket_key   = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
   default_sql_key      = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
-  effective_crypto_key = var.use_internal_queue ? null : (var.db_kms_key_id != null ? local.default_sql_key : module.kms[0].crypto_key)
+  effective_crypto_key = var.use_internal_queue ? null : (local.default_sql_key != null ? local.default_sql_key : module.kms[0].crypto_key)
 }
 
 module "storage" {
