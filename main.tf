@@ -78,15 +78,17 @@ locals {
 }
 
 module "storage" {
-  count               = local.create_bucket ? 1 : 0
-  source              = "./modules/storage"
-  namespace           = var.namespace
-  labels              = var.labels
-  create_queue        = !var.use_internal_queue
-  bucket_location     = var.bucket_location
-  service_account     = module.service_accounts.service_account
-  bucket_crypto_key   = local.default_bucket_key
-  crypto_key          = local.effective_crypto_key
+  count     = local.create_bucket ? 1 : 0
+  source    = "./modules/storage"
+  namespace = var.namespace
+  labels    = var.labels
+
+  create_queue      = !var.use_internal_queue
+  bucket_location   = var.bucket_location
+  service_account   = module.service_accounts.service_account
+  bucket_crypto_key = local.default_bucket_key
+  crypto_key        = local.effective_crypto_key
+
   deletion_protection = var.deletion_protection
   depends_on          = [module.project_factory_project_services, module.kms_default_bucket]
 }
