@@ -21,19 +21,23 @@ module "project_factory_project_services" {
 }
 
 locals {
-  fqdn            = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
-  url_prefix      = var.ssl ? "https" : "http"
-  url             = "${local.url_prefix}://${local.fqdn}"
-  create_bucket   = var.bucket_name == ""
-  create_network  = var.network == null
-  bucket_location = "US" 
+  fqdn           = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
+  url_prefix     = var.ssl ? "https" : "http"
+  url            = "${local.url_prefix}://${local.fqdn}"
+  create_bucket  = var.bucket_name == ""
+  create_network = var.network == null
+  k8s_sa_map = {
+    app       = "wandb-app"
+    parquet   = "wandb-parquet"
+    flat_runs = "wandb-flat-run-fields-updater"
+  }
 }
 
 module "service_accounts" {
   source                   = "./modules/service_accounts"
   namespace                = var.namespace
   bucket_name              = var.bucket_name
-  kms_gcs_sa_name          = var.kms_gcs_sa_name
+  kms_gcs_sa_list          = values(local.k8s_sa_map)
   create_workload_identity = var.create_workload_identity
   stackdriver_sa_name      = var.stackdriver_sa_name
   enable_stackdriver       = var.enable_stackdriver
@@ -53,7 +57,7 @@ module "kms_default_bucket" {
   source                         = "./modules/kms"
   namespace                      = var.namespace
   deletion_protection            = var.deletion_protection
-  key_location                   = lower(local.bucket_location)
+  key_location                   = lower(var.bucket_location)
   bind_pubsub_service_to_kms_key = false
 }
 
@@ -78,7 +82,7 @@ module "storage" {
   namespace           = var.namespace
   labels              = var.labels
   create_queue        = !var.use_internal_queue
-  bucket_location     = local.bucket_location
+  bucket_location     = var.bucket_location
   service_account     = module.service_accounts.service_account
   bucket_crypto_key   = var.bucket_default_encryption || var.bucket_kms_key_id != "" ? local.bucket_crypto_key : null
   crypto_key          = local.crypto_key
@@ -136,7 +140,7 @@ module "database" {
   deletion_protection = var.deletion_protection
   labels              = var.labels
   crypto_key          = var.sql_default_encryption || var.db_kms_key_id != "" ? local.sql_crypto_key : null
-  depends_on = [module.project_factory_project_services, module.kms_default_sql]
+  depends_on          = [module.project_factory_project_services, module.kms_default_sql]
 }
 
 module "redis" {
@@ -284,7 +288,7 @@ module "wandb" {
       app = {
         extraEnvs = var.app_wandb_env
         serviceAccount = var.create_workload_identity ? {
-          name        = var.kms_gcs_sa_name
+          name        = local.k8s_sa_map.app
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
           name        = ""
@@ -370,6 +374,23 @@ module "wandb" {
 
       parquet = {
         extraEnvs = var.parquet_wandb_env
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.parquet
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      flat-runs-fields-updater = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.flat_runs
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
       }
     }
   }

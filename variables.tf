@@ -198,6 +198,12 @@ variable "bucket_name" {
   default     = ""
 }
 
+variable "bucket_location" {
+  type        = string
+  description = "Location of the bucket (US, EU, ASIA)"
+  default     = "US"
+}
+
 ##########################################
 # K8s                                    #
 ##########################################
@@ -234,12 +240,12 @@ variable "other_wandb_env" {
 # KMS                                    #
 ##########################################
 variable "sql_default_encryption" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "bucket_default_encryption" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -294,7 +300,7 @@ variable "create_private_link" {
 variable "public_access" {
   type        = bool
   description = "Whether to create a public endpoint for wandb access."
-  default = true
+  default     = true
 }
 
 variable "allowed_project_names" {
@@ -323,13 +329,9 @@ variable "create_workload_identity" {
   default     = false
 }
 
-variable "kms_gcs_sa_name" {
-  type    = string
-  default = "wandb-app"
-}
 
 variable "enable_stackdriver" {
-  type = bool
+  type    = bool
   default = false
 }
 

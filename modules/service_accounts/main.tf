@@ -66,7 +66,7 @@ resource "google_project_iam_member" "secretmanager_admin" {
 ####### service account for kms and gcs
 resource "google_service_account" "kms_gcs_sa" {
   count        = var.create_workload_identity == true ? 1 : 0
-  account_id   = substr("kms-gcs-${random_id.main.dec}", 0, 30)
+  account_id   = format("%s-kms-gcs", substr(random_id.main.dec, 0, 22))
   display_name = "Service Account For Workload Identity"
 }
 
@@ -120,12 +120,11 @@ resource "google_service_account_iam_member" "token_creator_binding" {
 }
 
 resource "google_service_account_iam_member" "workload_binding" {
-  count              = var.create_workload_identity == true ? 1 : 0
+  for_each           = var.create_workload_identity ? { for sa in var.kms_gcs_sa_list : sa => sa } : {}
   service_account_id = google_service_account.kms_gcs_sa[0].id
   role               = "roles/iam.workloadIdentityUser"
-  member             = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.kms_gcs_sa_name}]"
+  member             = "serviceAccount:${local.project_id}.svc.id.goog[default/${each.value}]"
 }
-
 
 ### service account for stackdriver
 resource "google_service_account" "stackdriver" {
