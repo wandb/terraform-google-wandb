@@ -154,9 +154,9 @@ module "redis" {
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
-  depends_on        = [module.project_factory_project_services, module.kms_default_sql]
   tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
-  crypto_key        = local.effective_crypto_key
+  crypto_key        = local.default_sql_key
+  depends_on        = [module.project_factory_project_services, module.kms_default_sql]
 }
 
 locals {
