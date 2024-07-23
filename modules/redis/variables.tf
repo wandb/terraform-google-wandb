@@ -28,3 +28,9 @@ variable "tier" {
   type        = string
   description = "Specifies the tier for this Redis instance"
 }
+
+variable "crypto_key" {
+  type        = string
+  default     = null
+  description = "Key used to encrypt and decrypt redis."
+}

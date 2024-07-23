@@ -54,8 +54,27 @@ module "kms" {
   deletion_protection = var.deletion_protection
 }
 
+module "kms_default_bucket" {
+  count                          = var.bucket_default_encryption ? 1 : 0
+  source                         = "./modules/kms"
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  key_location                   = lower(var.bucket_location)
+  bind_pubsub_service_to_kms_key = false
+}
+
+module "kms_default_sql" {
+  count                          = var.sql_default_encryption ? 1 : 0
+  source                         = "./modules/kms"
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  key_location                   = data.google_client_config.current.region
+  bind_pubsub_service_to_kms_key = false
+}
 locals {
-  crypto_key = var.use_internal_queue ? null : module.kms[0].crypto_key
+  default_bucket_key   = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
+  default_sql_key      = length(module.kms_default_sql) > 0 ? module.kms_default_sql[0].crypto_key.id : var.db_kms_key_id
+  effective_crypto_key = var.use_internal_queue ? null : (local.default_sql_key != null ? local.default_sql_key : module.kms[0].crypto_key)
 }
 
 module "storage" {
@@ -64,13 +83,14 @@ module "storage" {
   namespace = var.namespace
   labels    = var.labels
 
-  create_queue    = !var.use_internal_queue
-  bucket_location = "US"
-  service_account = module.service_accounts.service_account
-  crypto_key      = local.crypto_key
+  create_queue      = !var.use_internal_queue
+  bucket_location   = var.bucket_location
+  service_account   = module.service_accounts.service_account
+  bucket_crypto_key = local.default_bucket_key
+  crypto_key        = local.effective_crypto_key
 
   deletion_protection = var.deletion_protection
-  depends_on          = [module.project_factory_project_services]
+  depends_on          = [module.project_factory_project_services, module.kms_default_bucket]
 }
 
 module "networking" {
@@ -109,8 +129,7 @@ module "app_lb" {
   service_account       = module.service_accounts.service_account
   labels                = var.labels
   allowed_inbound_cidrs = var.allowed_inbound_cidrs
-
-  depends_on = [module.project_factory_project_services, module.app_gke]
+  depends_on            = [module.project_factory_project_services, module.app_gke]
 }
 
 module "database" {
@@ -123,7 +142,8 @@ module "database" {
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
-  depends_on          = [module.project_factory_project_services]
+  crypto_key          = local.effective_crypto_key
+  depends_on          = [module.project_factory_project_services, module.kms_default_sql]
 }
 
 module "redis" {
@@ -135,7 +155,9 @@ module "redis" {
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   labels            = var.labels
-  tier              = var.redis_tier
+  depends_on        = [module.project_factory_project_services, module.kms_default_sql]
+  tier              = coalesce(try(local.deployment_size[var.size].cache, null), var.redis_tier)
+  crypto_key        = local.effective_crypto_key
 }
 
 locals {

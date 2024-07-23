@@ -198,6 +198,12 @@ variable "bucket_name" {
   default     = ""
 }
 
+variable "bucket_location" {
+  type        = string
+  description = "Location of the bucket (US, EU, ASIA)"
+  default     = "US"
+}
+
 ##########################################
 # K8s                                    #
 ##########################################
@@ -228,6 +234,33 @@ variable "other_wandb_env" {
   type        = map(string)
   description = "Extra environment variables for W&B"
   default     = {}
+}
+
+##########################################
+# KMS                                    #
+##########################################
+variable "sql_default_encryption" {
+  description = "Boolean to determine if a default SQL encryption key should be used. If true, a default key will be created. Takes precedence over `db_kms_key_id`."
+  type        = bool
+  default     = false
+}
+
+variable "bucket_default_encryption" {
+  description = "Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created. Takes precedence over `bucket_kms_key_id`."
+  type        = bool
+  default     = false
+}
+
+variable "db_kms_key_id" {
+  description = "ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key unless `use_internal_queue` is `true`."
+  type        = string
+  default     = null
+}
+
+variable "bucket_kms_key_id" {
+  description = "ID of the customer-provided bucket KMS key. If not provided (empty string),  the module will create a new key unless `use_internal_queue` is `true`."
+  type        = string
+  default     = null
 }
 
 variable "size" {
