@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.1.2](https://github.com/wandb/terraform-google-wandb/compare/v5.1.1...v5.1.2) (2024-07-23)
+
+
+### Bug Fixes
+
+* Correct Encryption Logic ([#154](https://github.com/wandb/terraform-google-wandb/issues/154)) ([e68805c](https://github.com/wandb/terraform-google-wandb/commit/e68805c0eb7115f3ff13a42d80fdefa0d966024c))
+
 ### [5.1.1](https://github.com/wandb/terraform-google-wandb/compare/v5.1.0...v5.1.1) (2024-07-23)
 
 
