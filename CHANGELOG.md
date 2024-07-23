@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.1.0](https://github.com/wandb/terraform-google-wandb/compare/v5.0.1...v5.1.0) (2024-07-23)
+
+
+### Features
+
+* Added support for encrypting the database and bucket with CMK ([#100](https://github.com/wandb/terraform-google-wandb/issues/100)) ([7802e3c](https://github.com/wandb/terraform-google-wandb/commit/7802e3ce1f227f3e641d2e1bdb6c01db4de5cac9))
+
 ### [5.0.1](https://github.com/wandb/terraform-google-wandb/compare/v5.0.0...v5.0.1) (2024-07-22)
 
 
