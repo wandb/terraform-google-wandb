@@ -252,13 +252,13 @@ variable "bucket_default_encryption" {
 }
 
 variable "db_kms_key_id" {
-  description = "ID of the customer-provided SQL KMS key. If not provided (empty string), the module will create a new key unless `use_internal_queue` is `true`."
+  description = "ID of the customer-provided SQL KMS key. If not provided (empty string)"
   type        = string
   default     = null
 }
 
 variable "bucket_kms_key_id" {
-  description = "ID of the customer-provided bucket KMS key. If not provided (empty string),  the module will create a new key unless `use_internal_queue` is `true`."
+  description = "ID of the customer-provided bucket KMS key. If not provided (empty string)"
   type        = string
   default     = null
 }
