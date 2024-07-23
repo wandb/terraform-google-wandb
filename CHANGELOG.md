@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.0.1](https://github.com/wandb/terraform-google-wandb/compare/v5.0.0...v5.0.1) (2024-07-22)
+
+
+### Bug Fixes
+
+* Weave SA ([#152](https://github.com/wandb/terraform-google-wandb/issues/152)) ([81aca11](https://github.com/wandb/terraform-google-wandb/commit/81aca117e939d93cc4769ae3106fda706cb62f60))
+
+## [5.0.0](https://github.com/wandb/terraform-google-wandb/compare/v4.0.3...v5.0.0) (2024-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Service Account Mapping (#151)
+
+### Features
+
+* Service Account Mapping ([#151](https://github.com/wandb/terraform-google-wandb/issues/151)) ([8930eaf](https://github.com/wandb/terraform-google-wandb/commit/8930eafde09a7013d57e2dec045685765d2d84c4))
+
+### [4.0.3](https://github.com/wandb/terraform-google-wandb/compare/v4.0.2...v4.0.3) (2024-07-18)
+
+
+### Bug Fixes
+
+* Kms sa name ([#150](https://github.com/wandb/terraform-google-wandb/issues/150)) ([1a70cdf](https://github.com/wandb/terraform-google-wandb/commit/1a70cdff42ef3b35386386b674af5643e23fbd00))
+
+### [4.0.2](https://github.com/wandb/terraform-google-wandb/compare/v4.0.1...v4.0.2) (2024-07-17)
+
+
+### Bug Fixes
+
+* Stackdriver SA name ([#148](https://github.com/wandb/terraform-google-wandb/issues/148)) ([e67c9fc](https://github.com/wandb/terraform-google-wandb/commit/e67c9fc5a09459893ebc7960e9c40a315cc9e6f3))
+
+### [4.0.1](https://github.com/wandb/terraform-google-wandb/compare/v4.0.0...v4.0.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* Stackdriver SA regex ([#147](https://github.com/wandb/terraform-google-wandb/issues/147)) ([aa9dfc5](https://github.com/wandb/terraform-google-wandb/commit/aa9dfc52c95f8355e216f4dab5b3f428d17931cf))
+
+## [4.0.0](https://github.com/wandb/terraform-google-wandb/compare/v3.7.0...v4.0.0) (2024-07-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Index error and missing breaking change (#146)
+
+### Bug Fixes
+
+* Index error and missing breaking change ([#146](https://github.com/wandb/terraform-google-wandb/issues/146)) ([3e2c484](https://github.com/wandb/terraform-google-wandb/commit/3e2c48477117cb39687e68d08d5b06c7d595cbde))
+
+## [3.7.0](https://github.com/wandb/terraform-google-wandb/compare/v3.6.1...v3.7.0) (2024-07-15)
+
+
+### Features
+
+* Added namespace as a prefix in stackdriver sa name ([#144](https://github.com/wandb/terraform-google-wandb/issues/144)) ([af49f8b](https://github.com/wandb/terraform-google-wandb/commit/af49f8b2afe67f14d0b9f4648a7133985cc4626d))
+
 ### [3.6.1](https://github.com/wandb/terraform-google-wandb/compare/v3.6.0...v3.6.1) (2024-07-11)
 
 

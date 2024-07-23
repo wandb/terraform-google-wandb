@@ -119,7 +119,6 @@ resources that lack official modules.
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"n1-standard-4"` | no |
 | <a name="input_gke_node_count"></a> [gke\_node\_count](#input\_gke\_node\_count) | n/a | `number` | `2` | no |
 | <a name="input_ilb_proxynetwork_cidr"></a> [ilb\_proxynetwork\_cidr](#input\_ilb\_proxynetwork\_cidr) | Internal load balancer proxy subnetwork | `string` | `"10.127.0.0/24"` | no |
-| <a name="input_kms_gcs_sa_name"></a> [kms\_gcs\_sa\_name](#input\_kms\_gcs\_sa\_name) | n/a | `string` | `"wandb-app"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
 | <a name="input_local_restore"></a> [local\_restore](#input\_local\_restore) | Restores W&B to a stable state if needed | `bool` | `false` | no |
@@ -173,3 +172,10 @@ resources that lack official modules.
 | <a name="output_standardized_size"></a> [standardized\_size](#output\_standardized\_size) | n/a |
 | <a name="output_url"></a> [url](#output\_url) | The URL to the W&B application |
 <!-- END_TF_DOCS -->
+
+## Migrations
+
+### 3.x -> 4.x 
+
+3.6.0 introduced a change in the Google Provider that isn't backwards compatible with prior versions. 
+Nothing needs to be done to upgrade, but it is not backwards compatible. 

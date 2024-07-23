@@ -9,14 +9,13 @@ variable "bucket_name" {
   default     = ""
 }
 
-
 variable "create_workload_identity" {
   description = "Flag to indicate whether to create a workload identity for the service account."
   type        = bool
 }
 
-variable "kms_gcs_sa_name" {
-  type    = string
+variable "kms_gcs_sa_list" {
+  type = list(string)
 }
 
 variable "stackdriver_sa_name" {

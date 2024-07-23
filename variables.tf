@@ -269,7 +269,7 @@ variable "create_private_link" {
 variable "public_access" {
   type        = bool
   description = "Whether to create a public endpoint for wandb access."
-  default = true
+  default     = true
 }
 
 variable "allowed_project_names" {
@@ -298,13 +298,9 @@ variable "create_workload_identity" {
   default     = false
 }
 
-variable "kms_gcs_sa_name" {
-  type    = string
-  default = "wandb-app"
-}
 
 variable "enable_stackdriver" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -312,4 +308,3 @@ variable "stackdriver_sa_name" {
   type    = string
   default = "wandb-stackdriver"
 }
-
