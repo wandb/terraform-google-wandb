@@ -25,10 +25,15 @@ locals {
   master_instance_name = "${var.namespace}-${random_pet.mysql.id}"
 }
 
+data "google_project" "default" {
+}
+
 resource "google_sql_database_instance" "default" {
   name                = local.master_instance_name
   database_version    = var.database_version
   deletion_protection = var.deletion_protection
+
+  encryption_key_name = var.crypto_key
 
   settings {
     tier                        = var.tier

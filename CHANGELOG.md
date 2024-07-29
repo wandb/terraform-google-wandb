@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.1.3](https://github.com/wandb/terraform-google-wandb/compare/v5.1.2...v5.1.3) (2024-07-25)
+
+
+### Bug Fixes
+
+* Typo on SA Member ([#155](https://github.com/wandb/terraform-google-wandb/issues/155)) ([2262da2](https://github.com/wandb/terraform-google-wandb/commit/2262da2f1a36647194c9f8292814798f15cb33a1))
+
+### [5.1.2](https://github.com/wandb/terraform-google-wandb/compare/v5.1.1...v5.1.2) (2024-07-23)
+
+
+### Bug Fixes
+
+* Correct Encryption Logic ([#154](https://github.com/wandb/terraform-google-wandb/issues/154)) ([e68805c](https://github.com/wandb/terraform-google-wandb/commit/e68805c0eb7115f3ff13a42d80fdefa0d966024c))
+
+### [5.1.1](https://github.com/wandb/terraform-google-wandb/compare/v5.1.0...v5.1.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* Tier typo/mistake ([#153](https://github.com/wandb/terraform-google-wandb/issues/153)) ([5d632e4](https://github.com/wandb/terraform-google-wandb/commit/5d632e4408d91674f1ff33ebae49e6b583e91d72))
+
+## [5.1.0](https://github.com/wandb/terraform-google-wandb/compare/v5.0.1...v5.1.0) (2024-07-23)
+
+
+### Features
+
+* Added support for encrypting the database and bucket with CMK ([#100](https://github.com/wandb/terraform-google-wandb/issues/100)) ([7802e3c](https://github.com/wandb/terraform-google-wandb/commit/7802e3ce1f227f3e641d2e1bdb6c01db4de5cac9))
+
 ### [5.0.1](https://github.com/wandb/terraform-google-wandb/compare/v5.0.0...v5.0.1) (2024-07-22)
 
 

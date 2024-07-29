@@ -101,7 +101,7 @@ resource "google_project_iam_member" "storage" {
 resource "google_storage_bucket_iam_member" "gcs_admin" {
   count  = var.create_workload_identity == true && var.bucket_name != "" ? 1 : 0
   bucket = var.bucket_name
-  member = google_service_account.kms_gcs_sa[0].email
+  member = "serviceAccount:${google_service_account.kms_gcs_sa[0].email}"
   role   = "roles/storage.objectAdmin"
 }
 
