@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.2.0](https://github.com/wandb/terraform-google-wandb/compare/v5.1.3...v5.2.0) (2024-07-31)
+
+
+### Features
+
+* Bump operator image and chart versions ([#156](https://github.com/wandb/terraform-google-wandb/issues/156)) ([dd83f51](https://github.com/wandb/terraform-google-wandb/commit/dd83f51368f7b7d99fa4d59d86f0483eb365a314))
+
 ### [5.1.3](https://github.com/wandb/terraform-google-wandb/compare/v5.1.2...v5.1.3) (2024-07-25)
 
 
