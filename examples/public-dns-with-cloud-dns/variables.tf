@@ -21,6 +21,12 @@ variable "region" {
   description = "Google region"
 }
 
+variable "bucket_path" {
+  description = "path of where to store data for the instance-level bucket"
+  type        = string
+  default     = ""
+}
+
 variable "zone" {
   type        = string
   description = "Google zone"

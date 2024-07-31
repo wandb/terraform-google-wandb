@@ -253,6 +253,7 @@ module "wandb" {
         bucket = {
           provider = "gcs"
           name     = local.bucket
+          path     = var.bucket_path
         }
 
         mysql = {
