@@ -148,9 +148,9 @@ variable "database_version" {
 }
 
 variable "database_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
+  description = "Specifies the machine type to be allocated for the database. Defaults to null and value from deployment-size.tf is used"
   type        = string
-  default     = "db-n1-standard-2"
+  default = null
 }
 
 variable "database_sort_buffer_size" {
@@ -186,6 +186,12 @@ variable "redis_tier" {
   default     = "STANDARD_HA"
 }
 
+variable "redis_memory_size_gb" {
+  type        = number
+  description = "Specifies the memory size in GB for the Redis instance. Defaults to null and value from deployment-size.tf is used"
+  default = null
+}
+
 ##########################################
 # External Bucket                        #
 ##########################################
@@ -209,15 +215,22 @@ variable "bucket_location" {
 ##########################################
 
 variable "gke_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
+  description = "Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used"
   type        = string
-  default     = "n1-standard-4"
+  default = null
 }
 
 
 variable "gke_node_count" {
   type    = number
-  default = 2
+  description = "Initial number of nodes for the GKE cluster, if gke_max_node_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used"
+  default = null
+}
+
+variable "gke_max_node_count" {
+  type    = number
+  description = "Maximum number of nodes for the GKE cluster. Defaults to null and value from deployment-size.tf is used"
+  default = null
 }
 
 ##########################################
@@ -266,7 +279,7 @@ variable "bucket_kms_key_id" {
 variable "size" {
   description = "Deployment size for the instance"
   type        = string
-  default     = null
+  default     = "small"
 }
 
 variable "weave_wandb_env" {

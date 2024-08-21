@@ -74,16 +74,19 @@ output "standardized_size" {
 }
 
 output "gke_node_count" {
-  value = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  value = local.min_node_count
 }
 
+output "gke_max_node_count" {
+  value = local.max_node_count
+}
 
 output "gke_node_instance_type" {
-  value = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
+  value = local.gke_machine_type
 }
 
 output "database_instance_type" {
-  value = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
+  value = local.database_machine_type
 }
 
 output "private_attachement_id" {

@@ -36,8 +36,6 @@ module "wandb" {
   domain_name           = var.domain_name
   subdomain             = var.subdomain
 
-  gke_machine_type = var.gke_machine_type
-
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
@@ -49,7 +47,6 @@ module "wandb" {
   deletion_protection = false
 
   database_sort_buffer_size = var.database_sort_buffer_size
-  database_machine_type     = var.database_machine_type
 
   disable_code_saving = var.disable_code_saving
   size                = var.size

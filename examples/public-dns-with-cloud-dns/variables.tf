@@ -41,12 +41,6 @@ variable "subdomain" {
   description = "Subdomain for access the Weights & Biases UI."
 }
 
-variable "gke_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
-  type        = string
-  default     = "n1-standard-4"
-}
-
 variable "license" {
   type = string
 }
@@ -75,12 +69,6 @@ variable "force_ssl" {
   default     = false
 }
 
-variable "database_machine_type" {
-  description = "Specifies the machine type to be allocated for the database"
-  type        = string
-  default     = "db-n1-standard-2"
-}
-
 variable "disable_code_saving" {
   type        = bool
   description = "Boolean indicating if code saving is disabled"
@@ -90,5 +78,5 @@ variable "disable_code_saving" {
 variable "size" {
   description = "Deployment size for the instance"
   type        = string
-  default     = null
+  default     = "small"
 }
