@@ -122,6 +122,7 @@ resources that lack official modules.
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
 | <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `false` | no |
+| <a name="input_external_bucket"></a> [external\_bucket](#input\_external\_bucket) | config an external bucket | `any` | `null` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type to be allocated for the database | `string` | `"n1-standard-4"` | no |
 | <a name="input_gke_node_count"></a> [gke\_node\_count](#input\_gke\_node\_count) | n/a | `number` | `2` | no |

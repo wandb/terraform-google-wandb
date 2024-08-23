@@ -37,6 +37,7 @@ module "wandb" {
   subdomain             = var.subdomain
 
   bucket_path = var.bucket_path
+  external_bucket = var.external_bucket
 
   gke_machine_type = var.gke_machine_type
 

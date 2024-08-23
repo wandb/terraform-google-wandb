@@ -187,7 +187,7 @@ variable "redis_tier" {
 }
 
 ##########################################
-# External Bucket                        #
+# Existing GCP Bucket                    #
 ##########################################
 # Most users will not need these settings. They are ment for users who want a
 # bucket in a different account.
@@ -202,6 +202,19 @@ variable "bucket_location" {
   type        = string
   description = "Location of the bucket (US, EU, ASIA)"
   default     = "US"
+}
+
+
+##########################################
+# Existing External Bucket               #
+##########################################
+# Most users will not need these settings. They are ment for users who want a
+# bucket from on-prem storage or a different cloud provider.
+
+variable "external_bucket" {
+  description = "config an external bucket"
+  type        = map(string)
+  default     = null
 }
 
 ##########################################
