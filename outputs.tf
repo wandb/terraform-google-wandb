@@ -7,7 +7,7 @@ output "bucket_name" {
 }
 output "bucket_path" {
   value       = local.bucket_path
-  descritpion = "path of where to store data for the instance-level bucket"
+  description = "path of where to store data for the instance-level bucket"
 }
 output "bucket_queue_name" {
   value       = local.bucket_queue
