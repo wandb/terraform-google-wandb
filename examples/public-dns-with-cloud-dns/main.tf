@@ -71,6 +71,10 @@ output "bucket_name" {
   value = module.wandb.bucket_name
 }
 
+output "bucket_path" {
+  value = module.wandb.bucket_path
+}
+
 output "standardized_size" {
   value = var.size
 }
