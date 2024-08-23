@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.3.0](https://github.com/wandb/terraform-google-wandb/compare/v5.2.2...v5.3.0) (2024-08-23)
+
+
+### Features
+
+* Add optional path var for instance level bucket path ([#145](https://github.com/wandb/terraform-google-wandb/issues/145)) ([e95bc6a](https://github.com/wandb/terraform-google-wandb/commit/e95bc6ab276152af2419fadb335af23b91e9c0ca))
+
 ### [5.2.2](https://github.com/wandb/terraform-google-wandb/compare/v5.2.1...v5.2.2) (2024-08-01)
 
 
