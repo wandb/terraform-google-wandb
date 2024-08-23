@@ -5,7 +5,10 @@ output "bucket_name" {
   value       = local.bucket
   description = "Name of google bucket."
 }
-
+output "bucket_path" {
+  value       = local.bucket_path
+  description = "path of where to store data for the instance-level bucket"
+}
 output "bucket_queue_name" {
   value       = local.bucket_queue
   description = "Pubsub queue created for google bucket file upload events."

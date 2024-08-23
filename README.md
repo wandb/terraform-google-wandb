@@ -110,6 +110,7 @@ resources that lack official modules.
 | <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. | `string` | `null` | no |
 | <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket (US, EU, ASIA) | `string` | `"US"` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
+| <a name="input_bucket_path"></a> [bucket\_path](#input\_bucket\_path) | path of where to store data for the instance-level bucket | `string` | `""` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
 | <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_workload_identity"></a> [create\_workload\_identity](#input\_create\_workload\_identity) | Flag to indicate whether to create a workload identity for the service account. | `bool` | `false` | no |
@@ -159,6 +160,7 @@ resources that lack official modules.
 |------|-------------|
 | <a name="output_address"></a> [address](#output\_address) | n/a |
 | <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of google bucket. |
+| <a name="output_bucket_path"></a> [bucket\_path](#output\_bucket\_path) | path of where to store data for the instance-level bucket |
 | <a name="output_bucket_queue_name"></a> [bucket\_queue\_name](#output\_bucket\_queue\_name) | Pubsub queue created for google bucket file upload events. |
 | <a name="output_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#output\_cluster\_ca\_certificate) | Certificate of the kubernetes (GKE) cluster. |
 | <a name="output_cluster_client_certificate"></a> [cluster\_client\_certificate](#output\_cluster\_client\_certificate) | n/a |

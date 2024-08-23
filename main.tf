@@ -164,6 +164,7 @@ locals {
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
   bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
+  bucket_path             = var.bucket_path
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
@@ -253,6 +254,7 @@ module "wandb" {
         bucket = {
           provider = "gcs"
           name     = local.bucket
+          path     = var.bucket_path
         }
 
         mysql = {
