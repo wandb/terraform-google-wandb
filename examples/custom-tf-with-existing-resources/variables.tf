@@ -8,31 +8,31 @@ variable "allowed_inbound_cidrs" {
 variable "project_id" {
   type        = string
   description = "Project ID"
-  default = ""
+  default     = ""
 }
 
 variable "region" {
   type        = string
   description = "Google region"
-  default = "us-central1"
+  default     = "us-central1"
 }
 
 variable "zone" {
   type        = string
   description = "Google zone"
-  default = "us-central1-b"
+  default     = "us-central1-b"
 }
 
 variable "namespace" {
   type        = string
   description = "Namespace prefix used for resources"
-  default = ""
+  default     = ""
 }
 
 variable "domain_name" {
   type        = string
   description = "Domain name for accessing the Weights & Biases UI."
-  default = ""
+  default     = ""
 }
 
 variable "subdomain" {
@@ -48,9 +48,9 @@ variable "gke_machine_type" {
 }
 
 variable "license" {
-  type = string
+  type    = string
   default = ""
-  }
+}
 
 variable "wandb_version" {
   description = "The version of Weights & Biases local to deploy."
@@ -65,7 +65,7 @@ variable "wandb_image" {
 }
 
 variable "database_env" {
-  nullable    = false
+  nullable = false
   type = object({
     name               = string
     database_name      = string
@@ -76,12 +76,12 @@ variable "database_env" {
   })
 
   default = {
-     name = "**"
-    username = "**"
-    password = "**"
-    database_name =  "**"
-    private_ip_address =  "**"
-    connection_string = "**" # "mysql://${username}:${password}@${private_ip_address}/${database_name}"
+    name               = "**"
+    username           = "**"
+    password           = "**"
+    database_name      = "**"
+    private_ip_address = "**"
+    connection_string  = "**" # "mysql://${username}:${password}@${private_ip_address}/${database_name}"
   }
 }
 
@@ -159,36 +159,36 @@ variable "deletion_protection" {
 }
 
 variable "network" {
-  nullable = false
+  nullable    = false
   default     = ""
   description = "Pre-existing network self link"
   type        = string
 }
 
 variable "subnetwork" {
-  nullable = false
+  nullable    = false
   default     = ""
   description = "Pre-existing subnetwork self link"
   type        = string
 }
 
 variable "cluster_name" {
-  type = string
+  type     = string
   nullable = false
-  default = ""
+  default  = ""
 }
 
 variable "redis_cluster_name" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "redis_env" {
-  nullable    = false
+  nullable = false
   type = object({
-    password = string
-    host     = string
-    port     = string
+    password          = string
+    host              = string
+    port              = string
     connection_string = string
   })
 

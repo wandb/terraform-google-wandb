@@ -115,6 +115,7 @@ module "app_gke" {
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
   create_workload_identity = var.create_workload_identity
+  deletion_protection      = var.deletion_protection
   depends_on               = [module.project_factory_project_services]
 }
 
@@ -279,7 +280,7 @@ module "wandb" {
           } : {
           password = ""
           host     = ""
-          port     = 0
+          port     = 6379
           caCert   = ""
           params = {
             tls          = false

@@ -49,3 +49,9 @@ variable "create_workload_identity" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
 }
+
+variable "deletion_protection" {
+  description = "If the GKE Cluster should have deletion protection enabled. The GKE Cluster can't be deleted when this value is set to `true`."
+  type        = bool
+  default     = true
+}
