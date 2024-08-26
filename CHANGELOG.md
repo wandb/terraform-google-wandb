@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.3.1](https://github.com/wandb/terraform-google-wandb/compare/v5.3.0...v5.3.1) (2024-08-26)
+
+
+### Bug Fixes
+
+* Fix redis port ([#161](https://github.com/wandb/terraform-google-wandb/issues/161)) ([6647636](https://github.com/wandb/terraform-google-wandb/commit/66476360f2c97528dfe37f0c1ec2765bbb7c6f52))
+
 ## [5.3.0](https://github.com/wandb/terraform-google-wandb/compare/v5.2.2...v5.3.0) (2024-08-23)
 
 
