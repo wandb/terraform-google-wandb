@@ -5,7 +5,7 @@ resource "random_pet" "key_ring" {
 
 resource "google_kms_key_ring" "default" {
   name     = "${var.namespace}-${random_pet.key_ring.id}"
-  location =  var.key_location
+  location = var.key_location
 }
 
 

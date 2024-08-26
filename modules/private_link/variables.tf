@@ -23,8 +23,8 @@ variable "subnetwork" {
 }
 
 variable "allowed_project_names" {
-  type = map(number)
-  default = {}
+  type        = map(number)
+  default     = {}
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
 
@@ -39,6 +39,6 @@ variable "proxynetwork_cidr" {
 }
 
 variable "forwarding_rule" {
-  type = string
+  type        = string
   description = "forwarding rule name used in private service connect as a target"
 }
