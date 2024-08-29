@@ -55,8 +55,8 @@ locals {
   url               = "${local.url_prefix}://${local.fqdn}"
   internal_app_port = 32543
   create_bucket     = var.bucket_name == ""
-  network         = data.google_compute_network.network
-  subnetwork      = data.google_compute_subnetwork.subnetwork
+  network           = data.google_compute_network.network
+  subnetwork        = data.google_compute_subnetwork.subnetwork
 
 }
 

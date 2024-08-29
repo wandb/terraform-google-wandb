@@ -2,10 +2,10 @@ data "google_compute_zones" "available" {
 }
 
 resource "google_redis_instance" "default" {
-  name           = "${var.namespace}-redis"
-  display_name   = "${var.namespace} W&B Instance"
-  tier           = var.tier
-  memory_size_gb = var.memory_size_gb
+  name                 = "${var.namespace}-redis"
+  display_name         = "${var.namespace} W&B Instance"
+  tier                 = var.tier
+  memory_size_gb       = var.memory_size_gb
   customer_managed_key = var.crypto_key
 
   location_id             = data.google_compute_zones.available.names.0

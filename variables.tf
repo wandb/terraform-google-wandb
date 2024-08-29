@@ -150,7 +150,7 @@ variable "database_version" {
 variable "database_machine_type" {
   description = "Specifies the machine type to be allocated for the database. Defaults to null and value from deployment-size.tf is used"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "database_sort_buffer_size" {
@@ -189,7 +189,7 @@ variable "redis_tier" {
 variable "redis_memory_size_gb" {
   type        = number
   description = "Specifies the memory size in GB for the Redis instance. Defaults to null and value from deployment-size.tf is used"
-  default = null
+  default     = null
 }
 
 ##########################################
@@ -217,20 +217,20 @@ variable "bucket_location" {
 variable "gke_machine_type" {
   description = "Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used"
   type        = string
-  default = null
+  default     = null
 }
 
 
 variable "gke_min_node_count" {
-  type    = number
+  type        = number
   description = "Initial number of nodes for the GKE cluster, if gke_max_node_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used"
-  default = null
+  default     = null
 }
 
 variable "gke_max_node_count" {
-  type    = number
+  type        = number
   description = "Maximum number of nodes for the GKE cluster. Defaults to null and value from deployment-size.tf is used"
-  default = null
+  default     = null
 }
 
 ##########################################
