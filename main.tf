@@ -334,42 +334,6 @@ module "wandb" {
         serviceAccount = {}
       }
 
-      otel = {
-        daemonset = var.enable_stackdriver ? {
-          config = {
-            receivers = {
-              prometheus = {
-                config = {
-                  scrape_configs = [
-                    { job_name     = "stackdriver"
-                      scheme       = "http"
-                      metrics_path = "/metrics"
-                      dns_sd_configs = [
-                        { names = ["wandb-stackdriver"]
-                          type  = "A"
-                          port  = 9255
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-            service = {
-              pipelines = {
-                metrics = {
-                  receivers = ["hostmetrics", "k8s_cluster", "kubeletstats", "prometheus"]
-                }
-              }
-            }
-          }
-          } : { config = {
-            receivers = {}
-            service   = {}
-          }
-        }
-      }
-
       redis = { install = !var.create_redis }
       mysql = { install = false }
 
