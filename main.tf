@@ -35,7 +35,7 @@ locals {
   }
   gke_machine_type      = coalesce(var.gke_machine_type, local.deployment_size[var.size].node_instance)
   max_node_count        = coalesce(var.gke_max_node_count, local.deployment_size[var.size].max_node_count)
-  min_node_count        = coalesce(var.gke_node_count, local.deployment_size[var.size].min_node_count)
+  min_node_count        = coalesce(var.gke_min_node_count, local.deployment_size[var.size].min_node_count)
   database_machine_type = coalesce(var.database_machine_type, local.deployment_size[var.size].db)
   redis_memory_size_gb  = coalesce(var.redis_memory_size_gb, local.deployment_size[var.size].cache)
 }

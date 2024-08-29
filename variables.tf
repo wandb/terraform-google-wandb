@@ -195,7 +195,7 @@ variable "redis_memory_size_gb" {
 ##########################################
 # External Bucket                        #
 ##########################################
-# Most users will not need these settings. They are ment for users who want a
+# Most users will not need these settings. They are meant for users who want a
 # bucket in a different account.
 
 variable "bucket_name" {
@@ -221,7 +221,7 @@ variable "gke_machine_type" {
 }
 
 
-variable "gke_node_count" {
+variable "gke_min_node_count" {
   type    = number
   description = "Initial number of nodes for the GKE cluster, if gke_max_node_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used"
   default = null
