@@ -353,3 +353,18 @@ variable "stackdriver_sa_name" {
   type    = string
   default = "wandb-stackdriver"
 }
+
+###########################################
+# ClickHouse endpoint                     #
+###########################################
+variable "clickhouse_private_endpoint_service_name" {
+  type        = string
+  description = "ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud)."
+  default     = ""
+}
+
+variable "clickhouse_region" {
+  type        = string
+  description = "ClickHouse region (us-east1, us-central1, etc)."
+  default     = ""
+}
