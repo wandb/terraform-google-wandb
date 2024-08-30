@@ -4,7 +4,7 @@ resource "google_compute_address" "psc_endpoint_ip" {
   address_type = "INTERNAL"
   name         = "clickhouse-cloud-psc-${var.clickhouse_region}"
   purpose      = "GCE_ENDPOINT"
-  subnetwork   = var.subnetwork
+  subnetwork   = var.subnetwork.name
 }
 
 resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
