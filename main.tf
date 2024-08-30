@@ -163,8 +163,8 @@ module "redis" {
 module "clickhouse" {
   count      = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
   source     = "./modules/clickhouse"
-  network    = local.network
-  subnetwork = local.subnetwork
+  network    = local.network.id
+  subnetwork = local.subnetwork.name
 
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
