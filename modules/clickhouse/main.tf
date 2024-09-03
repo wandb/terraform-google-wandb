@@ -11,7 +11,7 @@ resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
   ip_address            = google_compute_address.psc_endpoint_ip.self_link
   name                  = "ch-cloud-${var.clickhouse_region}"
   network               = var.network
-  ## region                = var.region
+  region                = var.clickhouse_region
   load_balancing_scheme = ""
   # service attachment
   target = "https://www.googleapis.com/compute/v1/${var.clickhouse_private_endpoint_service_name}"
