@@ -5,7 +5,7 @@ resource "google_compute_address" "psc_endpoint_ip" {
   name         = "clickhouse-cloud-psc-${var.clickhouse_region}"
   purpose      = "GCE_ENDPOINT"
   subnetwork   = var.subnetwork
-  region       = var.clickhouse_region
+  # region       = var.clickhouse_region
 }
 
 resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
@@ -15,6 +15,7 @@ resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
   load_balancing_scheme = ""
   # service attachment
   target = "https://www.googleapis.com/compute/v1/${var.clickhouse_private_endpoint_service_name}"
+  allow_psc_global_access = true
 }
 
 output "psc_connection_id" {
