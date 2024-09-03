@@ -13,7 +13,7 @@ resource "google_compute_address" "psc_endpoint_ip" {
   address_type = "INTERNAL"
   name         = "clickhouse-cloud-psc-${var.clickhouse_region}"
   purpose      = "GCE_ENDPOINT"
-  subnetwork   = google_compute_subnetwork.psc_network
+  subnetwork   = google_compute_subnetwork.psc_network.self_link
   region       = var.clickhouse_region
 }
 
