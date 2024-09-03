@@ -1,7 +1,7 @@
 resource "google_compute_subnetwork" "psc_network" {
   name = "${var.clickhouse_region}-subnet"
 
-  ip_cidr_range            = "10.20.0.0/16"
+  ip_cidr_range            = "10.40.0.0/16"
   private_ip_google_access = true
   network                  = var.network
   region = var.clickhouse_region
@@ -31,4 +31,27 @@ resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
 output "psc_connection_id" {
   value       = google_compute_forwarding_rule.clickhouse_cloud_psc.psc_connection_id
   description = "Add GCP PSC Connection ID to allow list on instance level."
+}
+
+resource "google_dns_managed_zone" "clickhouse_cloud_private_service_connect" {
+  description   = "Private DNS zone for accessing ClickHouse Cloud using Private Service Connect"
+  dns_name      = "${var.clickhouse_region}.p.gcp.clickhouse.cloud."
+  force_destroy = false
+  name          = "clickhouse-cloud-private-service-connect-${var.clickhouse_region}"
+  visibility    = "private"
+
+  // associate private DNS zone with network
+  private_visibility_config {
+    networks {
+      network_url = var.network
+    }
+  }
+}
+
+resource "google_dns_record_set" "psc-wildcard" {
+  managed_zone = google_dns_managed_zone.clickhouse_cloud_private_service_connect.name
+  name         = "*.${var.clickhouse_region}.p.gcp.clickhouse.cloud."
+  type         = "A"
+  rrdatas      = [google_compute_address.psc_endpoint_ip.address]
+  ttl          = 3600
 }
