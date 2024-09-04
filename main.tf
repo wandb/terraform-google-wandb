@@ -344,42 +344,6 @@ module "wandb" {
         serviceAccount = {}
       }
 
-      otel = {
-        daemonset = var.enable_stackdriver ? {
-          config = {
-            receivers = {
-              prometheus = {
-                config = {
-                  scrape_configs = [
-                    { job_name     = "stackdriver"
-                      scheme       = "http"
-                      metrics_path = "/metrics"
-                      dns_sd_configs = [
-                        { names = ["wandb-stackdriver"]
-                          type  = "A"
-                          port  = 9255
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-            service = {
-              pipelines = {
-                metrics = {
-                  receivers = ["hostmetrics", "k8s_cluster", "kubeletstats", "prometheus"]
-                }
-              }
-            }
-          }
-          } : { config = {
-            receivers = {}
-            service   = {}
-          }
-        }
-      }
-
       redis = { install = !var.create_redis }
       mysql = { install = false }
 
@@ -415,7 +379,7 @@ module "wandb" {
         }
       }
 
-      flat-runs-fields-updater = {
+      flat-run-fields-updater = {
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
