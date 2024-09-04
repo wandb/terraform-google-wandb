@@ -1,4 +1,4 @@
-name: Terraform Lint Check
+name: Terraform Lint and Format Check
 
 on: 
   push: 
@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  tflint:
-    name: Run tflint
+  terraform_checks:
+    name: Run Terraform Lint and Format Check
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,6 @@ jobs:
 
       - name: Run tflint
         run: tflint
+
+      - name: Check Terraform formatting
+        run: terraform fmt -check -recursive
