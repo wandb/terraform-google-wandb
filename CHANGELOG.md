@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.3.3](https://github.com/wandb/terraform-google-wandb/compare/v5.3.2...v5.3.3) (2024-09-04)
+
+
+### Bug Fixes
+
+* Name Typo ([#164](https://github.com/wandb/terraform-google-wandb/issues/164)) ([6ac348b](https://github.com/wandb/terraform-google-wandb/commit/6ac348b83569f94b54b2a9ef6aadbe30e1bd9882))
+
 ### [5.3.2](https://github.com/wandb/terraform-google-wandb/compare/v5.3.1...v5.3.2) (2024-08-29)
 
 
