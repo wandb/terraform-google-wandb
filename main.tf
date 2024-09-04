@@ -369,7 +369,7 @@ module "wandb" {
         }
       }
 
-      flat-runs-fields-updater = {
+      flat-run-fields-updater = {
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
