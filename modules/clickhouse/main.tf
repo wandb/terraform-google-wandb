@@ -3,7 +3,7 @@ resource "google_compute_subnetwork" "psc_network" {
 
   ip_cidr_range            = "10.20.0.0/16"
   private_ip_google_access = true
-  network                  = var.network
+  network                  = var.network.id
   region = var.clickhouse_region
 }
 
@@ -54,4 +54,13 @@ resource "google_dns_record_set" "psc-wildcard" {
   type         = "A"
   rrdatas      = [google_compute_address.psc_endpoint_ip.address]
   ttl          = 3600
+}
+
+resource "google_compute_route" "default_to_psc" {
+  name                    = "${var.namespace}-default-to-psc"
+  network                 = var.network.self_link
+  destination_range       = google_compute_subnetwork.psc_network.ip_cidr_range
+  next_hop_ilb            = "YOUR_NEXT_HOP"
+  priority                = 1000
+  tags                    = ["default-to-psc"]
 }

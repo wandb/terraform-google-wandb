@@ -1,6 +1,6 @@
 variable "network" {
   description = "Google Compute Engine network to which the cluster is connected."
-  type        = string
+  type        = object({ self_link = string })
 }
 
 variable "subnetwork" {
