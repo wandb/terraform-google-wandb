@@ -165,6 +165,7 @@ module "clickhouse" {
   source     = "./modules/clickhouse"
   network    = local.network
   subnetwork = local.subnetwork.name
+  namespace  = var.namespace
 
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
