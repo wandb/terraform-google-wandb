@@ -20,7 +20,7 @@ resource "google_kms_crypto_key" "default" {
   name            = "${var.namespace}-key"
   key_ring        = google_kms_key_ring.default.id
   rotation_period = "100000s"
-
+  labels          = var.labels
   # lifecycle {
   #   prevent_destroy = var.deletion_protection
   # }
