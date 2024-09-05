@@ -59,7 +59,7 @@ resource "google_dns_record_set" "psc-wildcard" {
 resource "google_compute_route" "default_to_psc" {
   name                    = "${var.namespace}-default-to-psc"
   network                 = var.network.self_link
-  destination_range       = google_compute_subnetwork.psc_network.ip_cidr_range
+  dest_range       = google_compute_subnetwork.psc_network.ip_cidr_range
   next_hop_ilb            = "YOUR_NEXT_HOP"
   priority                = 1000
   tags                    = ["default-to-psc"]
