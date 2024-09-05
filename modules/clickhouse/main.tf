@@ -20,7 +20,7 @@ resource "google_compute_address" "psc_endpoint_ip" {
 resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
   ip_address            = google_compute_address.psc_endpoint_ip.self_link
   name                  = "ch-cloud-${var.clickhouse_region}"
-  network               = var.network
+  network               = var.network.id
   region       = var.clickhouse_region
   load_balancing_scheme = ""
   # service attachment
@@ -43,7 +43,7 @@ resource "google_dns_managed_zone" "clickhouse_cloud_private_service_connect" {
   // associate private DNS zone with network
   private_visibility_config {
     networks {
-      network_url = var.network
+      network_url = var.network.id
     }
   }
 }
