@@ -58,6 +58,7 @@ module "kms" {
   source              = "./modules/kms"
   namespace           = var.namespace
   deletion_protection = var.deletion_protection
+  labels              = var.labels
 }
 
 module "kms_default_bucket" {
@@ -67,6 +68,7 @@ module "kms_default_bucket" {
   deletion_protection            = var.deletion_protection
   key_location                   = lower(var.bucket_location)
   bind_pubsub_service_to_kms_key = false
+  labels                         = var.labels
 }
 
 module "kms_default_sql" {
@@ -76,6 +78,7 @@ module "kms_default_sql" {
   deletion_protection            = var.deletion_protection
   key_location                   = data.google_client_config.current.region
   bind_pubsub_service_to_kms_key = false
+  labels                         = var.labels
 }
 locals {
   default_bucket_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
@@ -99,10 +102,10 @@ module "storage" {
 }
 
 module "networking" {
-  count = local.create_network ? 1 : 0
-
+  count      = local.create_network ? 1 : 0
   source     = "./modules/networking"
   namespace  = var.namespace
+  labels     = var.labels
   depends_on = [module.project_factory_project_services]
 }
 
@@ -124,6 +127,7 @@ module "app_gke" {
   depends_on               = [module.project_factory_project_services]
   max_node_count           = local.max_node_count
   min_node_count           = local.min_node_count
+  labels                   = var.labels
 }
 
 module "app_lb" {

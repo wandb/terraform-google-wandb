@@ -93,6 +93,7 @@ resource "google_container_node_pool" "default" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+    labels = var.labels
   }
 
   management {
