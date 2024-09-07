@@ -8,7 +8,7 @@ resource "google_compute_subnetwork" "psc_network" {
 
   ip_cidr_range            = "10.20.0.0/16"
   private_ip_google_access = true
-  network                  = google_compute_network.vpc2
+  network                  = google_compute_network.vpc2.id
   region = var.clickhouse_region
 }
 
