@@ -69,13 +69,12 @@ resource "google_compute_network_peering" "default_to_psc" {
   name         = "${var.namespace}-default-to-psc-peering"
   network      = var.network.name
   peer_network = google_compute_subnetwork.psc_network.self_link
-  auto_create_routes = false
 }
 
-resource "google_compute_route" "default_to_psc" {
-  name                    = "${var.namespace}-default-to-psc-route"
-  network                 = var.network.self_link
-  dest_range              = google_compute_subnetwork.psc_network.ip_cidr_range
-  next_hop_peering        = google_compute_network_peering.default_to_psc.self_link
-  priority                = 1000
-}
+//resource "google_compute_route" "default_to_psc" {
+//  name                    = "${var.namespace}-default-to-psc-route"
+//  network                 = var.network.self_link
+//  dest_range              = google_compute_subnetwork.psc_network.ip_cidr_range
+//  next_hop_peering        = google_compute_network_peering.default_to_psc.self_link
+//  priority                = 1000
+//}
