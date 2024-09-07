@@ -1,6 +1,6 @@
 resource "google_compute_network" "vpc2" {
   name                    = "my-custom-network-2"
-  region       = var.clickhouse_region
+  # region       = var.clickhouse_region
   auto_create_subnetworks = "false"
 }
 resource "google_compute_subnetwork" "psc_network" {
@@ -9,7 +9,7 @@ resource "google_compute_subnetwork" "psc_network" {
   ip_cidr_range            = "10.20.0.0/16"
   private_ip_google_access = true
   network                  = google_compute_network.vpc2
-  # region = var.clickhouse_region
+  region = var.clickhouse_region
 }
 
 resource "google_compute_address" "psc_endpoint_ip" {
