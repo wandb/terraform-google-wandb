@@ -73,7 +73,7 @@ resource "google_dns_record_set" "psc-wildcard" {
 resource "google_compute_network_peering" "default_to_psc" {
   name         = "${var.namespace}-default-to-psc-peering"
   network      = var.network.self_link
-  peer_network = google_compute_subnetwork.vpc2.self_link
+  peer_network = google_compute_network.vpc2.self_link
 }
 
 //resource "google_compute_route" "default_to_psc" {
