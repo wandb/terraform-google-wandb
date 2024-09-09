@@ -3,7 +3,7 @@ output "address" {
 }
 output "bucket_name" {
   value       = local.bucket
-  description = "Name of google bucket."
+  description = "Name of bucket."
 }
 output "bucket_path" {
   value       = local.bucket_path

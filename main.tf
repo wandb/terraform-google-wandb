@@ -24,7 +24,7 @@ locals {
   fqdn           = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
   url_prefix     = var.ssl ? "https" : "http"
   url            = "${local.url_prefix}://${local.fqdn}"
-  create_bucket  = var.bucket_name == ""
+  create_bucket  = var.bucket_name == "" && var.external_bucket == null
   create_network = var.network == null
   k8s_sa_map = {
     app         = "wandb-app"
@@ -163,11 +163,21 @@ module "redis" {
 locals {
   redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
-  bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
+  gcp_bucket              = var.external_bucket != null ? "" : local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
+  bucket                  = var.external_bucket != null ? var.external_bucket.name : local.gcp_bucket
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
   bucket_path             = var.bucket_path
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
+}
+
+locals {
+  gcp_bucket_config = {
+    provider  = "gcs"
+    name      = local.gcp_bucket
+    path      = var.bucket_path
+  }
+  bucket_config = var.external_bucket != null ? var.external_bucket : local.gcp_bucket_config
 }
 
 resource "google_compute_address" "default" {
@@ -185,7 +195,7 @@ module "gke_app" {
   license = var.license
 
   host                       = local.url
-  bucket                     = "gs://${local.bucket}"
+  bucket                     = "gs://${local.gcp_bucket}"
   bucket_queue               = local.bucket_queue
   database_connection_string = module.database.connection_string
   redis_connection_string    = local.redis_connection_string
@@ -252,11 +262,7 @@ module "wandb" {
           "TAG_CUSTOMER_NS"                      = var.namespace
         }, var.other_wandb_env, local.oidc_envs)
 
-        bucket = {
-          provider = "gcs"
-          name     = local.bucket
-          path     = var.bucket_path
-        }
+        bucket = local.bucket_config
 
         mysql = {
           name     = module.database.database_name

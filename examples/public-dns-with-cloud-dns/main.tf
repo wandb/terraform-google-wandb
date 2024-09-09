@@ -37,6 +37,7 @@ module "wandb" {
   subdomain             = var.subdomain
 
   bucket_path = var.bucket_path
+  external_bucket = var.external_bucket
 
   gke_machine_type = var.gke_machine_type
 
@@ -74,7 +75,9 @@ output "bucket_name" {
 output "bucket_path" {
   value = module.wandb.bucket_path
 }
-
+output "bucket_queue_name" {
+  value = module.wandb.bucket_queue_name
+}
 output "standardized_size" {
   value = var.size
 }

@@ -27,6 +27,12 @@ variable "bucket_path" {
   default     = ""
 }
 
+variable "external_bucket" {
+  description = "config an external bucket"
+  type        = map(string)
+  default     = null
+}
+
 variable "zone" {
   type        = string
   description = "Google zone"
