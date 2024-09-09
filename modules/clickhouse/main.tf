@@ -77,6 +77,12 @@ resource "google_compute_network_peering" "default_to_psc" {
   peer_network = google_compute_network.vpc2.self_link
 }
 
+resource "google_compute_network_peering" "default_to_psc_back" {
+  name         = "${var.namespace}-default-to-psc-peer-back"
+  network = google_compute_network.vpc2.self_link
+  peer_network      = var.network.self_link
+}
+
 //resource "google_compute_route" "default_to_psc" {
 //  name                    = "${var.namespace}-default-to-psc-route"
 //  network                 = var.network.self_link
