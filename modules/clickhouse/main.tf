@@ -1,14 +1,9 @@
-resource "google_compute_network" "vpc2" {
-  name                    = "my-custom-network-2"
-  # region       = var.clickhouse_region
-  auto_create_subnetworks = "false"
-}
 resource "google_compute_subnetwork" "psc_network" {
   name = "${var.clickhouse_region}-subnet"
 
   ip_cidr_range            = "10.20.0.0/16"
   private_ip_google_access = true
-  network                  = google_compute_network.vpc2.id
+  network                  = var.network.id
   region = var.clickhouse_region
 }
 
@@ -26,7 +21,7 @@ resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
   ip_address            = google_compute_address.psc_endpoint_ip.self_link
   name                  = "ch-cloud-${var.clickhouse_region}"
   # network               = var.network.id
-  network                  = google_compute_network.vpc2.id
+  network                  = var.network.id
   region       = var.clickhouse_region
   load_balancing_scheme = ""
   # service attachment
@@ -70,18 +65,6 @@ resource "google_dns_record_set" "psc-wildcard" {
 //  priority                = 1000
 //  tags                    = ["default-to-psc"]
 //}
-
-resource "google_compute_network_peering" "default_to_psc" {
-  name         = "${var.namespace}-default-to-psc-peering"
-  network      = var.network.self_link
-  peer_network = google_compute_network.vpc2.self_link
-}
-
-resource "google_compute_network_peering" "default_to_psc_back" {
-  name         = "${var.namespace}-default-to-psc-peer-back"
-  network = google_compute_network.vpc2.self_link
-  peer_network      = var.network.self_link
-}
 
 //resource "google_compute_route" "default_to_psc" {
 //  name                    = "${var.namespace}-default-to-psc-route"
