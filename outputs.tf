@@ -100,5 +100,5 @@ output "sa_account_email" {
 
 output "clickhouse_private_endpoint_id" {
   description = "ClickHouse Private endpoint Endpoint ID to secure access inside VPC"
-  value = module.clickhouse.psc_connection_id
+  value = var.clickhouse_private_endpoint_service_name ? module.clickhouse[0].psc_connection_id : null
 }
