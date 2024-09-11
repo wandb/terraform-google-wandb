@@ -4,7 +4,7 @@ resource "google_compute_subnetwork" "psc_network" {
   region                   = var.clickhouse_region
   ip_cidr_range            = var.clickhouse_reserved_ip_range
   private_ip_google_access = true
-  network                  = var.network.id
+  network                  = var.network
 }
 
 resource "google_compute_address" "psc_endpoint_ip" {
@@ -18,7 +18,7 @@ resource "google_compute_address" "psc_endpoint_ip" {
 resource "google_compute_forwarding_rule" "psc_forward_rule" {
   name                    = "${var.namespace}-clickhouse-psc-forward"
   ip_address              = google_compute_address.psc_endpoint_ip.self_link
-  network                 = var.network.id
+  network                 = var.network
   region                  = var.clickhouse_region
   load_balancing_scheme   = ""
   allow_psc_global_access = true
@@ -36,7 +36,7 @@ resource "google_dns_managed_zone" "psc_dns_zone" {
   // associate private DNS zone with network
   private_visibility_config {
     networks {
-      network_url = var.network.id
+      network_url = var.network
     }
   }
 }

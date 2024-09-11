@@ -4,13 +4,8 @@ variable "namespace" {
 }
 
 variable "network" {
-  description = "Google Compute Engine network to which the cluster is connected."
-  type        = object({ self_link = string, id = string, name = string })
-}
-
-variable "subnetwork" {
-  description = "Google Compute Engine subnetwork in which the cluster's instances are launched."
   type        = string
+  description = "Google Compute Engine network to which the cluster is connected."
 }
 
 variable "clickhouse_reserved_ip_range" {
