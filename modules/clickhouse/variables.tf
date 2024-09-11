@@ -13,6 +13,12 @@ variable "subnetwork" {
   type        = string
 }
 
+variable "clickhouse_reserved_ip_range" {
+  type        = string
+  description = "Reserved IP range for ClickHouse private link"
+  default     = "10.20.0.0/16"
+}
+
 variable "clickhouse_private_endpoint_service_name" {
   type        = string
   description = "ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud)."
