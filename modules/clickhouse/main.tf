@@ -23,6 +23,11 @@ resource "google_compute_forwarding_rule" "clickhouse_cloud_psc" {
   load_balancing_scheme = ""
   target = "https://www.googleapis.com/compute/v1/${var.clickhouse_private_endpoint_service_name}"
   allow_psc_global_access = true
+
+  # comment why this was needed
+  depends_on = [
+    google_compute_address.psc_endpoint_ip
+  ]
 }
 
 output "psc_connection_id" {
