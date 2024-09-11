@@ -166,6 +166,7 @@ module "clickhouse" {
   network    = local.network.id
   namespace  = var.namespace
 
+  clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
 }

@@ -368,3 +368,9 @@ variable "clickhouse_region" {
   description = "ClickHouse region (us-east1, us-central1, etc)."
   default     = ""
 }
+
+variable "clickhouse_subnetwork_cidr" {
+  default     = "10.50.0.0/24"
+  description = "ClickHouse private service connect subnetwork"
+  type        = string
+}

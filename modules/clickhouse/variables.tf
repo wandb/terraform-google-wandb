@@ -11,7 +11,7 @@ variable "network" {
 variable "clickhouse_reserved_ip_range" {
   type        = string
   description = "Reserved IP range for ClickHouse private link"
-  default     = "10.20.0.0/16"
+  default     = "10.50.0.0/24"
 }
 
 variable "clickhouse_private_endpoint_service_name" {
