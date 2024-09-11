@@ -30,7 +30,7 @@ resource "google_dns_managed_zone" "psc_dns_zone" {
   name          = "${var.namespace}-clickhouse-dns-zone"
   description   = "Private DNS zone for accessing ClickHouse Cloud using Private Service Connect"
   dns_name      = "${var.clickhouse_region}.p.gcp.clickhouse.cloud."
-  force_destroy = false
+  force_destroy = true
   visibility    = "private"
 
   // associate private DNS zone with network
