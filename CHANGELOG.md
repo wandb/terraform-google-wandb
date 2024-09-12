@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.3.4](https://github.com/wandb/terraform-google-wandb/compare/v5.3.3...v5.3.4) (2024-09-12)
+
+
+### Bug Fixes
+
+* Bump operator chart and controller image ([#170](https://github.com/wandb/terraform-google-wandb/issues/170)) ([37c8774](https://github.com/wandb/terraform-google-wandb/commit/37c8774caf7db083a1d48eea78542dde2637b4a3))
+
 ### [5.3.3](https://github.com/wandb/terraform-google-wandb/compare/v5.3.2...v5.3.3) (2024-09-04)
 
 
