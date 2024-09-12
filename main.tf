@@ -381,8 +381,8 @@ module "wandb" {
     }
   }
 
-  controller_image_tag   = "1.12.0"
-  operator_chart_version = "1.2.4"
+  controller_image_tag   = "1.13.0"
+  operator_chart_version = "1.3.1"
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
