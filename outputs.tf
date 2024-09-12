@@ -97,3 +97,8 @@ output "sa_account_email" {
   description = "This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null"
   value       = var.create_workload_identity == true ? module.service_accounts.sa_account_role : null
 }
+
+output "clickhouse_private_endpoint_id" {
+  description = "ClickHouse Private endpoint Endpoint ID to secure access inside VPC"
+  value = var.clickhouse_private_endpoint_service_name != "" ? module.clickhouse[0].psc_connection_id : null
+}
