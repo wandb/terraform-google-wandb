@@ -2,7 +2,7 @@ resource "google_compute_network" "vpc" {
   name                    = "${var.namespace}-vpc"
   description             = "Weights & Biases VPC Network"
   auto_create_subnetworks = false
-  # routing_mode            = "GLOBAL"
+  routing_mode            = "REGIONAL"
 }
 
 resource "google_compute_subnetwork" "default" {
