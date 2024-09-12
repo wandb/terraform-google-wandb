@@ -160,6 +160,17 @@ module "redis" {
   depends_on        = [module.project_factory_project_services, module.kms_default_sql]
 }
 
+module "clickhouse" {
+  count      = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
+  source     = "./modules/clickhouse"
+  network    = local.network.id
+  namespace  = var.namespace
+
+  clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
+  clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
+  clickhouse_region                        = var.clickhouse_region
+}
+
 locals {
   redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
