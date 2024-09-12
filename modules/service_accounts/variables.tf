@@ -27,3 +27,8 @@ variable "enable_stackdriver" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
 }
+
+variable "skip_bucket_admin_role" {
+  description = "Flag to indicate whether to skip the bucket policy creation."
+  type        = bool
+}
