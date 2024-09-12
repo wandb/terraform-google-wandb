@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.4.0](https://github.com/wandb/terraform-google-wandb/compare/v5.3.4...v5.4.0) (2024-09-12)
+
+
+### Features
+
+* Add support for Private Service Connect to ClickHouse ([#168](https://github.com/wandb/terraform-google-wandb/issues/168)) ([62dbc62](https://github.com/wandb/terraform-google-wandb/commit/62dbc629c875dc3bebcce5efefb4834379fa4f71))
+
 ### [5.3.4](https://github.com/wandb/terraform-google-wandb/compare/v5.3.3...v5.3.4) (2024-09-12)
 
 
