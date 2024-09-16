@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.4.0](https://github.com/wandb/terraform-google-wandb/compare/v5.3.4...v5.4.0) (2024-09-12)
+
+
+### Features
+
+* Add support for Private Service Connect to ClickHouse ([#168](https://github.com/wandb/terraform-google-wandb/issues/168)) ([62dbc62](https://github.com/wandb/terraform-google-wandb/commit/62dbc629c875dc3bebcce5efefb4834379fa4f71))
+
+### [5.3.4](https://github.com/wandb/terraform-google-wandb/compare/v5.3.3...v5.3.4) (2024-09-12)
+
+
+### Bug Fixes
+
+* Bump operator chart and controller image ([#170](https://github.com/wandb/terraform-google-wandb/issues/170)) ([37c8774](https://github.com/wandb/terraform-google-wandb/commit/37c8774caf7db083a1d48eea78542dde2637b4a3))
+
+### [5.3.3](https://github.com/wandb/terraform-google-wandb/compare/v5.3.2...v5.3.3) (2024-09-04)
+
+
+### Bug Fixes
+
+* Name Typo ([#164](https://github.com/wandb/terraform-google-wandb/issues/164)) ([6ac348b](https://github.com/wandb/terraform-google-wandb/commit/6ac348b83569f94b54b2a9ef6aadbe30e1bd9882))
+
+### [5.3.2](https://github.com/wandb/terraform-google-wandb/compare/v5.3.1...v5.3.2) (2024-08-29)
+
+
+### Bug Fixes
+
+* Cleanup unneeded otel configs ([#162](https://github.com/wandb/terraform-google-wandb/issues/162)) ([38e63b1](https://github.com/wandb/terraform-google-wandb/commit/38e63b17fd91eff4bbf6a40c0cec724fbaa6b7cc))
+
+### [5.3.1](https://github.com/wandb/terraform-google-wandb/compare/v5.3.0...v5.3.1) (2024-08-26)
+
+
+### Bug Fixes
+
+* Fix redis port ([#161](https://github.com/wandb/terraform-google-wandb/issues/161)) ([6647636](https://github.com/wandb/terraform-google-wandb/commit/66476360f2c97528dfe37f0c1ec2765bbb7c6f52))
+
+## [5.3.0](https://github.com/wandb/terraform-google-wandb/compare/v5.2.2...v5.3.0) (2024-08-23)
+
+
+### Features
+
+* Add optional path var for instance level bucket path ([#145](https://github.com/wandb/terraform-google-wandb/issues/145)) ([e95bc6a](https://github.com/wandb/terraform-google-wandb/commit/e95bc6ab276152af2419fadb335af23b91e9c0ca))
+
 ### [5.2.2](https://github.com/wandb/terraform-google-wandb/compare/v5.2.1...v5.2.2) (2024-08-01)
 
 

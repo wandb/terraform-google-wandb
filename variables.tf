@@ -211,6 +211,18 @@ variable "bucket_location" {
 }
 
 ##########################################
+# Bucket Subpath                         #
+##########################################
+# This setting is meant for users who want to store all of their instance-level
+# bucket's data at a specific path within their bucket. It can be set both for
+# external buckets or the bucket created by this module.
+variable "bucket_path" {
+  description = "path of where to store data for the instance-level bucket"
+  type        = string
+  default     = ""
+}
+
+##########################################
 # K8s                                    #
 ##########################################
 
@@ -353,4 +365,25 @@ variable "enable_stackdriver" {
 variable "stackdriver_sa_name" {
   type    = string
   default = "wandb-stackdriver"
+}
+
+###########################################
+# ClickHouse endpoint                     #
+###########################################
+variable "clickhouse_private_endpoint_service_name" {
+  type        = string
+  description = "ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud)."
+  default     = ""
+}
+
+variable "clickhouse_region" {
+  type        = string
+  description = "ClickHouse region (us-east1, us-central1, etc)."
+  default     = ""
+}
+
+variable "clickhouse_subnetwork_cidr" {
+  default     = "10.50.0.0/24"
+  description = "ClickHouse private service connect subnetwork"
+  type        = string
 }

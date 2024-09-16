@@ -11,6 +11,7 @@ resource "google_container_cluster" "default" {
   subnetwork                  = var.subnetwork.self_link
   networking_mode             = "VPC_NATIVE"
   enable_intranode_visibility = true
+  deletion_protection         = var.deletion_protection
 
 
   binary_authorization {

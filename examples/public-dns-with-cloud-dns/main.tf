@@ -36,6 +36,8 @@ module "wandb" {
   domain_name           = var.domain_name
   subdomain             = var.subdomain
 
+  bucket_path = var.bucket_path
+
   wandb_version = var.wandb_version
   wandb_image   = var.wandb_image
 
@@ -64,6 +66,10 @@ output "address" {
 
 output "bucket_name" {
   value = module.wandb.bucket_name
+}
+
+output "bucket_path" {
+  value = module.wandb.bucket_path
 }
 
 output "standardized_size" {

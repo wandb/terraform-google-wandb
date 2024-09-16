@@ -5,7 +5,10 @@ output "bucket_name" {
   value       = local.bucket
   description = "Name of google bucket."
 }
-
+output "bucket_path" {
+  value       = local.bucket_path
+  description = "path of where to store data for the instance-level bucket"
+}
 output "bucket_queue_name" {
   value       = local.bucket_queue
   description = "Pubsub queue created for google bucket file upload events."
@@ -96,4 +99,9 @@ output "private_attachement_id" {
 output "sa_account_email" {
   description = "This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null"
   value       = var.create_workload_identity == true ? module.service_accounts.sa_account_role : null
+}
+
+output "clickhouse_private_endpoint_id" {
+  description = "ClickHouse Private endpoint Endpoint ID to secure access inside VPC"
+  value = var.clickhouse_private_endpoint_service_name != "" ? module.clickhouse[0].psc_connection_id : null
 }

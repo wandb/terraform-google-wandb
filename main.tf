@@ -119,6 +119,7 @@ module "app_gke" {
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
   create_workload_identity = var.create_workload_identity
+  deletion_protection      = var.deletion_protection
   depends_on               = [module.project_factory_project_services]
   max_node_count           = local.max_node_count
   min_node_count           = local.min_node_count
@@ -165,11 +166,23 @@ module "redis" {
   depends_on        = [module.project_factory_project_services, module.kms_default_sql]
 }
 
+module "clickhouse" {
+  count      = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
+  source     = "./modules/clickhouse"
+  network    = local.network.id
+  namespace  = var.namespace
+
+  clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
+  clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
+  clickhouse_region                        = var.clickhouse_region
+}
+
 locals {
   redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
   bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
   bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
+  bucket_path             = var.bucket_path
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
 }
@@ -259,6 +272,7 @@ module "wandb" {
         bucket = {
           provider = "gcs"
           name     = local.bucket
+          path     = var.bucket_path
         }
 
         mysql = {
@@ -283,7 +297,7 @@ module "wandb" {
           } : {
           password = ""
           host     = ""
-          port     = 0
+          port     = 6379
           caCert   = ""
           params = {
             tls          = false
@@ -337,42 +351,6 @@ module "wandb" {
         serviceAccount = {}
       }
 
-      otel = {
-        daemonset = var.enable_stackdriver ? {
-          config = {
-            receivers = {
-              prometheus = {
-                config = {
-                  scrape_configs = [
-                    { job_name     = "stackdriver"
-                      scheme       = "http"
-                      metrics_path = "/metrics"
-                      dns_sd_configs = [
-                        { names = ["wandb-stackdriver"]
-                          type  = "A"
-                          port  = 9255
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-            service = {
-              pipelines = {
-                metrics = {
-                  receivers = ["hostmetrics", "k8s_cluster", "kubeletstats", "prometheus"]
-                }
-              }
-            }
-          }
-          } : { config = {
-            receivers = {}
-            service   = {}
-          }
-        }
-      }
-
       redis = { install = !var.create_redis }
       mysql = { install = false }
 
@@ -408,7 +386,7 @@ module "wandb" {
         }
       }
 
-      flat-runs-fields-updater = {
+      flat-run-fields-updater = {
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
@@ -420,8 +398,8 @@ module "wandb" {
     }
   }
 
-  controller_image_tag   = "1.12.0"
-  operator_chart_version = "1.2.4"
+  controller_image_tag   = "1.13.0"
+  operator_chart_version = "1.3.1"
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
