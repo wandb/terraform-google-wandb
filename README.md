@@ -47,6 +47,22 @@ module "wandb" {
 
 - Run `terraform init` and `terraform apply`
 
+## Cluster Sizing
+
+By default, the type of kubernetes instances, number of instances, redis cluster size, and database instance sizes are
+standardized via configurations in [./deployment-size.tf](deployment-size.tf), and is configured via the `size` input 
+variable.
+
+Available sizes are, `small`, `medium`, `large`, `xlarge`, and `xxlarge`.  Default is `small`.
+
+All the values set via `deployment-size.tf` can be overridden by setting the appropriate input variables.
+
+- `gke_machine_type` - The instance type for the GKE nodes
+- `gke_min_node_count` - The minimum number of nodes in the GKE cluster
+- `gke_max_node_count` - The maximum number of nodes in the GKE cluster
+- `redis_memory_size_gb` - The memory size of the redis cluster
+- `database_machine_type` - The instance type for the database
+
 ## Examples
 
 We have included documentation and reference examples for common
@@ -191,6 +207,28 @@ resources that lack official modules.
 <!-- END_TF_DOCS -->
 
 ## Migrations
+
+### 5.x -> 6.x
+
+6.0.0 introduced autoscaling to the GKE cluster and made the `size` variable the preferred way to set the cluster size.
+Previously, unless the `size` variable was set explicitly, there were default values for the following variables:
+- `gke_machine_type`
+- `gke_node_count`
+- `redis_memory_size_gb`
+- `db_machine_type`  
+
+The `size` variable is now defaulted to `small`, and the following values to can be used to partially override the values
+set by the `size` variable:
+- `gke_machine_type`
+- `gke_min_node_count`
+- `gke_max_node_count`
+- `redis_memory_size_gb`
+- `database_machine_type`
+
+For more information on the available sizes, see the [Cluster Sizing](#cluster-sizing) section.
+
+If having the cluster scale nodes in and out is not desired, the `gke_min_node_count` and `gke_max_node_count` can be set
+to the same value to prevent the cluster from scaling.
 
 ### 3.x -> 4.x 
 
