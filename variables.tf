@@ -204,6 +204,11 @@ variable "bucket_location" {
   default     = "US"
 }
 
+variable "skip_bucket_admin_role" {
+    type        = bool
+    description = "Flag to indicate whether to skip the bucket policy creation."
+    default     = false
+}
 ##########################################
 # Bucket Subpath                         #
 ##########################################

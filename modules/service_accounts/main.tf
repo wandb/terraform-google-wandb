@@ -49,7 +49,7 @@ resource "google_project_iam_member" "log_writer" {
 
 # If the bucket already exists, grant this new service account permission
 resource "google_storage_bucket_iam_member" "object_admin" {
-  count  = var.bucket_name != "" ? 1 : 0
+  count  = (var.bucket_name != "" && var.skip_bucket_admin_role == false) ? 1 : 0
   bucket = var.bucket_name
   member = local.sa_member
   role   = "roles/storage.objectAdmin"

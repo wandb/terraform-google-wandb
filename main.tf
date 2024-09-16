@@ -44,6 +44,7 @@ module "service_accounts" {
   stackdriver_sa_name      = var.stackdriver_sa_name
   enable_stackdriver       = var.enable_stackdriver
   depends_on               = [module.project_factory_project_services]
+  skip_bucket_admin_role   = var.skip_bucket_admin_role
 }
 
 module "kms" {
