@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.4.1](https://github.com/wandb/terraform-google-wandb/compare/v5.4.0...v5.4.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* Allow skipping the modification of the bucket to add our service account's permissions ([#171](https://github.com/wandb/terraform-google-wandb/issues/171)) ([7c949be](https://github.com/wandb/terraform-google-wandb/commit/7c949bee52388b338e837f80a7ca9584fb5105ed))
+
 ## [5.4.0](https://github.com/wandb/terraform-google-wandb/compare/v5.3.4...v5.4.0) (2024-09-12)
 
 
