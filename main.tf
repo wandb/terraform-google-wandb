@@ -162,10 +162,10 @@ module "redis" {
 }
 
 module "clickhouse" {
-  count      = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
-  source     = "./modules/clickhouse"
-  network    = local.network.id
-  namespace  = var.namespace
+  count     = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
+  source    = "./modules/clickhouse"
+  network   = local.network.id
+  namespace = var.namespace
 
   clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
@@ -254,9 +254,13 @@ module "wandb" {
   spec = {
     values = {
       global = {
-        pod           = { labels = { workload_hash : local.workload_hash } }
-        host          = local.url
-        license       = var.license
+        pod     = { labels = { workload_hash : local.workload_hash } }
+        host    = local.url
+        license = var.license
+        licenseSecret = {
+          name = var.license_secret_name, ## this will support wandb-operator chart version 0.17.9
+          key  = var.license_secret_key_name
+        }
         cloudProvider = "gcp"
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,

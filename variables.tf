@@ -205,9 +205,9 @@ variable "bucket_location" {
 }
 
 variable "skip_bucket_admin_role" {
-    type        = bool
-    description = "Flag to indicate whether to skip the bucket policy creation."
-    default     = false
+  type        = bool
+  description = "Flag to indicate whether to skip the bucket policy creation."
+  default     = false
 }
 ##########################################
 # Bucket Subpath                         #
@@ -378,4 +378,16 @@ variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"
   type        = string
+}
+
+variable "license_secret_name" {
+  type        = string
+  description = "Wandb licence secret name"
+  default     = ""
+}
+
+variable "license_secret_key_name" {
+  type        = string
+  description = "Wandb licence secret key name"
+  default     = ""
 }
