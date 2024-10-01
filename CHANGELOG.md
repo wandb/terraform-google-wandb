@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.4.2](https://github.com/wandb/terraform-google-wandb/compare/v5.4.1...v5.4.2) (2024-10-01)
+
+
+### Bug Fixes
+
+* Use variables for operator helm release ([#173](https://github.com/wandb/terraform-google-wandb/issues/173)) ([0964e71](https://github.com/wandb/terraform-google-wandb/commit/0964e7133786cfdfc863bca6e04c607da0b5e782))
+
 ### [5.4.1](https://github.com/wandb/terraform-google-wandb/compare/v5.4.0...v5.4.1) (2024-09-16)
 
 
