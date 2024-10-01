@@ -104,7 +104,7 @@ resources that lack official modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_allowed_inbound_cidrs"></a> [allowed\_inbound\_cidrs](#input\_allowed\_inbound\_cidrs) | Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to ["*"] | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
+| <a name="input_allowed_inbound_cidrs"></a> [allowed\_inbound\_cidrs](#input\_allowed\_inbound\_cidrs) | Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to ["*"] | `list(string)` | <pre>[<br/>  "*"<br/>]</pre> | no |
 | <a name="input_allowed_project_names"></a> [allowed\_project\_names](#input\_allowed\_project\_names) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_bucket_default_encryption"></a> [bucket\_default\_encryption](#input\_bucket\_default\_encryption) | Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created. Takes precedence over `bucket_kms_key_id`. | `bool` | `false` | no |
@@ -115,6 +115,7 @@ resources that lack official modules.
 | <a name="input_clickhouse_private_endpoint_service_name"></a> [clickhouse\_private\_endpoint\_service\_name](#input\_clickhouse\_private\_endpoint\_service\_name) | ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud). | `string` | `""` | no |
 | <a name="input_clickhouse_region"></a> [clickhouse\_region](#input\_clickhouse\_region) | ClickHouse region (us-east1, us-central1, etc). | `string` | `""` | no |
 | <a name="input_clickhouse_subnetwork_cidr"></a> [clickhouse\_subnetwork\_cidr](#input\_clickhouse\_subnetwork\_cidr) | ClickHouse private service connect subnetwork | `string` | `"10.50.0.0/24"` | no |
+| <a name="input_controller_image_tag"></a> [controller\_image\_tag](#input\_controller\_image\_tag) | Tag of the controller image to deploy | `string` | n/a | yes |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
 | <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_workload_identity"></a> [create\_workload\_identity](#input\_create\_workload\_identity) | Flag to indicate whether to create a workload identity for the service account. | `bool` | `false` | no |
@@ -139,14 +140,15 @@ resources that lack official modules.
 | <a name="input_oidc_client_id"></a> [oidc\_client\_id](#input\_oidc\_client\_id) | The Client ID of application in your identity provider | `string` | `""` | no |
 | <a name="input_oidc_issuer"></a> [oidc\_issuer](#input\_oidc\_issuer) | A url to your Open ID Connect identity provider, i.e. https://cognito-idp.us-east-1.amazonaws.com/us-east-1_uiIFNdacd | `string` | `""` | no |
 | <a name="input_oidc_secret"></a> [oidc\_secret](#input\_oidc\_secret) | The Client secret of application in your identity provider | `string` | `""` | no |
+| <a name="input_operator_chart_version"></a> [operator\_chart\_version](#input\_operator\_chart\_version) | Version of the operator chart to deploy | `string` | n/a | yes |
 | <a name="input_other_wandb_env"></a> [other\_wandb\_env](#input\_other\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_parquet_wandb_env"></a> [parquet\_wandb\_env](#input\_parquet\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_psc_subnetwork_cidr"></a> [psc\_subnetwork\_cidr](#input\_psc\_subnetwork\_cidr) | Private link service reserved subnetwork | `string` | `"192.168.0.0/24"` | no |
 | <a name="input_public_access"></a> [public\_access](#input\_public\_access) | Whether to create a public endpoint for wandb access. | `bool` | `true` | no |
 | <a name="input_redis_reserved_ip_range"></a> [redis\_reserved\_ip\_range](#input\_redis\_reserved\_ip\_range) | Reserved IP range for REDIS peering connection | `string` | `"10.30.0.0/16"` | no |
 | <a name="input_redis_tier"></a> [redis\_tier](#input\_redis\_tier) | Specifies the tier for this Redis instance | `string` | `"STANDARD_HA"` | no |
-| <a name="input_resource_limits"></a> [resource\_limits](#input\_resource\_limits) | Specifies the resource limits for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
-| <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br>  "cpu": "2000m",<br>  "memory": "2G"<br>}</pre> | no |
+| <a name="input_resource_limits"></a> [resource\_limits](#input\_resource\_limits) | Specifies the resource limits for the wandb deployment | `map(string)` | <pre>{<br/>  "cpu": null,<br/>  "memory": null<br/>}</pre> | no |
+| <a name="input_resource_requests"></a> [resource\_requests](#input\_resource\_requests) | Specifies the resource requests for the wandb deployment | `map(string)` | <pre>{<br/>  "cpu": "2000m",<br/>  "memory": "2G"<br/>}</pre> | no |
 | <a name="input_size"></a> [size](#input\_size) | Deployment size for the instance | `string` | `null` | no |
 | <a name="input_skip_bucket_admin_role"></a> [skip\_bucket\_admin\_role](#input\_skip\_bucket\_admin\_role) | Flag to indicate whether to skip the bucket policy creation. | `bool` | `false` | no |
 | <a name="input_sql_default_encryption"></a> [sql\_default\_encryption](#input\_sql\_default\_encryption) | Boolean to determine if a default SQL encryption key should be used. If true, a default key will be created. Takes precedence over `db_kms_key_id`. | `bool` | `false` | no |
