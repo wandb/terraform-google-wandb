@@ -95,6 +95,21 @@ variable "resource_requests" {
 }
 
 ##########################################
+# Operator                               #
+##########################################
+variable "operator_chart_version" {
+  type        = string
+  description = "Version of the operator chart to deploy"
+  default     = "1.3.4"
+}
+
+variable "controller_image_tag" {
+  type        = string
+  description = "Tag of the controller image to deploy"
+  default     = "1.14.0"
+}
+
+##########################################
 # Networking                             #
 ##########################################
 variable "network" {
@@ -210,6 +225,11 @@ variable "bucket_location" {
   default     = "US"
 }
 
+variable "skip_bucket_admin_role" {
+  type        = bool
+  description = "Flag to indicate whether to skip the bucket policy creation."
+  default     = false
+}
 ##########################################
 # Bucket Subpath                         #
 ##########################################
