@@ -162,10 +162,10 @@ module "redis" {
 }
 
 module "clickhouse" {
-  count      = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
-  source     = "./modules/clickhouse"
-  network    = local.network.id
-  namespace  = var.namespace
+  count     = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
+  source    = "./modules/clickhouse"
+  network   = local.network.id
+  namespace = var.namespace
 
   clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
@@ -393,8 +393,8 @@ module "wandb" {
     }
   }
 
-  controller_image_tag   = "1.13.0"
-  operator_chart_version = "1.3.1"
+  controller_image_tag   = var.controller_image_tag
+  operator_chart_version = var.operator_chart_version
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
