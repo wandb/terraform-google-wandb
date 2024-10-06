@@ -20,3 +20,9 @@ variable "bind_pubsub_service_to_kms_key" {
   description = "Whether to bind the Pub/Sub service account to the KMS key for encrypter/decrypter access."
   default     = true
 }
+
+variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  type        = map(string)
+  default     = {}
+}

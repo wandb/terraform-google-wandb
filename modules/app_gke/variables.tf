@@ -55,3 +55,9 @@ variable "deletion_protection" {
   type        = bool
   default     = true
 }
+
+variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  type        = map(string)
+  default     = {}
+}
