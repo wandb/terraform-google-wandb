@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.0.0](https://github.com/wandb/terraform-google-wandb/compare/v5.4.2...v6.0.0) (2024-10-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* A number of variable defaults are removed and variables renamed for node counts.
+
+### Features
+
+* Enable autoscaling ([#169](https://github.com/wandb/terraform-google-wandb/issues/169)) ([faebff7](https://github.com/wandb/terraform-google-wandb/commit/faebff781006aa39b816006fed2bd19a94351fd3))
+
 ### [5.4.2](https://github.com/wandb/terraform-google-wandb/compare/v5.4.1...v5.4.2) (2024-10-01)
 
 
