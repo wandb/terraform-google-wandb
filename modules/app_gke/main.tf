@@ -58,9 +58,14 @@ resource "random_pet" "node_pool" {
 }
 
 resource "google_container_node_pool" "default" {
-  name       = "default-pool-${random_pet.node_pool.id}"
-  cluster    = google_container_cluster.default.id
-  node_count = var.node_count
+  name    = "default-pool-${random_pet.node_pool.id}"
+  cluster = google_container_cluster.default.id
+
+  autoscaling {
+    total_max_node_count = var.max_node_count
+    total_min_node_count = var.min_node_count
+    location_policy      = "BALANCED"
+  }
 
   node_config {
     image_type      = "COS_CONTAINERD"

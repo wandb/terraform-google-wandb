@@ -33,6 +33,11 @@ locals {
     weave       = "wandb-weave"
     weave_trace = "wandb-weave-trace"
   }
+  gke_machine_type      = coalesce(var.gke_machine_type, local.deployment_size[var.size].node_instance)
+  max_node_count        = coalesce(var.gke_max_node_count, local.deployment_size[var.size].max_node_count)
+  min_node_count        = coalesce(var.gke_min_node_count, local.deployment_size[var.size].min_node_count)
+  database_machine_type = coalesce(var.database_machine_type, local.deployment_size[var.size].db)
+  redis_memory_size_gb  = coalesce(var.redis_memory_size_gb, local.deployment_size[var.size].cache)
 }
 
 module "service_accounts" {
@@ -110,14 +115,15 @@ locals {
 module "app_gke" {
   source                   = "./modules/app_gke"
   namespace                = var.namespace
-  machine_type             = coalesce(try(local.deployment_size[var.size].node_instance, null), var.gke_machine_type)
-  node_count               = coalesce(try(local.deployment_size[var.size].node_count, null), var.gke_node_count)
+  machine_type             = local.gke_machine_type
   network                  = local.network
   subnetwork               = local.subnetwork
   service_account          = module.service_accounts.service_account
   create_workload_identity = var.create_workload_identity
   deletion_protection      = var.deletion_protection
   depends_on               = [module.project_factory_project_services]
+  max_node_count           = local.max_node_count
+  min_node_count           = local.min_node_count
 }
 
 module "app_lb" {
@@ -138,7 +144,7 @@ module "database" {
   namespace           = var.namespace
   database_version    = var.database_version
   force_ssl           = var.force_ssl
-  tier                = coalesce(try(local.deployment_size[var.size].db, null), var.database_machine_type)
+  tier                = local.database_machine_type
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
@@ -152,7 +158,7 @@ module "redis" {
   source    = "./modules/redis"
   namespace = var.namespace
   ### here we set the default to 6gb, which is = setting for "small" standard size
-  memory_size_gb    = coalesce(try(local.deployment_size[var.size].cache, 6))
+  memory_size_gb    = local.redis_memory_size_gb
   network           = local.network
   reserved_ip_range = var.redis_reserved_ip_range
   tier              = var.redis_tier

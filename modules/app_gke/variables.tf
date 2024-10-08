@@ -41,7 +41,11 @@ variable "parquet_wandb_env" {
 }
 
 
-variable "node_count" {
+variable "min_node_count" {
+  type = number
+}
+
+variable "max_node_count" {
   type = number
 }
 
