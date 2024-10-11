@@ -2,7 +2,7 @@
 
 ## About
 
-Weights & Biases can connect to a Azure Blob Storage Container created and owned by the customer. This is called BYOB (Bring your own bucket). More details (here)[https://docs.wandb.ai/guides/hosting/data-security/secure-storage-connector#provision-the-gcs-bucket].
+Weights & Biases can connect to a GCP Bucket created and owned by the customer. This is called BYOB (Bring your own bucket). More details (here)[https://docs.wandb.ai/guides/hosting/data-security/secure-storage-connector#provision-the-gcs-bucket].
 
 This example does not deploy a Weights & Biases instance. It deploys all required resources (GCP bucket and permissions) in the customer's account and grants the W&B GCP Service Account access to the bucket.
 
@@ -26,7 +26,6 @@ This example does not deploy a Weights & Biases instance. It deploys all require
 7. Fill out any required information and approve.
 8. Please provide the resulting output to customer support.
 
-## Using the GCP Portal
+## Using the GCP Console
 
 Please refer to the (public documentation)[https://docs.wandb.ai/guides/hosting/data-security/secure-storage-connector#provision-the-gcs-bucket] on how to create all required resources manually.
-
