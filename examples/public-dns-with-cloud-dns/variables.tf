@@ -5,7 +5,7 @@ variable "allowed_inbound_cidrs" {
 }
 
 variable "create_redis" {
-  default     = false
+  default     = true
   description = "Boolean indicating whether to provision an redis instance (true) or not (false)."
   nullable    = false
   type        = bool
