@@ -1,14 +1,14 @@
 # Bring Your Own Bucket (BYOB)
 
-This example does not deploy an instance of Weights & Biases. It creates a
-google bucket configured for support managed single tenant installs.
+## About
+
+Weights & Biases can connect to a GCP Bucket created and owned by the customer. This is called BYOB (Bring your own bucket). More details (here)[https://docs.wandb.ai/guides/hosting/data-security/secure-storage-connector#provision-the-gcs-bucket].
+
+This example does not deploy a Weights & Biases instance. It deploys all required resources (GCP bucket and permissions) in the customer's account and grants the W&B GCP Service Account access to the bucket.
 
 ---
 
-When using bring your own bucket you will need to grant our service account
-access to an google bucket provisioned in project account.
-
-## Provision Bucket using Terraform
+## Using Terraform
 
 1. Install [Terraform
    1.0+](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started)
@@ -26,6 +26,6 @@ access to an google bucket provisioned in project account.
 7. Fill out any required information and approve.
 8. Please provide the resulting output to customer support.
 
-## Provision Bucket Manually
+## Using the GCP Console
 
-_WIP_
+Please refer to the (public documentation)[https://docs.wandb.ai/guides/hosting/data-security/secure-storage-connector#provision-the-gcs-bucket] on how to create all required resources manually.
