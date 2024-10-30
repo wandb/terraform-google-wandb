@@ -254,8 +254,7 @@ locals {
 data "google_client_config" "current" {}
 
 module "wandb" {
-  source  = "wandb/wandb/helm"
-  version = "1.2.0"
+  source = "git::https://github.com:wandb/helm-charts.git?ref=kyle/operator-weave-trace-dangerzone"
 
   spec = {
     values = {
@@ -264,6 +263,10 @@ module "wandb" {
         host          = local.url
         license       = var.license
         cloudProvider = "gcp"
+        weave-trace = {
+          enabled = true
+          serviceAccountName = local.k8s_sa_map.weave_trace
+        }
         extraEnv = merge({
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
