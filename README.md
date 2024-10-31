@@ -107,7 +107,7 @@ resources that lack official modules.
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
 | <a name="module_sleep"></a> [sleep](#module\_sleep) | matti/resource/shell | 1.5.0 |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
-| <a name="module_wandb"></a> [wandb](#module\_wandb) | git::https://github.com/wandb/helm-charts.git | kyle/operator-weave-trace-dangerzone |
+| <a name="module_wandb"></a> [wandb](#module\_wandb) | git::https://github.com/wandb/helm-charts.git//charts/operator-wandb | kyle/operator-weave-trace-dangerzone |
 
 ## Resources
 
