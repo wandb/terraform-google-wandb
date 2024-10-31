@@ -254,7 +254,7 @@ locals {
 data "google_client_config" "current" {}
 
 module "wandb" {
-  source = "git::https://github.com:wandb/helm-charts.git?ref=kyle/operator-weave-trace-dangerzone"
+  source = "git::https://github.com/wandb/helm-charts.git?ref=kyle/operator-weave-trace-dangerzone"
 
   spec = {
     values = {
