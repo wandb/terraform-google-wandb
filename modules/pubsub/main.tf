@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "5.34.0"
+    }
+  }
+}
 locals {
   sa_member = "serviceAccount:${var.service_account.email}"
 }
@@ -15,7 +23,7 @@ resource "google_pubsub_topic_iam_member" "filestream" {
   member = local.sa_member
 }
 
-resource "google_pubsub_subscription" "filestream" {
+resource "google_pubsub_subscription" "filestream-gorilla" {
   name  = "${var.namespace}-filestream-gorilla"
   topic = google_pubsub_topic.filestream.name
 
@@ -23,6 +31,12 @@ resource "google_pubsub_subscription" "filestream" {
   ack_deadline_seconds       = 30
 
   labels = var.labels
+}
+
+resource "google_pubsub_subscription_iam_member" "filestream-gorilla" {
+  subscription = google_pubsub_subscription.filestream-gorilla.name
+  role = "roles/pubsub.admin"
+  member = local.sa_member
 }
 
 resource "google_pubsub_topic" "run_updates_v2" {
@@ -46,4 +60,10 @@ resource "google_pubsub_subscription" "flat-run-fields-updater-v2" {
   ack_deadline_seconds       = 60
 
   labels = var.labels
+}
+
+resource "google_pubsub_subscription_iam_member" "flat-run-fields-updater-v2" {
+  subscription = google_pubsub_subscription.flat-run-fields-updater-v2.name
+  role = "roles/pubsub.admin"
+  member = local.sa_member
 }

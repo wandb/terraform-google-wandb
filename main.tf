@@ -30,6 +30,7 @@ locals {
     app         = "wandb-app"
     parquet     = "wandb-parquet"
     flat_runs   = "wandb-flat-run-fields-updater"
+    filestream  = "wandb-filestream"
     weave       = "wandb-weave"
     weave_trace = "wandb-weave-trace"
   }
@@ -416,6 +417,16 @@ module "wandb" {
           name        = local.k8s_sa_map.flat_runs
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      filestream = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.filestream
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+        } : {
           name        = null
           annotations = {}
         }
