@@ -9,7 +9,7 @@ resource "google_pubsub_topic" "filestream" {
   labels = var.labels
 }
 
-resource "google_pubsub_topic_iam_member" "member" {
+resource "google_pubsub_topic_iam_member" "filestream" {
   topic = google_pubsub_topic.filestream.name
   role = "roles/admin"
   member = local.sa_member
@@ -32,7 +32,7 @@ resource "google_pubsub_topic" "run_updates_v2" {
   labels = var.labels
 }
 
-resource "google_pubsub_topic_iam_member" "member" {
+resource "google_pubsub_topic_iam_member" "run_updates_v2" {
   topic = google_pubsub_topic.run_updates_v2.name
   role = "roles/admin"
   member = local.sa_member

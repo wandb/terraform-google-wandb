@@ -159,8 +159,10 @@ module "bigtable" {
 
   namespace = var.namespace
   deletion_protection = var.deletion_protection
-  labels = var.labels
+  service_account   = module.service_accounts.service_account
   crypto_key        = local.default_sql_key
+
+  labels = var.labels
 }
 
 module "pubsub" {
@@ -169,8 +171,10 @@ module "pubsub" {
 
   namespace = var.namespace
   deletion_protection = var.deletion_protection
-  labels = var.labels
+  service_account   = module.service_accounts.service_account
   crypto_key        = local.default_sql_key
+
+  labels = var.labels
 }
 
 module "redis" {

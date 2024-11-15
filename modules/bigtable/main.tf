@@ -21,7 +21,7 @@ resource "google_bigtable_instance" "default" {
   labels = var.labels
 }
 
-resource "google_bigtable_instance_iam_member" "editor" {
+resource "google_bigtable_instance_iam_member" "default" {
   instance = google_bigtable_instance.default.name
   role     = "roles/bigtable.user"
   member   = local.sa_member
