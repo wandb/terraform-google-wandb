@@ -94,6 +94,7 @@ resources that lack official modules.
 |------|--------|---------|
 | <a name="module_app_gke"></a> [app\_gke](#module\_app\_gke) | ./modules/app_gke | n/a |
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
+| <a name="module_bigtable"></a> [bigtable](#module\_bigtable) | ./modules/bigtable | n/a |
 | <a name="module_clickhouse"></a> [clickhouse](#module\_clickhouse) | ./modules/clickhouse | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
 | <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.14.1 |
@@ -103,6 +104,7 @@ resources that lack official modules.
 | <a name="module_networking"></a> [networking](#module\_networking) | ./modules/networking | n/a |
 | <a name="module_private_link"></a> [private\_link](#module\_private\_link) | ./modules/private_link | n/a |
 | <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 14.0 |
+| <a name="module_pubsub"></a> [pubsub](#module\_pubsub) | ./modules/pubsub | n/a |
 | <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
 | <a name="module_sleep"></a> [sleep](#module\_sleep) | matti/resource/shell | 1.5.0 |
@@ -132,7 +134,9 @@ resources that lack official modules.
 | <a name="input_clickhouse_region"></a> [clickhouse\_region](#input\_clickhouse\_region) | ClickHouse region (us-east1, us-central1, etc). | `string` | `""` | no |
 | <a name="input_clickhouse_subnetwork_cidr"></a> [clickhouse\_subnetwork\_cidr](#input\_clickhouse\_subnetwork\_cidr) | ClickHouse private service connect subnetwork | `string` | `"10.50.0.0/24"` | no |
 | <a name="input_controller_image_tag"></a> [controller\_image\_tag](#input\_controller\_image\_tag) | Tag of the controller image to deploy | `string` | `"1.14.0"` | no |
+| <a name="input_create_bigtable"></a> [create\_bigtable](#input\_create\_bigtable) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
+| <a name="input_create_pubsub"></a> [create\_pubsub](#input\_create\_pubsub) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_workload_identity"></a> [create\_workload\_identity](#input\_create\_workload\_identity) | Flag to indicate whether to create a workload identity for the service account. | `bool` | `false` | no |
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
