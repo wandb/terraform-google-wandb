@@ -9,6 +9,11 @@ variable "deletion_protection" {
   default     = true
 }
 
+variable "service_account" {
+  description = "The service account associated with the GKE cluster instances that host Weights & Biases."
+  type        = object({ email = string })
+}
+
 variable "labels" {
   description = "Labels which will be applied to all applicable resources."
   type        = map(string)

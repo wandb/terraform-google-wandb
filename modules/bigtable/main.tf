@@ -1,3 +1,6 @@
+locals {
+  sa_member = "serviceAccount:${var.service_account.email}"
+}
 
 resource "google_bigtable_instance" "default" {
   name = "${var.namespace}"
@@ -16,4 +19,10 @@ resource "google_bigtable_instance" "default" {
   }
 
   labels = var.labels
+}
+
+resource "google_bigtable_instance_iam_member" "editor" {
+  instance = google_bigtable_instance.default.name
+  role     = "roles/bigtable.user"
+  member   = local.sa_member
 }
