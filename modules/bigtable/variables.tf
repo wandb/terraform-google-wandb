@@ -33,13 +33,13 @@ variable "storage_type" {
 }
 
 variable "min_nodes" {
-    type        = number
-    description = "The minimum number of nodes for the Bigtable cluster."
-    default     = 1
+  type        = number
+  description = "The minimum number of nodes for the Bigtable cluster."
+  default     = 1
 }
 
 variable "max_nodes" {
-    type        = number
-    description = "The maximum number of nodes for the Bigtable cluster."
-    default     = 3
+  type        = number
+  description = "The maximum number of nodes for the Bigtable cluster."
+  default     = 3
 }

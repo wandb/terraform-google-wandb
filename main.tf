@@ -156,24 +156,24 @@ module "database" {
 
 module "bigtable" {
   source = "./modules/bigtable"
-  count = var.create_bigtable ? 1 : 0
+  count  = var.create_bigtable ? 1 : 0
 
-  namespace = var.namespace
+  namespace           = var.namespace
   deletion_protection = var.deletion_protection
-  service_account   = module.service_accounts.service_account
-  crypto_key        = local.default_sql_key
+  service_account     = module.service_accounts.service_account
+  crypto_key          = local.default_sql_key
 
   labels = var.labels
 }
 
 module "pubsub" {
   source = "./modules/pubsub"
-  count = var.create_pubsub ? 1 : 0
+  count  = var.create_pubsub ? 1 : 0
 
-  namespace = var.namespace
+  namespace           = var.namespace
   deletion_protection = var.deletion_protection
-  service_account   = module.service_accounts.service_account
-  crypto_key        = local.default_sql_key
+  service_account     = module.service_accounts.service_account
+  crypto_key          = local.default_sql_key
 
   labels = var.labels
 }
@@ -272,8 +272,8 @@ locals {
   internal_lb_name = "${var.namespace}-internal"
   filestream_envs = (var.create_bigtable && var.create_pubsub) ? {
     "GORILLA_PARQUET_LIVE_HISTORY_STORE" = "bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
-    "GORILLA_HISTORY_STORE"   = "http://wandb-parquet:8087/_goRPC_,bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
-    "GORILLA_FILE_STREAM_STORE_ADDRESS" = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}"
+    "GORILLA_HISTORY_STORE"              = "http://wandb-parquet:8087/_goRPC_,bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+    "GORILLA_FILE_STREAM_STORE_ADDRESS"  = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}"
   } : {}
 }
 
@@ -288,6 +288,11 @@ module "wandb" {
   version = "1.2.0"
 
   spec = {
+    chart = {
+      url     = "https://charts.wandb.ai"
+      name    = "operator-wandb"
+      version = "0.19.0-PR262-2eba68f"
+    }
     values = {
       global = {
         pod           = { labels = { workload_hash : local.workload_hash } }
@@ -436,7 +441,7 @@ module "wandb" {
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.filestream
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
-        } : {
+          } : {
           name        = null
           annotations = {}
         }

@@ -18,8 +18,8 @@ resource "google_pubsub_topic" "filestream" {
 }
 
 resource "google_pubsub_topic_iam_member" "filestream" {
-  topic = google_pubsub_topic.filestream.name
-  role = "roles/pubsub.admin"
+  topic  = google_pubsub_topic.filestream.name
+  role   = "roles/pubsub.admin"
   member = local.sa_member
 }
 
@@ -35,8 +35,8 @@ resource "google_pubsub_subscription" "filestream-gorilla" {
 
 resource "google_pubsub_subscription_iam_member" "filestream-gorilla" {
   subscription = google_pubsub_subscription.filestream-gorilla.name
-  role = "roles/pubsub.admin"
-  member = local.sa_member
+  role         = "roles/pubsub.admin"
+  member       = local.sa_member
 }
 
 resource "google_pubsub_topic" "run_updates_v2" {
@@ -47,8 +47,8 @@ resource "google_pubsub_topic" "run_updates_v2" {
 }
 
 resource "google_pubsub_topic_iam_member" "run_updates_v2" {
-  topic = google_pubsub_topic.run_updates_v2.name
-  role = "roles/pubsub.admin"
+  topic  = google_pubsub_topic.run_updates_v2.name
+  role   = "roles/pubsub.admin"
   member = local.sa_member
 }
 
@@ -64,6 +64,6 @@ resource "google_pubsub_subscription" "flat_run_fields_updater_v2" {
 
 resource "google_pubsub_subscription_iam_member" "flat_run_fields_updater_v2" {
   subscription = google_pubsub_subscription.flat_run_fields_updater_v2.name
-  role = "roles/pubsub.admin"
-  member = local.sa_member
+  role         = "roles/pubsub.admin"
+  member       = local.sa_member
 }
