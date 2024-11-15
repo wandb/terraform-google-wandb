@@ -153,6 +153,26 @@ module "database" {
   depends_on          = [module.project_factory_project_services, module.kms_default_sql]
 }
 
+module "bigtable" {
+  source = "./modules/bigtable"
+  count = var.create_bigtable ? 1 : 0
+
+  namespace = var.namespace
+  deletion_protection = var.deletion_protection
+  labels = var.labels
+  crypto_key        = local.default_sql_key
+}
+
+module "pubsub" {
+  source = "./modules/pubsub"
+  count = var.create_pubsub ? 1 : 0
+
+  namespace = var.namespace
+  deletion_protection = var.deletion_protection
+  labels = var.labels
+  crypto_key        = local.default_sql_key
+}
+
 module "redis" {
   count     = var.create_redis ? 1 : 0
   source    = "./modules/redis"

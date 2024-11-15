@@ -1,0 +1,40 @@
+variable "namespace" {
+  type        = string
+  description = "The name prefix for all resources created."
+}
+
+variable "deletion_protection" {
+  description = "If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to `true`."
+  type        = bool
+  default     = true
+}
+
+variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  type        = map(string)
+  default     = {}
+}
+
+variable "crypto_key" {
+  type        = string
+  default     = null
+  description = "Key used to encrypt and decrypt database."
+}
+
+variable "storage_type" {
+  type        = string
+  description = "The storage type for the Bigtable cluster."
+  default     = "SSD"
+}
+
+variable "min_nodes" {
+    type        = number
+    description = "The minimum number of nodes for the Bigtable cluster."
+    default     = 1
+}
+
+variable "max_nodes" {
+    type        = number
+    description = "The maximum number of nodes for the Bigtable cluster."
+    default     = 3
+}

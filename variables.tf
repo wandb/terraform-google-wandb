@@ -181,6 +181,24 @@ variable "force_ssl" {
 }
 
 ##########################################
+# BigTable                               #
+##########################################
+variable "create_bigtable" {
+  type        = bool
+  description = "Boolean indicating whether to provision a bigtable instance (true) or not (false)."
+  default     = false
+}
+
+##########################################
+# PubSub                                 #
+##########################################
+variable "create_pubsub" {
+  type        = bool
+  description = "Boolean indicating whether to provision a bigtable instance (true) or not (false)."
+  default     = false
+}
+
+##########################################
 # Redis                                  #
 ##########################################
 variable "create_redis" {
