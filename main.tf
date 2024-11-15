@@ -270,6 +270,11 @@ locals {
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
   internal_lb_name = "${var.namespace}-internal"
+  filestream_envs = (var.create_bigtable && var.create_pubsub) ? {
+    "GORILLA_PARQUET_LIVE_HISTORY_STORE" = "bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+    "GORILLA_HISTORY_STORE"   = "http://wandb-parquet:8087/_goRPC_,bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+    "GORILLA_FILE_STREAM_STORE_ADDRESS" = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}"
+  } : {}
 }
 
 locals {
@@ -293,7 +298,7 @@ module "wandb" {
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
           "TAG_CUSTOMER_NS"                      = var.namespace
-        }, var.other_wandb_env, local.oidc_envs)
+        }, var.other_wandb_env, local.oidc_envs, local.filestream_envs)
 
         bucket = {
           provider = "gcs"
@@ -423,6 +428,11 @@ module "wandb" {
       }
 
       filestream = {
+        enabled = var.create_pubsub && var.create_bigtable
+        env = {
+          fileStreamWorkerSource = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}/${module.pubsub[0].filestream_gorilla_subscription_name}"
+          fileStreamWorkerStore  = "bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+        }
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.filestream
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }

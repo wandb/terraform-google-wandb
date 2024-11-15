@@ -52,7 +52,7 @@ resource "google_pubsub_topic_iam_member" "run_updates_v2" {
   member = local.sa_member
 }
 
-resource "google_pubsub_subscription" "flat-run-fields-updater-v2" {
+resource "google_pubsub_subscription" "flat_run_fields_updater_v2" {
   name  = "${var.namespace}-flat-run-fields-updater-v2"
   topic = google_pubsub_topic.run_updates_v2.name
 
@@ -62,8 +62,8 @@ resource "google_pubsub_subscription" "flat-run-fields-updater-v2" {
   labels = var.labels
 }
 
-resource "google_pubsub_subscription_iam_member" "flat-run-fields-updater-v2" {
-  subscription = google_pubsub_subscription.flat-run-fields-updater-v2.name
+resource "google_pubsub_subscription_iam_member" "flat_run_fields_updater_v2" {
+  subscription = google_pubsub_subscription.flat_run_fields_updater_v2.name
   role = "roles/pubsub.admin"
   member = local.sa_member
 }
