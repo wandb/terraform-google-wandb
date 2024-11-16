@@ -26,3 +26,72 @@ resource "google_bigtable_instance_iam_member" "default" {
   role     = "roles/bigtable.admin"
   member   = local.sa_member
 }
+
+resource "google_bigtable_table" "omni_history" {
+  name          = "omni-history"
+  instance_name = google_bigtable_instance.default.name
+
+  deletion_protection = (var.deletion_protection) ? "PROTECTED" : "UNPROTECTED"
+
+  column_family {
+    family = "x"
+  }
+
+  change_stream_retention = "0"
+}
+
+resource "google_bigtable_table" "omni_history_lookup" {
+  name          = "omni-history-lookup"
+  instance_name = google_bigtable_instance.default.name
+
+  deletion_protection = (var.deletion_protection) ? "PROTECTED" : "UNPROTECTED"
+
+  column_family {
+    family = "x"
+  }
+
+  change_stream_retention = "0"
+}
+
+resource "google_bigtable_table" "runs" {
+  name          = "runs"
+  instance_name = google_bigtable_instance.default.name
+
+  deletion_protection = (var.deletion_protection) ? "PROTECTED" : "UNPROTECTED"
+
+  column_family {
+    family = "data"
+  }
+
+  column_family {
+    family = "metadata"
+  }
+
+  change_stream_retention = "0"
+}
+
+resource "google_bigtable_table" "logs" {
+  name          = "logs"
+  instance_name = google_bigtable_instance.default.name
+
+  deletion_protection = (var.deletion_protection) ? "PROTECTED" : "UNPROTECTED"
+
+  column_family {
+    family = "line"
+  }
+
+  change_stream_retention = "0"
+}
+
+resource "google_bigtable_table" "history" {
+  name          = "history"
+  instance_name = google_bigtable_instance.default.name
+
+  deletion_protection = (var.deletion_protection) ? "PROTECTED" : "UNPROTECTED"
+
+  column_family {
+    family = "event"
+  }
+
+  change_stream_retention = "0"
+}

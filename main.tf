@@ -270,10 +270,13 @@ locals {
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
   internal_lb_name = "${var.namespace}-internal"
-  filestream_envs = (var.create_bigtable && var.create_pubsub) ? {
-    "GORILLA_PARQUET_LIVE_HISTORY_STORE" = "bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
-    "GORILLA_HISTORY_STORE"              = "http://wandb-parquet:8087/_goRPC_,bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+  bigtable_url     = var.create_bigtable ? "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
+  filestream_envs = var.create_bigtable && var.create_pubsub ? {
+    "GORILLA_PARQUET_LIVE_HISTORY_STORE" = "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
     "GORILLA_FILE_STREAM_STORE_ADDRESS"  = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}"
+    "GORILLA_HISTORY_STORE"              = <<-EOF
+      ${join("\\,", ["http://wandb-parquet:8087/_goRPC_", local.bigtable_url])}
+    EOF
   } : {}
 }
 
@@ -433,10 +436,10 @@ module "wandb" {
       }
 
       filestream = {
-        enabled = var.create_pubsub && var.create_bigtable
+        install = var.create_pubsub && var.create_bigtable
         env = {
           fileStreamWorkerSource = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}/${module.pubsub[0].filestream_gorilla_subscription_name}"
-          fileStreamWorkerStore  = "bigtable://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+          fileStreamWorkerStore  = "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
         }
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.filestream
