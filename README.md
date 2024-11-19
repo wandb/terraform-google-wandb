@@ -23,6 +23,7 @@ preparation, however it does have the following pre-requisites:
 - Google Kubernetes Engine
 - Google Storage Bucket
 - Google PubSub
+- Google BigTable
 - Google Managed Certificates
 - Google Cloud DNS
 
@@ -62,6 +63,29 @@ All the values set via `deployment-size.tf` can be overridden by setting the app
 - `gke_max_node_count` - The maximum number of nodes in the GKE cluster
 - `redis_memory_size_gb` - The memory size of the redis cluster
 - `database_machine_type` - The instance type for the database
+
+## Filestream and Runs V2
+*This is temporary documentation for an in-progress feature.*
+
+Filestream requires both BigTable and PubSub to be enabled.
+
+Runs V2 requires PubSub to be enabled.
+
+Recommended to enable all four variables:
+```shell
+enable_filestream = true
+enable_flat_run_fields_updater = true
+create_pubsub = true
+create_bigtable = true
+```
+
+The BigTable Instance currently defaults to scale to 3 nodes, adjust this with:
+```shell
+bigtable_max_nodes = 3
+bigtable_min_nodes = 1
+```
+
+Upgrading an existing cluster to enable Filestream and Runs V2 is not yet tested.
 
 ## Examples
 
