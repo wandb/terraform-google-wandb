@@ -72,7 +72,7 @@ Filestream requires both BigTable and PubSub to be enabled.
 Runs V2 requires PubSub to be enabled.
 
 Recommended to enable all four variables:
-```shell
+```terraform
 enable_filestream = true
 enable_flat_run_fields_updater = true
 create_pubsub = true
@@ -80,12 +80,42 @@ create_bigtable = true
 ```
 
 The BigTable Instance currently defaults to scale to 3 nodes, adjust this with:
-```shell
+```terraform
 bigtable_max_nodes = 3
 bigtable_min_nodes = 1
 ```
 
 Upgrading an existing cluster to enable Filestream and Runs V2 is not yet tested.
+
+Filestream and the flat run fields updater do not have autoscaling enabled, so their replica counts may need to be 
+adjusted manually via the user-spec
+```yaml
+values:
+  filestream:
+    replicaCount: 1
+  flatRunFieldsUpdater:
+    replicaCount: 1
+```
+or enable autoscaling
+```yaml
+values:
+  filestream:
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 10
+      targetCPUUtilization: 70
+  flatRunFieldsUpdater:
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 10
+      targetCPUUtilization: 70
+```
+
+Application resources may not currently be ideal for autoscaling and updating them may be desirable in that case. They can
+also be specified in the user-spec.
+
 
 ## Examples
 
