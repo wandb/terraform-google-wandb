@@ -170,10 +170,12 @@ module "pubsub" {
   source = "./modules/pubsub"
   count  = var.create_pubsub ? 1 : 0
 
-  namespace           = var.namespace
-  deletion_protection = var.deletion_protection
-  service_account     = module.service_accounts.service_account
-  crypto_key          = local.default_sql_key
+  namespace                      = var.namespace
+  deletion_protection            = var.deletion_protection
+  service_account                = module.service_accounts.service_account
+  crypto_key                     = local.default_sql_key
+  enable_filestream              = var.enable_filestream
+  enable_flat_run_fields_updater = var.enable_flat_run_fields_updater
 
   labels = var.labels
 }
@@ -269,15 +271,42 @@ locals {
     "OIDC_AUTH_METHOD" = var.oidc_auth_method
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
+  run_update_shadow_queue_config = {
+    addr = "pubsub:/${module.pubsub[0].run_updates_shadow_project_id}/${module.pubsub[0].run_updates_shadow_topic_name}"
+    subscriptions = {
+      flatRunFieldsUpdater = "pubsub:/${module.pubsub[0].run_updates_shadow_project_id}/${module.pubsub[0].run_updates_shadow_topic_name}/${module.pubsub[0].flat_run_fields_updater_subscription_name}"
+    }
+    overflow-bucket = {
+      store = "gs://${local.bucket}"
+    }
+  }
   internal_lb_name = "${var.namespace}-internal"
   bigtable_url     = var.create_bigtable ? "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
-  filestream_envs = var.create_bigtable && var.create_pubsub ? {
+  filestream_global_envs = var.create_bigtable && var.create_pubsub && var.enable_filestream ? {
     "GORILLA_PARQUET_LIVE_HISTORY_STORE" = "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
     "GORILLA_FILE_STREAM_STORE_ADDRESS"  = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}"
     "GORILLA_HISTORY_STORE"              = <<-EOF
       ${join("\\,", ["http://wandb-parquet:8087/_goRPC_", local.bigtable_url])}
     EOF
   } : {}
+
+  flat_run_fields_updater_global_envs_all = var.enable_flat_run_fields_updater ? {
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_TABLES  = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_STORE   = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_SHADOW_RUN_UPDATES = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_FLAT_RUNS_MIGRATOR = "false"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_FLAT_RUNS_GARBAGE_COLLECTOR = "false"
+  } : {}
+  flat_run_fields_updater_global_envs_pubsub = var.enable_flat_run_fields_updater && var.create_pubsub ? {
+    GORILLA_RUN_UPDATE_SHADOW_QUEUE = <<-EOF
+      ${replace(jsonencode(local.run_update_shadow_queue_config), ",", "\\,")}
+    EOF
+  } : {}
+  flat_run_fields_updater_global_envs_kafka = var.enable_flat_run_fields_updater && !var.create_pubsub ? {
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_TABLES  = "true"
+  } : {}
+  flat_run_fields_updater_global_envs = merge(local.flat_run_fields_updater_global_envs_kafka, local.flat_run_fields_updater_global_envs_pubsub, local.flat_run_fields_updater_global_envs_all)
+  install_kafka                = var.enable_flat_run_fields_updater && !var.create_pubsub
 }
 
 locals {
@@ -294,7 +323,7 @@ module "wandb" {
     chart = {
       url     = "https://charts.wandb.ai"
       name    = "operator-wandb"
-      version = "0.19.0-PR262-2eba68f"
+      version = "0.19.0-PR262-27e6900"
     }
     values = {
       global = {
@@ -306,7 +335,7 @@ module "wandb" {
           "GORILLA_DISABLE_CODE_SAVING"          = var.disable_code_saving,
           "GORILLA_CUSTOMER_SECRET_STORE_SOURCE" = local.secret_store_source,
           "TAG_CUSTOMER_NS"                      = var.namespace
-        }, var.other_wandb_env, local.oidc_envs, local.filestream_envs)
+        }, var.other_wandb_env, local.oidc_envs, local.filestream_global_envs, local.flat_run_fields_updater_global_envs)
 
         bucket = {
           provider = "gcs"
@@ -425,7 +454,14 @@ module "wandb" {
         }
       }
 
+      kafka = {
+        install = local.install_kafka
+      }
+
       flat-run-fields-updater = {
+        install = var.enable_flat_run_fields_updater
+        usePubSub = var.create_pubsub
+
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
@@ -436,7 +472,7 @@ module "wandb" {
       }
 
       filestream = {
-        install = var.create_pubsub && var.create_bigtable
+        install = var.create_pubsub && var.create_bigtable && var.enable_filestream
         env = {
           fileStreamWorkerSource = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}/${module.pubsub[0].filestream_gorilla_subscription_name}"
           fileStreamWorkerStore  = "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"

@@ -25,3 +25,14 @@ variable "crypto_key" {
   default     = null
   description = "Key used to encrypt and decrypt database."
 }
+
+variable "enable_filestream" {
+  type        = bool
+  default     = false
+  description = "Enable the filestream service. (This also requires create_pubsub and create_bigtable to be true)"
+}
+variable "enable_flat_run_fields_updater" {
+  type        = bool
+  default     = false
+  description = "Enable the run updates shadow service."
+}
