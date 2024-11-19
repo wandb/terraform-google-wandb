@@ -331,7 +331,7 @@ module "wandb" {
     chart = {
       url     = "https://charts.wandb.ai"
       name    = "operator-wandb"
-      version = "0.19.0-PR262-27e6900"
+      version = "0.19.0-PR262-349a442"
     }
     values = {
       global = {
@@ -358,6 +358,10 @@ module "wandb" {
           database = module.database.database_name
           host     = module.database.private_ip_address
           port     = 3306
+        }
+
+        pubSub = {
+          enabled = var.create_pubsub
         }
 
         redis = var.create_redis ? {
@@ -480,7 +484,6 @@ module "wandb" {
           tag = "0.63.0-danielpanzella-filestream-local.1"
         }
         install   = var.enable_flat_run_fields_updater
-        usePubSub = var.create_pubsub
 
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
