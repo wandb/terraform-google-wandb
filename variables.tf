@@ -189,6 +189,30 @@ variable "create_bigtable" {
   default     = false
 }
 
+variable "bigtable_storage_type" {
+  type        = string
+  description = "The storage type for the Bigtable cluster."
+  default     = "SSD"
+}
+
+variable "bigtable_min_nodes" {
+  type        = number
+  description = "The minimum number of nodes for the Bigtable cluster."
+  default     = 1
+}
+
+variable "bigtable_max_nodes" {
+  type        = number
+  description = "The maximum number of nodes for the Bigtable cluster."
+  default     = 3
+}
+
+variable "bigtable_cpu_target" {
+    type        = number
+    description = "The target CPU utilization for the Bigtable cluster."
+    default     = 70
+}
+
 ##########################################
 # PubSub                                 #
 ##########################################

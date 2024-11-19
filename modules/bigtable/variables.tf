@@ -29,17 +29,19 @@ variable "crypto_key" {
 variable "storage_type" {
   type        = string
   description = "The storage type for the Bigtable cluster."
-  default     = "SSD"
 }
 
 variable "min_nodes" {
   type        = number
   description = "The minimum number of nodes for the Bigtable cluster."
-  default     = 1
 }
 
 variable "max_nodes" {
   type        = number
   description = "The maximum number of nodes for the Bigtable cluster."
-  default     = 3
+}
+
+variable "cpu_target" {
+    type        = number
+    description = "The target CPU utilization for the Bigtable cluster."
 }

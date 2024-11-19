@@ -12,9 +12,9 @@ resource "google_bigtable_instance" "default" {
     storage_type = var.storage_type
     kms_key_name = var.crypto_key
     autoscaling_config {
-      min_nodes  = 1
-      max_nodes  = 3
-      cpu_target = 70
+      min_nodes  = var.min_nodes
+      max_nodes  = var.max_nodes
+      cpu_target = var.cpu_target
     }
   }
 

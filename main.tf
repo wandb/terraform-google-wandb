@@ -162,6 +162,10 @@ module "bigtable" {
   deletion_protection = var.deletion_protection
   service_account     = module.service_accounts.service_account
   crypto_key          = local.default_sql_key
+  storage_type        = var.bigtable_storage_type
+  cpu_target          = var.bigtable_cpu_target
+  min_nodes           = var.bigtable_min_nodes
+  max_nodes           = var.bigtable_max_nodes
 
   labels = var.labels
 }
@@ -281,20 +285,24 @@ locals {
     }
   }
   internal_lb_name = "${var.namespace}-internal"
-  bigtable_url     = var.create_bigtable ? "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
+  bigtablev2_url     = var.create_bigtable ? "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
+  bigtablev3_url     = var.create_bigtable ? "bigtablev3://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
   filestream_global_envs = var.create_bigtable && var.create_pubsub && var.enable_filestream ? {
-    "GORILLA_PARQUET_LIVE_HISTORY_STORE" = "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+    "GORILLA_ALLOW_BIGTABLE_V3" = true
+    "GORILLA_PARQUET_LIVE_HISTORY_STORE" = <<-EOF
+      ${join("\\,", [local.bigtablev3_url, local.bigtablev2_url])}
+    EOF
     "GORILLA_FILE_STREAM_STORE_ADDRESS"  = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}"
     "GORILLA_HISTORY_STORE"              = <<-EOF
-      ${join("\\,", ["http://wandb-parquet:8087/_goRPC_", local.bigtable_url])}
+      ${join("\\,", ["http://wandb-parquet:8087/_goRPC_", local.bigtablev2_url])}
     EOF
   } : {}
 
   flat_run_fields_updater_global_envs_all = var.enable_flat_run_fields_updater ? {
-    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_TABLES  = "true"
-    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_STORE   = "true"
-    GORILLA_RUN_STORE_ONPREM_MIGRATE_SHADOW_RUN_UPDATES = "true"
-    GORILLA_RUN_STORE_ONPREM_MIGRATE_FLAT_RUNS_MIGRATOR = "false"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_TABLES           = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_STORE            = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_SHADOW_RUN_UPDATES          = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_FLAT_RUNS_MIGRATOR          = "false"
     GORILLA_RUN_STORE_ONPREM_MIGRATE_FLAT_RUNS_GARBAGE_COLLECTOR = "false"
   } : {}
   flat_run_fields_updater_global_envs_pubsub = var.enable_flat_run_fields_updater && var.create_pubsub ? {
@@ -303,10 +311,10 @@ locals {
     EOF
   } : {}
   flat_run_fields_updater_global_envs_kafka = var.enable_flat_run_fields_updater && !var.create_pubsub ? {
-    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_TABLES  = "true"
+    GORILLA_RUN_STORE_ONPREM_MIGRATE_CREATE_RUN_TABLES = "true"
   } : {}
   flat_run_fields_updater_global_envs = merge(local.flat_run_fields_updater_global_envs_kafka, local.flat_run_fields_updater_global_envs_pubsub, local.flat_run_fields_updater_global_envs_all)
-  install_kafka                = var.enable_flat_run_fields_updater && !var.create_pubsub
+  install_kafka                       = var.enable_flat_run_fields_updater && !var.create_pubsub
 }
 
 locals {
@@ -376,6 +384,10 @@ module "wandb" {
       }
 
       app = {
+        image = {
+          repository = "wandb/local-dev"
+          tag = "0.63.0-danielpanzella-filestream-local.1"
+        }
         extraEnvs = var.app_wandb_env
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.app
@@ -444,6 +456,10 @@ module "wandb" {
       }
 
       parquet = {
+        image = {
+          repository = "wandb/local-dev"
+          tag = "0.63.0-danielpanzella-filestream-local.1"
+        }
         extraEnvs = var.parquet_wandb_env
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.parquet
@@ -459,7 +475,11 @@ module "wandb" {
       }
 
       flat-run-fields-updater = {
-        install = var.enable_flat_run_fields_updater
+        image = {
+          repository = "wandb/local-dev"
+          tag = "0.63.0-danielpanzella-filestream-local.1"
+        }
+        install   = var.enable_flat_run_fields_updater
         usePubSub = var.create_pubsub
 
         serviceAccount = var.create_workload_identity ? {
@@ -472,10 +492,16 @@ module "wandb" {
       }
 
       filestream = {
+        image = {
+          repository = "wandb/local-dev"
+          tag = "0.63.0-danielpanzella-filestream-local.1"
+        }
         install = var.create_pubsub && var.create_bigtable && var.enable_filestream
         env = {
           fileStreamWorkerSource = "pubsub:/${module.pubsub[0].filestream_project_id}/${module.pubsub[0].filestream_topic_name}/${module.pubsub[0].filestream_gorilla_subscription_name}"
-          fileStreamWorkerStore  = "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}"
+          fileStreamWorkerStore  = <<-EOF
+            ${join("\\,", [local.bigtablev3_url, local.bigtablev2_url])}
+          EOF
         }
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.filestream
