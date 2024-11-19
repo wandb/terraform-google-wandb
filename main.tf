@@ -331,7 +331,7 @@ module "wandb" {
     chart = {
       url     = "https://charts.wandb.ai"
       name    = "operator-wandb"
-      version = "0.19.0-PR262-349a442"
+      version = "0.19.0-PR262-f06cc7c"
     }
     values = {
       global = {
