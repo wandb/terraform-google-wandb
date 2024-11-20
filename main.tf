@@ -287,10 +287,10 @@ locals {
     }
   }
   internal_lb_name = "${var.namespace}-internal"
-  bigtablev2_url     = var.create_bigtable ? "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
-  bigtablev3_url     = var.create_bigtable ? "bigtablev3://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
+  bigtablev2_url   = var.create_bigtable ? "bigtablev2://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
+  bigtablev3_url   = var.create_bigtable ? "bigtablev3://${module.bigtable[0].bigtable_project_id}/${module.bigtable[0].bigtable_instance_id}" : ""
   filestream_global_envs = var.create_bigtable && var.create_pubsub && var.enable_filestream ? {
-    "GORILLA_ALLOW_BIGTABLE_V3" = true
+    "GORILLA_ALLOW_BIGTABLE_V3"          = true
     "GORILLA_PARQUET_LIVE_HISTORY_STORE" = <<-EOF
       ${join("\\,", [local.bigtablev3_url, local.bigtablev2_url])}
     EOF
@@ -392,7 +392,7 @@ module "wandb" {
       app = {
         image = {
           repository = "wandb/local-dev"
-          tag = "0.63.0-danielpanzella-filestream-local.1"
+          tag        = "0.63.0-danielpanzella-filestream-local.1"
         }
         extraEnvs = var.app_wandb_env
         serviceAccount = var.create_workload_identity ? {
@@ -464,7 +464,7 @@ module "wandb" {
       parquet = {
         image = {
           repository = "wandb/local-dev"
-          tag = "0.63.0-danielpanzella-filestream-local.1"
+          tag        = "0.63.0-danielpanzella-filestream-local.1"
         }
         extraEnvs = var.parquet_wandb_env
         serviceAccount = var.create_workload_identity ? {
@@ -483,9 +483,9 @@ module "wandb" {
       flat-run-fields-updater = {
         image = {
           repository = "wandb/local-dev"
-          tag = "0.63.0-danielpanzella-filestream-local.1"
+          tag        = "0.63.0-danielpanzella-filestream-local.1"
         }
-        install   = var.enable_flat_run_fields_updater
+        install = var.enable_flat_run_fields_updater
 
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
@@ -499,7 +499,7 @@ module "wandb" {
       filestream = {
         image = {
           repository = "wandb/local-dev"
-          tag = "0.63.0-danielpanzella-filestream-local.1"
+          tag        = "0.63.0-danielpanzella-filestream-local.1"
         }
         install = var.create_pubsub && var.create_bigtable && var.enable_filestream
         env = {

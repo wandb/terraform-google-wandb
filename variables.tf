@@ -208,9 +208,9 @@ variable "bigtable_max_nodes" {
 }
 
 variable "bigtable_cpu_target" {
-    type        = number
-    description = "The target CPU utilization for the Bigtable cluster."
-    default     = 70
+  type        = number
+  description = "The target CPU utilization for the Bigtable cluster."
+  default     = 70
 }
 
 ##########################################
