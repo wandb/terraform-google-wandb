@@ -407,3 +407,12 @@ variable "clickhouse_subnetwork_cidr" {
   description = "ClickHouse private service connect subnetwork"
   type        = string
 }
+
+##########################################
+# Internal Service                       #
+##########################################
+variable "kubernetes_oidc_issuer" {
+  type        = string
+  description = "OIDC issuer URL"
+  default     = ""
+}

@@ -317,6 +317,12 @@ module "wandb" {
           name        = ""
           annotations = {}
         }
+        internalJWTMap = [
+          {
+            subject = "system:serviceaccount:${var.namespace}:${local.k8s_sa_map.weave_trace}"
+            issuer = var.kubernetes_oidc_issuer
+          }
+        ]
       }
 
       ingress = {
