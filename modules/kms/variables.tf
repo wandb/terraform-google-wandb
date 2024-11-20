@@ -9,6 +9,11 @@ variable "deletion_protection" {
   default     = true
 }
 
+variable "service_account" {
+  description = "The service account associated with the GKE cluster instances that host Weights & Biases."
+  type        = object({ email = string })
+}
+
 variable "key_location" {
   type        = string
   description = "Location where the KMS key will be created."
