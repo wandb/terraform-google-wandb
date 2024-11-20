@@ -1,5 +1,5 @@
 locals {
-  sa_member = "serviceAccount:${var.service_account.email}"
+  sa_member = "serviceAccount:${var.service_account_email}"
 }
 
 resource "google_bigtable_instance" "default" {
