@@ -93,7 +93,7 @@ adjusted manually via the user-spec
 values:
   filestream:
     replicaCount: 1
-  flatRunFieldsUpdater:
+  flat-run-fields-updater:
     replicaCount: 1
 ```
 or enable autoscaling
@@ -105,7 +105,7 @@ values:
       minReplicas: 1
       maxReplicas: 10
       targetCPUUtilization: 70
-  flatRunFieldsUpdater:
+  flat-run-fields-updater:
     autoscaling:
       enabled: true
       minReplicas: 1
@@ -115,6 +115,24 @@ values:
 
 Application resources may not currently be ideal for autoscaling and updating them may be desirable in that case. They can
 also be specified in the user-spec.
+
+```yaml
+values:
+  filestream:
+    requests:
+      cpu: 500m
+      memory: 4Gi
+    limits:
+      cpu: 4000m
+      memory: 8Gi
+  flat-run-fields-updater:
+    requests:
+      cpu: 500m
+      memory: 4Gi
+    limits:
+      cpu: 4000m
+      memory: 8Gi
+```
 
 
 ## Examples
