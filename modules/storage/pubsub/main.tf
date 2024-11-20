@@ -2,7 +2,7 @@ locals {
   sa_member = "serviceAccount:${var.service_account.email}"
 }
 
-resource "google_kms_crypto_key_iam_member" "pubsub_service_access" {
+resource "google_kms_crypto_key_iam_member" "pubsub_key_access" {
   count         = var.crypto_key.id ? 1 : 0
   crypto_key_id = var.crypto_key.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
