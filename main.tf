@@ -53,13 +53,17 @@ module "service_accounts" {
   skip_bucket_admin_role   = var.skip_bucket_admin_role
 }
 
+locals {
+  app_service_account = (var.create_workload_identity) ? module.service_accounts.sa_account_role : module.service_accounts.service_account
+}
+
 module "kms" {
   # KMS is currently only used to encrypt pubsub queue. Disable it if we dont use it.
   count               = var.use_internal_queue ? 0 : 1
   source              = "./modules/kms"
   namespace           = var.namespace
   deletion_protection = var.deletion_protection
-  service_account     = module.service_accounts.service_account
+  service_account     = local.app_service_account
 }
 
 module "kms_default_bucket" {
@@ -70,7 +74,7 @@ module "kms_default_bucket" {
   key_location                     = lower(var.bucket_location)
   bind_pubsub_service_to_kms_key   = false
   bind_bigtable_service_to_kms_key = false
-  service_account                  = module.service_accounts.service_account
+  service_account                  = local.app_service_account
 }
 
 module "kms_default_sql" {
@@ -81,7 +85,7 @@ module "kms_default_sql" {
   key_location                     = data.google_client_config.current.region
   bind_pubsub_service_to_kms_key   = var.create_pubsub
   bind_bigtable_service_to_kms_key = var.create_bigtable
-  service_account                  = module.service_accounts.service_account
+  service_account                  = local.app_service_account
 }
 locals {
   default_bucket_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
@@ -165,7 +169,7 @@ module "bigtable" {
 
   namespace           = var.namespace
   deletion_protection = var.deletion_protection
-  service_account     = module.service_accounts.service_account
+  service_account     = local.app_service_account
   crypto_key          = local.default_sql_key
   storage_type        = var.bigtable_storage_type
   cpu_target          = var.bigtable_cpu_target
@@ -181,7 +185,7 @@ module "pubsub" {
 
   namespace                      = var.namespace
   deletion_protection            = var.deletion_protection
-  service_account                = module.service_accounts.service_account
+  service_account                = local.app_service_account
   crypto_key                     = local.default_sql_key
   enable_filestream              = var.enable_filestream
   enable_flat_run_fields_updater = var.enable_flat_run_fields_updater
