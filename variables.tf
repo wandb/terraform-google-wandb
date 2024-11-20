@@ -413,6 +413,6 @@ variable "clickhouse_subnetwork_cidr" {
 ##########################################
 variable "kubernetes_oidc_issuer" {
   type        = string
-  description = "OIDC issuer URL"
+  description = "Kubernetes OIDC issuer URL"
   default     = ""
 }
