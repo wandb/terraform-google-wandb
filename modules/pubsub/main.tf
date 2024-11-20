@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 5.34.0"
-    }
-  }
-}
 locals {
   sa_member = "serviceAccount:${var.service_account.email}"
 }
