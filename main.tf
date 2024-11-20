@@ -164,14 +164,14 @@ module "bigtable" {
   source = "./modules/bigtable"
   count  = var.create_bigtable ? 1 : 0
 
-  namespace           = var.namespace
-  deletion_protection = var.deletion_protection
-  service_account     = local.app_service_account
-  crypto_key          = local.default_sql_key
-  storage_type        = var.bigtable_storage_type
-  cpu_target          = var.bigtable_cpu_target
-  min_nodes           = var.bigtable_min_nodes
-  max_nodes           = var.bigtable_max_nodes
+  namespace             = var.namespace
+  deletion_protection   = var.deletion_protection
+  service_account_email = local.app_service_account
+  crypto_key            = local.default_sql_key
+  storage_type          = var.bigtable_storage_type
+  cpu_target            = var.bigtable_cpu_target
+  min_nodes             = var.bigtable_min_nodes
+  max_nodes             = var.bigtable_max_nodes
 
   labels = var.labels
 }
@@ -182,7 +182,7 @@ module "pubsub" {
 
   namespace                      = var.namespace
   deletion_protection            = var.deletion_protection
-  service_account                = local.app_service_account
+  service_account_email          = local.app_service_account
   crypto_key                     = local.default_sql_key
   enable_filestream              = var.enable_filestream
   enable_flat_run_fields_updater = var.enable_flat_run_fields_updater
