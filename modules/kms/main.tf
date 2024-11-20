@@ -48,6 +48,20 @@ resource "google_kms_crypto_key_iam_member" "pubsub_service_access" {
   member        = "serviceAccount:${google_project_service_identity.pubsub[0].email}"
 }
 
+resource "google_project_service_identity" "bigtable" {
+  count    = var.bind_bigtable_service_to_kms_key ? 1 : 0
+  provider = google-beta
+  project  = data.google_project.project.project_id
+  service  = "bigtableadmin.googleapis.com"
+}
+
+resource "google_kms_crypto_key_iam_member" "bigtable_service_access" {
+  count         = var.bind_bigtable_service_to_kms_key ? 1 : 0
+  crypto_key_id = google_kms_crypto_key.default.id
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  member        = "serviceAccount:${google_project_service_identity.bigtable[0].email}"
+}
+
 
 # Enable notifications by giving the correct IAM permission to the unique
 # service account.

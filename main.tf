@@ -62,21 +62,23 @@ module "kms" {
 }
 
 module "kms_default_bucket" {
-  count                          = var.bucket_default_encryption ? 1 : 0
-  source                         = "./modules/kms"
-  namespace                      = var.namespace
-  deletion_protection            = var.deletion_protection
-  key_location                   = lower(var.bucket_location)
-  bind_pubsub_service_to_kms_key = false
+  count                            = var.bucket_default_encryption ? 1 : 0
+  source                           = "./modules/kms"
+  namespace                        = var.namespace
+  deletion_protection              = var.deletion_protection
+  key_location                     = lower(var.bucket_location)
+  bind_pubsub_service_to_kms_key   = false
+  bind_bigtable_service_to_kms_key = false
 }
 
 module "kms_default_sql" {
-  count                          = var.sql_default_encryption ? 1 : 0
-  source                         = "./modules/kms"
-  namespace                      = var.namespace
-  deletion_protection            = var.deletion_protection
-  key_location                   = data.google_client_config.current.region
-  bind_pubsub_service_to_kms_key = false
+  count                            = var.sql_default_encryption ? 1 : 0
+  source                           = "./modules/kms"
+  namespace                        = var.namespace
+  deletion_protection              = var.deletion_protection
+  key_location                     = data.google_client_config.current.region
+  bind_pubsub_service_to_kms_key   = var.create_pubsub
+  bind_bigtable_service_to_kms_key = var.create_bigtable
 }
 locals {
   default_bucket_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
