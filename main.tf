@@ -59,6 +59,7 @@ module "kms" {
   source              = "./modules/kms"
   namespace           = var.namespace
   deletion_protection = var.deletion_protection
+  service_account     = module.service_accounts.service_account
 }
 
 module "kms_default_bucket" {
@@ -69,6 +70,7 @@ module "kms_default_bucket" {
   key_location                     = lower(var.bucket_location)
   bind_pubsub_service_to_kms_key   = false
   bind_bigtable_service_to_kms_key = false
+  service_account                  = module.service_accounts.service_account
 }
 
 module "kms_default_sql" {
@@ -79,6 +81,7 @@ module "kms_default_sql" {
   key_location                     = data.google_client_config.current.region
   bind_pubsub_service_to_kms_key   = var.create_pubsub
   bind_bigtable_service_to_kms_key = var.create_bigtable
+  service_account                  = module.service_accounts.service_account
 }
 locals {
   default_bucket_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
