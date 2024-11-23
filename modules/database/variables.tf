@@ -25,6 +25,12 @@ variable "tier" {
   default = "db-n1-standard-1"
 }
 
+variable "edition" {
+  type        = string
+  description = "The edition of the Cloud SQL instance. Can be either `STANDARD` or `ENTERPRISE` or `ENTERPRISE_PLUS`."
+  default     = "ENTERPRISE"
+}
+
 variable "availability_type" {
   type    = string
   default = "REGIONAL"

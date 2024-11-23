@@ -168,6 +168,12 @@ variable "database_machine_type" {
   default     = null
 }
 
+variable "database_edition" {
+  description = "The edition of the Cloud SQL instance. Can be either `STANDARD` or `ENTERPRISE` or `ENTERPRISE_PLUS`."
+  type        = string
+  default     = "ENTERPRISE"
+}
+
 variable "database_sort_buffer_size" {
   description = "Specifies the sort_buffer_size value to set for the database"
   type        = number
