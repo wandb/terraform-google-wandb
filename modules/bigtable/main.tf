@@ -44,7 +44,7 @@ resource "google_bigtable_gc_policy" "omni_history" {
   instance_name = google_bigtable_instance.default.name
   table         = google_bigtable_table.omni_history.name
   column_family = "x"
-  max_version = {
+  max_version {
     number = 1
   }
 }
@@ -66,7 +66,7 @@ resource "google_bigtable_gc_policy" "omni_history_lookup" {
   instance_name = google_bigtable_instance.default.name
   table         = google_bigtable_table.omni_history_lookup.name
   column_family = "x"
-  max_version = {
+  max_version {
     number = 1
   }
 }
@@ -92,7 +92,7 @@ resource "google_bigtable_gc_policy" "runs_data" {
   instance_name = google_bigtable_instance.default.name
   table         = google_bigtable_table.runs.name
   column_family = "data"
-  max_version = {
+  max_version {
     number = 1
   }
 }
@@ -101,7 +101,7 @@ resource "google_bigtable_gc_policy" "runs_metadata" {
   instance_name = google_bigtable_instance.default.name
   table         = google_bigtable_table.runs.name
   column_family = "metadata"
-  max_version = {
+  max_version {
     number = 1
   }
 }
@@ -123,7 +123,7 @@ resource "google_bigtable_gc_policy" "logs" {
   instance_name = google_bigtable_instance.default.name
   table         = google_bigtable_table.logs.name
   column_family = "line"
-  max_version = {
+  max_version {
     number = 1
   }
 }
@@ -145,7 +145,7 @@ resource "google_bigtable_gc_policy" "history" {
   instance_name = google_bigtable_instance.default.name
   table         = google_bigtable_table.history.name
   column_family = "event"
-  max_version = {
+  max_version {
     number = 1
   }
 }
