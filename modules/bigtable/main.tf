@@ -40,6 +40,24 @@ resource "google_bigtable_table" "omni_history" {
   change_stream_retention = "0"
 }
 
+resource "google_bigtable_gc_policy" "omni_history" {
+  instance_name = google_bigtable_instance.default.name
+  table         = google_bigtable_table.omni_history.name
+  column_family = "x"
+  deletion_policy = "ABANDON"
+
+
+  gc_rules = <<EOF
+  {
+    "rules": [
+      {
+        "max_version": "1"
+      }
+    ]
+  }
+  EOF
+}
+
 resource "google_bigtable_table" "omni_history_lookup" {
   name          = "omni-history-lookup"
   instance_name = google_bigtable_instance.default.name
@@ -51,6 +69,24 @@ resource "google_bigtable_table" "omni_history_lookup" {
   }
 
   change_stream_retention = "0"
+}
+
+resource "google_bigtable_gc_policy" "omni_history_lookup" {
+  instance_name = google_bigtable_instance.default.name
+  table         = google_bigtable_table.omni_history_lookup.name
+  column_family = "x"
+  deletion_policy = "ABANDON"
+
+
+  gc_rules = <<EOF
+  {
+    "rules": [
+      {
+        "max_version": "1"
+      }
+    ]
+  }
+  EOF
 }
 
 resource "google_bigtable_table" "runs" {
@@ -70,6 +106,42 @@ resource "google_bigtable_table" "runs" {
   change_stream_retention = "0"
 }
 
+resource "google_bigtable_gc_policy" "runs_data" {
+  instance_name = google_bigtable_instance.default.name
+  table         = google_bigtable_table.runs.name
+  column_family = "data"
+  deletion_policy = "ABANDON"
+
+
+  gc_rules = <<EOF
+  {
+    "rules": [
+      {
+        "max_version": "1"
+      }
+    ]
+  }
+  EOF
+}
+
+resource "google_bigtable_gc_policy" "runs_metadata" {
+  instance_name = google_bigtable_instance.default.name
+  table         = google_bigtable_table.runs.name
+  column_family = "metadata"
+  deletion_policy = "ABANDON"
+
+
+  gc_rules = <<EOF
+  {
+    "rules": [
+      {
+        "max_version": "1"
+      }
+    ]
+  }
+  EOF
+}
+
 resource "google_bigtable_table" "logs" {
   name          = "logs"
   instance_name = google_bigtable_instance.default.name
@@ -83,6 +155,24 @@ resource "google_bigtable_table" "logs" {
   change_stream_retention = "0"
 }
 
+resource "google_bigtable_gc_policy" "logs" {
+  instance_name = google_bigtable_instance.default.name
+  table         = google_bigtable_table.logs.name
+  column_family = "line"
+  deletion_policy = "ABANDON"
+
+
+  gc_rules = <<EOF
+  {
+    "rules": [
+      {
+        "max_version": "1"
+      }
+    ]
+  }
+  EOF
+}
+
 resource "google_bigtable_table" "history" {
   name          = "history"
   instance_name = google_bigtable_instance.default.name
@@ -94,4 +184,22 @@ resource "google_bigtable_table" "history" {
   }
 
   change_stream_retention = "0"
+}
+
+resource "google_bigtable_gc_policy" "history" {
+  instance_name = google_bigtable_instance.default.name
+  table         = google_bigtable_table.history.name
+  column_family = "event"
+  deletion_policy = "ABANDON"
+
+
+  gc_rules = <<EOF
+  {
+    "rules": [
+      {
+        "max_version": "1"
+      }
+    ]
+  }
+  EOF
 }
