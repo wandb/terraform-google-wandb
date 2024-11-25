@@ -217,7 +217,7 @@ resources that lack official modules.
 | <a name="input_create_workload_identity"></a> [create\_workload\_identity](#input\_create\_workload\_identity) | Flag to indicate whether to create a workload identity for the service account. | `bool` | `false` | no |
 | <a name="input_database_edition"></a> [database\_edition](#input\_database\_edition) | The edition of the Cloud SQL instance. Can be either `STANDARD` or `ENTERPRISE` or `ENTERPRISE_PLUS`. | `string` | `"ENTERPRISE"` | no |
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
-| <a name="input_database_max_allowed_packet"></a> [database\_max\_allowed\_packet](#input\_database\_max\_allowed\_packet) | Specifies the max\_allowed\_packet value to set for the database | `string` | `"64M"` | no |
+| <a name="input_database_max_allowed_packet"></a> [database\_max\_allowed\_packet](#input\_database\_max\_allowed\_packet) | Specifies the max\_allowed\_packet value to set for the database | `number` | `67108864` | no |
 | <a name="input_database_sort_buffer_size"></a> [database\_sort\_buffer\_size](#input\_database\_sort\_buffer\_size) | Specifies the sort\_buffer\_size value to set for the database | `number` | `67108864` | no |
 | <a name="input_database_version"></a> [database\_version](#input\_database\_version) | Version for MySQL | `string` | `"MYSQL_8_0_31"` | no |
 | <a name="input_db_kms_key_id"></a> [db\_kms\_key\_id](#input\_db\_kms\_key\_id) | ID of the customer-provided SQL KMS key. | `string` | `null` | no |
