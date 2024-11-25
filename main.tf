@@ -28,6 +28,7 @@ locals {
   create_network = var.network == null
   k8s_sa_map = {
     app         = "wandb-app"
+    executor    = "wandb-executor"
     parquet     = "wandb-parquet"
     flat_runs   = "wandb-flat-run-fields-updater"
     filestream  = "wandb-filestream"
@@ -438,8 +439,14 @@ module "wandb" {
         }
       }
 
-      kafka = {
-        install = var.enable_flat_run_fields_updater && !var.create_pubsub
+      executor = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.executor
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+        } : {
+          name        = null
+          annotations = {}
+        }
       }
 
       flat-run-fields-updater = {
