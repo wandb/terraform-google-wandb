@@ -182,8 +182,8 @@ variable "database_sort_buffer_size" {
 
 variable "database_max_allowed_packet" {
   description = "Specifies the max_allowed_packet value to set for the database"
-  type        = string
-  default     = "64M"
+  type        = number
+  default     = 67108864
 }
 
 variable "force_ssl" {
