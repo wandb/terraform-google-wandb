@@ -45,7 +45,11 @@ resource "google_sql_database_instance" "default" {
     backup_configuration {
       binary_log_enabled             = true
       enabled                        = true
-      transaction_log_retention_days = 7
+      transaction_log_retention_days = var.edition == "ENTERPRISE_PLUS" ? 14: 7
+      backup_retention_settings {
+        retained_backups = var.edition == "ENTERPRISE_PLUS" ? 15 : 7
+        retention_unit = "COUNT"
+      }
     }
 
     maintenance_window {
