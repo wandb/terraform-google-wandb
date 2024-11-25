@@ -3,7 +3,6 @@ locals {
 }
 
 resource "google_pubsub_topic" "filestream" {
-  count        = var.enable_filestream ? 1 : 0
   name         = "${var.namespace}-filestream"
   kms_key_name = var.crypto_key
 
@@ -20,20 +19,18 @@ resource "google_pubsub_topic" "filestream" {
 # }
 
 resource "google_pubsub_topic_iam_member" "filestream" {
-  count  = var.enable_filestream ? 1 : 0
-  topic  = google_pubsub_topic.filestream[0].name
+  topic  = google_pubsub_topic.filestream.name
   role   = "roles/pubsub.admin"
   member = local.sa_member
 }
 
 resource "google_pubsub_subscription" "filestream-gorilla" {
-  count = var.enable_filestream ? 1 : 0
   name  = "${var.namespace}-filestream-gorilla"
-  topic = google_pubsub_topic.filestream[0].name
+  topic = google_pubsub_topic.filestream.name
 
   # TODO(dpanzella): Uncomment if dead letter is needed.
   # dead_letter_policy {
-  #   dead_letter_topic     = google_pubsub_topic.filestream_dead_letter[0].name
+  #   dead_letter_topic     = google_pubsub_topic.filestream_dead_letter.name
   #   max_delivery_attempts = 5
   # }
 
@@ -44,14 +41,12 @@ resource "google_pubsub_subscription" "filestream-gorilla" {
 }
 
 resource "google_pubsub_subscription_iam_member" "filestream-gorilla" {
-  count        = var.enable_filestream ? 1 : 0
-  subscription = google_pubsub_subscription.filestream-gorilla[0].name
+  subscription = google_pubsub_subscription.filestream-gorilla.name
   role         = "roles/pubsub.admin"
   member       = local.sa_member
 }
 
 resource "google_pubsub_topic" "run_updates_shadow" {
-  count        = var.enable_flat_run_fields_updater ? 1 : 0
   name         = "${var.namespace}-run-updates-shadow"
   kms_key_name = var.crypto_key
 
@@ -59,16 +54,14 @@ resource "google_pubsub_topic" "run_updates_shadow" {
 }
 
 resource "google_pubsub_topic_iam_member" "run_updates_shadow" {
-  count  = var.enable_flat_run_fields_updater ? 1 : 0
-  topic  = google_pubsub_topic.run_updates_shadow[0].name
+  topic  = google_pubsub_topic.run_updates_shadow.name
   role   = "roles/pubsub.admin"
   member = local.sa_member
 }
 
 resource "google_pubsub_subscription" "flat_run_fields_updater" {
-  count = var.enable_flat_run_fields_updater ? 1 : 0
   name  = "${var.namespace}-flat-run-fields-updater"
-  topic = google_pubsub_topic.run_updates_shadow[0].name
+  topic = google_pubsub_topic.run_updates_shadow.name
 
   enable_message_ordering    = true
   message_retention_duration = "604800s" # 7 days.
@@ -82,8 +75,7 @@ resource "google_pubsub_subscription" "flat_run_fields_updater" {
 }
 
 resource "google_pubsub_subscription_iam_member" "flat_run_fields_updater" {
-  count        = var.enable_flat_run_fields_updater ? 1 : 0
-  subscription = google_pubsub_subscription.flat_run_fields_updater[0].name
+  subscription = google_pubsub_subscription.flat_run_fields_updater.name
   role         = "roles/pubsub.admin"
   member       = local.sa_member
 }

@@ -155,6 +155,7 @@ module "database" {
   tier                = local.database_machine_type
   edition             = var.database_edition
   sort_buffer_size    = var.database_sort_buffer_size
+  max_allowed_packet  = var.database_max_allowed_packet
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels
@@ -186,8 +187,6 @@ module "pubsub" {
   deletion_protection            = var.deletion_protection
   service_account_email          = local.app_service_account
   crypto_key                     = local.default_sql_key
-  enable_filestream              = var.enable_filestream
-  enable_flat_run_fields_updater = var.enable_flat_run_fields_updater
 
   labels = var.labels
 }
@@ -450,9 +449,8 @@ module "wandb" {
       }
 
       flat-run-fields-updater = {
-        install = var.enable_flat_run_fields_updater
         pubSub  = {
-          subscription = var.create_pubsub && var.enable_flat_run_fields_updater ? module.pubsub[0].flat_run_fields_updater_subscription_name : ""
+          subscription = var.create_pubsub ? module.pubsub[0].flat_run_fields_updater_subscription_name : ""
         }
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
@@ -464,9 +462,8 @@ module "wandb" {
       }
 
       filestream = {
-        install = var.create_pubsub && var.create_bigtable && var.enable_filestream
         pubSub  = {
-          subscription = var.create_pubsub && var.enable_filestream ? module.pubsub[0].filestream_gorilla_subscription_name : ""
+          subscription = var.create_pubsub ? module.pubsub[0].filestream_gorilla_subscription_name : ""
         }
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.filestream
