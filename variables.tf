@@ -329,6 +329,18 @@ variable "other_wandb_env" {
   default     = {}
 }
 
+variable "enable_filestream" {
+  type        = bool
+  description = "Enable Filestream Service (this will implicitly enable pubsub and bigtable)"
+  default     = false
+}
+
+variable "enable_flat_run_fields_updater" {
+  type        = bool
+  description = "Enable Flat Run Fields Updater Service"
+  default     = false
+}
+
 ##########################################
 # KMS                                    #
 ##########################################
