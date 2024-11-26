@@ -84,6 +84,26 @@ resource "google_sql_database_instance" "default" {
       name  = "sort_buffer_size"
       value = var.sort_buffer_size
     }
+    database_flags {
+      name  = "innodb_autoinc_lock_mode"
+      value = 2
+    }
+    database_flags {
+      name  = "innodb_print_all_deadlocks"
+      value = "on"
+    }
+    database_flags {
+      name  = "binlog_row_image"
+      value = "MINIMAL"
+    }
+    database_flags {
+      name  = "binlog_row_value_options"
+      value = "PARTIAL_JSON"
+    }
+    database_flags {
+      name  = "innodb_lru_scan_depth"
+      value = 100
+    }
   }
 }
 
