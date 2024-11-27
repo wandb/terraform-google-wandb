@@ -154,6 +154,7 @@ module "database" {
   force_ssl           = var.force_ssl
   tier                = local.database_machine_type
   edition             = var.database_edition
+  database_flags      = var.database_flags
   sort_buffer_size    = var.database_sort_buffer_size
   max_allowed_packet  = var.database_max_allowed_packet
   network_connection  = local.network_connection

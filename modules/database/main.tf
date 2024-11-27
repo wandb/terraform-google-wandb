@@ -28,6 +28,23 @@ locals {
 data "google_project" "default" {
 }
 
+locals {
+  default_flags = {
+    "binlog_row_image"   = "MINIMAL"
+    "binlog_row_value_options" = "PARTIAL_JSON"
+    "innodb_autoinc_lock_mode" = "2"
+    "innodb_lru_scan_depth" = "100"
+    "innodb_print_all_deadlocks" = "off"
+    "long_query_time"    = "1"
+    "max_allowed_packet" = var.max_allowed_packet
+    "max_prepared_stmt_count" = "1048576"
+    "max_execution_time" = "60000"
+    "slow_query_log"     = "on"
+    "sort_buffer_size"   = var.sort_buffer_size
+  }
+  database_flags = merge(local.default_flags, var.database_flags)
+}
+
 resource "google_sql_database_instance" "default" {
   name                = local.master_instance_name
   database_version    = var.database_version
@@ -64,34 +81,12 @@ resource "google_sql_database_instance" "default" {
       require_ssl     = var.force_ssl
     }
 
-    # requires minimum memory of 26624 MB
-    # database_flags {
-    #   name  = "performance_schema"
-    #   value = 1
-    # }
-    database_flags {
-      name  = "slow_query_log"
-      value = "on"
-    }
-    database_flags {
-      name  = "long_query_time"
-      value = 1
-    }
-    database_flags {
-      name  = "max_prepared_stmt_count"
-      value = 1048576
-    }
-    database_flags {
-      name  = "max_execution_time"
-      value = 60000
-    }
-    database_flags {
-      name  = "max_allowed_packet"
-      value = var.max_allowed_packet
-    }
-    database_flags {
-      name  = "sort_buffer_size"
-      value = var.sort_buffer_size
+    dynamic "database_flags" {
+      for_each = local.database_flags
+      content {
+        name  = database_flags.key
+        value = database_flags.value
+      }
     }
   }
 }
