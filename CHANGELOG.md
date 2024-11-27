@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.2.0](https://github.com/wandb/terraform-google-wandb/compare/v6.1.0...v6.2.0) (2024-11-27)
+
+
+### Features
+
+* Configure notify-keyspace-events for redis ([#180](https://github.com/wandb/terraform-google-wandb/issues/180)) ([e63e89f](https://github.com/wandb/terraform-google-wandb/commit/e63e89fe26fc935ccbda2e2a2ae13fb4b63865f6))
+
 ## [6.1.0](https://github.com/wandb/terraform-google-wandb/compare/v6.0.0...v6.1.0) (2024-11-27)
 
 
