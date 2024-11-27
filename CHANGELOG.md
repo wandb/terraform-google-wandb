@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.0](https://github.com/wandb/terraform-google-wandb/compare/v6.0.0...v6.1.0) (2024-11-27)
+
+
+### Features
+
+* Additional database flags and refactor to allow new flags to be passed via map ([#181](https://github.com/wandb/terraform-google-wandb/issues/181)) ([68ed4d2](https://github.com/wandb/terraform-google-wandb/commit/68ed4d26525cb8b4b03321967d2b18d560a566f8))
+
+
+### Bug Fixes
+
+* Improve BYOB config ([#174](https://github.com/wandb/terraform-google-wandb/issues/174)) ([bec5e9f](https://github.com/wandb/terraform-google-wandb/commit/bec5e9f0d136e87355447eb36c2c82f76fb139e6))
+
 ## [6.0.0](https://github.com/wandb/terraform-google-wandb/compare/v5.4.2...v6.0.0) (2024-10-08)
 
 
