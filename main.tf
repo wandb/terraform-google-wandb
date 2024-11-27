@@ -145,6 +145,7 @@ module "database" {
   database_version    = var.database_version
   force_ssl           = var.force_ssl
   tier                = local.database_machine_type
+  database_flags      = var.database_flags
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection

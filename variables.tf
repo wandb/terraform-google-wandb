@@ -168,6 +168,12 @@ variable "database_machine_type" {
   default     = null
 }
 
+variable "database_flags" {
+  description = "Flags to set for the database"
+  type        = map(string)
+  default     = {}
+}
+
 variable "database_sort_buffer_size" {
   description = "Specifies the sort_buffer_size value to set for the database"
   type        = number
