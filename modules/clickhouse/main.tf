@@ -45,6 +45,6 @@ resource "google_dns_record_set" "psc_dns_record" {
   name         = "*.${var.clickhouse_region}.p.gcp.clickhouse.cloud."
   managed_zone = google_dns_managed_zone.psc_dns_zone.name
   type         = "A"
-  rrdatas      = [ google_compute_address.psc_endpoint_ip.address ]
+  rrdatas      = [google_compute_address.psc_endpoint_ip.address]
   ttl          = 3600
 }
