@@ -97,3 +97,9 @@ variable "innodb_lru_scan_depth" {
   type        = number
   default     = 100
 }
+
+variable "innodb_io_capacity" {
+  description = "Specifies the innodb_io_capacity value to set for the database"
+  type        = number
+  default     = null
+}

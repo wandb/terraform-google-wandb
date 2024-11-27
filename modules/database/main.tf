@@ -104,6 +104,13 @@ resource "google_sql_database_instance" "default" {
       name  = "innodb_lru_scan_depth"
       value = var.innodb_lru_scan_depth
     }
+    dynamic "database_flags" {
+      for_each = var.innodb_io_capacity != null ? [1] : []
+      content {
+        name  = "innodb_io_capacity"
+        value = var.innodb_io_capacity
+      }
+    }
   }
 }
 
