@@ -79,3 +79,21 @@ variable "crypto_key" {
   default     = null
   description = "Key used to encrypt and decrypt database."
 }
+
+variable "binlog_row_image" {
+  description = "Specifies the binlog_row_image value to set for the database"
+  type        = string
+  default     = "MINIMAL"
+}
+
+variable "binlog_row_value_options" {
+  description = "Specifies the binlog_row_value_options value to set for the database"
+  type        = string
+  default     = "PARTIAL_JSON"
+}
+
+variable "innodb_lru_scan_depth" {
+  description = "Specifies the innodb_lru_scan_depth value to set for the database"
+  type        = number
+  default     = 100
+}

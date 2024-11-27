@@ -94,15 +94,15 @@ resource "google_sql_database_instance" "default" {
     }
     database_flags {
       name  = "binlog_row_image"
-      value = "MINIMAL"
+      value = var.binlog_row_image
     }
     database_flags {
       name  = "binlog_row_value_options"
-      value = "PARTIAL_JSON"
+      value = var.binlog_row_value_options
     }
     database_flags {
       name  = "innodb_lru_scan_depth"
-      value = 100
+      value = var.innodb_lru_scan_depth
     }
   }
 }
