@@ -36,7 +36,6 @@ locals {
     "innodb_lru_scan_depth" = "100"
     "innodb_print_all_deadlocks" = "off"
     "long_query_time"    = "1"
-    "max_allowed_packet" = var.max_allowed_packet
     "max_prepared_stmt_count" = "1048576"
     "max_execution_time" = "60000"
     "slow_query_log"     = "on"

@@ -156,7 +156,6 @@ module "database" {
   edition             = var.database_edition
   database_flags      = var.database_flags
   sort_buffer_size    = var.database_sort_buffer_size
-  max_allowed_packet  = var.database_max_allowed_packet
   network_connection  = local.network_connection
   deletion_protection = var.deletion_protection
   labels              = var.labels

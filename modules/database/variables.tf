@@ -79,13 +79,6 @@ variable "sort_buffer_size" {
   default     = 262144
 }
 
-variable "max_allowed_packet" {
-  description = "Specifies the max_allowed_packet value to set for the database"
-  type        = number
-  default     = 67108864
-}
-
-
 variable "force_ssl" {
   description = "Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string"
   type        = bool
