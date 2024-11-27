@@ -1,7 +1,3 @@
-resource "google_compute_global_address" "default" {
-  name = "${var.namespace}-address"
-}
-
 resource "google_compute_global_address" "operator" {
   name = "${var.namespace}-operator-address"
 }
@@ -12,7 +8,6 @@ module "https" {
   source     = "./https"
   fqdn       = var.fqdn
   namespace  = var.namespace
-  ip_address = google_compute_global_address.default.address
 
   labels = var.labels
 }

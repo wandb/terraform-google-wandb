@@ -67,6 +67,10 @@ resource "google_container_node_pool" "default" {
     location_policy      = "BALANCED"
   }
 
+  network_config {
+    enable_private_nodes = true
+  }
+
   node_config {
     image_type      = "COS_CONTAINERD"
     machine_type    = var.machine_type
@@ -83,6 +87,7 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
+
     workload_metadata_config {
       mode = var.create_workload_identity ? "GKE_METADATA" : "GCE_METADATA"
     }

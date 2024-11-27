@@ -3,10 +3,6 @@ variable "namespace" {
   description = "Friendly name prefix used for tagging and naming AWS resources."
 }
 
-variable "ip_address" {
-  type = string
-}
-
 variable "fqdn" {
   type = string
 }
