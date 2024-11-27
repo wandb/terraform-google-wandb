@@ -90,7 +90,7 @@ resource "google_sql_database_instance" "default" {
     }
     database_flags {
       name  = "innodb_print_all_deadlocks"
-      value = "on"
+      value = var.innodb_print_all_deadlocks
     }
     database_flags {
       name  = "binlog_row_image"

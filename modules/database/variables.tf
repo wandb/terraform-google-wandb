@@ -92,6 +92,12 @@ variable "binlog_row_value_options" {
   default     = "PARTIAL_JSON"
 }
 
+variable "innodb_print_all_deadlocks" {
+  description = "Specifies the innodb_print_all_deadlocks value to set for the database"
+  type        = string
+  default     = "off"
+}
+
 variable "innodb_lru_scan_depth" {
   description = "Specifies the innodb_lru_scan_depth value to set for the database"
   type        = number
