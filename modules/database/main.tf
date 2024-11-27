@@ -30,7 +30,7 @@ data "google_project" "default" {
 
 locals {
   default_flags = {
-    "binlog_row_image"   = "MINIMAL"
+    "binlog_row_image"   = "minimal"
     "binlog_row_value_options" = "PARTIAL_JSON"
     "innodb_autoinc_lock_mode" = "2"
     "innodb_lru_scan_depth" = "100"
