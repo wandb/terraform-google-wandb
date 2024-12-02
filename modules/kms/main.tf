@@ -78,7 +78,7 @@ data "google_storage_project_service_account" "gcs_account" {
 }
 
 locals {
-  pubsub_members = var.bind_pubsub_service_to_kms_key ? ["serviceAccount:${google_project_service_identity.pubsub[0].email}"] : []
+  pubsub_members   = var.bind_pubsub_service_to_kms_key ? ["serviceAccount:${google_project_service_identity.pubsub[0].email}"] : []
   bigtable_members = var.bind_bigtable_service_to_kms_key ? ["serviceAccount:${google_project_service_identity.bigtable[0].email}"] : []
   members = concat([
     "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}",

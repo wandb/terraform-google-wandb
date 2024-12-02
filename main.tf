@@ -183,10 +183,10 @@ module "pubsub" {
   source = "./modules/pubsub"
   count  = var.create_pubsub ? 1 : 0
 
-  namespace                      = var.namespace
-  deletion_protection            = var.deletion_protection
-  service_account_email          = local.app_service_account
-  crypto_key                     = local.default_sql_key
+  namespace             = var.namespace
+  deletion_protection   = var.deletion_protection
+  service_account_email = local.app_service_account
+  crypto_key            = local.default_sql_key
 
   labels = var.labels
 }
@@ -309,15 +309,15 @@ module "wandb" {
         }, var.other_wandb_env, local.oidc_envs)
 
         bigTable = {
-          enabled = var.create_bigtable
-          project = local.project_id
+          enabled  = var.create_bigtable
+          project  = local.project_id
           instance = var.create_bigtable ? module.bigtable[0].bigtable_instance_id : ""
         }
 
         pubSub = {
-          enabled = var.create_pubsub
-          project = local.project_id
-          filestreamTopic = var.create_pubsub ? module.pubsub[0].filestream_topic_name : ""
+          enabled              = var.create_pubsub
+          project              = local.project_id
+          filestreamTopic      = var.create_pubsub ? module.pubsub[0].filestream_topic_name : ""
           runUpdateShadowTopic = var.create_pubsub ? module.pubsub[0].run_updates_shadow_topic_name : ""
         }
 
@@ -442,14 +442,14 @@ module "wandb" {
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.executor
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
-        } : {
+          } : {
           name        = null
           annotations = {}
         }
       }
 
       flat-run-fields-updater = {
-        pubSub  = {
+        pubSub = {
           subscription = var.create_pubsub ? module.pubsub[0].flat_run_fields_updater_subscription_name : ""
         }
         serviceAccount = var.create_workload_identity ? {
@@ -462,7 +462,7 @@ module "wandb" {
       }
 
       filestream = {
-        pubSub  = {
+        pubSub = {
           subscription = var.create_pubsub ? module.pubsub[0].filestream_gorilla_subscription_name : ""
         }
         serviceAccount = var.create_workload_identity ? {
