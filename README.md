@@ -224,8 +224,6 @@ resources that lack official modules.
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
-| <a name="input_enable_filestream"></a> [enable\_filestream](#input\_enable\_filestream) | Enable Filestream Service (this will implicitly enable pubsub and bigtable) | `bool` | `false` | no |
-| <a name="input_enable_flat_run_fields_updater"></a> [enable\_flat\_run\_fields\_updater](#input\_enable\_flat\_run\_fields\_updater) | Enable Flat Run Fields Updater Service | `bool` | `false` | no |
 | <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `false` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
