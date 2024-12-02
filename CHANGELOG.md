@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [6.2.1](https://github.com/wandb/terraform-google-wandb/compare/v6.2.0...v6.2.1) (2024-12-02)
+
+
+### Bug Fixes
+
+* Fix database instance flag ([#183](https://github.com/wandb/terraform-google-wandb/issues/183)) ([a9329dd](https://github.com/wandb/terraform-google-wandb/commit/a9329ddf24de5c3d8fd1fe77264e150595902f5f))
+
 ## [6.2.0](https://github.com/wandb/terraform-google-wandb/compare/v6.1.0...v6.2.0) (2024-11-27)
 
 
