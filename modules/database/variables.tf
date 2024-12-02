@@ -62,9 +62,9 @@ variable "database_version" {
 }
 
 variable "database_flags" {
-    description = "Flags to set for the database"
-    type        = map(string)
-    default     = {}
+  description = "Flags to set for the database"
+  type        = map(string)
+  default     = {}
 }
 
 variable "sort_buffer_size" {

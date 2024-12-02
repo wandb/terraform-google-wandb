@@ -30,16 +30,16 @@ data "google_project" "default" {
 
 locals {
   default_flags = {
-    "binlog_row_image"   = "minimal"
-    "binlog_row_value_options" = "PARTIAL_JSON"
-    "innodb_autoinc_lock_mode" = "2"
-    "innodb_lru_scan_depth" = "100"
+    "binlog_row_image"           = "minimal"
+    "binlog_row_value_options"   = "PARTIAL_JSON"
+    "innodb_autoinc_lock_mode"   = "2"
+    "innodb_lru_scan_depth"      = "100"
     "innodb_print_all_deadlocks" = "off"
-    "long_query_time"    = "1"
-    "max_prepared_stmt_count" = "1048576"
-    "max_execution_time" = "60000"
-    "slow_query_log"     = "on"
-    "sort_buffer_size"   = var.sort_buffer_size
+    "long_query_time"            = "1"
+    "max_prepared_stmt_count"    = "1048576"
+    "max_execution_time"         = "60000"
+    "slow_query_log"             = "on"
+    "sort_buffer_size"           = var.sort_buffer_size
   }
   database_flags = merge(local.default_flags, var.database_flags)
 }
