@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.3.0](https://github.com/wandb/terraform-google-wandb/compare/v6.2.1...v6.3.0) (2024-12-02)
+
+
+### Features
+
+* Add internalJWTMap variables used for inter service request authentication ([#177](https://github.com/wandb/terraform-google-wandb/issues/177)) ([69732e0](https://github.com/wandb/terraform-google-wandb/commit/69732e0a5e78946712391c1e625c69ffc11d0d21))
+
+
+### Bug Fixes
+
+* Binlog_row_image needs to have lowercase value ([#182](https://github.com/wandb/terraform-google-wandb/issues/182)) ([ce99cb0](https://github.com/wandb/terraform-google-wandb/commit/ce99cb0691539a514ed96b846a8e98c8ce522d10))
+
 ### [6.2.1](https://github.com/wandb/terraform-google-wandb/compare/v6.2.0...v6.2.1) (2024-12-02)
 
 
