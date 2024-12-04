@@ -82,6 +82,33 @@ resource "google_sql_database_instance" "default" {
         value = database_flags.value
       }
     }
+    database_flags {
+      name  = "innodb_autoinc_lock_mode"
+      value = 2
+    }
+    database_flags {
+      name  = "innodb_print_all_deadlocks"
+      value = var.innodb_print_all_deadlocks
+    }
+    database_flags {
+      name  = "binlog_row_image"
+      value = var.binlog_row_image
+    }
+    database_flags {
+      name  = "binlog_row_value_options"
+      value = var.binlog_row_value_options
+    }
+    database_flags {
+      name  = "innodb_lru_scan_depth"
+      value = var.innodb_lru_scan_depth
+    }
+    dynamic "database_flags" {
+      for_each = var.innodb_io_capacity != null ? [1] : []
+      content {
+        name  = "innodb_io_capacity"
+        value = var.innodb_io_capacity
+      }
+    }
   }
 }
 
