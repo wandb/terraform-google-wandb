@@ -40,6 +40,8 @@ locals {
     "max_execution_time"         = "60000"
     "slow_query_log"             = "on"
     "sort_buffer_size"           = var.sort_buffer_size
+    "skip_show_database"         = "on"
+    "local_infile"               = "off"
   }
   database_flags = merge(local.default_flags, var.database_flags)
 }
