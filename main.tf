@@ -28,6 +28,7 @@ locals {
   create_network = var.network == null
   k8s_sa_map = {
     app         = "wandb-app"
+    bufstream   = "wandb-bufstream"
     parquet     = "wandb-parquet"
     flat_runs   = "wandb-flat-run-fields-updater"
     weave       = "wandb-weave"
@@ -321,11 +322,22 @@ module "wandb" {
         internalJWTMap = [
           {
             subject = "system:serviceaccount:default:${local.k8s_sa_map.weave_trace}"
-            issuer = var.kubernetes_cluster_oidc_issuer_url
+            issuer  = var.kubernetes_cluster_oidc_issuer_url
           }
         ]
       }
 
+      bufstream = {
+        bufstream = {
+          serviceAccount = var.create_workload_identity ? {
+            name        = local.k8s_sa_map.bufstream
+            annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+            } : {
+            name        = ""
+            annotations = {}
+          }
+        }
+      }
       ingress = {
         create       = var.public_access # external ingress for public connection
         nameOverride = var.namespace
