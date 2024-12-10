@@ -280,7 +280,7 @@ module "wandb" {
           "TAG_CUSTOMER_NS"                      = var.namespace
         }, var.other_wandb_env, local.oidc_envs)
 
-        bucket = {
+        defaultBucket = {
           provider = "gcs"
           name     = local.bucket
           path     = var.bucket_path
