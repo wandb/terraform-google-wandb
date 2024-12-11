@@ -413,12 +413,3 @@ variable "clickhouse_subnetwork_cidr" {
   description = "ClickHouse private service connect subnetwork"
   type        = string
 }
-
-###########################################
-# Internal Service                        #
-###########################################
-variable "kubernetes_cluster_oidc_issuer_url" {
-  type        = string
-  description = "OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration`"
-  default     = ""
-}
