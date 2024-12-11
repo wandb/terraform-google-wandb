@@ -55,7 +55,7 @@ variable "create_workload_identity" {
 }
 
 variable "enable_private_gke_nodes" {
-  type = bool
+  type        = bool
   description = "Enable private nodes for the GKE cluster."
 }
 
