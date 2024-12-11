@@ -252,6 +252,16 @@ locals {
   workload_hash = var.create_workload_identity ? substr(sha256("yes"), 0, 50) : null
 }
 
+locals {
+  project_id = data.google_client_config.current.project
+  issuer_url = format(
+    "https://container.googleapis.com/v1/projects/%s/locations/%s/clusters/%s",
+    local.project_id,
+    var.location,
+    google_container_cluster.default.name
+  )
+}
+
 data "google_client_config" "current" {}
 
 module "wandb" {
@@ -321,7 +331,7 @@ module "wandb" {
         internalJWTMap = [
           {
             subject = "system:serviceaccount:default:${local.k8s_sa_map.weave_trace}"
-            issuer = var.kubernetes_cluster_oidc_issuer_url
+            issuer = local.issuer_url
           }
         ]
       }
