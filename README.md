@@ -149,7 +149,6 @@ resources that lack official modules.
 | <a name="input_gke_max_node_count"></a> [gke\_max\_node\_count](#input\_gke\_max\_node\_count) | Maximum number of nodes for the GKE cluster. Defaults to null and value from deployment-size.tf is used | `number` | `null` | no |
 | <a name="input_gke_min_node_count"></a> [gke\_min\_node\_count](#input\_gke\_min\_node\_count) | Initial number of nodes for the GKE cluster, if gke\_max\_node\_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used | `number` | `null` | no |
 | <a name="input_ilb_proxynetwork_cidr"></a> [ilb\_proxynetwork\_cidr](#input\_ilb\_proxynetwork\_cidr) | Internal load balancer proxy subnetwork | `string` | `"10.127.0.0/24"` | no |
-| <a name="input_kubernetes_cluster_oidc_issuer_url"></a> [kubernetes\_cluster\_oidc\_issuer\_url](#input\_kubernetes\_cluster\_oidc\_issuer\_url) | OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration` | `string` | `""` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
 | <a name="input_local_restore"></a> [local\_restore](#input\_local\_restore) | Restores W&B to a stable state if needed | `bool` | `false` | no |
@@ -204,6 +203,7 @@ resources that lack official modules.
 | <a name="output_gke_max_node_count"></a> [gke\_max\_node\_count](#output\_gke\_max\_node\_count) | n/a |
 | <a name="output_gke_node_count"></a> [gke\_node\_count](#output\_gke\_node\_count) | n/a |
 | <a name="output_gke_node_instance_type"></a> [gke\_node\_instance\_type](#output\_gke\_node\_instance\_type) | n/a |
+| <a name="output_oidc_issuer"></a> [oidc\_issuer](#output\_oidc\_issuer) | n/a |
 | <a name="output_private_attachement_id"></a> [private\_attachement\_id](#output\_private\_attachement\_id) | n/a |
 | <a name="output_sa_account_email"></a> [sa\_account\_email](#output\_sa\_account\_email) | This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null |
 | <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Weights & Biases service account used to manage resources. |
