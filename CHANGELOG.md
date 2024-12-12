@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [6.5.1](https://github.com/wandb/terraform-google-wandb/compare/v6.5.0...v6.5.1) (2024-12-12)
+
+
+### Bug Fixes
+
+* don't make the entire cluster private, just the nodes ([#194](https://github.com/wandb/terraform-google-wandb/issues/194)) ([98c6d09](https://github.com/wandb/terraform-google-wandb/commit/98c6d090f2ab6d6e55c8a45f41e6ddca14e62341))
+
 ## [6.5.0](https://github.com/wandb/terraform-google-wandb/compare/v6.4.0...v6.5.0) (2024-12-12)
 
 
