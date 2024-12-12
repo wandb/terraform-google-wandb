@@ -17,7 +17,7 @@ resource "google_compute_router_nat" "nat" {
   name                               = "${var.namespace}-cloud-nat"
   router                             = google_compute_router.this.name
   region                             = google_compute_router.this.region
-  nat_ip_allocate_option = "MANUAL_ONLY"
-  nat_ips                = google_compute_address.this.*.self_link
+  nat_ip_allocate_option             = "MANUAL_ONLY"
+  nat_ips                            = google_compute_address.this.*.self_link
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
