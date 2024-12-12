@@ -26,4 +26,11 @@ resource "google_redis_instance" "default" {
   redis_configs = {
     notify-keyspace-events = "K$"
   }
+
+  lifecycle {
+    ignore_changes = [
+      location_id,
+      alternative_location_id
+    ]
+  }
 }
