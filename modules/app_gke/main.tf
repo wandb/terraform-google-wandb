@@ -5,7 +5,8 @@ locals {
 }
 
 resource "google_container_cluster" "default" {
-  name = "${var.namespace}-cluster"
+  name            = "${var.namespace}-cluster"
+  resource_labels = var.labels
 
   network                     = var.network.self_link
   subnetwork                  = var.subnetwork.self_link
@@ -23,6 +24,14 @@ resource "google_container_cluster" "default" {
     for_each = var.create_workload_identity == true ? [1] : []
     content {
       workload_pool = "${local.project_id}.svc.id.goog"
+    }
+  }
+
+  dynamic "private_cluster_config" {
+    for_each = var.enable_private_gke_nodes == true ? [1] : []
+    content {
+      enable_private_nodes   = true
+      master_ipv4_cidr_block = "10.13.0.0/28"
     }
   }
 

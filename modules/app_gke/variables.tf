@@ -3,6 +3,12 @@ variable "namespace" {
   description = "Friendly name prefix used for tagging and naming AWS resources."
 }
 
+variable "labels" {
+  type        = map(string)
+  description = "Labels to apply to resources"
+  default     = {}
+}
+
 variable "service_account" {
   description = "The service account associated with the GKE cluster instances that host Weights & Biases."
   type        = object({ email = string })
@@ -52,6 +58,11 @@ variable "max_node_count" {
 variable "create_workload_identity" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
+}
+
+variable "enable_private_gke_nodes" {
+  type        = bool
+  description = "Enable private nodes for the GKE cluster."
 }
 
 variable "deletion_protection" {
