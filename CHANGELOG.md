@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.5.0](https://github.com/wandb/terraform-google-wandb/compare/v6.4.0...v6.5.0) (2024-12-12)
+
+
+### Features
+
+* Added support gke private node ([#190](https://github.com/wandb/terraform-google-wandb/issues/190)) ([eb2280a](https://github.com/wandb/terraform-google-wandb/commit/eb2280aa2633de082ddaa2ea9c4ca89781f9e1dd))
+
 ## [6.4.0](https://github.com/wandb/terraform-google-wandb/compare/v6.3.0...v6.4.0) (2024-12-12)
 
 
