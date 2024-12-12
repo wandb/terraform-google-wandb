@@ -5,7 +5,8 @@ locals {
 }
 
 resource "google_container_cluster" "default" {
-  name = "${var.namespace}-cluster"
+  name            = "${var.namespace}-cluster"
+  resource_labels = var.labels
 
   network                     = var.network.self_link
   subnetwork                  = var.subnetwork.self_link

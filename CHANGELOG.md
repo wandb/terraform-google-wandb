@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.0](https://github.com/wandb/terraform-google-wandb/compare/v6.3.0...v6.4.0) (2024-12-12)
+
+
+### Features
+
+* Add additional label references ([#193](https://github.com/wandb/terraform-google-wandb/issues/193)) ([227f60b](https://github.com/wandb/terraform-google-wandb/commit/227f60b93fb32215d57f01426ca29600fd56f27b))
+
 ## [6.3.0](https://github.com/wandb/terraform-google-wandb/compare/v6.2.1...v6.3.0) (2024-12-02)
 
 

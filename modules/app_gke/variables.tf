@@ -3,6 +3,12 @@ variable "namespace" {
   description = "Friendly name prefix used for tagging and naming AWS resources."
 }
 
+variable "labels" {
+  type        = map(string)
+  description = "Labels to apply to resources"
+  default     = {}
+}
+
 variable "service_account" {
   description = "The service account associated with the GKE cluster instances that host Weights & Biases."
   type        = object({ email = string })
