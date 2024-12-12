@@ -27,14 +27,6 @@ resource "google_container_cluster" "default" {
     }
   }
 
-  dynamic "private_cluster_config" {
-    for_each = var.enable_private_gke_nodes == true ? [1] : []
-    content {
-      enable_private_nodes   = true
-      master_ipv4_cidr_block = "10.13.0.0/28"
-    }
-  }
-
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
     services_ipv4_cidr_block = "/19"
@@ -74,6 +66,10 @@ resource "google_container_node_pool" "default" {
     total_max_node_count = var.max_node_count
     total_min_node_count = var.min_node_count
     location_policy      = "BALANCED"
+  }
+
+  network_config {
+    enable_private_nodes = var.enable_private_gke_nodes
   }
 
   node_config {
