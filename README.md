@@ -95,6 +95,7 @@ resources that lack official modules.
 | <a name="module_app_gke"></a> [app\_gke](#module\_app\_gke) | ./modules/app_gke | n/a |
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
 | <a name="module_clickhouse"></a> [clickhouse](#module\_clickhouse) | ./modules/clickhouse | n/a |
+| <a name="module_cloud_nat"></a> [cloud\_nat](#module\_cloud\_nat) | ./modules/cloud_nat | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
 | <a name="module_gke_app"></a> [gke\_app](#module\_gke\_app) | wandb/wandb/kubernetes | 1.14.1 |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./modules/kms | n/a |
@@ -143,6 +144,7 @@ resources that lack official modules.
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
+| <a name="input_enable_private_gke_nodes"></a> [enable\_private\_gke\_nodes](#input\_enable\_private\_gke\_nodes) | Enable private nodes for the GKE cluster. When set to true, nodes will not have public IPs, and Cloud NAT with a static public IP will be used for egress traffic. Ensure sufficient quota for static IPs in the specified region. | `bool` | `false` | no |
 | <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `false` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |

@@ -27,6 +27,14 @@ resource "google_container_cluster" "default" {
     }
   }
 
+  dynamic "private_cluster_config" {
+    for_each = var.enable_private_gke_nodes == true ? [1] : []
+    content {
+      enable_private_nodes   = true
+      master_ipv4_cidr_block = "10.13.0.0/28"
+    }
+  }
+
   ip_allocation_policy {
     cluster_ipv4_cidr_block  = "/14"
     services_ipv4_cidr_block = "/19"

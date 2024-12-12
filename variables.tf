@@ -422,3 +422,9 @@ variable "kubernetes_cluster_oidc_issuer_url" {
   description = "OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration`"
   default     = ""
 }
+
+variable "enable_private_gke_nodes" {
+  type        = bool
+  default     = false
+  description = "Enable private nodes for the GKE cluster. When set to true, nodes will not have public IPs, and Cloud NAT with a static public IP will be used for egress traffic. Ensure sufficient quota for static IPs in the specified region."
+}

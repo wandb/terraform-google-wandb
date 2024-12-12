@@ -125,6 +125,14 @@ module "app_gke" {
   max_node_count           = local.max_node_count
   min_node_count           = local.min_node_count
   labels                   = var.labels
+  enable_private_gke_nodes = var.enable_private_gke_nodes
+}
+
+module "cloud_nat" {
+  count     = var.enable_private_gke_nodes ? 1 : 0
+  source    = "./modules/cloud_nat"
+  network   = local.network
+  namespace = var.namespace
 }
 
 module "app_lb" {
@@ -322,7 +330,7 @@ module "wandb" {
         internalJWTMap = [
           {
             subject = "system:serviceaccount:default:${local.k8s_sa_map.weave_trace}"
-            issuer = var.kubernetes_cluster_oidc_issuer_url
+            issuer  = var.kubernetes_cluster_oidc_issuer_url
           }
         ]
       }

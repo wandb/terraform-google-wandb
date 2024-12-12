@@ -60,6 +60,11 @@ variable "create_workload_identity" {
   type        = bool
 }
 
+variable "enable_private_gke_nodes" {
+  type        = bool
+  description = "Enable private nodes for the GKE cluster."
+}
+
 variable "deletion_protection" {
   description = "If the GKE Cluster should have deletion protection enabled. The GKE Cluster can't be deleted when this value is set to `true`."
   type        = bool
