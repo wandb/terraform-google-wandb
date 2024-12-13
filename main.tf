@@ -345,11 +345,11 @@ module "wandb" {
         }
         ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
         secondary = {
-          create       = var.create_private_link # internal ingress for private link connections
+          create       = true # internal ingress for private link connections
           nameOverride = local.internal_lb_name
           annotations = {
             "kubernetes.io/ingress.class"                   = "gce-internal"
-            "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
+            "kubernetes.io/ingress.regional-static-ip-name" = true ? google_compute_address.default[0].name : null
           }
         }
       }
