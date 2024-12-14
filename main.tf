@@ -317,8 +317,7 @@ module "wandb" {
           "TAG_CUSTOMER_NS"                      = var.namespace
         }, var.other_wandb_env, local.oidc_envs)
 
-        bigTable = {
-          enabled  = var.create_bigtable
+        bigtable = {
           project  = local.project_id
           instance = var.create_bigtable ? module.bigtable[0].bigtable_instance_id : ""
         }
