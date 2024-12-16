@@ -287,7 +287,7 @@ module "wandb" {
         defaultBucket = {
           provider = "gcs"
           name     = module.storage.bucket_name
-          path     = module.storage.bucket_path
+          path     = ""
         }
 
         mysql = {
