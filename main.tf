@@ -440,33 +440,26 @@ resource "google_compute_subnetwork" "proxy" {
   }
 }
 
-## This ensures that the private link resource does not fail during the provisioning process.
-module "sleep" {
-  count   = var.create_private_link ? 1 : 0
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-
-  environment = {
-    TIME = timestamp()
-  }
-  command              = "sleep 400; date +%s"
-  command_when_destroy = "sleep 400"
-  trigger              = timestamp()
-  working_dir          = "/tmp"
-
-  depends = [
-    module.wandb
-  ]
-}
-
 data "google_compute_forwarding_rules" "all" {
-  depends_on = [module.sleep.stdout]
+  depends_on = [null_resource.always_sleep]
 }
 
 locals {
   regex_pattern       = local.internal_lb_name
   filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
   forwarding_rule     = join(", ", local.filtered_rule_names)
+}
+
+resource "null_resource" "always_sleep" {
+  count                 = var.create_private_link ? 1 : 0
+  # A dynamic trigger that changes every time Terraform runs
+  triggers = {
+    always_run = timestamp() # Forces the resource to always run
+  }
+
+  provisioner "local-exec" {
+    command = "echo 'Sleeping for 300 seconds...' && sleep 300"
+  }
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
