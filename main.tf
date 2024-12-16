@@ -451,10 +451,9 @@ locals {
 }
 
 resource "null_resource" "always_sleep" {
-  count                 = var.create_private_link ? 1 : 0
-  # A dynamic trigger that changes every time Terraform runs
+  count = var.create_private_link ? 1 : 0
   triggers = {
-    always_run = timestamp() # Forces the resource to always run
+    always_run = timestamp()
   }
 
   provisioner "local-exec" {
