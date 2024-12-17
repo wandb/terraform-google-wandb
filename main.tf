@@ -282,7 +282,7 @@ module "wandb" {
           provider = "gcs"
           name     = var.bucket_name
           path     = var.bucket_path
-        } : null
+        } : {}
 
         defaultBucket = {
           provider = "gcs"
