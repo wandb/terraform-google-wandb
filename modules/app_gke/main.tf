@@ -14,6 +14,14 @@ resource "google_container_cluster" "default" {
   enable_intranode_visibility = true
   deletion_protection         = var.deletion_protection
 
+  dynamic "addons_config" {
+    for_each = var.enable_gcs_fuse_csi_driver == true ? [1] : []
+    content {
+      gcs_fuse_csi_driver_config {
+        enabled = true
+      }
+    }
+  }
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
