@@ -440,27 +440,16 @@ resource "google_compute_subnetwork" "proxy" {
   }
 }
 
+
 resource "null_resource" "always_sleep" {
   count = var.create_private_link ? 1 : 0
   triggers = {
     always_run = timestamp()
   }
   depends_on = [module.wandb]
+
   provisioner "local-exec" {
-    command = <<EOT
-      #!/bin/bash
-      echo "Checking for existing service attachment"
-      gcloud auth application-default set-quota-project "${local.project_id}"
-      gcloud config set project "${local.project_id}"
-      EXISTS=$(gcloud compute service-attachments list --filter="name=${var.namespace}-private-link" --format="value(name)" )
-      echo $EXISTS
-      if [ -z "$EXISTS" ]; then
-        echo "Sleeping for 300 seconds..."
-        sleep 300
-      else
-        echo "No need to wait."
-      fi
-    EOT
+    command = "echo 'Sleeping for 300 seconds...' && sleep 300"
   }
 }
 
