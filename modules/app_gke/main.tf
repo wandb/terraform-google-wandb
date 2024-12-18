@@ -96,6 +96,7 @@ resource "google_container_node_pool" "default" {
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
+
     workload_metadata_config {
       mode = var.create_workload_identity ? "GKE_METADATA" : "GCE_METADATA"
     }
