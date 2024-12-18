@@ -15,6 +15,10 @@ resource "google_compute_service_attachment" "default" {
     }
   }
   depends_on = [google_compute_subnetwork.default]
+
+  lifecycle {
+    ignore_changes = [target_service]
+  }
 }
 
 resource "google_compute_subnetwork" "default" {

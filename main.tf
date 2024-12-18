@@ -269,11 +269,6 @@ module "wandb" {
 
   spec = {
     values = {
-      chart = {
-        url     = "https://charts.wandb.ai",
-        name    = "operator-wandb",
-        version = "0.21.8"
-      }
       global = {
         pod           = { labels = { workload_hash : local.workload_hash } }
         host          = local.url
@@ -445,6 +440,30 @@ resource "google_compute_subnetwork" "proxy" {
   }
 }
 
+resource "null_resource" "always_sleep" {
+  count = var.create_private_link ? 1 : 0
+  triggers = {
+    always_run = timestamp()
+  }
+  depends_on = [module.wandb]
+  provisioner "local-exec" {
+    command = <<EOT
+      #!/bin/bash
+      echo "Checking for existing service attachment"
+      gcloud auth application-default set-quota-project "${local.project_id}"
+      gcloud config set project "${local.project_id}"
+      EXISTS=$(gcloud compute service-attachments list --filter="name=${var.namespace}-private-link" --format="value(name)" )
+      echo $EXISTS
+      if [ -z "$EXISTS" ]; then
+        echo "Sleeping for 300 seconds..."
+        sleep 300
+      else
+        echo "No need to wait."
+      fi
+    EOT
+  }
+}
+
 data "google_compute_forwarding_rules" "all" {
   depends_on = [null_resource.always_sleep]
 }
@@ -453,17 +472,6 @@ locals {
   regex_pattern       = local.internal_lb_name
   filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
   forwarding_rule     = join(", ", local.filtered_rule_names)
-}
-
-resource "null_resource" "always_sleep" {
-  count = var.create_private_link ? 1 : 0
-  triggers = {
-    always_run = timestamp()
-  }
-
-  provisioner "local-exec" {
-    command = "echo 'Sleeping for 300 seconds...' && sleep 300"
-  }
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
