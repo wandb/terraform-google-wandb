@@ -270,8 +270,8 @@ module "wandb" {
   spec = {
     values = {
       chart = {
-        url = "https://charts.wandb.ai",
-        name = "operator-wandb",
+        url     = "https://charts.wandb.ai",
+        name    = "operator-wandb",
         version = "0.21.8"
       }
       global = {
