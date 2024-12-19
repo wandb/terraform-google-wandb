@@ -14,7 +14,6 @@ variable "network" {
   type        = object({ id = string })
 }
 
-
 variable "subnetwork" {
   type = object({
     self_link = string
