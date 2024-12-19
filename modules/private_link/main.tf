@@ -1,3 +1,15 @@
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "5.34.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "3.2.2"
+    }
+  }
+}
 data "google_client_config" "current" {}
 
 resource "google_compute_service_attachment" "default" {
@@ -14,7 +26,9 @@ resource "google_compute_service_attachment" "default" {
       connection_limit  = consumer_accept_lists.value
     }
   }
-  depends_on = [google_compute_subnetwork.default]
+  depends_on = [
+    google_compute_subnetwork.default
+  ]
 }
 
 resource "google_compute_subnetwork" "default" {

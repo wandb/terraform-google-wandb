@@ -440,33 +440,37 @@ resource "google_compute_subnetwork" "proxy" {
   }
 }
 
-## This ensures that the private link resource does not fail during the provisioning process.
-module "sleep" {
-  count   = var.create_private_link ? 1 : 0
-  source  = "matti/resource/shell"
-  version = "1.5.0"
+resource "null_resource" "wait_for_lb" {
+  count                 = var.create_private_link ? 1 : 0
 
-  environment = {
-    TIME = timestamp()
+  provisioner "local-exec" {
+    command = <<EOF
+      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/$(echo $(uname -s) | tr '[:upper:]' '[:lower:]')/$(uname -m)/kubectl" && chmod +x kubectl &&
+      echo ${module.app_gke.cluster_ca_certificate} | base64 -d  >> kubectl_ca.crt &&
+      ./kubectl config set-cluster ${module.app_gke.cluster_name} --server=https://${module.app_gke.cluster_endpoint} --certificate-authority=./kubectl_ca.crt &&
+      ./kubectl config set-credentials ${module.app_gke.cluster_name} --token=${data.google_client_config.current.access_token} &&
+      ./kubectl config set-context ${module.app_gke.cluster_name} --cluster=${module.app_gke.cluster_name} --user=${module.app_gke.cluster_name} &&
+      ./kubectl config use-context ${module.app_gke.cluster_name} &&
+      ./kubectl wait --for=jsonpath='{.status.loadBalancer.ingress}' ingress --namespace="default" ${local.internal_lb_name}
+    EOF
   }
-  command              = "sleep 400; date +%s"
-  command_when_destroy = "sleep 400"
-  trigger              = timestamp()
-  working_dir          = "/tmp"
 
-  depends = [
-    module.wandb
-  ]
+  depends_on = [module.wandb]
 }
 
-data "google_compute_forwarding_rules" "all" {
-  depends_on = [module.sleep.stdout]
+data "kubernetes_ingress_v1" "internal-lb" {
+  count       = var.create_private_link ? 1 : 0
+  metadata {
+    name      = local.internal_lb_name
+    namespace = "default"
+  }
+
+  depends_on = [null_resource.wait_for_lb]
 }
 
 locals {
-  regex_pattern       = local.internal_lb_name
-  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
-  forwarding_rule     = join(", ", local.filtered_rule_names)
+  annotations = try(data.kubernetes_ingress_v1.internal-lb[0].metadata[0].annotations, {})
+  forwarding_rule = try(local.annotations["ingress.kubernetes.io/forwarding-rule"], "")
 }
 
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
@@ -480,5 +484,5 @@ module "private_link" {
   allowed_project_names = var.allowed_project_names
   psc_subnetwork        = var.psc_subnetwork_cidr
   proxynetwork_cidr     = var.ilb_proxynetwork_cidr
-  depends_on            = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.all]
+  depends_on            = [google_compute_subnetwork.proxy, null_resource.wait_for_lb]
 }
