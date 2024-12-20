@@ -78,6 +78,7 @@ resources that lack official modules.
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.30 |
+| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | 0.11.2 |
@@ -87,8 +88,6 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | ~> 5.30 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | ~> 2.23 |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
 
 ## Modules
 
@@ -116,14 +115,13 @@ resources that lack official modules.
 | Name | Type |
 |------|------|
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
-| [kubernetes_ingress_v1.internal-lb](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/ingress_v1) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allowed_inbound_cidrs"></a> [allowed\_inbound\_cidrs](#input\_allowed\_inbound\_cidrs) | Which IPv4 addresses/ranges to allow access. This must be explicitly provided, and by default is set to ["*"] | `list(string)` | <pre>[<br/>  "*"<br/>]</pre> | no |
-| <a name="input_allowed_project_names"></a> [allowed\_project\_names](#input\_allowed\_project\_names) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | `{}` | no |
+| <a name="input_allowed_project_names"></a> [allowed\_project\_names](#input\_allowed\_project\_names) | A map of allowed projects where each key is a project number and the value is the connection limit. | `map(number)` | <pre>{<br/>  "wandb-qa": 20<br/>}</pre> | no |
 | <a name="input_app_wandb_env"></a> [app\_wandb\_env](#input\_app\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_bucket_default_encryption"></a> [bucket\_default\_encryption](#input\_bucket\_default\_encryption) | Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created. Takes precedence over `bucket_kms_key_id`. | `bool` | `false` | no |
 | <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. | `string` | `null` | no |
@@ -207,7 +205,7 @@ resources that lack official modules.
 | <a name="output_gke_max_node_count"></a> [gke\_max\_node\_count](#output\_gke\_max\_node\_count) | n/a |
 | <a name="output_gke_node_count"></a> [gke\_node\_count](#output\_gke\_node\_count) | n/a |
 | <a name="output_gke_node_instance_type"></a> [gke\_node\_instance\_type](#output\_gke\_node\_instance\_type) | n/a |
-| <a name="output_private_attachement_id"></a> [private\_attachement\_id](#output\_private\_attachement\_id) | n/a |
+| <a name="output_private_attachment_id"></a> [private\_attachment\_id](#output\_private\_attachment\_id) | n/a |
 | <a name="output_sa_account_email"></a> [sa\_account\_email](#output\_sa\_account\_email) | This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null |
 | <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Weights & Biases service account used to manage resources. |
 | <a name="output_standardized_size"></a> [standardized\_size](#output\_standardized\_size) | n/a |
