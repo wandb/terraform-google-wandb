@@ -13,18 +13,18 @@ resource "google_compute_subnetwork" "proxy" {
 }
 
 resource "google_compute_region_network_endpoint_group" "external_lb" {
-  name = "${var.namespace}-psc-lb-neg"
+  name   = "${var.namespace}-psc-lb-neg"
   region = data.google_client_config.current.region
 
   network_endpoint_type = "INTERNET_FQDN_PORT"
-  network = var.network.id
+  network               = var.network.id
 }
 
 resource "google_compute_region_network_endpoint" "external_lb" {
   region_network_endpoint_group = google_compute_region_network_endpoint_group.external_lb.name
 
-  fqdn  = var.fqdn
-  port  = 443
+  fqdn = var.fqdn
+  port = 443
 }
 
 resource "google_compute_region_backend_service" "internal_nlb" {
@@ -32,8 +32,8 @@ resource "google_compute_region_backend_service" "internal_nlb" {
   protocol              = "TCP"
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
-    group           = google_compute_region_network_endpoint_group.external_lb.id
-    balancing_mode  = ""
+    group          = google_compute_region_network_endpoint_group.external_lb.id
+    balancing_mode = ""
   }
 }
 
@@ -43,16 +43,16 @@ resource "google_compute_region_target_tcp_proxy" "internal_nlb" {
 }
 
 resource "google_compute_forwarding_rule" "internal_nlb" {
-  name = "${var.namespace}-psc-nlb"
+  name                  = "${var.namespace}-psc-nlb"
   load_balancing_scheme = "INTERNAL_MANAGED"
 
   allow_global_access = true
-  ip_protocol = "TCP"
-  port_range  = "443"
+  ip_protocol         = "TCP"
+  port_range          = "443"
 
   target = google_compute_region_target_tcp_proxy.internal_nlb.id
 
-  network = var.network.id
+  network    = var.network.id
   subnetwork = var.subnetwork.self_link
 }
 

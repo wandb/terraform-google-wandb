@@ -9,10 +9,10 @@ variable "network" {
 
 variable "proxy_nat" {
   description = "Enable NAT for the Load Balancer Proxy Subnets"
-  type = bool
+  type        = bool
 }
 
 variable "vpc_nat" {
   description = "Enable NAT for the VPC"
-  type = bool
+  type        = bool
 }

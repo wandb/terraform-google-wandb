@@ -31,5 +31,5 @@ resource "google_compute_router_nat" "nat_lb_proxy" {
   region                             = google_compute_router.this.region
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-  endpoint_types = ["ENDPOINT_TYPE_MANAGED_PROXY_LB"]
+  endpoint_types                     = ["ENDPOINT_TYPE_MANAGED_PROXY_LB"]
 }
