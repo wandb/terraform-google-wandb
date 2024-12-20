@@ -359,7 +359,7 @@ variable "public_access" {
 variable "allowed_project_names" {
   type = map(number)
   default = {
-    "wandb-qa" : 20
+    # "project_ID" = 10
   }
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
