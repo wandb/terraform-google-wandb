@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.6.0](https://github.com/wandb/terraform-google-wandb/compare/v6.5.2...v6.6.0) (2024-12-18)
+
+
+### Features
+
+* Enable GCS FUSE driver addon ([#198](https://github.com/wandb/terraform-google-wandb/issues/198)) ([510164a](https://github.com/wandb/terraform-google-wandb/commit/510164a79c39655ac5276861d1ac797a9d75c220))
+
 ### [6.5.2](https://github.com/wandb/terraform-google-wandb/compare/v6.5.1...v6.5.2) (2024-12-12)
 
 

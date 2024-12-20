@@ -65,6 +65,12 @@ variable "enable_private_gke_nodes" {
   description = "Enable private nodes for the GKE cluster."
 }
 
+variable "enable_gcs_fuse_csi_driver" {
+  type        = bool
+  description = "Enable GCS Fuse CSI driver for the GKE cluster."
+  default     = false
+}
+
 variable "deletion_protection" {
   description = "If the GKE Cluster should have deletion protection enabled. The GKE Cluster can't be deleted when this value is set to `true`."
   type        = bool
