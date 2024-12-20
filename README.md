@@ -13,7 +13,7 @@ like audit logging and single sign-on.
 This module is intended to run in an Google Cloud account with minimal
 preparation, however it does have the following pre-requisites:
 
-### Terrafom version >= 1
+### Terrafom version >= 1.9
 
 ### Credentials / Permissions
 
