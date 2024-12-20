@@ -76,7 +76,7 @@ resources that lack official modules.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
@@ -108,7 +108,7 @@ resources that lack official modules.
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
 | <a name="module_sleep"></a> [sleep](#module\_sleep) | matti/resource/shell | 1.5.0 |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
-| <a name="module_wandb"></a> [wandb](#module\_wandb) | wandb/wandb/helm | 1.2.0 |
+| <a name="module_wandb"></a> [wandb](#module\_wandb) | wandb/wandb/helm | 2.0.0 |
 
 ## Resources
 
