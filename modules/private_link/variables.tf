@@ -3,17 +3,10 @@ variable "namespace" {
   description = "The name prefix for all resources created."
 }
 
-variable "labels" {
-  description = "Labels which will be applied to all applicable resources."
-  type        = map(string)
-  default     = {}
-}
-
 variable "network" {
   description = "Google Compute Engine network to which the cluster is connected."
   type        = object({ id = string })
 }
-
 
 variable "subnetwork" {
   type = object({
@@ -38,7 +31,7 @@ variable "proxynetwork_cidr" {
   description = "Internal load balancer proxy subnetwork"
 }
 
-variable "forwarding_rule" {
+variable "fqdn" {
   type        = string
-  description = "forwarding rule name used in private service connect as a target"
+  description = "Fully qualified domain name or hostname"
 }
