@@ -129,10 +129,12 @@ module "app_gke" {
 }
 
 module "cloud_nat" {
-  count     = var.enable_private_gke_nodes ? 1 : 0
+  count     = var.enable_private_gke_nodes || var.create_private_link ? 1 : 0
   source    = "./modules/cloud_nat"
   network   = local.network
   namespace = var.namespace
+  vpc_nat   = var.enable_private_gke_nodes
+  proxy_nat = var.create_private_link
 }
 
 module "app_lb" {
@@ -254,7 +256,6 @@ locals {
     "OIDC_AUTH_METHOD" = var.oidc_auth_method
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
-  internal_lb_name = "${var.namespace}-internal"
 }
 
 locals {
@@ -343,15 +344,6 @@ module "wandb" {
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
         }
-        ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
-        secondary = {
-          create       = var.create_private_link # internal ingress for private link connections
-          nameOverride = local.internal_lb_name
-          annotations = {
-            "kubernetes.io/ingress.class"                   = "gce-internal"
-            "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
-          }
-        }
       }
 
       # To support otel rds and redis metrics need operator-wandb chart minimum version 0.13.8 ( stackdriver subchart)
@@ -427,62 +419,16 @@ module "wandb" {
   ]
 }
 
-# proxy-only subnet used by internal load balancer
-resource "google_compute_subnetwork" "proxy" {
-  count         = var.create_private_link ? 1 : 0
-  name          = "${var.namespace}-proxy-subnet"
-  ip_cidr_range = var.ilb_proxynetwork_cidr
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-  network       = local.network.id
-  timeouts {
-    delete = "2m"
-  }
-}
-
-resource "null_resource" "wait_for_lb" {
-  count                 = var.create_private_link ? 1 : 0
-
-  provisioner "local-exec" {
-    command = <<EOF
-      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/$(echo $(uname -s) | tr '[:upper:]' '[:lower:]')/$(uname -m)/kubectl" && chmod +x kubectl &&
-      echo ${module.app_gke.cluster_ca_certificate} | base64 -d  >> kubectl_ca.crt &&
-      ./kubectl config set-cluster ${module.app_gke.cluster_name} --server=https://${module.app_gke.cluster_endpoint} --certificate-authority=./kubectl_ca.crt &&
-      ./kubectl config set-credentials ${module.app_gke.cluster_name} --token=${data.google_client_config.current.access_token} &&
-      ./kubectl config set-context ${module.app_gke.cluster_name} --cluster=${module.app_gke.cluster_name} --user=${module.app_gke.cluster_name} &&
-      ./kubectl config use-context ${module.app_gke.cluster_name} &&
-      ./kubectl wait --for=jsonpath='{.status.loadBalancer.ingress}' ingress --namespace="default" ${local.internal_lb_name}
-    EOF
-  }
-
-  depends_on = [module.wandb]
-}
-
-data "kubernetes_ingress_v1" "internal-lb" {
-  count       = var.create_private_link ? 1 : 0
-  metadata {
-    name      = local.internal_lb_name
-    namespace = "default"
-  }
-
-  depends_on = [null_resource.wait_for_lb]
-}
-
-locals {
-  annotations = try(data.kubernetes_ingress_v1.internal-lb[0].metadata[0].annotations, {})
-  forwarding_rule = try(local.annotations["ingress.kubernetes.io/forwarding-rule"], "")
-}
-
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
 module "private_link" {
   count                 = var.create_private_link ? 1 : 0
   source                = "./modules/private_link"
   namespace             = var.namespace
-  forwarding_rule       = local.forwarding_rule
   network               = local.network
   subnetwork            = local.subnetwork
   allowed_project_names = var.allowed_project_names
   psc_subnetwork        = var.psc_subnetwork_cidr
   proxynetwork_cidr     = var.ilb_proxynetwork_cidr
-  depends_on            = [google_compute_subnetwork.proxy, null_resource.wait_for_lb]
+  fqdn                  = local.fqdn
+  depends_on            = [module.wandb]
 }
