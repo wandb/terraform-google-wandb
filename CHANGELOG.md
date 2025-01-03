@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [6.6.1](https://github.com/wandb/terraform-google-wandb/compare/v6.6.0...v6.6.1) (2025-01-03)
+
+
+### Bug Fixes
+
+* Tune mysql database flags ([#187](https://github.com/wandb/terraform-google-wandb/issues/187)) ([f7c5659](https://github.com/wandb/terraform-google-wandb/commit/f7c5659a2b0fdc70208b1297d37c0e3d37691eda))
+
 ## [6.6.0](https://github.com/wandb/terraform-google-wandb/compare/v6.5.2...v6.6.0) (2024-12-18)
 
 
