@@ -440,27 +440,21 @@ resource "google_compute_subnetwork" "proxy" {
   }
 }
 
-## This ensures that the private link resource does not fail during the provisioning process.
-module "sleep" {
-  count   = var.create_private_link ? 1 : 0
-  source  = "matti/resource/shell"
-  version = "1.5.0"
 
-  environment = {
-    TIME = timestamp()
+resource "null_resource" "always_sleep" {
+  count = var.create_private_link ? 1 : 0
+  triggers = {
+    always_run = timestamp()
   }
-  command              = "sleep 400; date +%s"
-  command_when_destroy = "sleep 400"
-  trigger              = timestamp()
-  working_dir          = "/tmp"
+  depends_on = [module.wandb]
 
-  depends = [
-    module.wandb
-  ]
+  provisioner "local-exec" {
+    command = "echo 'Sleeping for 300 seconds...' && sleep 300"
+  }
 }
 
 data "google_compute_forwarding_rules" "all" {
-  depends_on = [module.sleep.stdout]
+  depends_on = [null_resource.always_sleep]
 }
 
 locals {

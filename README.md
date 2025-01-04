@@ -80,6 +80,7 @@ resources that lack official modules.
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.2 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | 0.11.2 |
 
 ## Providers
@@ -87,6 +88,7 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | ~> 5.30 |
+| <a name="provider_null"></a> [null](#provider\_null) | ~> 3.2.2 |
 
 ## Modules
 
@@ -106,7 +108,6 @@ resources that lack official modules.
 | <a name="module_project_factory_project_services"></a> [project\_factory\_project\_services](#module\_project\_factory\_project\_services) | terraform-google-modules/project-factory/google//modules/project_services | ~> 14.0 |
 | <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
-| <a name="module_sleep"></a> [sleep](#module\_sleep) | matti/resource/shell | 1.5.0 |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
 | <a name="module_wandb"></a> [wandb](#module\_wandb) | wandb/wandb/helm | 1.2.0 |
 
