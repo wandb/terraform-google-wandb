@@ -3,17 +3,10 @@ variable "namespace" {
   description = "The name prefix for all resources created."
 }
 
-variable "labels" {
-  description = "Labels which will be applied to all applicable resources."
-  type        = map(string)
-  default     = {}
-}
-
 variable "network" {
   description = "Google Compute Engine network to which the cluster is connected."
   type        = object({ id = string })
 }
-
 
 variable "subnetwork" {
   type = object({
@@ -28,17 +21,17 @@ variable "allowed_project_names" {
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
 
-variable "psc_subnetwork" {
+variable "psc_subnetwork_cidr" {
   type        = string
-  description = "Private link service reserved subnetwork"
+  description = "Private link service reserved subnetwork CIDR range"
 }
 
-variable "proxynetwork_cidr" {
+variable "ilb_proxynetwork_cidr" {
   type        = string
-  description = "Internal load balancer proxy subnetwork"
+  description = "CIDR range for the internal load balancer proxy subnet"
 }
 
-variable "forwarding_rule" {
+variable "ilb_name" {
   type        = string
-  description = "forwarding rule name used in private service connect as a target"
+  description = "Name of the internal load balancer"
 }
