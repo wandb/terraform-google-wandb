@@ -265,7 +265,7 @@ data "google_client_config" "current" {}
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.2.0"
+  version = "2.0.0"
 
   spec = {
     values = {
@@ -417,6 +417,7 @@ module "wandb" {
 
   controller_image_tag   = var.controller_image_tag
   operator_chart_version = var.operator_chart_version
+  enable_helm_release    = var.enable_helm_release
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority

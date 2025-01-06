@@ -109,6 +109,12 @@ variable "controller_image_tag" {
   default     = "1.14.0"
 }
 
+variable "enable_helm_release" {
+  type        = bool
+  default     = true
+  description = "Enable or disable applying and releasing Helm chart"
+}
+
 ##########################################
 # Networking                             #
 ##########################################
