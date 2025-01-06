@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.0.0](https://github.com/wandb/terraform-google-wandb/compare/v6.6.1...v7.0.0) (2025-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump helm-wandb vers to v2.0.0, requires TF > 1.9 (#200)
+
+### Features
+
+* Bump helm-wandb vers to v2.0.0, requires TF > 1.9 ([#200](https://github.com/wandb/terraform-google-wandb/issues/200)) ([3b3e811](https://github.com/wandb/terraform-google-wandb/commit/3b3e81122661681ed80a1cedfd531351f0469bfd))
+
 ### [6.6.1](https://github.com/wandb/terraform-google-wandb/compare/v6.6.0...v6.6.1) (2025-01-03)
 
 
