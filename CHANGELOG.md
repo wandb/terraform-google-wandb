@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [7.0.1](https://github.com/wandb/terraform-google-wandb/compare/v7.0.0...v7.0.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* missing var passthrough ([#202](https://github.com/wandb/terraform-google-wandb/issues/202)) ([327a97c](https://github.com/wandb/terraform-google-wandb/commit/327a97cfdf53d38ccd12f7ac139ebd44a679bd53))
+
 ## [7.0.0](https://github.com/wandb/terraform-google-wandb/compare/v6.6.1...v7.0.0) (2025-01-06)
 
 
