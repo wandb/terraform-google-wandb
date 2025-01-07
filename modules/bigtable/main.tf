@@ -2,13 +2,19 @@ locals {
   sa_member = "serviceAccount:${var.service_account_email}"
 }
 
+locals {
+  # google_bigtable_instance.cluster.cluster_id has a min length of 6 and a max length of 30
+  instance_name = (length(var.namespace)) < 6 ? "${var.namespace}-bt" : var.namespace
+  trimmed_instance_name = length(local.instance_name) > 27 ? substr(local.instance_name, 0, 27) : local.instance_name
+}
+
 resource "google_bigtable_instance" "default" {
-  name                = var.namespace
+  name                = local.trimmed_instance_name
   deletion_protection = var.deletion_protection
   force_destroy       = !var.deletion_protection
 
   cluster {
-    cluster_id   = "${var.namespace}-c1"
+    cluster_id   = "${local.trimmed_instance_name}-c1"
     storage_type = var.storage_type
     kms_key_name = var.crypto_key
     autoscaling_config {
