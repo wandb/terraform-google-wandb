@@ -336,6 +336,12 @@ module "wandb" {
         ]
       }
 
+      console = {
+        extraEnv = {
+          "REFERENCE_IDENTITY" = module.service_accounts.service_account.email
+        }
+      }
+
       ingress = {
         create       = var.public_access # external ingress for public connection
         nameOverride = var.namespace
