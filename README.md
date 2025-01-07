@@ -144,6 +144,7 @@ resources that lack official modules.
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
+| <a name="input_enable_gcs_fuse_csi_driver"></a> [enable\_gcs\_fuse\_csi\_driver](#input\_enable\_gcs\_fuse\_csi\_driver) | Enable GCS Fuse CSI driver for the GKE cluster. | `bool` | `false` | no |
 | <a name="input_enable_helm_release"></a> [enable\_helm\_release](#input\_enable\_helm\_release) | Enable or disable applying and releasing Helm chart | `bool` | `true` | no |
 | <a name="input_enable_private_gke_nodes"></a> [enable\_private\_gke\_nodes](#input\_enable\_private\_gke\_nodes) | Enable private nodes for the GKE cluster. When set to true, nodes will not have public IPs, and Cloud NAT with a static public IP will be used for egress traffic. Ensure sufficient quota for static IPs in the specified region. | `bool` | `false` | no |
 | <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `false` | no |
