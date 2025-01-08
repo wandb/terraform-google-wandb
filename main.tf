@@ -113,19 +113,20 @@ locals {
 }
 
 module "app_gke" {
-  source                   = "./modules/app_gke"
-  namespace                = var.namespace
-  machine_type             = local.gke_machine_type
-  network                  = local.network
-  subnetwork               = local.subnetwork
-  service_account          = module.service_accounts.service_account
-  create_workload_identity = var.create_workload_identity
-  deletion_protection      = var.deletion_protection
-  depends_on               = [module.project_factory_project_services]
-  max_node_count           = local.max_node_count
-  min_node_count           = local.min_node_count
-  labels                   = var.labels
-  enable_private_gke_nodes = var.enable_private_gke_nodes
+  source                     = "./modules/app_gke"
+  namespace                  = var.namespace
+  machine_type               = local.gke_machine_type
+  network                    = local.network
+  subnetwork                 = local.subnetwork
+  service_account            = module.service_accounts.service_account
+  enable_gcs_fuse_csi_driver = var.enable_gcs_fuse_csi_driver
+  create_workload_identity   = var.create_workload_identity
+  deletion_protection        = var.deletion_protection
+  depends_on                 = [module.project_factory_project_services]
+  max_node_count             = local.max_node_count
+  min_node_count             = local.min_node_count
+  labels                     = var.labels
+  enable_private_gke_nodes   = var.enable_private_gke_nodes
 }
 
 module "cloud_nat" {
@@ -266,7 +267,7 @@ data "google_client_config" "current" {}
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.2.0"
+  version = "2.0.0"
 
   spec = {
     values = {
@@ -409,6 +410,7 @@ module "wandb" {
 
   controller_image_tag   = var.controller_image_tag
   operator_chart_version = var.operator_chart_version
+  enable_helm_release    = var.enable_helm_release
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
