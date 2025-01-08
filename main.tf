@@ -338,7 +338,7 @@ module "wandb" {
 
       console = {
         extraEnv = {
-          "REFERENCE_IDENTITY" = module.service_accounts.service_account.email
+          "BUCKET_ACCESS_IDENTITY" = module.service_accounts.service_account.email
         }
       }
 
