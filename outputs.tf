@@ -92,8 +92,8 @@ output "database_instance_type" {
   value = local.database_machine_type
 }
 
-output "private_attachement_id" {
-  value = var.create_private_link ? module.private_link[0].private_attachement_id : null
+output "private_attachment_id" {
+  value = var.create_private_link ? module.private_link[0].private_attachment_id : null
 }
 
 output "sa_account_email" {
