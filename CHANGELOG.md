@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [7.0.3](https://github.com/wandb/terraform-google-wandb/compare/v7.0.2...v7.0.3) (2025-01-10)
+
+
+### Bug Fixes
+
+* Rework the PSC connection to support SSL and be available globally ([#199](https://github.com/wandb/terraform-google-wandb/issues/199)) ([edd460b](https://github.com/wandb/terraform-google-wandb/commit/edd460b66ea11d27a11fdd70bf1e00d35214c461))
+
 ### [7.0.2](https://github.com/wandb/terraform-google-wandb/compare/v7.0.1...v7.0.2) (2025-01-08)
 
 
