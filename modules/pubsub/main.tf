@@ -33,6 +33,10 @@ resource "google_pubsub_subscription" "filestream-gorilla" {
   #   dead_letter_topic     = google_pubsub_topic.filestream_dead_letter.name
   #   max_delivery_attempts = 5
   # }
+  retry_policy {
+    minimum_backoff = "10s"
+    maximum_backoff = "600s"
+  }
 
   message_retention_duration = "604800s" # 7 days.
   ack_deadline_seconds       = 30
