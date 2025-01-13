@@ -444,3 +444,8 @@ module "private_link" {
   fqdn                  = local.fqdn
   depends_on            = [module.wandb]
 }
+
+moved {
+  from = module.storage[0]
+  to   = module.storage
+}
