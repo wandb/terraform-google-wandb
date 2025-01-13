@@ -24,7 +24,6 @@ locals {
   fqdn           = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
   url_prefix     = var.ssl ? "https" : "http"
   url            = "${local.url_prefix}://${local.fqdn}"
-  create_bucket  = var.bucket_name == ""
   create_network = var.network == null
   k8s_sa_map = {
     app         = "wandb-app"
@@ -83,7 +82,6 @@ locals {
 }
 
 module "storage" {
-  count     = local.create_bucket ? 1 : 0
   source    = "./modules/storage"
   namespace = var.namespace
   labels    = var.labels
@@ -194,8 +192,8 @@ module "clickhouse" {
 locals {
   redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
-  bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
-  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
+  bucket                  = var.bucket_name != "" ? var.bucket_name : module.storage.bucket_name
+  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.bucket_queue_name}"
   bucket_path             = var.bucket_path
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
@@ -282,9 +280,15 @@ module "wandb" {
           "TAG_CUSTOMER_NS"                      = var.namespace
         }, var.other_wandb_env, local.oidc_envs)
 
-        bucket = {
+        bucket = var.bucket_name != "" ? {
           provider = "gcs"
-          name     = local.bucket
+          name     = var.bucket_name
+          path     = var.bucket_path
+        } : {}
+
+        defaultBucket = {
+          provider = "gcs"
+          name     = module.storage.bucket_name
           path     = var.bucket_path
         }
 
@@ -439,4 +443,9 @@ module "private_link" {
   proxynetwork_cidr     = var.ilb_proxynetwork_cidr
   fqdn                  = local.fqdn
   depends_on            = [module.wandb]
+}
+
+moved {
+  from = module.storage[0]
+  to   = module.storage
 }
