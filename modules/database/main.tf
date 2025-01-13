@@ -35,7 +35,7 @@ locals {
     "innodb_autoinc_lock_mode"   = "2"
     "innodb_lru_scan_depth"      = "100"
     "innodb_print_all_deadlocks" = "off"
-    "local_infile"               = "off"
+    "local_infile"               = "on"
     "long_query_time"            = "1"
     "max_prepared_stmt_count"    = "1048576"
     "max_execution_time"         = "60000"
