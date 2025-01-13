@@ -2,6 +2,59 @@
 
 All notable changes to this project will be documented in this file.
 
+### [7.0.4](https://github.com/wandb/terraform-google-wandb/compare/v7.0.3...v7.0.4) (2025-01-13)
+
+
+### Bug Fixes
+
+* Reenable local_infile setting for cloudSQL database ([#205](https://github.com/wandb/terraform-google-wandb/issues/205)) ([80b20f6](https://github.com/wandb/terraform-google-wandb/commit/80b20f66bd210936118cfad277a99234d3096e5f))
+
+### [7.0.3](https://github.com/wandb/terraform-google-wandb/compare/v7.0.2...v7.0.3) (2025-01-10)
+
+
+### Bug Fixes
+
+* Rework the PSC connection to support SSL and be available globally ([#199](https://github.com/wandb/terraform-google-wandb/issues/199)) ([edd460b](https://github.com/wandb/terraform-google-wandb/commit/edd460b66ea11d27a11fdd70bf1e00d35214c461))
+
+### [7.0.2](https://github.com/wandb/terraform-google-wandb/compare/v7.0.1...v7.0.2) (2025-01-08)
+
+
+### Bug Fixes
+
+* Pass identity to console ([#203](https://github.com/wandb/terraform-google-wandb/issues/203)) ([4f74d30](https://github.com/wandb/terraform-google-wandb/commit/4f74d30680519e40f43e85d06c8abd3c4564c8e7))
+
+### [7.0.1](https://github.com/wandb/terraform-google-wandb/compare/v7.0.0...v7.0.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* missing var passthrough ([#202](https://github.com/wandb/terraform-google-wandb/issues/202)) ([327a97c](https://github.com/wandb/terraform-google-wandb/commit/327a97cfdf53d38ccd12f7ac139ebd44a679bd53))
+
+## [7.0.0](https://github.com/wandb/terraform-google-wandb/compare/v6.6.1...v7.0.0) (2025-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump helm-wandb vers to v2.0.0, requires TF > 1.9 (#200)
+
+### Features
+
+* Bump helm-wandb vers to v2.0.0, requires TF > 1.9 ([#200](https://github.com/wandb/terraform-google-wandb/issues/200)) ([3b3e811](https://github.com/wandb/terraform-google-wandb/commit/3b3e81122661681ed80a1cedfd531351f0469bfd))
+
+### [6.6.1](https://github.com/wandb/terraform-google-wandb/compare/v6.6.0...v6.6.1) (2025-01-03)
+
+
+### Bug Fixes
+
+* Tune mysql database flags ([#187](https://github.com/wandb/terraform-google-wandb/issues/187)) ([f7c5659](https://github.com/wandb/terraform-google-wandb/commit/f7c5659a2b0fdc70208b1297d37c0e3d37691eda))
+
+## [6.6.0](https://github.com/wandb/terraform-google-wandb/compare/v6.5.2...v6.6.0) (2024-12-18)
+
+
+### Features
+
+* Enable GCS FUSE driver addon ([#198](https://github.com/wandb/terraform-google-wandb/issues/198)) ([510164a](https://github.com/wandb/terraform-google-wandb/commit/510164a79c39655ac5276861d1ac797a9d75c220))
+
 ### [6.5.2](https://github.com/wandb/terraform-google-wandb/compare/v6.5.1...v6.5.2) (2024-12-12)
 
 

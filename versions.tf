@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.0"
+  required_version = "~> 1.9"
   required_providers {
     time = {
       source  = "hashicorp/time"
@@ -7,6 +7,10 @@ terraform {
     }
     google = {
       source  = "hashicorp/google"
+      version = "~> 5.30"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
       version = "~> 5.30"
     }
     kubernetes = {

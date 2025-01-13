@@ -109,6 +109,12 @@ variable "controller_image_tag" {
   default     = "1.14.0"
 }
 
+variable "enable_helm_release" {
+  type        = bool
+  default     = true
+  description = "Enable or disable applying and releasing Helm chart"
+}
+
 ##########################################
 # Networking                             #
 ##########################################
@@ -258,7 +264,6 @@ variable "gke_machine_type" {
   default     = null
 }
 
-
 variable "gke_min_node_count" {
   type        = number
   description = "Initial number of nodes for the GKE cluster, if gke_max_node_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used"
@@ -269,6 +274,12 @@ variable "gke_max_node_count" {
   type        = number
   description = "Maximum number of nodes for the GKE cluster. Defaults to null and value from deployment-size.tf is used"
   default     = null
+}
+
+variable "enable_gcs_fuse_csi_driver" {
+  type        = bool
+  description = "Enable GCS Fuse CSI driver for the GKE cluster."
+  default     = false
 }
 
 ##########################################
@@ -359,7 +370,7 @@ variable "public_access" {
 variable "allowed_project_names" {
   type = map(number)
   default = {
-    # "project_ID" = 4 
+    # "project_ID" = 10
   }
   description = "A map of allowed projects where each key is a project number and the value is the connection limit."
 }
@@ -381,7 +392,6 @@ variable "create_workload_identity" {
   type        = bool
   default     = false
 }
-
 
 variable "enable_stackdriver" {
   type    = bool

@@ -111,26 +111,29 @@ locals {
 }
 
 module "app_gke" {
-  source                   = "./modules/app_gke"
-  namespace                = var.namespace
-  machine_type             = local.gke_machine_type
-  network                  = local.network
-  subnetwork               = local.subnetwork
-  service_account          = module.service_accounts.service_account
-  create_workload_identity = var.create_workload_identity
-  deletion_protection      = var.deletion_protection
-  depends_on               = [module.project_factory_project_services]
-  max_node_count           = local.max_node_count
-  min_node_count           = local.min_node_count
-  labels                   = var.labels
-  enable_private_gke_nodes = var.enable_private_gke_nodes
+  source                     = "./modules/app_gke"
+  namespace                  = var.namespace
+  machine_type               = local.gke_machine_type
+  network                    = local.network
+  subnetwork                 = local.subnetwork
+  service_account            = module.service_accounts.service_account
+  enable_gcs_fuse_csi_driver = var.enable_gcs_fuse_csi_driver
+  create_workload_identity   = var.create_workload_identity
+  deletion_protection        = var.deletion_protection
+  depends_on                 = [module.project_factory_project_services]
+  max_node_count             = local.max_node_count
+  min_node_count             = local.min_node_count
+  labels                     = var.labels
+  enable_private_gke_nodes   = var.enable_private_gke_nodes
 }
 
 module "cloud_nat" {
-  count     = var.enable_private_gke_nodes ? 1 : 0
+  count     = var.enable_private_gke_nodes || var.create_private_link ? 1 : 0
   source    = "./modules/cloud_nat"
   network   = local.network
   namespace = var.namespace
+  vpc_nat   = var.enable_private_gke_nodes
+  proxy_nat = var.create_private_link
 }
 
 module "app_lb" {
@@ -252,7 +255,6 @@ locals {
     "OIDC_AUTH_METHOD" = var.oidc_auth_method
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
-  internal_lb_name = "${var.namespace}-internal"
 }
 
 locals {
@@ -263,7 +265,7 @@ data "google_client_config" "current" {}
 
 module "wandb" {
   source  = "wandb/wandb/helm"
-  version = "1.2.0"
+  version = "2.0.0"
 
   spec = {
     values = {
@@ -339,6 +341,12 @@ module "wandb" {
         ]
       }
 
+      console = {
+        extraEnv = {
+          "BUCKET_ACCESS_IDENTITY" = module.service_accounts.service_account.email
+        }
+      }
+
       ingress = {
         create       = var.public_access # external ingress for public connection
         nameOverride = var.namespace
@@ -346,15 +354,6 @@ module "wandb" {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
-        }
-        ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
-        secondary = {
-          create       = var.create_private_link # internal ingress for private link connections
-          nameOverride = local.internal_lb_name
-          annotations = {
-            "kubernetes.io/ingress.class"                   = "gce-internal"
-            "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
-          }
         }
       }
 
@@ -421,6 +420,7 @@ module "wandb" {
 
   controller_image_tag   = var.controller_image_tag
   operator_chart_version = var.operator_chart_version
+  enable_helm_release    = var.enable_helm_release
 
   # Added `depends_on` to ensure old infrastructure is provisioned first. This addresses a critical scheduling challenge
   # where the Datadog DaemonSet could fail to provision due to CPU constraints. Ensuring the old infrastructure has priority
@@ -431,58 +431,16 @@ module "wandb" {
   ]
 }
 
-# proxy-only subnet used by internal load balancer
-resource "google_compute_subnetwork" "proxy" {
-  count         = var.create_private_link ? 1 : 0
-  name          = "${var.namespace}-proxy-subnet"
-  ip_cidr_range = var.ilb_proxynetwork_cidr
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-  network       = local.network.id
-  timeouts {
-    delete = "2m"
-  }
-}
-
-## This ensures that the private link resource does not fail during the provisioning process.
-module "sleep" {
-  count   = var.create_private_link ? 1 : 0
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-
-  environment = {
-    TIME = timestamp()
-  }
-  command              = "sleep 400; date +%s"
-  command_when_destroy = "sleep 400"
-  trigger              = timestamp()
-  working_dir          = "/tmp"
-
-  depends = [
-    module.wandb
-  ]
-}
-
-data "google_compute_forwarding_rules" "all" {
-  depends_on = [module.sleep.stdout]
-}
-
-locals {
-  regex_pattern       = local.internal_lb_name
-  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
-  forwarding_rule     = join(", ", local.filtered_rule_names)
-}
-
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
 module "private_link" {
   count                 = var.create_private_link ? 1 : 0
   source                = "./modules/private_link"
   namespace             = var.namespace
-  forwarding_rule       = local.forwarding_rule
   network               = local.network
   subnetwork            = local.subnetwork
   allowed_project_names = var.allowed_project_names
   psc_subnetwork        = var.psc_subnetwork_cidr
   proxynetwork_cidr     = var.ilb_proxynetwork_cidr
-  depends_on            = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.all]
+  fqdn                  = local.fqdn
+  depends_on            = [module.wandb]
 }
