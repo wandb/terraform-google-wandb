@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.0.0](https://github.com/wandb/terraform-google-wandb/compare/v7.0.4...v8.0.0) (2025-01-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Use defaultBucket (#189) *BREAKING CHANGE*
+
+### Features
+
+* Use defaultBucket ([#189](https://github.com/wandb/terraform-google-wandb/issues/189)) *BREAKING CHANGE* ([8306b7a](https://github.com/wandb/terraform-google-wandb/commit/8306b7a6dcb4e5ad678bb0c63a87128c3eeb797d))
+
 ### [7.0.4](https://github.com/wandb/terraform-google-wandb/compare/v7.0.3...v7.0.4) (2025-01-13)
 
 
