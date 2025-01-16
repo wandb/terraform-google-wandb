@@ -104,6 +104,12 @@ resource "google_container_node_pool" "default" {
       enable_secure_boot = true
     }
 
+    kubelet_config {
+      cpu_manager_policy = "none"
+      cpu_cfs_quota      = true
+      pod_pids_limit     = 0
+    }
+
     metadata = {
       disable-legacy-endpoints = "true"
     }

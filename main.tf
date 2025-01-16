@@ -24,7 +24,6 @@ locals {
   fqdn           = var.subdomain == null ? var.domain_name : "${var.subdomain}.${var.domain_name}"
   url_prefix     = var.ssl ? "https" : "http"
   url            = "${local.url_prefix}://${local.fqdn}"
-  create_bucket  = var.bucket_name == ""
   create_network = var.network == null
   k8s_sa_map = {
     app         = "wandb-app"
@@ -91,7 +90,6 @@ locals {
 }
 
 module "storage" {
-  count     = local.create_bucket ? 1 : 0
   source    = "./modules/storage"
   namespace = var.namespace
   labels    = var.labels
@@ -138,10 +136,12 @@ module "app_gke" {
 }
 
 module "cloud_nat" {
-  count     = var.enable_private_gke_nodes ? 1 : 0
+  count     = var.enable_private_gke_nodes || var.create_private_link ? 1 : 0
   source    = "./modules/cloud_nat"
   network   = local.network
   namespace = var.namespace
+  vpc_nat   = var.enable_private_gke_nodes
+  proxy_nat = var.create_private_link
 }
 
 module "app_lb" {
@@ -229,8 +229,8 @@ module "clickhouse" {
 locals {
   redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null
-  bucket                  = local.create_bucket ? module.storage[0].bucket_name : var.bucket_name
-  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage[0].bucket_queue_name}"
+  bucket                  = var.bucket_name != "" ? var.bucket_name : module.storage.bucket_name
+  bucket_queue            = var.use_internal_queue ? "internal://" : "pubsub:/${module.storage.bucket_queue_name}"
   bucket_path             = var.bucket_path
   project_id              = module.project_factory_project_services.project_id
   secret_store_source     = "gcp-secretmanager://${local.project_id}?namespace=${var.namespace}"
@@ -292,7 +292,6 @@ locals {
     "OIDC_AUTH_METHOD" = var.oidc_auth_method
     "OIDC_SECRET"      = var.oidc_secret
   } : {}
-  internal_lb_name = "${var.namespace}-internal"
 }
 
 locals {
@@ -330,9 +329,15 @@ module "wandb" {
           runUpdateShadowTopic = var.create_pubsub ? module.pubsub[0].run_updates_shadow_topic_name : ""
         }
 
-        bucket = {
+        bucket = var.bucket_name != "" ? {
           provider = "gcs"
-          name     = local.bucket
+          name     = var.bucket_name
+          path     = var.bucket_path
+        } : {}
+
+        defaultBucket = {
+          provider = "gcs"
+          name     = module.storage.bucket_name
           path     = var.bucket_path
         }
 
@@ -398,15 +403,6 @@ module "wandb" {
           "kubernetes.io/ingress.class"                 = "gce"
           "kubernetes.io/ingress.global-static-ip-name" = module.app_lb.address_operator_name
           "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.app_lb.certificate
-        }
-        ## In order to support secondary ingress required min version 0.13.0 of operator-wandb chart
-        secondary = {
-          create       = var.create_private_link # internal ingress for private link connections
-          nameOverride = local.internal_lb_name
-          annotations = {
-            "kubernetes.io/ingress.class"                   = "gce-internal"
-            "kubernetes.io/ingress.regional-static-ip-name" = var.create_private_link ? google_compute_address.default[0].name : null
-          }
         }
       }
 
@@ -510,58 +506,21 @@ module "wandb" {
   ]
 }
 
-# proxy-only subnet used by internal load balancer
-resource "google_compute_subnetwork" "proxy" {
-  count         = var.create_private_link ? 1 : 0
-  name          = "${var.namespace}-proxy-subnet"
-  ip_cidr_range = var.ilb_proxynetwork_cidr
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-  network       = local.network.id
-  timeouts {
-    delete = "2m"
-  }
-}
-
-## This ensures that the private link resource does not fail during the provisioning process.
-module "sleep" {
-  count   = var.create_private_link ? 1 : 0
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-
-  environment = {
-    TIME = timestamp()
-  }
-  command              = "sleep 400; date +%s"
-  command_when_destroy = "sleep 400"
-  trigger              = timestamp()
-  working_dir          = "/tmp"
-
-  depends = [
-    module.wandb
-  ]
-}
-
-data "google_compute_forwarding_rules" "all" {
-  depends_on = [module.sleep.stdout]
-}
-
-locals {
-  regex_pattern       = local.internal_lb_name
-  filtered_rule_names = [for rule in data.google_compute_forwarding_rules.all.rules : rule.name if can(regex(local.regex_pattern, rule.name))]
-  forwarding_rule     = join(", ", local.filtered_rule_names)
-}
-
 ## In order to support private link required min version 0.13.0 of operator-wandb chart
 module "private_link" {
   count                 = var.create_private_link ? 1 : 0
   source                = "./modules/private_link"
   namespace             = var.namespace
-  forwarding_rule       = local.forwarding_rule
   network               = local.network
   subnetwork            = local.subnetwork
   allowed_project_names = var.allowed_project_names
   psc_subnetwork        = var.psc_subnetwork_cidr
   proxynetwork_cidr     = var.ilb_proxynetwork_cidr
-  depends_on            = [google_compute_subnetwork.proxy, data.google_compute_forwarding_rules.all]
+  fqdn                  = local.fqdn
+  depends_on            = [module.wandb]
+}
+
+moved {
+  from = module.storage[0]
+  to   = module.storage
 }

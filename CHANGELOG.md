@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.0.0](https://github.com/wandb/terraform-google-wandb/compare/v7.0.4...v8.0.0) (2025-01-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Use defaultBucket (#189) *BREAKING CHANGE*
+
+### Features
+
+* Use defaultBucket ([#189](https://github.com/wandb/terraform-google-wandb/issues/189)) *BREAKING CHANGE* ([8306b7a](https://github.com/wandb/terraform-google-wandb/commit/8306b7a6dcb4e5ad678bb0c63a87128c3eeb797d))
+
+### [7.0.4](https://github.com/wandb/terraform-google-wandb/compare/v7.0.3...v7.0.4) (2025-01-13)
+
+
+### Bug Fixes
+
+* Reenable local_infile setting for cloudSQL database ([#205](https://github.com/wandb/terraform-google-wandb/issues/205)) ([80b20f6](https://github.com/wandb/terraform-google-wandb/commit/80b20f66bd210936118cfad277a99234d3096e5f))
+
+### [7.0.3](https://github.com/wandb/terraform-google-wandb/compare/v7.0.2...v7.0.3) (2025-01-10)
+
+
+### Bug Fixes
+
+* Rework the PSC connection to support SSL and be available globally ([#199](https://github.com/wandb/terraform-google-wandb/issues/199)) ([edd460b](https://github.com/wandb/terraform-google-wandb/commit/edd460b66ea11d27a11fdd70bf1e00d35214c461))
+
 ### [7.0.2](https://github.com/wandb/terraform-google-wandb/compare/v7.0.1...v7.0.2) (2025-01-08)
 
 

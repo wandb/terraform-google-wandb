@@ -150,6 +150,7 @@ resources that lack official modules.
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.30 |
+| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | 0.11.2 |
@@ -180,7 +181,6 @@ resources that lack official modules.
 | <a name="module_pubsub"></a> [pubsub](#module\_pubsub) | ./modules/pubsub | n/a |
 | <a name="module_redis"></a> [redis](#module\_redis) | ./modules/redis | n/a |
 | <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | ./modules/service_accounts | n/a |
-| <a name="module_sleep"></a> [sleep](#module\_sleep) | matti/resource/shell | 1.5.0 |
 | <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
 | <a name="module_wandb"></a> [wandb](#module\_wandb) | wandb/wandb/helm | 2.0.0 |
 
@@ -189,7 +189,6 @@ resources that lack official modules.
 | Name | Type |
 |------|------|
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
-| [google_compute_forwarding_rules.all](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_forwarding_rules) | data source |
 
 ## Inputs
 
@@ -289,7 +288,7 @@ resources that lack official modules.
 | <a name="output_gke_max_node_count"></a> [gke\_max\_node\_count](#output\_gke\_max\_node\_count) | n/a |
 | <a name="output_gke_node_count"></a> [gke\_node\_count](#output\_gke\_node\_count) | n/a |
 | <a name="output_gke_node_instance_type"></a> [gke\_node\_instance\_type](#output\_gke\_node\_instance\_type) | n/a |
-| <a name="output_private_attachement_id"></a> [private\_attachement\_id](#output\_private\_attachement\_id) | n/a |
+| <a name="output_private_attachment_id"></a> [private\_attachment\_id](#output\_private\_attachment\_id) | n/a |
 | <a name="output_sa_account_email"></a> [sa\_account\_email](#output\_sa\_account\_email) | This output provides the email address of the service account created for workload identity, if workload identity is enabled. Otherwise, it returns null |
 | <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Weights & Biases service account used to manage resources. |
 | <a name="output_standardized_size"></a> [standardized\_size](#output\_standardized\_size) | n/a |
