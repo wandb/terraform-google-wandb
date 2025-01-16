@@ -4,7 +4,7 @@ locals {
 
 locals {
   # google_bigtable_instance.cluster.cluster_id has a min length of 6 and a max length of 30
-  instance_name = (length(var.namespace)) < 6 ? "${var.namespace}-bigtable" : var.namespace
+  instance_name         = (length(var.namespace)) < 6 ? "${var.namespace}-bigtable" : var.namespace
   trimmed_instance_name = length(local.instance_name) > 27 ? substr(local.instance_name, 0, 27) : local.instance_name
 }
 
