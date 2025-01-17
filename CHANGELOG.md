@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [8.0.1](https://github.com/wandb/terraform-google-wandb/compare/v8.0.0...v8.0.1) (2025-01-16)
+
+
+### Bug Fixes
+
+* Adding missing service account ([#207](https://github.com/wandb/terraform-google-wandb/issues/207)) ([527d4db](https://github.com/wandb/terraform-google-wandb/commit/527d4dbbc3856796c4fea4060c2c2c184c81a4e5))
+
 ## [8.0.0](https://github.com/wandb/terraform-google-wandb/compare/v7.0.4...v8.0.0) (2025-01-13)
 
 

@@ -33,6 +33,9 @@ locals {
     filestream  = "wandb-filestream"
     weave       = "wandb-weave"
     weave_trace = "wandb-weave-trace"
+    settings_migration_job = "wandb-settings-migration-job"
+    wandb_api              = "wandb-api"
+    wandb_glue             = "wandb-glue"
   }
   gke_machine_type      = coalesce(var.gke_machine_type, local.deployment_size[var.size].node_instance)
   max_node_count        = coalesce(var.gke_max_node_count, local.deployment_size[var.size].max_node_count)
@@ -459,6 +462,35 @@ module "wandb" {
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.executor
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+        name        = null
+        annotations = {}
+      }
+
+      settingsMigrationJob = {
+        serviceAccount = var.create_workload_identity ? {
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          name        = local.k8s_sa_map.settings_migration_job
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      api = {
+        serviceAccount = var.create_workload_identity ? {
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          name        = local.k8s_sa_map.wandb_api
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      glue = {
+        serviceAccount = var.create_workload_identity ? {
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          name        = local.k8s_sa_map.wandb_glue
           } : {
           name        = null
           annotations = {}
