@@ -52,7 +52,7 @@ resource "google_compute_forwarding_rule" "internal_nlb" {
 
   target = google_compute_region_target_tcp_proxy.internal_nlb.id
 
-  network    = var.network.id
+  network    = var.network.self_link
   subnetwork = var.subnetwork.self_link
 
   depends_on = [google_compute_subnetwork.proxy]
