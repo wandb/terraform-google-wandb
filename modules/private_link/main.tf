@@ -17,7 +17,7 @@ resource "google_compute_region_network_endpoint_group" "external_lb" {
   region = data.google_client_config.current.region
 
   network_endpoint_type = "INTERNET_FQDN_PORT"
-  network               = var.network.id
+  network               = var.network.self_link
 }
 
 resource "google_compute_region_network_endpoint" "external_lb" {
