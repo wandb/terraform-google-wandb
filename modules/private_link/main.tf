@@ -18,6 +18,10 @@ resource "google_compute_region_network_endpoint_group" "external_lb" {
 
   network_endpoint_type = "INTERNET_FQDN_PORT"
   network               = var.network.self_link
+
+  lifecycle {
+    ignore_changes = [region]
+  }
 }
 
 resource "google_compute_region_network_endpoint" "external_lb" {
