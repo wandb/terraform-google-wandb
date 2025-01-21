@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [8.0.2](https://github.com/wandb/terraform-google-wandb/compare/v8.0.1...v8.0.2) (2025-01-21)
+
+
+### Bug Fixes
+
+* Set the default value or it causes a diff and recreate in TF ([#208](https://github.com/wandb/terraform-google-wandb/issues/208)) ([c7dc4dd](https://github.com/wandb/terraform-google-wandb/commit/c7dc4ddaa4e87df495fbde059cd1fe07d595f973))
+
 ### [8.0.1](https://github.com/wandb/terraform-google-wandb/compare/v8.0.0...v8.0.1) (2025-01-16)
 
 
