@@ -33,7 +33,7 @@ resource "google_compute_region_backend_service" "internal_nlb" {
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
     group          = google_compute_region_network_endpoint_group.external_lb.id
-    balancing_mode = ""
+    balancing_mode = "UTILIZATION"
   }
 }
 
@@ -54,6 +54,8 @@ resource "google_compute_forwarding_rule" "internal_nlb" {
 
   network    = var.network.id
   subnetwork = var.subnetwork.self_link
+
+  depends_on = [google_compute_subnetwork.proxy]
 }
 
 resource "google_compute_service_attachment" "default" {
