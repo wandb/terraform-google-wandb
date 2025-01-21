@@ -5,7 +5,7 @@ variable "namespace" {
 
 variable "network" {
   description = "Google Compute Engine network to which the cluster is connected."
-  type        = object({ id = string })
+  type        = object({ self_link = string })
 }
 
 variable "subnetwork" {
