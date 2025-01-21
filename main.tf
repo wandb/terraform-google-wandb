@@ -26,13 +26,13 @@ locals {
   url            = "${local.url_prefix}://${local.fqdn}"
   create_network = var.network == null
   k8s_sa_map = {
-    app         = "wandb-app"
-    executor    = "wandb-executor"
-    parquet     = "wandb-parquet"
-    flat_runs   = "wandb-flat-run-fields-updater"
-    filestream  = "wandb-filestream"
-    weave       = "wandb-weave"
-    weave_trace = "wandb-weave-trace"
+    app                    = "wandb-app"
+    executor               = "wandb-executor"
+    parquet                = "wandb-parquet"
+    flat_runs              = "wandb-flat-run-fields-updater"
+    filestream             = "wandb-filestream"
+    weave                  = "wandb-weave"
+    weave_trace            = "wandb-weave-trace"
     settings_migration_job = "wandb-settings-migration-job"
     wandb_api              = "wandb-api"
     wandb_glue             = "wandb-glue"
@@ -416,7 +416,9 @@ module "wandb" {
           projectId          = data.google_client_config.current.project
           serviceAccountName = var.stackdriver_sa_name
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_role } }
+        serviceAccount = {
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_role }
+        }
         } : {
         install        = false
         stackdriver    = {}
@@ -463,8 +465,9 @@ module "wandb" {
           name        = local.k8s_sa_map.executor
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
-        name        = null
-        annotations = {}
+          name        = null
+          annotations = {}
+        }
       }
 
       settingsMigrationJob = {
