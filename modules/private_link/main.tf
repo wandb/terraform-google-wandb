@@ -79,7 +79,7 @@ resource "google_compute_service_attachment" "default" {
 
 resource "google_compute_subnetwork" "default" {
   name          = "${var.namespace}-psc-ilb-subnet"
-  network       = var.network.id
+  network       = var.network.self_link
   purpose       = "PRIVATE_SERVICE_CONNECT"
   ip_cidr_range = var.psc_subnetwork
 }
@@ -90,7 +90,7 @@ resource "google_compute_firewall" "default" {
   name          = "${var.namespace}-internal-fw"
   provider      = google-beta
   direction     = "INGRESS"
-  network       = var.network.id
+  network       = var.network.self_link
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16", "35.235.240.0/20", var.proxynetwork_cidr]
   allow {
     protocol = "tcp"
