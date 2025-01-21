@@ -6,7 +6,7 @@ resource "google_compute_subnetwork" "proxy" {
   ip_cidr_range = var.proxynetwork_cidr
   purpose       = "REGIONAL_MANAGED_PROXY"
   role          = "ACTIVE"
-  network       = var.network.id
+  network       = var.network.self_link
   timeouts {
     delete = "2m"
   }
