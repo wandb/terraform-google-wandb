@@ -6,7 +6,7 @@ resource "google_compute_subnetwork" "proxy" {
   ip_cidr_range = var.proxynetwork_cidr
   purpose       = "REGIONAL_MANAGED_PROXY"
   role          = "ACTIVE"
-  network       = var.network.id
+  network       = var.network.self_link
   timeouts {
     delete = "2m"
   }
@@ -17,7 +17,11 @@ resource "google_compute_region_network_endpoint_group" "external_lb" {
   region = data.google_client_config.current.region
 
   network_endpoint_type = "INTERNET_FQDN_PORT"
-  network               = var.network.id
+  network               = var.network.self_link
+
+  lifecycle {
+    ignore_changes = [region]
+  }
 }
 
 resource "google_compute_region_network_endpoint" "external_lb" {
@@ -33,7 +37,7 @@ resource "google_compute_region_backend_service" "internal_nlb" {
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
     group          = google_compute_region_network_endpoint_group.external_lb.id
-    balancing_mode = ""
+    balancing_mode = "UTILIZATION"
   }
 }
 
@@ -52,8 +56,10 @@ resource "google_compute_forwarding_rule" "internal_nlb" {
 
   target = google_compute_region_target_tcp_proxy.internal_nlb.id
 
-  network    = var.network.id
+  network    = var.network.self_link
   subnetwork = var.subnetwork.self_link
+
+  depends_on = [google_compute_subnetwork.proxy]
 }
 
 resource "google_compute_service_attachment" "default" {
@@ -77,7 +83,7 @@ resource "google_compute_service_attachment" "default" {
 
 resource "google_compute_subnetwork" "default" {
   name          = "${var.namespace}-psc-ilb-subnet"
-  network       = var.network.id
+  network       = var.network.self_link
   purpose       = "PRIVATE_SERVICE_CONNECT"
   ip_cidr_range = var.psc_subnetwork
 }
@@ -88,7 +94,7 @@ resource "google_compute_firewall" "default" {
   name          = "${var.namespace}-internal-fw"
   provider      = google-beta
   direction     = "INGRESS"
-  network       = var.network.id
+  network       = var.network.self_link
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16", "35.235.240.0/20", var.proxynetwork_cidr]
   allow {
     protocol = "tcp"

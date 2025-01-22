@@ -7,7 +7,7 @@ variable "namespace" {
 }
 
 variable "deletion_protection" {
-  description = "If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`."
+  description = "If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. "
   type        = bool
   default     = true
 }

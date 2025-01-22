@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+### [8.0.3](https://github.com/wandb/terraform-google-wandb/compare/v8.0.2...v8.0.3) (2025-01-21)
+
+
+### Bug Fixes
+
+* Prevent diffs appearing when nothing has changed in PSC configs ([#209](https://github.com/wandb/terraform-google-wandb/issues/209)) ([60597e4](https://github.com/wandb/terraform-google-wandb/commit/60597e4a5d21e861c31fd53234912935d580ef48))
+* Previous merge did not trigger release ([#210](https://github.com/wandb/terraform-google-wandb/issues/210)) ([205e332](https://github.com/wandb/terraform-google-wandb/commit/205e332f864611eefe524664e6b381adf1027cb5))
+
+### [8.0.2](https://github.com/wandb/terraform-google-wandb/compare/v8.0.1...v8.0.2) (2025-01-21)
+
+
+### Bug Fixes
+
+* Set the default value or it causes a diff and recreate in TF ([#208](https://github.com/wandb/terraform-google-wandb/issues/208)) ([c7dc4dd](https://github.com/wandb/terraform-google-wandb/commit/c7dc4ddaa4e87df495fbde059cd1fe07d595f973))
+
 ### [8.0.1](https://github.com/wandb/terraform-google-wandb/compare/v8.0.0...v8.0.1) (2025-01-16)
 
 
