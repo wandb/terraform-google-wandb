@@ -102,7 +102,7 @@ module "storage" {
 module "networking" {
   count = local.create_network ? 1 : 0
   providers = {
-    google = google
+    google          = google
     google.nolabels = google.nolabels
   }
   source     = "./modules/networking"

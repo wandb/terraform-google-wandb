@@ -51,13 +51,13 @@ resource "google_compute_global_address" "psc_endpoint_ip" {
 }
 
 resource "google_compute_global_forwarding_rule" "psc_forward_rule" {
-  provider = google.nolabels
-  name                    = "gcpapipsc"
-  ip_address              = google_compute_global_address.psc_endpoint_ip.self_link
-  load_balancing_scheme   = ""
-  network      = google_compute_network.vpc.id
-  target = "all-apis"
-  labels = null
+  provider              = google.nolabels
+  name                  = "gcpapipsc"
+  ip_address            = google_compute_global_address.psc_endpoint_ip.self_link
+  load_balancing_scheme = ""
+  network               = google_compute_network.vpc.id
+  target                = "all-apis"
+  labels                = null
 }
 
 resource "google_dns_managed_zone" "private-zone" {
