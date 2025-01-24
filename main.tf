@@ -101,7 +101,10 @@ module "storage" {
 
 module "networking" {
   count = local.create_network ? 1 : 0
-
+  providers = {
+    google = google
+    google.nolabels = google.nolabels
+  }
   source     = "./modules/networking"
   namespace  = var.namespace
   depends_on = [module.project_factory_project_services]
