@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [8.0.4](https://github.com/wandb/terraform-google-wandb/compare/v8.0.3...v8.0.4) (2025-01-24)
+
+
+### Bug Fixes
+
+* Console identity value if using workload id ([#211](https://github.com/wandb/terraform-google-wandb/issues/211)) ([64b4471](https://github.com/wandb/terraform-google-wandb/commit/64b44719627a4da5ecd2584fd5aedec6217cbdc3))
+
 ### [8.0.3](https://github.com/wandb/terraform-google-wandb/compare/v8.0.2...v8.0.3) (2025-01-21)
 
 
