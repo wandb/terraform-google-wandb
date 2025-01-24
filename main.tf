@@ -346,7 +346,7 @@ module "wandb" {
 
       console = {
         extraEnv = {
-          "BUCKET_ACCESS_IDENTITY" = var.create_workload_identity ? module.service_accounts.sa_account_role : module.service_accounts.service_account.email
+          "BUCKET_ACCESS_IDENTITY" = var.create_workload_identity ? "${module.service_accounts.sa_account_role} ${module.service_accounts.service_account.email}" : module.service_accounts.service_account.email
         }
       }
 
