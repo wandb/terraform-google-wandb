@@ -16,3 +16,9 @@ variable "vpc_nat" {
   description = "Enable NAT for the VPC"
   type        = bool
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Labels to apply to all resources."
+  default     = {}
+}

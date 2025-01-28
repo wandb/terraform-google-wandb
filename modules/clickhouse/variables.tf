@@ -35,3 +35,9 @@ variable "clickhouse_region" {
     error_message = "Clickhouse Region should always be set if the private endpoint service name is specified."
   }
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Labels to apply to all resources."
+  default     = {}
+}

@@ -7,6 +7,9 @@ resource "google_compute_router" "this" {
 resource "google_compute_address" "this" {
   name   = "${var.namespace}-cloud-nat-ip"
   region = google_compute_router.this.region
+
+  labels = var.labels
+
   lifecycle {
     create_before_destroy = true
   }
