@@ -154,7 +154,7 @@ resources that lack official modules.
 | <a name="input_google_api_dns_override"></a> [google\_api\_dns\_override](#input\_google\_api\_dns\_override) | By default we create PSC for all Google APIs at *.p.googleaps.com, this will additionally override the default *.googleapis.com domain as well | `bool` | `false` | no |
 | <a name="input_ilb_proxynetwork_cidr"></a> [ilb\_proxynetwork\_cidr](#input\_ilb\_proxynetwork\_cidr) | Internal load balancer proxy subnetwork | `string` | `"10.127.0.0/24"` | no |
 | <a name="input_kubernetes_cluster_oidc_issuer_url"></a> [kubernetes\_cluster\_oidc\_issuer\_url](#input\_kubernetes\_cluster\_oidc\_issuer\_url) | OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration` | `string` | `""` | no |
-| <a name="input_labels"></a> [label[labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
+| <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_license"></a> [license](#input\_license) | Your wandb/local license | `string` | n/a | yes |
 | <a name="input_local_restore"></a> [local\_restore](#input\_local\_restore) | Restores W&B to a stable state if needed | `bool` | `false` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | String used for prefix resources. | `string` | n/a | yes |
