@@ -217,6 +217,12 @@ resources that lack official modules.
 
 ## Migrations
 
+### 7.x -> 8.x
+
+`v8` changes how the module references storage from using terraform's `count` to always creating a "defaultBucket" which can be overidden latter or but providing some initial bucket.
+
+We are considering this a major change because of the terraform `moved` block which migrates the resource. After moving to a `v8` applying an earlier version of the module may result in terraform deleting your bucket.
+
 ### 5.x -> 6.x
 
 6.0.0 introduced autoscaling to the GKE cluster and made the `size` variable the preferred way to set the cluster size.
