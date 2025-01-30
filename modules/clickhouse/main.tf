@@ -13,6 +13,8 @@ resource "google_compute_address" "psc_endpoint_ip" {
   purpose      = "GCE_ENDPOINT"
   subnetwork   = google_compute_subnetwork.psc_network.self_link
   region       = var.clickhouse_region
+
+  labels = var.labels
 }
 
 resource "google_compute_forwarding_rule" "psc_forward_rule" {
@@ -22,6 +24,8 @@ resource "google_compute_forwarding_rule" "psc_forward_rule" {
   region                  = var.clickhouse_region
   load_balancing_scheme   = ""
   allow_psc_global_access = true
+
+  labels = var.labels
 
   target = "https://www.googleapis.com/compute/v1/${var.clickhouse_private_endpoint_service_name}"
 }
@@ -39,6 +43,8 @@ resource "google_dns_managed_zone" "psc_dns_zone" {
       network_url = var.network
     }
   }
+
+  labels = var.labels
 }
 
 resource "google_dns_record_set" "psc_dns_record" {

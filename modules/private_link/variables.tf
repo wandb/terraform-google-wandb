@@ -35,3 +35,9 @@ variable "fqdn" {
   type        = string
   description = "Fully qualified domain name or hostname"
 }
+
+variable "labels" {
+  description = "Labels which will be applied to all applicable resources."
+  type        = map(string)
+  default     = {}
+}

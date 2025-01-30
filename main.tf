@@ -108,11 +108,13 @@ module "storage" {
 }
 
 module "networking" {
-  count = local.create_network ? 1 : 0
-
-  source     = "./modules/networking"
-  namespace  = var.namespace
-  depends_on = [module.project_factory_project_services]
+  count                    = local.create_network ? 1 : 0
+  source                   = "./modules/networking"
+  namespace                = var.namespace
+  labels                   = var.labels
+  google_api_psc_ipaddress = var.google_api_psc_ipaddress
+  google_api_dns_override  = var.google_api_dns_override
+  depends_on               = [module.project_factory_project_services]
 }
 
 locals {
@@ -145,6 +147,8 @@ module "cloud_nat" {
   namespace = var.namespace
   vpc_nat   = var.enable_private_gke_nodes
   proxy_nat = var.create_private_link
+
+  labels = var.labels
 }
 
 module "app_lb" {
@@ -227,6 +231,8 @@ module "clickhouse" {
   clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
+
+  labels = var.labels
 }
 
 locals {
@@ -245,6 +251,8 @@ resource "google_compute_address" "default" {
   subnetwork   = local.subnetwork.name
   address_type = "INTERNAL"
   purpose      = "GCE_ENDPOINT"
+
+  labels = var.labels
 }
 
 module "gke_app" {
@@ -552,7 +560,10 @@ module "private_link" {
   psc_subnetwork        = var.psc_subnetwork_cidr
   proxynetwork_cidr     = var.ilb_proxynetwork_cidr
   fqdn                  = local.fqdn
-  depends_on            = [module.wandb]
+
+  labels = var.labels
+
+  depends_on = [module.wandb]
 }
 
 moved {

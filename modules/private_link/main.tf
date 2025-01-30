@@ -59,6 +59,8 @@ resource "google_compute_forwarding_rule" "internal_nlb" {
   network    = var.network.self_link
   subnetwork = var.subnetwork.self_link
 
+  labels = var.labels
+
   depends_on = [google_compute_subnetwork.proxy]
 }
 
@@ -76,6 +78,7 @@ resource "google_compute_service_attachment" "default" {
       connection_limit  = consumer_accept_lists.value
     }
   }
+
   depends_on = [
     google_compute_subnetwork.default
   ]
