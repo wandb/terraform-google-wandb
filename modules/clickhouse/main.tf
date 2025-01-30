@@ -25,6 +25,8 @@ resource "google_compute_forwarding_rule" "psc_forward_rule" {
   load_balancing_scheme   = ""
   allow_psc_global_access = true
 
+  labels = var.labels
+
   target = "https://www.googleapis.com/compute/v1/${var.clickhouse_private_endpoint_service_name}"
 }
 
