@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.0.3](https://github.com/wandb/terraform-google-wandb/compare/v9.0.2...v9.0.3) (2025-01-30)
+
+
+### Bug Fixes
+
+* Non-global PSC forwarding rules can have labels. ([#215](https://github.com/wandb/terraform-google-wandb/issues/215)) ([0e11a3c](https://github.com/wandb/terraform-google-wandb/commit/0e11a3c0a0b326f60a907f87314519c0555dc1ca))
+
 ### [9.0.2](https://github.com/wandb/terraform-google-wandb/compare/v9.0.1...v9.0.2) (2025-01-30)
 
 
