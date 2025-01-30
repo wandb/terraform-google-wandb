@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.0.0](https://github.com/wandb/terraform-google-wandb/compare/v8.0.4...v9.0.0) (2025-01-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* Force connections to Google's APIs to go through a PSC (#212)
+
+### Features
+
+* Force connections to Google's APIs to go through a PSC ([#212](https://github.com/wandb/terraform-google-wandb/issues/212)) ([aa8399f](https://github.com/wandb/terraform-google-wandb/commit/aa8399f2b6769193a05d6f710116900d49f3f4d5))
+
 ### [8.0.4](https://github.com/wandb/terraform-google-wandb/compare/v8.0.3...v8.0.4) (2025-01-24)
 
 
