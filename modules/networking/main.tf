@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "5.34.0"
-    }
-  }
-}
 data "google_client_config" "current" {}
 
 resource "google_compute_network" "vpc" {
