@@ -100,13 +100,13 @@ module "storage" {
 }
 
 module "networking" {
-  count                   = local.create_network ? 1 : 0
-  source                  = "./modules/networking"
-  namespace               = var.namespace
+  count                    = local.create_network ? 1 : 0
+  source                   = "./modules/networking"
+  namespace                = var.namespace
   labels                   = var.labels
   google_api_psc_ipaddress = var.google_api_psc_ipaddress
   google_api_dns_override  = var.google_api_dns_override
-  depends_on              = [module.project_factory_project_services]
+  depends_on               = [module.project_factory_project_services]
 }
 
 locals {
