@@ -151,6 +151,8 @@ resources that lack official modules.
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
 | <a name="input_gke_max_node_count"></a> [gke\_max\_node\_count](#input\_gke\_max\_node\_count) | Maximum number of nodes for the GKE cluster. Defaults to null and value from deployment-size.tf is used | `number` | `null` | no |
 | <a name="input_gke_min_node_count"></a> [gke\_min\_node\_count](#input\_gke\_min\_node\_count) | Initial number of nodes for the GKE cluster, if gke\_max\_node\_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used | `number` | `null` | no |
+| <a name="input_google_api_dns_override"></a> [google\_api\_dns\_override](#input\_google\_api\_dns\_override) | By default we create PSC for all Google APIs at *.p.googleaps.com, this will additionally override the default *.googleapis.com domain as well | `bool` | `true` | no |
+| <a name="input_google_api_psc_ipaddress"></a> [google\_api\_psc\_ipaddress](#input\_google\_api\_psc\_ipaddress) | The global IP address for the Google API PSC, this should not overlap with the private IP range of the VPC.  Default to an address in the GC-NAT range, as that is least likely to interfere. | `string` | `"100.100.100.106"` | no |
 | <a name="input_ilb_proxynetwork_cidr"></a> [ilb\_proxynetwork\_cidr](#input\_ilb\_proxynetwork\_cidr) | Internal load balancer proxy subnetwork | `string` | `"10.127.0.0/24"` | no |
 | <a name="input_kubernetes_cluster_oidc_issuer_url"></a> [kubernetes\_cluster\_oidc\_issuer\_url](#input\_kubernetes\_cluster\_oidc\_issuer\_url) | OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration` | `string` | `""` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to resources | `map(string)` | `{}` | no |
@@ -215,6 +217,15 @@ resources that lack official modules.
 <!-- END_TF_DOCS -->
 
 ## Migrations
+
+### 8.x -> 9.x
+
+We added a PSC for Google's APIs for customers that desire provability that those requests will not exit the private 
+network. [but due to an issue](https://github.com/hashicorp/terraform-provider-google/issues/16255) creating forwarding 
+rules for PSCs with labels, we are no longer able to support `default_labels` on the Google Terraform provider.  
+
+We have ensured that the labels passed in via the variable [labels](#input\_labels) are applied to all the resources that accept labels,
+any desired labels should be passed in via that variable.
 
 ### 7.x -> 8.x
 

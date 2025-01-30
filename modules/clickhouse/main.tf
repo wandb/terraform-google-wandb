@@ -13,6 +13,8 @@ resource "google_compute_address" "psc_endpoint_ip" {
   purpose      = "GCE_ENDPOINT"
   subnetwork   = google_compute_subnetwork.psc_network.self_link
   region       = var.clickhouse_region
+
+  labels = var.labels
 }
 
 resource "google_compute_forwarding_rule" "psc_forward_rule" {
@@ -39,6 +41,8 @@ resource "google_dns_managed_zone" "psc_dns_zone" {
       network_url = var.network
     }
   }
+
+  labels = var.labels
 }
 
 resource "google_dns_record_set" "psc_dns_record" {
