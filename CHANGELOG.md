@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.0.1](https://github.com/wandb/terraform-google-wandb/compare/v9.0.0...v9.0.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* Remove duplicate variable caused by merge issues ([#213](https://github.com/wandb/terraform-google-wandb/issues/213)) ([c1e68ec](https://github.com/wandb/terraform-google-wandb/commit/c1e68ec3a027e97e75010ad2ebe2ad2194f282d9))
+
 ## [9.0.0](https://github.com/wandb/terraform-google-wandb/compare/v8.0.4...v9.0.0) (2025-01-30)
 
 
