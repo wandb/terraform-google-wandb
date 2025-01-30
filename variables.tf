@@ -143,6 +143,17 @@ variable "google_api_dns_override" {
   type        = bool
 }
 
+variable "google_api_psc_ipaddress" {
+  default     = "100.100.100.106"
+  description = "The global IP address for the Google API PSC, this should not overlap with the private IP range of the VPC.  Default to an address in the GC-NAT range, as that is least likely to interfere."
+  type        = string
+}
+
+variable "google_api_dns_override" {
+  description = "By default we create PSC for all Google APIs at *.p.googleaps.com, this will additionally override the default *.googleapis.com domain as well"
+  type        = bool
+}
+
 ##########################################
 # DNS                                    #
 ##########################################
