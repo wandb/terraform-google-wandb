@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.0.2](https://github.com/wandb/terraform-google-wandb/compare/v9.0.1...v9.0.2) (2025-01-30)
+
+
+### Bug Fixes
+
+* Not sure why that got added, but its wrong ([#214](https://github.com/wandb/terraform-google-wandb/issues/214)) ([675af62](https://github.com/wandb/terraform-google-wandb/commit/675af62c876086cb10684f115a60bb71768168be))
+
 ### [9.0.1](https://github.com/wandb/terraform-google-wandb/compare/v9.0.0...v9.0.1) (2025-01-30)
 
 
