@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.0.4](https://github.com/wandb/terraform-google-wandb/compare/v9.0.3...v9.0.4) (2025-02-03)
+
+
+### Bug Fixes
+
+* Only forward the configured subdomains of googleapis.com ([#217](https://github.com/wandb/terraform-google-wandb/issues/217)) ([e74a45d](https://github.com/wandb/terraform-google-wandb/commit/e74a45d8083fe84fc43bbf019cc0b381ec8c4e1f))
+
 ### [9.0.3](https://github.com/wandb/terraform-google-wandb/compare/v9.0.2...v9.0.3) (2025-01-30)
 
 
