@@ -8,13 +8,8 @@ variable "labels" {
   type        = map(string)
 }
 
-variable "google_api_dns_override" {
-  description = "By default we create PSC for all Google APIs at *.p.googleaps.com, this will additionally override the default *.googleapis.com domain as well"
-  type        = bool
-}
-
 variable "google_api_dns_overrides" {
-  description = "The subdomains to add to the override DNS zone"
+  description = "By default we create PSC for all Google APIs at *.p.googleaps.com, this will additionally create zones for the provided subdomains of googleapis.com"
   type        = list(string)
 }
 

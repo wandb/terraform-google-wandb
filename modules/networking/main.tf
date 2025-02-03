@@ -51,7 +51,7 @@ resource "google_compute_global_forwarding_rule" "api_psc" {
 }
 
 resource "google_dns_managed_zone" "api_psc" {
-  count       = var.google_api_dns_override ? length(var.google_api_dns_overrides) : 0
+  count       = length(var.google_api_dns_overrides)
   name        = "${var.namespace}-${var.google_api_dns_overrides[count.index]}-gcp-api-psc"
   dns_name    = "${var.google_api_dns_overrides[count.index]}.googleapis.com."
   description = "Private DNS zone for accessing Google APIs using Private Service Connect"
@@ -68,7 +68,7 @@ resource "google_dns_managed_zone" "api_psc" {
 }
 
 resource "google_dns_record_set" "apex" {
-  count        = var.google_api_dns_override ? length(var.google_api_dns_overrides) : 0
+  count        = length(var.google_api_dns_overrides)
   name         = google_dns_managed_zone.api_psc[count.index].dns_name
   managed_zone = google_dns_managed_zone.api_psc[count.index].name
   type         = "A"
