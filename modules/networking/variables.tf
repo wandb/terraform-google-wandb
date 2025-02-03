@@ -16,7 +16,6 @@ variable "google_api_dns_override" {
 variable "google_api_dns_overrides" {
   description = "The subdomains to add to the override DNS zone"
   type        = list(string)
-  default     = ["storage"]
 }
 
 variable "google_api_psc_ipaddress" {
