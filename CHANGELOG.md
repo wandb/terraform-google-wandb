@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.1.0](https://github.com/wandb/terraform-google-wandb/compare/v9.0.4...v9.1.0) (2025-02-03)
+
+
+### Features
+
+* Adding bigtable and pubsub support for GCP ([#178](https://github.com/wandb/terraform-google-wandb/issues/178)) ([5b3e862](https://github.com/wandb/terraform-google-wandb/commit/5b3e862ccbd3b5e9575255bc5999a812f74a4615))
+
 ### [9.0.4](https://github.com/wandb/terraform-google-wandb/compare/v9.0.3...v9.0.4) (2025-02-03)
 
 
