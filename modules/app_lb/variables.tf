@@ -2,6 +2,7 @@ variable "allowed_inbound_cidrs" {
   description = "Which IPv4 addresses/ranges to allow access. No default -- this must be explicitly provided."
   nullable    = false
   type        = list(string)
+  default     = ["*"]
 }
 
 variable "fqdn" {

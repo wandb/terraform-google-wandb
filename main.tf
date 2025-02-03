@@ -333,6 +333,9 @@ module "wandb" {
             caCertPath   = ""
           }
         }
+
+        gcpSecurityPolicy = module.app_lb.lb_security_policy_name
+
       }
 
       app = {
