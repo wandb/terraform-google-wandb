@@ -77,15 +77,3 @@ resource "google_dns_record_set" "apex" {
 
   depends_on = [google_dns_managed_zone.api_psc]
 }
-
-#
-# resource "google_dns_record_set" "cname" {
-#   count        = !var.google_api_dns_override ? 0 : length(var.google_api_dns_overrides)
-#   name         = "${var.google_api_dns_overrides[count.index]}.${google_dns_managed_zone.api_psc[0].dns_name}"
-#   managed_zone = google_dns_managed_zone.api_psc[0].name
-#   type         = "CNAME"
-#   ttl          = 300
-#   rrdatas      = [google_dns_managed_zone.api_psc[0].dns_name]
-#
-#   depends_on = [google_dns_managed_zone.api_psc[0]]
-# }
