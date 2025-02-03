@@ -106,6 +106,7 @@ module "networking" {
   labels                   = var.labels
   google_api_psc_ipaddress = var.google_api_psc_ipaddress
   google_api_dns_override  = var.google_api_dns_override
+  google_api_dns_overrides = var.google_api_dns_overrides
   depends_on               = [module.project_factory_project_services]
 }
 

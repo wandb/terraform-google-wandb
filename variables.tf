@@ -143,6 +143,12 @@ variable "google_api_dns_override" {
   type        = bool
 }
 
+variable "google_api_dns_overrides" {
+  description = "The subdomains to add to the override DNS zone"
+  type = list(string)
+  default = ["storage"]
+}
+
 variable "google_api_psc_ipaddress" {
   default     = "100.100.100.106"
   description = "The global IP address for the Google API PSC, this should not overlap with the private IP range of the VPC.  Default to an address in the GC-NAT range, as that is least likely to interfere."
