@@ -49,6 +49,7 @@ locals {
 
 resource "google_compute_global_forwarding_rule" "api_psc" {
   name                  = local.psc_fordwarding_rule_name
+  description           = "${var.namespace} - all apis forwarding rule"
   ip_address            = google_compute_global_address.api_psc.self_link
   load_balancing_scheme = ""
   network               = google_compute_network.vpc.id
