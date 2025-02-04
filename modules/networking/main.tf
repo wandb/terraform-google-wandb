@@ -43,7 +43,8 @@ resource "google_compute_global_address" "api_psc" {
 }
 
 locals {
-  psc_fordwarding_rule_name = lower(substr("${var.namespace}gcpapi", 0, min(length("${var.namespace}gcpapi"), 20)))
+  # gcp name rules require this to start with a letter & be unique
+  psc_fordwarding_rule_name = "a${substr(sha256("${var.namespace}gcpapi"), 0, 19)}"
 }
 
 resource "google_compute_global_forwarding_rule" "api_psc" {
