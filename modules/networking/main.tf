@@ -42,8 +42,14 @@ resource "google_compute_global_address" "api_psc" {
   address      = var.google_api_psc_ipaddress
 }
 
+locals {
+  # gcp name rules require this to start with a letter & be unique
+  psc_fordwarding_rule_name = "a${substr(sha256("${var.namespace}gcpapi"), 0, 19)}"
+}
+
 resource "google_compute_global_forwarding_rule" "api_psc" {
-  name                  = "gcpapipsc"
+  name                  = local.psc_fordwarding_rule_name
+  description           = "${var.namespace} - all apis forwarding rule"
   ip_address            = google_compute_global_address.api_psc.self_link
   load_balancing_scheme = ""
   network               = google_compute_network.vpc.id
@@ -51,9 +57,9 @@ resource "google_compute_global_forwarding_rule" "api_psc" {
 }
 
 resource "google_dns_managed_zone" "api_psc" {
-  count       = var.google_api_dns_override ? 1 : 0
-  name        = "${var.namespace}-gcp-api-psc"
-  dns_name    = "googleapis.com."
+  count       = length(var.google_api_dns_overrides)
+  name        = "${var.namespace}-${var.google_api_dns_overrides[count.index]}-gcp-api-psc"
+  dns_name    = "${var.google_api_dns_overrides[count.index]}.googleapis.com."
   description = "Private DNS zone for accessing Google APIs using Private Service Connect"
 
   visibility = "private"
@@ -67,24 +73,13 @@ resource "google_dns_managed_zone" "api_psc" {
   }
 }
 
-resource "google_dns_record_set" "cname" {
-  count        = var.google_api_dns_override ? 1 : 0
-  name         = "*.${google_dns_managed_zone.api_psc[0].dns_name}"
-  managed_zone = google_dns_managed_zone.api_psc[0].name
-  type         = "CNAME"
-  ttl          = 300
-  rrdatas      = [google_dns_managed_zone.api_psc[0].dns_name]
-
-  depends_on = [google_dns_managed_zone.api_psc[0]]
-}
-
 resource "google_dns_record_set" "apex" {
-  count        = var.google_api_dns_override ? 1 : 0
-  name         = google_dns_managed_zone.api_psc[0].dns_name
-  managed_zone = google_dns_managed_zone.api_psc[0].name
+  count        = length(var.google_api_dns_overrides)
+  name         = google_dns_managed_zone.api_psc[count.index].dns_name
+  managed_zone = google_dns_managed_zone.api_psc[count.index].name
   type         = "A"
   ttl          = 300
   rrdatas      = [google_compute_global_address.api_psc.address]
 
-  depends_on = [google_dns_managed_zone.api_psc[0]]
+  depends_on = [google_dns_managed_zone.api_psc]
 }

@@ -50,6 +50,20 @@ resource "google_kms_crypto_key_iam_member" "pubsub_service_access" {
   member        = "serviceAccount:${google_project_service_identity.pubsub[0].email}"
 }
 
+resource "google_project_service_identity" "bigtable" {
+  count    = var.bind_bigtable_service_to_kms_key ? 1 : 0
+  provider = google-beta
+  project  = data.google_project.project.project_id
+  service  = "bigtableadmin.googleapis.com"
+}
+
+resource "google_kms_crypto_key_iam_member" "bigtable_service_access" {
+  count         = var.bind_bigtable_service_to_kms_key ? 1 : 0
+  crypto_key_id = google_kms_crypto_key.default.id
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  member        = "serviceAccount:${google_project_service_identity.bigtable[0].email}"
+}
+
 
 # Enable notifications by giving the correct IAM permission to the unique
 # service account.
@@ -65,13 +79,20 @@ resource "google_kms_crypto_key_iam_member" "storage_service_access" {
 data "google_storage_project_service_account" "gcs_account" {
 }
 
+locals {
+  pubsub_members   = var.bind_pubsub_service_to_kms_key ? ["serviceAccount:${google_project_service_identity.pubsub[0].email}"] : []
+  bigtable_members = var.bind_bigtable_service_to_kms_key ? ["serviceAccount:${google_project_service_identity.bigtable[0].email}"] : []
+  members = concat([
+    "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}",
+    "serviceAccount:${google_project_service_identity.gcp_sa_cloud_sql.email}",
+    "serviceAccount:service-${data.google_project.project.number}@cloud-redis.iam.gserviceaccount.com",
+  ], local.pubsub_members, local.bigtable_members)
+
+}
+
 resource "google_kms_crypto_key_iam_binding" "crypto_key" {
 
   crypto_key_id = google_kms_crypto_key.default.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  members = [
-    "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}",
-    "serviceAccount:${google_project_service_identity.gcp_sa_cloud_sql.email}",
-    "serviceAccount:service-${data.google_project.project.number}@cloud-redis.iam.gserviceaccount.com"
-  ]
+  members       = local.members
 }

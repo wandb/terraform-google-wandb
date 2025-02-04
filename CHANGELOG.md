@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.1.1](https://github.com/wandb/terraform-google-wandb/compare/v9.1.0...v9.1.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* Forwarding rule names need to be unique ([#219](https://github.com/wandb/terraform-google-wandb/issues/219)) ([0db345c](https://github.com/wandb/terraform-google-wandb/commit/0db345cf0336e6616402429281e7ac04d95e79f8))
+
+## [9.1.0](https://github.com/wandb/terraform-google-wandb/compare/v9.0.4...v9.1.0) (2025-02-03)
+
+
+### Features
+
+* Adding bigtable and pubsub support for GCP ([#178](https://github.com/wandb/terraform-google-wandb/issues/178)) ([5b3e862](https://github.com/wandb/terraform-google-wandb/commit/5b3e862ccbd3b5e9575255bc5999a812f74a4615))
+
+### [9.0.4](https://github.com/wandb/terraform-google-wandb/compare/v9.0.3...v9.0.4) (2025-02-03)
+
+
+### Bug Fixes
+
+* Only forward the configured subdomains of googleapis.com ([#217](https://github.com/wandb/terraform-google-wandb/issues/217)) ([e74a45d](https://github.com/wandb/terraform-google-wandb/commit/e74a45d8083fe84fc43bbf019cc0b381ec8c4e1f))
+
 ### [9.0.3](https://github.com/wandb/terraform-google-wandb/compare/v9.0.2...v9.0.3) (2025-01-30)
 
 

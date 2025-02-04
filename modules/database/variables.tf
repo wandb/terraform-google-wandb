@@ -25,6 +25,12 @@ variable "tier" {
   default = "db-n1-standard-1"
 }
 
+variable "edition" {
+  type        = string
+  description = "The edition of the Cloud SQL instance. Can be either `STANDARD` or `ENTERPRISE` or `ENTERPRISE_PLUS`."
+  default     = "ENTERPRISE"
+}
+
 variable "availability_type" {
   type    = string
   default = "REGIONAL"
@@ -72,7 +78,6 @@ variable "sort_buffer_size" {
   type        = number
   default     = 262144
 }
-
 
 variable "force_ssl" {
   description = "Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string"

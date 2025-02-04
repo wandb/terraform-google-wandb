@@ -100,7 +100,7 @@ variable "resource_requests" {
 variable "operator_chart_version" {
   type        = string
   description = "Version of the operator chart to deploy"
-  default     = "1.3.4"
+  default     = "1.3.6"
 }
 
 variable "controller_image_tag" {
@@ -137,10 +137,10 @@ variable "allowed_inbound_cidrs" {
   type        = list(string)
 }
 
-variable "google_api_dns_override" {
-  default     = true
-  description = "By default we create PSC for all Google APIs at *.p.googleaps.com, this will additionally override the default *.googleapis.com domain as well"
-  type        = bool
+variable "google_api_dns_overrides" {
+  description = "The subdomains to add to the override DNS zone"
+  type        = list(string)
+  default     = ["storage"]
 }
 
 variable "google_api_psc_ipaddress" {
@@ -185,6 +185,12 @@ variable "database_machine_type" {
   default     = null
 }
 
+variable "database_edition" {
+  description = "The edition of the Cloud SQL instance. Can be either `STANDARD` or `ENTERPRISE` or `ENTERPRISE_PLUS`."
+  type        = string
+  default     = "ENTERPRISE"
+}
+
 variable "database_flags" {
   description = "Flags to set for the database"
   type        = map(string)
@@ -200,6 +206,48 @@ variable "database_sort_buffer_size" {
 variable "force_ssl" {
   description = "Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string"
   type        = bool
+  default     = false
+}
+
+##########################################
+# BigTable                               #
+##########################################
+variable "create_bigtable" {
+  type        = bool
+  description = "Boolean indicating whether to provision a bigtable instance (true) or not (false)."
+  default     = false
+}
+
+variable "bigtable_storage_type" {
+  type        = string
+  description = "The storage type for the Bigtable cluster."
+  default     = "SSD"
+}
+
+variable "bigtable_min_nodes" {
+  type        = number
+  description = "The minimum number of nodes for the Bigtable cluster."
+  default     = 1
+}
+
+variable "bigtable_max_nodes" {
+  type        = number
+  description = "The maximum number of nodes for the Bigtable cluster."
+  default     = 3
+}
+
+variable "bigtable_cpu_target" {
+  type        = number
+  description = "The target CPU utilization for the Bigtable cluster."
+  default     = 70
+}
+
+##########################################
+# PubSub                                 #
+##########################################
+variable "create_pubsub" {
+  type        = bool
+  description = "Boolean indicating whether to provision a bigtable instance (true) or not (false)."
   default     = false
 }
 
