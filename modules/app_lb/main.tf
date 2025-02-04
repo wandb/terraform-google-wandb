@@ -25,19 +25,7 @@ resource "google_compute_security_policy" "default" {
   description = "security policy"
   type        = "CLOUD_ARMOR"
 }
-/*
-resource "google_compute_security_policy_rule" "block_country" {
-  security_policy = google_compute_security_policy.default.name
-  priority        = 1000
-  action          = "deny(403)"
 
-  match {
-    expr {
-      expression = "origin.region_code == \"IR\" || origin.region_code == \"KP\""
-    }
-  }
-}
-*/
 resource "google_compute_security_policy_rule" "allow_internal" {
   security_policy = google_compute_security_policy.default.name
   description     = "Allowed internal CIDRs"
