@@ -42,8 +42,12 @@ resource "google_compute_global_address" "api_psc" {
   address      = var.google_api_psc_ipaddress
 }
 
+locals {
+  psc_fordwarding_rule_name = lower(substr("${var.namespace}gcpapi", 0, min(length("${var.namespace}gcpapi"), 20)))
+}
+
 resource "google_compute_global_forwarding_rule" "api_psc" {
-  name                  = "gcpapipsc"
+  name                  = local.psc_fordwarding_rule_name
   ip_address            = google_compute_global_address.api_psc.self_link
   load_balancing_scheme = ""
   network               = google_compute_network.vpc.id
