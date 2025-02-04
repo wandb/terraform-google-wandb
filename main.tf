@@ -143,6 +143,10 @@ module "cloud_nat" {
   labels = var.labels
 }
 
+locals {
+  allowed_inbound_cidrs = var.create_private_link ? concat(var.allowed_inbound_cidrs, "${module.cloud_nat.cloudnat_lb_proxy_ip}/32") : var.allowed_inbound_cidrs
+}
+
 module "app_lb" {
   source                = "./modules/app_lb"
   namespace             = var.namespace
