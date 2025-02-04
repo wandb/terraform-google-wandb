@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.1.1](https://github.com/wandb/terraform-google-wandb/compare/v9.1.0...v9.1.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* Forwarding rule names need to be unique ([#219](https://github.com/wandb/terraform-google-wandb/issues/219)) ([0db345c](https://github.com/wandb/terraform-google-wandb/commit/0db345cf0336e6616402429281e7ac04d95e79f8))
+
 ## [9.1.0](https://github.com/wandb/terraform-google-wandb/compare/v9.0.4...v9.1.0) (2025-02-03)
 
 
