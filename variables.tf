@@ -278,6 +278,25 @@ variable "redis_memory_size_gb" {
   default     = null
 }
 
+variable "use_core_managed_redis" {
+  type        = bool
+  description = "Boolean indicating whether to use the redis instance created in core"
+  default     = false
+}
+
+variable "core_redis_host" {
+  type        = string
+  description = "host for the redis instance created in core"
+  default     = null
+}
+
+variable "core_redis_port" {
+  type        = string
+  description = "port for the redis instance created in core"
+  default     = null
+}
+
+
 ##########################################
 # External Bucket                        #
 ##########################################

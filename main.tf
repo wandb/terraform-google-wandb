@@ -361,17 +361,10 @@ module "wandb" {
           port     = 3306
         }
 
-        redis = var.create_redis ? {
-          password = module.redis[0].auth_string
-          host     = module.redis[0].host
-          port     = module.redis[0].port
-          caCert   = module.redis[0].ca_cert
-          params = {
-            tls          = true
-            ttlInSeconds = 604800
-            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
-          }
-          } : {
+        redis = var.use_core_managed_redis ? {
+          host     = var.core_redis_host
+          port     = var.core_redis_port
+        } : {
           password = ""
           host     = ""
           port     = 6379
