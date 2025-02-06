@@ -27,8 +27,10 @@ locals {
   create_network = var.network == null
   k8s_sa_map = {
     app                    = "wandb-app"
+    executor               = "wandb-executor"
     parquet                = "wandb-parquet"
     flat_runs              = "wandb-flat-run-fields-updater"
+    filestream             = "wandb-filestream"
     weave                  = "wandb-weave"
     weave_trace            = "wandb-weave-trace"
     settings_migration_job = "wandb-settings-migration-job"
@@ -54,6 +56,10 @@ module "service_accounts" {
   skip_bucket_admin_role   = var.skip_bucket_admin_role
 }
 
+locals {
+  app_service_account = (var.create_workload_identity) ? module.service_accounts.sa_account_role : module.service_accounts.service_account.email
+}
+
 module "kms" {
   # KMS is currently only used to encrypt pubsub queue. Disable it if we dont use it.
   count               = var.use_internal_queue ? 0 : 1
@@ -63,21 +69,23 @@ module "kms" {
 }
 
 module "kms_default_bucket" {
-  count                          = var.bucket_default_encryption ? 1 : 0
-  source                         = "./modules/kms"
-  namespace                      = var.namespace
-  deletion_protection            = var.deletion_protection
-  key_location                   = lower(var.bucket_location)
-  bind_pubsub_service_to_kms_key = false
+  count                            = var.bucket_default_encryption ? 1 : 0
+  source                           = "./modules/kms"
+  namespace                        = var.namespace
+  deletion_protection              = var.deletion_protection
+  key_location                     = lower(var.bucket_location)
+  bind_pubsub_service_to_kms_key   = false
+  bind_bigtable_service_to_kms_key = false
 }
 
 module "kms_default_sql" {
-  count                          = var.sql_default_encryption ? 1 : 0
-  source                         = "./modules/kms"
-  namespace                      = var.namespace
-  deletion_protection            = var.deletion_protection
-  key_location                   = data.google_client_config.current.region
-  bind_pubsub_service_to_kms_key = false
+  count                            = var.sql_default_encryption ? 1 : 0
+  source                           = "./modules/kms"
+  namespace                        = var.namespace
+  deletion_protection              = var.deletion_protection
+  key_location                     = data.google_client_config.current.region
+  bind_pubsub_service_to_kms_key   = var.create_pubsub
+  bind_bigtable_service_to_kms_key = var.create_bigtable
 }
 locals {
   default_bucket_key = length(module.kms_default_bucket) > 0 ? module.kms_default_bucket[0].crypto_key.id : var.bucket_kms_key_id
@@ -105,7 +113,7 @@ module "networking" {
   namespace                = var.namespace
   labels                   = var.labels
   google_api_psc_ipaddress = var.google_api_psc_ipaddress
-  google_api_dns_override  = var.google_api_dns_override
+  google_api_dns_overrides = var.google_api_dns_overrides
   depends_on               = [module.project_factory_project_services]
 }
 
@@ -162,6 +170,7 @@ module "database" {
   database_version    = var.database_version
   force_ssl           = var.force_ssl
   tier                = local.database_machine_type
+  edition             = var.database_edition
   database_flags      = var.database_flags
   sort_buffer_size    = var.database_sort_buffer_size
   network_connection  = local.network_connection
@@ -169,6 +178,34 @@ module "database" {
   labels              = var.labels
   crypto_key          = local.default_sql_key
   depends_on          = [module.project_factory_project_services, module.kms_default_sql]
+}
+
+module "bigtable" {
+  source = "./modules/bigtable"
+  count  = var.create_bigtable ? 1 : 0
+
+  namespace             = var.namespace
+  deletion_protection   = var.deletion_protection
+  service_account_email = local.app_service_account
+  crypto_key            = local.default_sql_key
+  storage_type          = var.bigtable_storage_type
+  cpu_target            = var.bigtable_cpu_target
+  min_nodes             = var.bigtable_min_nodes
+  max_nodes             = var.bigtable_max_nodes
+
+  labels = var.labels
+}
+
+module "pubsub" {
+  source = "./modules/pubsub"
+  count  = var.create_pubsub ? 1 : 0
+
+  namespace             = var.namespace
+  deletion_protection   = var.deletion_protection
+  service_account_email = local.app_service_account
+  crypto_key            = local.default_sql_key
+
+  labels = var.labels
 }
 
 module "redis" {
@@ -291,6 +328,18 @@ module "wandb" {
           "TAG_CUSTOMER_NS"                      = var.namespace
         }, var.other_wandb_env, local.oidc_envs)
 
+        bigtable = {
+          project  = local.project_id
+          instance = var.create_bigtable ? module.bigtable[0].bigtable_instance_id : ""
+        }
+
+        pubSub = {
+          enabled              = var.create_pubsub
+          project              = local.project_id
+          filestreamTopic      = var.create_pubsub ? module.pubsub[0].filestream_topic_name : ""
+          runUpdateShadowTopic = var.create_pubsub ? module.pubsub[0].run_updates_shadow_topic_name : ""
+        }
+
         bucket = var.bucket_name != "" ? {
           provider = "gcs"
           name     = var.bucket_name
@@ -375,7 +424,9 @@ module "wandb" {
           projectId          = data.google_client_config.current.project
           serviceAccountName = var.stackdriver_sa_name
         }
-        serviceAccount = { annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_role } }
+        serviceAccount = {
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.stackdriver_role }
+        }
         } : {
         install        = false
         stackdriver    = {}
@@ -417,6 +468,16 @@ module "wandb" {
         }
       }
 
+      executor = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.executor
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
       settingsMigrationJob = {
         serviceAccount = var.create_workload_identity ? {
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
@@ -448,8 +509,24 @@ module "wandb" {
       }
 
       flat-run-fields-updater = {
+        pubSub = {
+          subscription = var.create_pubsub ? module.pubsub[0].flat_run_fields_updater_subscription_name : ""
+        }
         serviceAccount = var.create_workload_identity ? {
           name        = local.k8s_sa_map.flat_runs
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = null
+          annotations = {}
+        }
+      }
+
+      filestream = {
+        pubSub = {
+          subscription = var.create_pubsub ? module.pubsub[0].filestream_gorilla_subscription_name : ""
+        }
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.filestream
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
           name        = null
