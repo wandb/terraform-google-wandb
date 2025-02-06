@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.1.2](https://github.com/wandb/terraform-google-wandb/compare/v9.1.1...v9.1.2) (2025-02-06)
+
+
+### Bug Fixes
+
+* Abandon service network connections ([#216](https://github.com/wandb/terraform-google-wandb/issues/216)) ([8620198](https://github.com/wandb/terraform-google-wandb/commit/8620198397da5ffd4505a90cc3aa4600bf8b6e19))
+
 ### [9.1.1](https://github.com/wandb/terraform-google-wandb/compare/v9.1.0...v9.1.1) (2025-02-04)
 
 
