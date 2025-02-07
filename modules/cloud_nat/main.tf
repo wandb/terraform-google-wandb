@@ -15,6 +15,18 @@ resource "google_compute_address" "this" {
   }
 }
 
+resource "google_compute_address" "nat_lb_proxy_address" {
+  count  = var.proxy_nat ? 1 : 0
+  name   = "${var.namespace}-cloud-nat-lb-proxy-ip"
+  region = google_compute_router.this.region
+
+  labels = var.labels
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 # create cloud nat public gateway
 resource "google_compute_router_nat" "nat" {
   count                              = var.vpc_nat ? 1 : 0
@@ -32,7 +44,8 @@ resource "google_compute_router_nat" "nat_lb_proxy" {
   name                               = "${var.namespace}-cloud-nat-lb-proxy"
   router                             = google_compute_router.this.name
   region                             = google_compute_router.this.region
-  nat_ip_allocate_option             = "AUTO_ONLY"
+  nat_ip_allocate_option             = "MANUAL_ONLY"
+  nat_ips                            = google_compute_address.nat_lb_proxy_address[0].*.self_link
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   endpoint_types                     = ["ENDPOINT_TYPE_MANAGED_PROXY_LB"]
 }

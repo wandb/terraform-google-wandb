@@ -151,6 +151,10 @@ module "cloud_nat" {
   labels = var.labels
 }
 
+locals {
+  allowed_inbound_cidrs = var.create_private_link ? concat(var.allowed_inbound_cidrs, ["${module.cloud_nat[0].cloudnat_lb_proxy_ip}/32"]) : var.allowed_inbound_cidrs
+}
+
 module "app_lb" {
   source                = "./modules/app_lb"
   namespace             = var.namespace
@@ -160,7 +164,7 @@ module "app_lb" {
   group                 = module.app_gke.instance_group_url
   service_account       = module.service_accounts.service_account
   labels                = var.labels
-  allowed_inbound_cidrs = var.allowed_inbound_cidrs
+  allowed_inbound_cidrs = local.allowed_inbound_cidrs
   depends_on            = [module.project_factory_project_services, module.app_gke]
 }
 
@@ -382,6 +386,9 @@ module "wandb" {
             caCertPath   = ""
           }
         }
+
+        gcpSecurityPolicy = module.app_lb.lb_security_policy_name
+
       }
 
       app = {

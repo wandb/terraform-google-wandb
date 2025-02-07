@@ -11,3 +11,51 @@ module "https" {
 
   labels = var.labels
 }
+
+##########################################
+# Default Load Balancer Security Policy  #
+##########################################
+resource "google_compute_security_policy" "default" {
+  name        = "${var.namespace}-default-security-policy"
+  description = "security policy"
+  type        = "CLOUD_ARMOR"
+}
+
+resource "google_compute_security_policy_rule" "allow_internal" {
+  security_policy = google_compute_security_policy.default.name
+  description     = "Allowed internal CIDRs"
+  priority        = 1000
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = ["10.0.0.0/8"]
+    }
+  }
+  action = "allow"
+}
+
+resource "google_compute_security_policy_rule" "allow_cidrs" {
+  security_policy = google_compute_security_policy.default.name
+  description     = "Allowed CIDRs"
+  priority        = 1001
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = var.allowed_inbound_cidrs
+    }
+  }
+  action = "allow"
+}
+
+resource "google_compute_security_policy_rule" "default_rule" {
+  security_policy = google_compute_security_policy.default.name
+  description     = "default deny"
+  action          = "deny(403)"
+  priority        = 2147483646
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = ["*"]
+    }
+  }
+}

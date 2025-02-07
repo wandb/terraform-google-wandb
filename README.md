@@ -138,7 +138,7 @@ resources that lack official modules.
 | <a name="input_clickhouse_private_endpoint_service_name"></a> [clickhouse\_private\_endpoint\_service\_name](#input\_clickhouse\_private\_endpoint\_service\_name) | ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud). | `string` | `""` | no |
 | <a name="input_clickhouse_region"></a> [clickhouse\_region](#input\_clickhouse\_region) | ClickHouse region (us-east1, us-central1, etc). | `string` | `""` | no |
 | <a name="input_clickhouse_subnetwork_cidr"></a> [clickhouse\_subnetwork\_cidr](#input\_clickhouse\_subnetwork\_cidr) | ClickHouse private service connect subnetwork | `string` | `"10.50.0.0/24"` | no |
-| <a name="input_controller_image_tag"></a> [controller\_image\_tag](#input\_controller\_image\_tag) | Tag of the controller image to deploy | `string` | `"1.14.0"` | no |
+| <a name="input_controller_image_tag"></a> [controller\_image\_tag](#input\_controller\_image\_tag) | Tag of the controller image to deploy | `string` | `"1.17.0"` | no |
 | <a name="input_create_bigtable"></a> [create\_bigtable](#input\_create\_bigtable) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
 | <a name="input_create_pubsub"></a> [create\_pubsub](#input\_create\_pubsub) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
@@ -174,7 +174,7 @@ resources that lack official modules.
 | <a name="input_oidc_client_id"></a> [oidc\_client\_id](#input\_oidc\_client\_id) | The Client ID of application in your identity provider | `string` | `""` | no |
 | <a name="input_oidc_issuer"></a> [oidc\_issuer](#input\_oidc\_issuer) | A url to your Open ID Connect identity provider, i.e. https://cognito-idp.us-east-1.amazonaws.com/us-east-1_uiIFNdacd | `string` | `""` | no |
 | <a name="input_oidc_secret"></a> [oidc\_secret](#input\_oidc\_secret) | The Client secret of application in your identity provider | `string` | `""` | no |
-| <a name="input_operator_chart_version"></a> [operator\_chart\_version](#input\_operator\_chart\_version) | Version of the operator chart to deploy | `string` | `"1.3.6"` | no |
+| <a name="input_operator_chart_version"></a> [operator\_chart\_version](#input\_operator\_chart\_version) | Version of the operator chart to deploy | `string` | `"1.3.12"` | no |
 | <a name="input_other_wandb_env"></a> [other\_wandb\_env](#input\_other\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_parquet_wandb_env"></a> [parquet\_wandb\_env](#input\_parquet\_wandb\_env) | Extra environment variables for W&B | `map(string)` | `{}` | no |
 | <a name="input_psc_subnetwork_cidr"></a> [psc\_subnetwork\_cidr](#input\_psc\_subnetwork\_cidr) | Private link service reserved subnetwork | `string` | `"192.168.0.0/24"` | no |
