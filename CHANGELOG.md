@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.2.0](https://github.com/wandb/terraform-google-wandb/compare/v9.1.3...v9.2.0) (2025-02-07)
+
+
+### Features
+
+* Enable an IP allow list ([#218](https://github.com/wandb/terraform-google-wandb/issues/218)) ([68dc80b](https://github.com/wandb/terraform-google-wandb/commit/68dc80b829fae4787ee1fc5ec9ccdc0a4d92bd38))
+
 ### [9.1.3](https://github.com/wandb/terraform-google-wandb/compare/v9.1.2...v9.1.3) (2025-02-06)
 
 
