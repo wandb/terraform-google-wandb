@@ -278,6 +278,25 @@ variable "redis_memory_size_gb" {
   default     = null
 }
 
+variable "use_external_redis" {
+  type        = bool
+  description = "Boolean indicating whether to use the redis instance created externally"
+  default     = false
+}
+
+variable "external_redis_host" {
+  type        = string
+  description = "host for the redis instance created externally"
+  default     = null
+}
+
+variable "external_redis_port" {
+  type        = string
+  description = "port for the redis instance created externally"
+  default     = null
+}
+
+
 ##########################################
 # External Bucket                        #
 ##########################################
