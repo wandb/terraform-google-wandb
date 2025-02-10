@@ -278,7 +278,7 @@ variable "redis_memory_size_gb" {
   default     = null
 }
 
-variable "use_core_managed_redis" {
+variable "use_external_redis" {
   type        = bool
   description = "Boolean indicating whether to use the redis instance created in core"
   default     = false

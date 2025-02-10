@@ -361,7 +361,7 @@ module "wandb" {
           port     = 3306
         }
 
-        redis = var.use_core_managed_redis ? {
+        redis = var.use_external_redis ? {
           host     = var.core_redis_host
           port     = var.core_redis_port
         } : {
