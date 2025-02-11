@@ -369,7 +369,11 @@ module "wandb" {
           host   = var.external_redis_host
           port   = var.external_redis_port
           caCert = ""
-          params = {}
+          params = {
+            tls          = false
+            ttlInSeconds = 0
+            caCertPath   = ""
+          }
           } : {
           password = ""
           host     = ""
