@@ -371,7 +371,7 @@ module "wandb" {
         } : {
           password = ""
           host     = ""
-          port     = 6379
+          port     = "6379"
           caCert   = ""
           params = {
             tls          = false
