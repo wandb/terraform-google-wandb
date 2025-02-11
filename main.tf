@@ -366,12 +366,19 @@ module "wandb" {
         }
 
         redis = var.use_external_redis ? {
+          password = ""
           host     = var.external_redis_host
           port     = var.external_redis_port
-        } : {
+          caCert   = ""
+          params = {
+            tls          = false
+            ttlInSeconds = 0
+            caCertPath   = ""
+          }
+          } : {
           password = ""
           host     = ""
-          port     = 6379
+          port     = "6379"
           caCert   = ""
           params = {
             tls          = false
