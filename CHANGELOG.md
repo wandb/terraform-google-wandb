@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.3.1](https://github.com/wandb/terraform-google-wandb/compare/v9.3.0...v9.3.1) (2025-02-11)
+
+
+### Bug Fixes
+
+* INFRA-383 finicky terraform fixes ([#222](https://github.com/wandb/terraform-google-wandb/issues/222)) ([f1e3b79](https://github.com/wandb/terraform-google-wandb/commit/f1e3b79fb16f6a980f25178ff429a813966b8dc9))
+
 ## [9.3.0](https://github.com/wandb/terraform-google-wandb/compare/v9.2.0...v9.3.0) (2025-02-10)
 
 
