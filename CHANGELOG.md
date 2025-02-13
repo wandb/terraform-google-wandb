@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.3.3](https://github.com/wandb/terraform-google-wandb/compare/v9.3.2...v9.3.3) (2025-02-13)
+
+
+### Bug Fixes
+
+* Another trivial fix for releasebot ([#226](https://github.com/wandb/terraform-google-wandb/issues/226)) ([971976d](https://github.com/wandb/terraform-google-wandb/commit/971976d78d08080d8abb25211e3cfff22ee296f2))
+* Trivial fix for semantic bot ([#225](https://github.com/wandb/terraform-google-wandb/issues/225)) ([466af49](https://github.com/wandb/terraform-google-wandb/commit/466af499bbf89bf858b4b798d2aa489f47564b3d))
+
+
+### Reverts
+
+* INFRA-383 toggle for core-managed redis ([#224](https://github.com/wandb/terraform-google-wandb/issues/224)) ([c628884](https://github.com/wandb/terraform-google-wandb/commit/c628884b99c367c3683b6c71e76294a34cf4c9db))
 
 ### [9.3.2](https://github.com/wandb/terraform-google-wandb/compare/v9.3.1...v9.3.2) (2025-02-13)
 
