@@ -556,7 +556,8 @@ module "wandb" {
   ]
 }
 
-## In order to support private link required min version 0.13.0 of operator-wandb chart
+## In order to support private link required min version 0.13.0 of
+## operator-wandb chart
 module "private_link" {
   count                 = var.create_private_link ? 1 : 0
   source                = "./modules/private_link"
