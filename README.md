@@ -237,6 +237,7 @@ rules for PSCs with labels, we are no longer able to support `default_labels` on
 We have ensured that the labels passed in via the variable [labels](#input\_labels) are applied to all the resources that accept labels,
 any desired labels should be passed in via that variable.
 
+end
 ### 7.x -> 8.x
 
 `v8` changes how the module references storage from using terraform's `count` to always creating a "defaultBucket" which can be overidden latter or but providing some initial bucket.
