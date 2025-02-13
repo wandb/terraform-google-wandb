@@ -152,7 +152,7 @@ module "cloud_nat" {
 }
 
 locals {
-  allowed_inbound_cidrs = var.create_private_link ? concat(var.allowed_inbound_cidrs, ["${module.cloud_nat[0].cloudnat_lb_proxy_ip}/32"]) : var.allowed_inbound_cidrs
+  allowed_inbound_cidrs = var.create_private_link && var.allowed_inbound_cidrs[0] != "*" ? concat(var.allowed_inbound_cidrs, ["${module.cloud_nat[0].cloudnat_lb_proxy_ip}/32"]) : var.allowed_inbound_cidrs
 }
 
 module "app_lb" {
