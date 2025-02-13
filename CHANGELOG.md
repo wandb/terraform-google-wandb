@@ -2,6 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
+
 ### [9.3.2](https://github.com/wandb/terraform-google-wandb/compare/v9.3.1...v9.3.2) (2025-02-13)
 
 
@@ -9,19 +10,8 @@ All notable changes to this project will be documented in this file.
 
 * The default privatelink and allowed cidrs dont work as is ([#223](https://github.com/wandb/terraform-google-wandb/issues/223)) ([f0cfb5c](https://github.com/wandb/terraform-google-wandb/commit/f0cfb5cf616c23fefd4c27d184c008096dd8a23b))
 
-### [9.3.1](https://github.com/wandb/terraform-google-wandb/compare/v9.3.0...v9.3.1) (2025-02-11)
-
-
-### Bug Fixes
-
-* INFRA-383 finicky terraform fixes ([#222](https://github.com/wandb/terraform-google-wandb/issues/222)) ([f1e3b79](https://github.com/wandb/terraform-google-wandb/commit/f1e3b79fb16f6a980f25178ff429a813966b8dc9))
-
-## [9.3.0](https://github.com/wandb/terraform-google-wandb/compare/v9.2.0...v9.3.0) (2025-02-10)
-
 
 ### Features
-
-* INFRA-383 support for external external redis creation ([#221](https://github.com/wandb/terraform-google-wandb/issues/221)) ([691034d](https://github.com/wandb/terraform-google-wandb/commit/691034df2b007d01108d0f8fac611d9ef4ed2d32))
 
 ## [9.2.0](https://github.com/wandb/terraform-google-wandb/compare/v9.1.3...v9.2.0) (2025-02-07)
 
