@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.3.2](https://github.com/wandb/terraform-google-wandb/compare/v9.3.1...v9.3.2) (2025-02-13)
+
+
+### Bug Fixes
+
+* The default privatelink and allowed cidrs dont work as is ([#223](https://github.com/wandb/terraform-google-wandb/issues/223)) ([f0cfb5c](https://github.com/wandb/terraform-google-wandb/commit/f0cfb5cf616c23fefd4c27d184c008096dd8a23b))
+
 ### [9.3.1](https://github.com/wandb/terraform-google-wandb/compare/v9.3.0...v9.3.1) (2025-02-11)
 
 
