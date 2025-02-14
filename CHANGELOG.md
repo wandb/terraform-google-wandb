@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.3.4](https://github.com/wandb/terraform-google-wandb/compare/v9.3.3...v9.3.4) (2025-02-14)
+
+
+### Bug Fixes
+
+* Chunk out allowed cidrs ([#227](https://github.com/wandb/terraform-google-wandb/issues/227)) ([ff35a15](https://github.com/wandb/terraform-google-wandb/commit/ff35a15174cdc79cd5d4ddfc3d2a3e182f94534e))
+
 ### [9.3.3](https://github.com/wandb/terraform-google-wandb/compare/v9.3.2...v9.3.3) (2025-02-13)
 
 
