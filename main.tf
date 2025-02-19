@@ -365,7 +365,17 @@ module "wandb" {
           port     = 3306
         }
 
-        redis = var.create_redis ? {
+        redis = var.use_external_redis ? {
+          password = null
+          host     = var.external_redis_host
+          port     = var.external_redis_port
+          caCert   = null
+          params = {
+            tls          = false
+            ttlInSeconds = 604800
+            caCertPath   = null
+          }
+          } : var.create_redis ? {
           password = module.redis[0].auth_string
           host     = module.redis[0].host
           port     = module.redis[0].port
@@ -373,7 +383,7 @@ module "wandb" {
           params = {
             tls          = true
             ttlInSeconds = 604800
-            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+            caCertPath   = "/etc/ssl/certs/server_ca.pem"
           }
           } : {
           password = ""
