@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.4.0](https://github.com/wandb/terraform-google-wandb/compare/v9.3.4...v9.4.0) (2025-02-19)
+
+
+### Features
+
+* INFRA-478 support for external redis, default off ([#228](https://github.com/wandb/terraform-google-wandb/issues/228)) ([25a3daf](https://github.com/wandb/terraform-google-wandb/commit/25a3daf61480479a230c6f3e3f4b3d3b8bc6a2a0))
+
 ### [9.3.4](https://github.com/wandb/terraform-google-wandb/compare/v9.3.3...v9.3.4) (2025-02-14)
 
 
