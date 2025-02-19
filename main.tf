@@ -375,6 +375,16 @@ module "wandb" {
             ttlInSeconds = 0
             caCertPath   = ""
           }
+          } : var.create_redis ? {
+          password = ""
+          host     = module.redis[0].host
+          port     = module.redis[0].port
+          caCert   = module.redis[0].ca_cert
+          params = {
+            tls          = true
+            ttlInSeconds = 604800
+            caCertPath   = "/etc/ssl/certs/server_ca.pem"
+          }
           } : {
           password = ""
           host     = ""
