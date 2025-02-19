@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.3.4](https://github.com/wandb/terraform-google-wandb/compare/v9.3.3...v9.3.4) (2025-02-14)
+
+
+### Bug Fixes
+
+* Chunk out allowed cidrs ([#227](https://github.com/wandb/terraform-google-wandb/issues/227)) ([ff35a15](https://github.com/wandb/terraform-google-wandb/commit/ff35a15174cdc79cd5d4ddfc3d2a3e182f94534e))
+
+### [9.3.3](https://github.com/wandb/terraform-google-wandb/compare/v9.3.2...v9.3.3) (2025-02-13)
+
+
+### Bug Fixes
+
+* Another trivial fix for releasebot ([#226](https://github.com/wandb/terraform-google-wandb/issues/226)) ([971976d](https://github.com/wandb/terraform-google-wandb/commit/971976d78d08080d8abb25211e3cfff22ee296f2))
+* Trivial fix for semantic bot ([#225](https://github.com/wandb/terraform-google-wandb/issues/225)) ([466af49](https://github.com/wandb/terraform-google-wandb/commit/466af499bbf89bf858b4b798d2aa489f47564b3d))
+
+
+### Reverts
+
+* INFRA-383 toggle for core-managed redis ([#224](https://github.com/wandb/terraform-google-wandb/issues/224)) ([c628884](https://github.com/wandb/terraform-google-wandb/commit/c628884b99c367c3683b6c71e76294a34cf4c9db))
+
 ### [9.3.2](https://github.com/wandb/terraform-google-wandb/compare/v9.3.1...v9.3.2) (2025-02-13)
 
 
@@ -9,19 +29,8 @@ All notable changes to this project will be documented in this file.
 
 * The default privatelink and allowed cidrs dont work as is ([#223](https://github.com/wandb/terraform-google-wandb/issues/223)) ([f0cfb5c](https://github.com/wandb/terraform-google-wandb/commit/f0cfb5cf616c23fefd4c27d184c008096dd8a23b))
 
-### [9.3.1](https://github.com/wandb/terraform-google-wandb/compare/v9.3.0...v9.3.1) (2025-02-11)
-
-
-### Bug Fixes
-
-* INFRA-383 finicky terraform fixes ([#222](https://github.com/wandb/terraform-google-wandb/issues/222)) ([f1e3b79](https://github.com/wandb/terraform-google-wandb/commit/f1e3b79fb16f6a980f25178ff429a813966b8dc9))
-
-## [9.3.0](https://github.com/wandb/terraform-google-wandb/compare/v9.2.0...v9.3.0) (2025-02-10)
-
 
 ### Features
-
-* INFRA-383 support for external external redis creation ([#221](https://github.com/wandb/terraform-google-wandb/issues/221)) ([691034d](https://github.com/wandb/terraform-google-wandb/commit/691034df2b007d01108d0f8fac611d9ef4ed2d32))
 
 ## [9.2.0](https://github.com/wandb/terraform-google-wandb/compare/v9.1.3...v9.2.0) (2025-02-07)
 

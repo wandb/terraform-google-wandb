@@ -365,15 +365,15 @@ module "wandb" {
           port     = 3306
         }
 
-        redis = var.use_external_redis ? {
-          password = ""
-          host     = var.external_redis_host
-          port     = var.external_redis_port
-          caCert   = ""
+        redis = var.create_redis ? {
+          password = module.redis[0].auth_string
+          host     = module.redis[0].host
+          port     = module.redis[0].port
+          caCert   = module.redis[0].ca_cert
           params = {
-            tls          = false
-            ttlInSeconds = 0
-            caCertPath   = ""
+            tls          = true
+            ttlInSeconds = 604800
+            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
           } : var.create_redis ? {
           password = module.redis[0].auth_string
@@ -388,7 +388,7 @@ module "wandb" {
           } : {
           password = ""
           host     = ""
-          port     = "6379"
+          port     = 6379
           caCert   = ""
           params = {
             tls          = false
@@ -566,7 +566,8 @@ module "wandb" {
   ]
 }
 
-## In order to support private link required min version 0.13.0 of operator-wandb chart
+## In order to support private link required min version 0.13.0 of
+## operator-wandb chart
 module "private_link" {
   count                 = var.create_private_link ? 1 : 0
   source                = "./modules/private_link"
