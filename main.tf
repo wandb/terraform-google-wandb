@@ -376,7 +376,7 @@ module "wandb" {
             caCertPath   = ""
           }
           } : var.create_redis ? {
-          password = ""
+          password = module.redis[0].auth_string
           host     = module.redis[0].host
           port     = module.redis[0].port
           caCert   = module.redis[0].ca_cert
