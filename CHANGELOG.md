@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [9.4.1](https://github.com/wandb/terraform-google-wandb/compare/v9.4.0...v9.4.1) (2025-02-20)
+
+
+### Bug Fixes
+
+* Redis gcp ca cert path correction ([#229](https://github.com/wandb/terraform-google-wandb/issues/229)) ([f0dca42](https://github.com/wandb/terraform-google-wandb/commit/f0dca42c400be3c0bdfb2b4a949df3ba49ca3fd7))
+
 ## [9.4.0](https://github.com/wandb/terraform-google-wandb/compare/v9.3.4...v9.4.0) (2025-02-19)
 
 
