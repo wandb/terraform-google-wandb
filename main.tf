@@ -383,7 +383,7 @@ module "wandb" {
           params = {
             tls          = true
             ttlInSeconds = 604800
-            caCertPath   = "/etc/ssl/certs/server_ca.pem"
+            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
           } : {
           password = ""
