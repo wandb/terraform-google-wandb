@@ -451,7 +451,7 @@ module "wandb" {
       }
 
       redis = {
-        install  = !var.create_redis && !var.use_external_redis
+        install  = false
         external = var.use_external_redis
       }
       mysql = { install = false }
