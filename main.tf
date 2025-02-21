@@ -450,7 +450,10 @@ module "wandb" {
         serviceAccount = {}
       }
 
-      redis = { install = !var.create_redis }
+      redis = {
+        install = !var.create_redis && !var.use_external_redis
+        external = var.use_external_redis
+      }
       mysql = { install = false }
 
       weave = {
