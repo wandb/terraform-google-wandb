@@ -142,7 +142,7 @@ resources that lack official modules.
 | <a name="input_create_bigtable"></a> [create\_bigtable](#input\_create\_bigtable) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |
 | <a name="input_create_pubsub"></a> [create\_pubsub](#input\_create\_pubsub) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
-| <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `false` | no |
+| <a name="input_create_redis"></a> [create\_redis](#input\_create\_redis) | Boolean indicating whether to provision an redis instance (true) or not (false). | `bool` | `true` | no |
 | <a name="input_create_workload_identity"></a> [create\_workload\_identity](#input\_create\_workload\_identity) | Flag to indicate whether to create a workload identity for the service account. | `bool` | `false` | no |
 | <a name="input_database_edition"></a> [database\_edition](#input\_database\_edition) | The edition of the Cloud SQL instance. Can be either `STANDARD` or `ENTERPRISE` or `ENTERPRISE_PLUS`. | `string` | `"ENTERPRISE"` | no |
 | <a name="input_database_flags"></a> [database\_flags](#input\_database\_flags) | Flags to set for the database | `map(string)` | `{}` | no |
