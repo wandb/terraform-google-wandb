@@ -370,6 +370,7 @@ module "wandb" {
           host     = var.external_redis_host
           port     = var.external_redis_port
           caCert   = null
+          external = true
           params = {
             tls          = false
             ttlInSeconds = 604800
@@ -380,6 +381,7 @@ module "wandb" {
           host     = module.redis[0].host
           port     = module.redis[0].port
           caCert   = module.redis[0].ca_cert
+          external = false
           params = {
             tls          = true
             ttlInSeconds = 604800
@@ -390,6 +392,7 @@ module "wandb" {
           host     = ""
           port     = 6379
           caCert   = ""
+          external = false
           params = {
             tls          = false
             ttlInSeconds = 0
@@ -450,10 +453,7 @@ module "wandb" {
         serviceAccount = {}
       }
 
-      redis = {
-        install  = false
-        external = var.use_external_redis
-      }
+      redis = { install  = false }
       mysql = { install = false }
 
       weave = {
