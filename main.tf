@@ -453,7 +453,7 @@ module "wandb" {
         serviceAccount = {}
       }
 
-      redis = { install  = false }
+      redis = { install = false }
       mysql = { install = false }
 
       weave = {
