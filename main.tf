@@ -381,7 +381,6 @@ module "wandb" {
           host     = module.redis[0].host
           port     = module.redis[0].port
           caCert   = module.redis[0].ca_cert
-          external = false
           params = {
             tls          = true
             ttlInSeconds = 604800
@@ -392,7 +391,6 @@ module "wandb" {
           host     = ""
           port     = 6379
           caCert   = ""
-          external = false
           params = {
             tls          = false
             ttlInSeconds = 0
