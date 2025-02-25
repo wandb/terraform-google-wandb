@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.0.0](https://github.com/wandb/terraform-google-wandb/compare/v9.4.1...v10.0.0) (2025-02-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* Expose externalized redis to helm for console metrics (#230)
+
+### Bug Fixes
+
+* Expose externalized redis to helm for console metrics ([#230](https://github.com/wandb/terraform-google-wandb/issues/230)) ([2f5a684](https://github.com/wandb/terraform-google-wandb/commit/2f5a684978dfc93d741df856e2f5fa7497238ff0))
+
 ### [9.4.1](https://github.com/wandb/terraform-google-wandb/compare/v9.4.0...v9.4.1) (2025-02-20)
 
 
