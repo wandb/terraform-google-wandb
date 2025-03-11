@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.1.0](https://github.com/wandb/terraform-google-wandb/compare/v10.0.0...v10.1.0) (2025-03-11)
+
+
+### Features
+
+* Add helm chart toggles ([#231](https://github.com/wandb/terraform-google-wandb/issues/231)) ([cb7646f](https://github.com/wandb/terraform-google-wandb/commit/cb7646fa677dc76114bcb300793cf999b5b9a5f8))
+
 ## [10.0.0](https://github.com/wandb/terraform-google-wandb/compare/v9.4.1...v10.0.0) (2025-02-25)
 
 
