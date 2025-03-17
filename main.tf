@@ -315,6 +315,15 @@ locals {
 
 data "google_client_config" "current" {}
 
+locals {
+  ctrlplane_redis_host = "redis.redis.svc.cluster.local"
+  ctrlplane_redis_port = 26379
+  ctrlplane_redis_params = {
+    ttlInSeconds = 604800
+    master       = "gorilla"
+  }
+}
+
 module "wandb" {
   source  = "wandb/wandb/helm"
   version = "3.0.0"
@@ -365,12 +374,17 @@ module "wandb" {
           port     = 3306
         }
 
-        redis = var.use_external_redis ? {
+        redis = var.use_ctrlplane_redis ? {
+          host     = local.ctrlplane_redis_host
+          port     = local.ctrlplane_redis_port
+          params   = local.ctrlplane_redis_params
+          external = true
+        } : var.use_external_redis ? {
           password = ""
           host     = var.external_redis_host
           port     = var.external_redis_port
           caCert   = ""
-          external = var.use_external_redis
+          external = true
           params = {
             tls          = false
             ttlInSeconds = 604800
@@ -381,7 +395,7 @@ module "wandb" {
           host     = module.redis[0].host
           port     = module.redis[0].port
           caCert   = module.redis[0].ca_cert
-          external = var.use_external_redis
+          external = false
           params = {
             tls          = true
             ttlInSeconds = 604800
@@ -392,7 +406,7 @@ module "wandb" {
           host     = ""
           port     = 6379
           caCert   = ""
-          external = var.use_external_redis
+          external = false
           params = {
             tls          = false
             ttlInSeconds = 0
