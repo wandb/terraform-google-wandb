@@ -317,9 +317,9 @@ data "google_client_config" "current" {}
 
 locals {
   ctrlplane_redis_host = "redis.redis.svc.cluster.local"
-  ctrlplane_redis_port = 26379
+  ctrlplane_redis_port = "26379"
   ctrlplane_redis_params = {
-    ttlInSeconds = 604800
+    ttlInSeconds = "604800"
     master       = "gorilla"
   }
 }
@@ -376,12 +376,13 @@ module "wandb" {
 
         redis = var.use_ctrlplane_redis ? {
           host     = local.ctrlplane_redis_host
+          password = ""
           port     = local.ctrlplane_redis_port
           params   = local.ctrlplane_redis_params
           external = true
         } : var.use_external_redis ? {
-          password = ""
           host     = var.external_redis_host
+          password = ""
           port     = var.external_redis_port
           caCert   = ""
           external = true
@@ -391,8 +392,8 @@ module "wandb" {
             caCertPath   = ""
           }
           } : var.create_redis ? {
-          password = module.redis[0].auth_string
           host     = module.redis[0].host
+          password = module.redis[0].auth_string
           port     = module.redis[0].port
           caCert   = module.redis[0].ca_cert
           external = false
@@ -402,8 +403,8 @@ module "wandb" {
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
           }
           } : {
-          password = ""
           host     = ""
+          password = ""
           port     = 6379
           caCert   = ""
           external = false
