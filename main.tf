@@ -383,13 +383,13 @@ module "wandb" {
           caCert   = ""
           params   = local.ctrlplane_redis_params
           external = true
-        } : var.use_external_redis ? {
+          } : var.use_external_redis ? {
           host     = var.external_redis_host
           password = ""
           port     = var.external_redis_port
           caCert   = ""
           external = true
-          params   = {
+          params = {
             tls          = false
             ttlInSeconds = "604800"
             caCertPath   = ""
@@ -401,7 +401,7 @@ module "wandb" {
           port     = module.redis[0].port
           caCert   = module.redis[0].ca_cert
           external = false
-          params   = {
+          params = {
             tls          = true
             ttlInSeconds = "604800"
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
@@ -413,7 +413,7 @@ module "wandb" {
           port     = "6379"
           caCert   = ""
           external = false
-          params   = {
+          params = {
             tls          = false
             ttlInSeconds = ""
             caCertPath   = ""
