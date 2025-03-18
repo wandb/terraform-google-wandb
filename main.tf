@@ -388,7 +388,7 @@ module "wandb" {
           external = true
           params = {
             tls          = false
-            ttlInSeconds = 604800
+            ttlInSeconds = "604800"
             caCertPath   = ""
             master       = ""
           }
@@ -400,19 +400,19 @@ module "wandb" {
           external = false
           params = {
             tls          = true
-            ttlInSeconds = 604800
+            ttlInSeconds = "604800"
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
             master       = ""
           }
           } : {
           host     = ""
           password = ""
-          port     = 6379
+          port     = "6379"
           caCert   = ""
           external = false
           params = {
             tls          = false
-            ttlInSeconds = 0
+            ttlInSeconds = ""
             caCertPath   = ""
             master       = ""
           }
