@@ -321,6 +321,8 @@ locals {
   ctrlplane_redis_params = {
     ttlInSeconds = "604800"
     master       = "gorilla"
+    caCertPath   = ""
+    tls          = false
   }
 }
 
