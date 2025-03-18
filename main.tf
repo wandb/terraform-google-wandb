@@ -390,6 +390,7 @@ module "wandb" {
             tls          = false
             ttlInSeconds = 604800
             caCertPath   = ""
+            master       = ""
           }
           } : var.create_redis ? {
           host     = module.redis[0].host
@@ -401,6 +402,7 @@ module "wandb" {
             tls          = true
             ttlInSeconds = 604800
             caCertPath   = "/etc/ssl/certs/redis_ca.pem"
+            master       = ""
           }
           } : {
           host     = ""
@@ -412,6 +414,7 @@ module "wandb" {
             tls          = false
             ttlInSeconds = 0
             caCertPath   = ""
+            master       = ""
           }
         }
 
