@@ -380,6 +380,7 @@ module "wandb" {
           host     = local.ctrlplane_redis_host
           password = ""
           port     = local.ctrlplane_redis_port
+          caCert   = ""
           params   = local.ctrlplane_redis_params
           external = true
         } : var.use_external_redis ? {
