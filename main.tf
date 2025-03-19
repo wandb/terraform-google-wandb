@@ -389,12 +389,7 @@ module "wandb" {
           port     = var.external_redis_port
           caCert   = ""
           external = true
-          params = {
-            tls          = false
-            ttlInSeconds = "604800"
-            caCertPath   = ""
-            master       = ""
-          }
+          params   = var.external_redis_params
           } : var.create_redis ? {
           host     = module.redis[0].host
           password = module.redis[0].auth_string
