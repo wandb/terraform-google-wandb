@@ -319,7 +319,7 @@ locals {
   ctrlplane_redis_host = "redis.redis.svc.cluster.local"
   ctrlplane_redis_port = "26379"
   ctrlplane_redis_params = {
-    master       = "gorilla"
+    master = "gorilla"
   }
 }
 
@@ -394,7 +394,7 @@ module "wandb" {
           caCert   = module.redis[0].ca_cert
           external = false
           params = {
-            master       = ""
+            master = ""
           }
           } : {
           host     = ""
@@ -403,7 +403,7 @@ module "wandb" {
           caCert   = ""
           external = false
           params = {
-            master       = ""
+            master = ""
           }
         }
 
