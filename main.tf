@@ -319,10 +319,7 @@ locals {
   ctrlplane_redis_host = "redis.redis.svc.cluster.local"
   ctrlplane_redis_port = "26379"
   ctrlplane_redis_params = {
-    ttlInSeconds = "604800"
     master       = "gorilla"
-    caCertPath   = ""
-    tls          = false
   }
 }
 
@@ -397,9 +394,6 @@ module "wandb" {
           caCert   = module.redis[0].ca_cert
           external = false
           params = {
-            tls          = true
-            ttlInSeconds = "604800"
-            caCertPath   = "/etc/ssl/certs/redis_ca.pem"
             master       = ""
           }
           } : {
@@ -409,9 +403,6 @@ module "wandb" {
           caCert   = ""
           external = false
           params = {
-            tls          = false
-            ttlInSeconds = ""
-            caCertPath   = ""
             master       = ""
           }
         }
