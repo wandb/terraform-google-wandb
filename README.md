@@ -159,6 +159,7 @@ resources that lack official modules.
 | <a name="input_enable_private_gke_nodes"></a> [enable\_private\_gke\_nodes](#input\_enable\_private\_gke\_nodes) | Enable private nodes for the GKE cluster. When set to true, nodes will not have public IPs, and Cloud NAT with a static public IP will be used for egress traffic. Ensure sufficient quota for static IPs in the specified region. | `bool` | `false` | no |
 | <a name="input_enable_stackdriver"></a> [enable\_stackdriver](#input\_enable\_stackdriver) | n/a | `bool` | `false` | no |
 | <a name="input_external_redis_host"></a> [external\_redis\_host](#input\_external\_redis\_host) | host for the redis instance created externally | `string` | `null` | no |
+| <a name="input_external_redis_params"></a> [external\_redis\_params](#input\_external\_redis\_params) | queryVar params for redis instance created externally | `object({})` | `null` | no |
 | <a name="input_external_redis_port"></a> [external\_redis\_port](#input\_external\_redis\_port) | port for the redis instance created externally | `string` | `null` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
@@ -194,6 +195,7 @@ resources that lack official modules.
 | <a name="input_stackdriver_sa_name"></a> [stackdriver\_sa\_name](#input\_stackdriver\_sa\_name) | n/a | `string` | `"wandb-stackdriver"` | no |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Subdomain for accessing the Weights & Biases UI. Default creates record at Route53 Route. | `string` | `null` | no |
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | Pre-existing subnetwork self link | `string` | `null` | no |
+| <a name="input_use_ctrlplane_redis"></a> [use\_ctrlplane\_redis](#input\_use\_ctrlplane\_redis) | Whether redis is deployed in the cluster via ctrlplane | `bool` | `false` | no |
 | <a name="input_use_external_redis"></a> [use\_external\_redis](#input\_use\_external\_redis) | Boolean indicating whether to use the redis instance created externally | `bool` | `false` | no |
 | <a name="input_use_internal_queue"></a> [use\_internal\_queue](#input\_use\_internal\_queue) | Uses an internal redis queue instead of using google pubsub. | `bool` | `false` | no |
 | <a name="input_wandb_image"></a> [wandb\_image](#input\_wandb\_image) | Docker repository of to pull the wandb image from. | `string` | `"wandb/local"` | no |
