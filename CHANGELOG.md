@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.2.0](https://github.com/wandb/terraform-google-wandb/compare/v10.1.0...v10.2.0) (2025-03-19)
+
+
+### Features
+
+* **deployer:** Support ctrlplane redis ([#232](https://github.com/wandb/terraform-google-wandb/issues/232)) ([e2b082b](https://github.com/wandb/terraform-google-wandb/commit/e2b082b08561aeab583da5102a6adbd067e86562))
+
 ## [10.1.0](https://github.com/wandb/terraform-google-wandb/compare/v10.0.0...v10.1.0) (2025-03-11)
 
 
