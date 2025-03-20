@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.2.1](https://github.com/wandb/terraform-google-wandb/compare/v10.2.0...v10.2.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* Tag cluster managed K8S with cache_size ([#233](https://github.com/wandb/terraform-google-wandb/issues/233)) ([c58ab0b](https://github.com/wandb/terraform-google-wandb/commit/c58ab0b0b7c8a6519739364cc4918773f1ebd250))
+
 ## [10.2.0](https://github.com/wandb/terraform-google-wandb/compare/v10.1.0...v10.2.0) (2025-03-19)
 
 
