@@ -135,6 +135,7 @@ resources that lack official modules.
 | <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket (US, EU, ASIA) | `string` | `"US"` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_bucket_path"></a> [bucket\_path](#input\_bucket\_path) | path of where to store data for the instance-level bucket | `string` | `""` | no |
+| <a name="input_cache_size"></a> [cache\_size](#input\_cache\_size) | Size of the redis cache, when use\_ctrlplane\_redis is true. These values map to preset sizes in the bitnami helm chart. | `string` | `"nano"` | no |
 | <a name="input_clickhouse_private_endpoint_service_name"></a> [clickhouse\_private\_endpoint\_service\_name](#input\_clickhouse\_private\_endpoint\_service\_name) | ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud). | `string` | `""` | no |
 | <a name="input_clickhouse_region"></a> [clickhouse\_region](#input\_clickhouse\_region) | ClickHouse region (us-east1, us-central1, etc). | `string` | `""` | no |
 | <a name="input_clickhouse_subnetwork_cidr"></a> [clickhouse\_subnetwork\_cidr](#input\_clickhouse\_subnetwork\_cidr) | ClickHouse private service connect subnetwork | `string` | `"10.50.0.0/24"` | no |
