@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.2.2](https://github.com/wandb/terraform-google-wandb/compare/v10.2.1...v10.2.2) (2025-03-25)
+
+
+### Bug Fixes
+
+* Bump k8s max nodes by 1 ([#234](https://github.com/wandb/terraform-google-wandb/issues/234)) ([f02e068](https://github.com/wandb/terraform-google-wandb/commit/f02e0688a3be02dc88f6a64223cd3a62c3daa1a1))
+
 ### [10.2.1](https://github.com/wandb/terraform-google-wandb/compare/v10.2.0...v10.2.1) (2025-03-20)
 
 
