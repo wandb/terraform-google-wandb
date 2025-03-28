@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.2.3](https://github.com/wandb/terraform-google-wandb/compare/v10.2.2...v10.2.3) (2025-03-28)
+
+
+### Bug Fixes
+
+* Patch deploy ([#236](https://github.com/wandb/terraform-google-wandb/issues/236)) ([3cdbf76](https://github.com/wandb/terraform-google-wandb/commit/3cdbf7643a1e09d202fbf7755fc9d181cf03660a))
+
 ### [10.2.2](https://github.com/wandb/terraform-google-wandb/compare/v10.2.1...v10.2.2) (2025-03-25)
 
 
