@@ -381,6 +381,12 @@ variable "gke_max_node_count" {
   default     = null
 }
 
+variable "gke_node_disk_size_gb" {
+  type = number
+  description = "Size of the node root volume in GB."
+  default = "100"
+}
+
 variable "enable_gcs_fuse_csi_driver" {
   type        = bool
   description = "Enable GCS Fuse CSI driver for the GKE cluster."

@@ -55,6 +55,12 @@ variable "max_node_count" {
   type = number
 }
 
+variable "disk_size_gb" {
+  type = number
+  description = "Size of the node root volume in GB."
+  default = "100"
+}
+
 variable "create_workload_identity" {
   description = "Flag to indicate whether to enable workload identity for the service account."
   type        = bool
