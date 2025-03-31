@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.2.4](https://github.com/wandb/terraform-google-wandb/compare/v10.2.3...v10.2.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* Make root volume size of GKE nodes configurable ([#237](https://github.com/wandb/terraform-google-wandb/issues/237)) ([12c3ed7](https://github.com/wandb/terraform-google-wandb/commit/12c3ed751c338231de73f11993a46ac4e368973f))
+
 ### [10.2.3](https://github.com/wandb/terraform-google-wandb/compare/v10.2.2...v10.2.3) (2025-03-28)
 
 
