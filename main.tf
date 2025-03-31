@@ -136,6 +136,7 @@ module "app_gke" {
   depends_on                 = [module.project_factory_project_services]
   max_node_count             = local.max_node_count
   min_node_count             = local.min_node_count
+  disk_size_gb               = var.gke_node_disk_size_gb
   labels                     = merge(var.labels, { cache_size = var.cache_size })
   enable_private_gke_nodes   = var.enable_private_gke_nodes
 }
