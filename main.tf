@@ -319,7 +319,7 @@ locals {
     "https://container.googleapis.com/v1/projects/%s/locations/%s/clusters/%s",
     local.project_id,
     var.location,
-    google_container_cluster.default.name
+    data.google_client_config.current.name
   )
 }
 
