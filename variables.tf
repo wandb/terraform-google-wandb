@@ -538,11 +538,6 @@ variable "clickhouse_subnetwork_cidr" {
 ###########################################
 # Internal Service                        #
 ###########################################
-variable "kubernetes_cluster_oidc_issuer_url" {
-  type        = string
-  description = "OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration`"
-  default     = ""
-}
 
 variable "enable_private_gke_nodes" {
   type        = bool

@@ -105,3 +105,7 @@ output "clickhouse_private_endpoint_id" {
   description = "ClickHouse Private endpoint Endpoint ID to secure access inside VPC"
   value       = var.clickhouse_private_endpoint_service_name != "" ? module.clickhouse[0].psc_connection_id : null
 }
+
+output "oidc_issuer" {
+  value = local.issuer_url
+}
