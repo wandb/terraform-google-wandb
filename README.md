@@ -232,6 +232,7 @@ resources that lack official modules.
 | <a name="output_service_account"></a> [service\_account](#output\_service\_account) | Weights & Biases service account used to manage resources. |
 | <a name="output_standardized_size"></a> [standardized\_size](#output\_standardized\_size) | n/a |
 | <a name="output_url"></a> [url](#output\_url) | The URL to the W&B application |
+| <a name="output_wandb_spec"></a> [wandb\_spec](#output\_wandb\_spec) | n/a |
 <!-- END_TF_DOCS -->
 
 ## Migrations
