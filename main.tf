@@ -321,7 +321,7 @@ locals {
   issuer_url = format(
     "https://container.googleapis.com/v1/projects/%s/locations/%s/clusters/%s",
     local.project_id,
-    data.google_client_config.current.region,
+    provider::google::location_from_id(local.project_id),
     "${var.namespace}-cluster"
   )
 }
