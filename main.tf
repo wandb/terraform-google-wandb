@@ -323,7 +323,7 @@ locals {
     "https://container.googleapis.com/v1/projects/%s/locations/%s/clusters/%s",
     local.project_id,
     data.google_compute_zones.available.names.0,
-    data.google_container_cluster.name
+    "${var.namespace}-cluster"
   )
 }
 
