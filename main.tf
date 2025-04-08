@@ -314,17 +314,18 @@ locals {
   workload_hash = var.create_workload_identity ? substr(sha256("yes"), 0, 50) : null
 }
 
+data "google_compute_zones" "available" {}
+data "google_client_config" "current" {}
+
 locals {
   issuer_url = format(
     "https://container.googleapis.com/v1/projects/%s/locations/%s/clusters/%s",
     local.project_id,
-    data.google_compute_zones.available.names.0,
+    "${data.google_client_config.current.region}-${data.google_compute_zones.available.names.0}",
     "${var.namespace}-cluster"
   )
-  # "${data.google_client_config.current.region}-a",
 }
 
-data "google_client_config" "current" {}
 
 locals {
   ctrlplane_redis_host = "redis.redis.svc.cluster.local"
