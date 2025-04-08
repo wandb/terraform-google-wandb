@@ -316,7 +316,6 @@ locals {
 
 data "google_compute_zones" "available" {}
 data "google_client_config" "current" {}
-data "google_container_cluster" "default" {}
 
 locals {
   issuer_url = format(
