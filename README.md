@@ -118,6 +118,7 @@ resources that lack official modules.
 | Name | Type |
 |------|------|
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
+| [google_compute_zones.available](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_zones) | data source |
 
 ## Inputs
 
