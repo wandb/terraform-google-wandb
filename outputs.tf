@@ -109,3 +109,7 @@ output "clickhouse_private_endpoint_id" {
 output "oidc_issuer" {
   value = local.issuer_url
 }
+
+output "cluster_location" {
+  value = module.app_gke.location
+}
