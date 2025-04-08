@@ -35,3 +35,6 @@ output "node_pool" {
 output "mig_instance_group_id" {
   value = google_container_node_pool.default.managed_instance_group_urls[0]
 }
+output "location" {
+  value = google_container_cluster.default.location
+}
