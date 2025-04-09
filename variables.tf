@@ -382,9 +382,9 @@ variable "gke_max_node_count" {
 }
 
 variable "gke_node_disk_size_gb" {
-  type = number
+  type        = number
   description = "Size of the node root volume in GB."
-  default = "100"
+  default     = "100"
 }
 
 variable "enable_gcs_fuse_csi_driver" {

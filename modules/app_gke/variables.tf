@@ -56,9 +56,9 @@ variable "max_node_count" {
 }
 
 variable "disk_size_gb" {
-  type = number
+  type        = number
   description = "Size of the node root volume in GB."
-  default = "100"
+  default     = "100"
 }
 
 variable "create_workload_identity" {
