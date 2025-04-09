@@ -314,7 +314,6 @@ locals {
   workload_hash = var.create_workload_identity ? substr(sha256("yes"), 0, 50) : null
 }
 
-data "google_compute_zones" "available" {}
 data "google_client_config" "current" {}
 
 locals {
