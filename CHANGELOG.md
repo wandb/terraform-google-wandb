@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.3.1](https://github.com/wandb/terraform-google-wandb/compare/v10.3.0...v10.3.1) (2025-04-09)
+
+
+### Bug Fixes
+
+* Use internal oidc issuer url instead of variable ([#238](https://github.com/wandb/terraform-google-wandb/issues/238)) ([c0a1c65](https://github.com/wandb/terraform-google-wandb/commit/c0a1c655c687277ee4cb3c13a264bdd1a1c2c102))
+
 ## [10.3.0](https://github.com/wandb/terraform-google-wandb/compare/v10.2.4...v10.3.0) (2025-04-09)
 
 
