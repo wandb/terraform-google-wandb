@@ -113,3 +113,8 @@ output "oidc_issuer" {
 output "cluster_location" {
   value = module.app_gke.location
 }
+
+output "wandb_spec" {
+  value     = local.spec
+  sensitive = true
+}

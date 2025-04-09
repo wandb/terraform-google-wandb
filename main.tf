@@ -331,11 +331,6 @@ locals {
   ctrlplane_redis_params = {
     master = "gorilla"
   }
-}
-
-module "wandb" {
-  source  = "wandb/wandb/helm"
-  version = "3.0.0"
 
   spec = {
     values = {
@@ -573,6 +568,13 @@ module "wandb" {
       }
     }
   }
+}
+
+module "wandb" {
+  source  = "wandb/wandb/helm"
+  version = "3.0.0"
+
+  spec = local.spec
 
   controller_image_tag   = var.controller_image_tag
   operator_chart_version = var.operator_chart_version

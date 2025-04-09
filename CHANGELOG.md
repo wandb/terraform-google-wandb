@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.3.0](https://github.com/wandb/terraform-google-wandb/compare/v10.2.4...v10.3.0) (2025-04-09)
+
+
+### Features
+
+* output spec ([#239](https://github.com/wandb/terraform-google-wandb/issues/239)) ([06deb8f](https://github.com/wandb/terraform-google-wandb/commit/06deb8f928464fb60026da7612705caa031ae64e))
+
 ### [10.2.4](https://github.com/wandb/terraform-google-wandb/compare/v10.2.3...v10.2.4) (2025-03-31)
 
 
