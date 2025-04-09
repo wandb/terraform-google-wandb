@@ -325,7 +325,6 @@ locals {
   )
 }
 
-
 locals {
   ctrlplane_redis_host = "redis.redis.svc.cluster.local"
   ctrlplane_redis_port = "26379"
