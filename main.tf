@@ -317,6 +317,15 @@ locals {
 data "google_client_config" "current" {}
 
 locals {
+  issuer_url = format(
+    "https://container.googleapis.com/v1/projects/%s/locations/%s/clusters/%s",
+    local.project_id,
+    module.app_gke.location,
+    "${var.namespace}-cluster"
+  )
+}
+
+locals {
   ctrlplane_redis_host = "redis.redis.svc.cluster.local"
   ctrlplane_redis_port = "26379"
   ctrlplane_redis_params = {
@@ -420,7 +429,7 @@ locals {
         internalJWTMap = [
           {
             subject = "system:serviceaccount:default:${local.k8s_sa_map.weave_trace}"
-            issuer  = var.kubernetes_cluster_oidc_issuer_url
+            issuer  = local.issuer_url
           }
         ]
       }

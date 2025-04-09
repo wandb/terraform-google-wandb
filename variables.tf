@@ -382,9 +382,9 @@ variable "gke_max_node_count" {
 }
 
 variable "gke_node_disk_size_gb" {
-  type = number
+  type        = number
   description = "Size of the node root volume in GB."
-  default = "100"
+  default     = "100"
 }
 
 variable "enable_gcs_fuse_csi_driver" {
@@ -533,15 +533,6 @@ variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"
   type        = string
-}
-
-###########################################
-# Internal Service                        #
-###########################################
-variable "kubernetes_cluster_oidc_issuer_url" {
-  type        = string
-  description = "OIDC issuer URL for the Kubernetes cluster. Can be determined using `kubectl get --raw /.well-known/openid-configuration`"
-  default     = ""
 }
 
 variable "enable_private_gke_nodes" {
