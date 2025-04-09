@@ -535,10 +535,6 @@ variable "clickhouse_subnetwork_cidr" {
   type        = string
 }
 
-###########################################
-# Internal Service                        #
-###########################################
-
 variable "enable_private_gke_nodes" {
   type        = bool
   default     = false
