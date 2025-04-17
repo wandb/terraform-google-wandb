@@ -197,6 +197,12 @@ variable "database_edition" {
   default     = "ENTERPRISE"
 }
 
+variable "database_data_cache_enabled" {
+  description = "Whether data cache is enabled for the Cloud SQL instance. This only applies to the `ENTERPRISE_PLUS` edition."
+  type        = bool
+  default     = false
+}
+
 variable "database_flags" {
   description = "Flags to set for the database"
   type        = map(string)
