@@ -31,6 +31,12 @@ variable "edition" {
   default     = "ENTERPRISE"
 }
 
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the Cloud SQL instance. This only applies to the `ENTERPRISE_PLUS` edition."
+  type        = bool
+  default     = false
+}
+
 variable "availability_type" {
   type    = string
   default = "REGIONAL"
