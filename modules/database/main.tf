@@ -54,9 +54,12 @@ resource "google_sql_database_instance" "default" {
   encryption_key_name = var.crypto_key
 
   settings {
-    tier                        = var.tier
-    availability_type           = var.availability_type
-    edition                     = var.edition
+    tier              = var.tier
+    availability_type = var.availability_type
+    edition           = var.edition
+    data_cache_config {
+      data_cache_enabled = var.data_cache_enabled
+    }
     user_labels                 = var.labels
     deletion_protection_enabled = var.deletion_protection
 
