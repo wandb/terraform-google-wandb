@@ -27,6 +27,7 @@ locals {
   create_network = var.network == null
   k8s_sa_map = {
     app                    = "wandb-app"
+    console                = "wandb-console"
     executor               = "wandb-executor"
     parquet                = "wandb-parquet"
     flat_runs              = "wandb-flat-run-fields-updater"
@@ -436,7 +437,7 @@ locals {
 
       console = {
         serviceAccount = var.create_workload_identity ? {
-          name        = local.k8s_sa_map.app
+          name        = local.k8s_sa_map.console
           annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
           } : {
           name        = ""
