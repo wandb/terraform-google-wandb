@@ -435,8 +435,15 @@ locals {
       }
 
       console = {
+        serviceAccount = var.create_workload_identity ? {
+          name        = local.k8s_sa_map.app
+          annotations = { "iam.gke.io/gcp-service-account" = module.service_accounts.sa_account_role }
+          } : {
+          name        = ""
+          annotations = {}
+        }
         extraEnv = {
-          "BUCKET_ACCESS_IDENTITY" = var.create_workload_identity ? "${module.service_accounts.sa_account_role} ${module.service_accounts.service_account.email}" : module.service_accounts.service_account.email
+          "BUCKET_ACCESS_IDENTITY" = var.create_workload_identity ? module.service_accounts.sa_account_role : module.service_accounts.service_account.email
         }
       }
 
