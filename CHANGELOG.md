@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.3.2](https://github.com/wandb/terraform-google-wandb/compare/v10.3.1...v10.3.2) (2025-04-22)
+
+
+### Bug Fixes
+
+* Display one SA & give console the same workload identity access ([#241](https://github.com/wandb/terraform-google-wandb/issues/241)) ([324841b](https://github.com/wandb/terraform-google-wandb/commit/324841b8b28bfef02041e4bd73f2e48eb5e0f8b4))
+
 ### [10.3.1](https://github.com/wandb/terraform-google-wandb/compare/v10.3.0...v10.3.1) (2025-04-09)
 
 
