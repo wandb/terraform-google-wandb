@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.3.3](https://github.com/wandb/terraform-google-wandb/compare/v10.3.2...v10.3.3) (2025-04-22)
+
+
+### Bug Fixes
+
+* Give console correct name ([#242](https://github.com/wandb/terraform-google-wandb/issues/242)) ([600f75a](https://github.com/wandb/terraform-google-wandb/commit/600f75accfbee7e71f83f3fe04335ce947b00f06))
+
 ### [10.3.2](https://github.com/wandb/terraform-google-wandb/compare/v10.3.1...v10.3.2) (2025-04-22)
 
 
