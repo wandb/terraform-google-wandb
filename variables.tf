@@ -393,6 +393,12 @@ variable "gke_node_disk_size_gb" {
   default     = "100"
 }
 
+variable "gke_cluster_labels" {
+  description = "A map of GCP labels to apply to all resources managed by the GKE cluster"
+  type        = map(string)
+  default     = {}
+}
+
 variable "enable_gcs_fuse_csi_driver" {
   type        = bool
   description = "Enable GCS Fuse CSI driver for the GKE cluster."
