@@ -163,6 +163,7 @@ resources that lack official modules.
 | <a name="input_external_redis_params"></a> [external\_redis\_params](#input\_external\_redis\_params) | queryVar params for redis instance created externally | `object({})` | `null` | no |
 | <a name="input_external_redis_port"></a> [external\_redis\_port](#input\_external\_redis\_port) | port for the redis instance created externally | `string` | `null` | no |
 | <a name="input_force_ssl"></a> [force\_ssl](#input\_force\_ssl) | Enforce SSL through the usage of the Cloud SQL Proxy (cloudsql://) in the DB connection string | `bool` | `false` | no |
+| <a name="input_gke_cluster_labels"></a> [gke\_cluster\_labels](#input\_gke\_cluster\_labels) | A map of GCP labels to apply to all resources managed by the GKE cluster | `map(string)` | `{}` | no |
 | <a name="input_gke_machine_type"></a> [gke\_machine\_type](#input\_gke\_machine\_type) | Specifies the machine type for nodes in the GKE cluster. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
 | <a name="input_gke_max_node_count"></a> [gke\_max\_node\_count](#input\_gke\_max\_node\_count) | Maximum number of nodes for the GKE cluster. Defaults to null and value from deployment-size.tf is used | `number` | `null` | no |
 | <a name="input_gke_min_node_count"></a> [gke\_min\_node\_count](#input\_gke\_min\_node\_count) | Initial number of nodes for the GKE cluster, if gke\_max\_node\_count is set, this is the minimum number of nodes. Defaults to null and value from deployment-size.tf is used | `number` | `null` | no |
