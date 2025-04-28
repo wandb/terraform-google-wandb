@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.4.0](https://github.com/wandb/terraform-google-wandb/compare/v10.3.3...v10.4.0) (2025-04-28)
+
+
+### Features
+
+* GKE Cluster Labels ([#243](https://github.com/wandb/terraform-google-wandb/issues/243)) ([e7d5052](https://github.com/wandb/terraform-google-wandb/commit/e7d505261150a855752d6ed7e1939f10ca278cb9))
+
 ### [10.3.3](https://github.com/wandb/terraform-google-wandb/compare/v10.3.2...v10.3.3) (2025-04-22)
 
 
