@@ -541,6 +541,24 @@ variable "clickhouse_region" {
   default     = ""
 }
 
+variable "clickhouse_org_id" {
+  type        = string
+  description = "ClickHouse Cloud Org ID"
+  default     = ""
+}
+
+variable "clickhouse_token_key" {
+  type        = string
+  description = "ClickHouse Cloud Token Key"
+  default     = ""
+}
+
+variable "clickhouse_token_secret" {
+  type        = string
+  description = "ClickHouse Cloud Token Secret"
+  default     = ""
+}
+
 variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"

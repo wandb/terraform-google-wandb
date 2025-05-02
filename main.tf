@@ -45,6 +45,12 @@ locals {
   redis_memory_size_gb  = coalesce(var.redis_memory_size_gb, local.deployment_size[var.size].cache)
 }
 
+provider "clickhouse" {
+  organization_id = var.clickhouse_org_id
+  token_key       = var.clickhouse_token_key
+  token_secret    = var.clickhouse_token_secret
+}
+
 module "service_accounts" {
   source                   = "./modules/service_accounts"
   namespace                = var.namespace
