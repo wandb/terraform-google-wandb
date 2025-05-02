@@ -238,6 +238,9 @@ module "clickhouse" {
   clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
+  clickhouse_org_id                        = var.clickhouse_org_id
+  clickhouse_token_key                     = var.clickhouse_token_key
+  clickhouse_secret_key                    = var.clickhouse_secret_key
 
   labels = var.labels
 }
