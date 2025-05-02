@@ -1,9 +1,3 @@
-provider "clickhouse" {
-  organization_id = var.clickhouse_org_id
-  token_key       = var.clickhouse_token_key
-  token_secret    = var.clickhouse_token_secret
-}
-
 resource "google_compute_subnetwork" "psc_network" {
   name = "${var.namespace}-subnet-clickhouse"
 
