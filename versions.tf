@@ -21,9 +21,9 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.10"
     }
-    clickhouse = {
-      version = "3.1.2"
-      source  = "ClickHouse/clickhouse"
-    }
+    #clickhouse = {
+    # version = "3.1.2"
+    # source  = "ClickHouse/clickhouse"
+    #}
   }
 }
