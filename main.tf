@@ -241,6 +241,9 @@ module "clickhouse" {
   clickhouse_org_id                        = var.clickhouse_org_id
   clickhouse_token_key                     = var.clickhouse_token_key
   clickhouse_secret_key                    = var.clickhouse_secret_key
+  providers = {
+    clickhouse = clickhouse
+  }
 
   labels = var.labels
 }

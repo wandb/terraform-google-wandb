@@ -24,6 +24,7 @@ terraform {
     clickhouse = {
       version = "3.1.2"
       source  = "ClickHouse/clickhouse"
+      configuration_aliases = [clickhouse]
     }
   }
 }
