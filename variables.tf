@@ -547,24 +547,6 @@ variable "clickhouse_subnetwork_cidr" {
   type        = string
 }
 
-variable "clickhouse_org_id" {
-  type        = string
-  description = "ClickHouse Cloud Org ID"
-  default     = ""
-}
-
-variable "clickhouse_token_key" {
-  type        = string
-  description = "ClickHouse Cloud Token Key"
-  default     = ""
-}
-
-variable "clickhouse_token_secret" {
-  type        = string
-  description = "ClickHouse Cloud Token Secret"
-  default     = ""
-}
-
 variable "enable_private_gke_nodes" {
   type        = bool
   default     = false
