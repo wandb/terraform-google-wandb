@@ -41,8 +41,10 @@ resource "google_container_cluster" "default" {
   }
 
   release_channel {
-    channel = "STABLE"
+    channel = var.release_channel
   }
+
+  min_master_version = var.gke_min_version
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
