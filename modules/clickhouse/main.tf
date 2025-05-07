@@ -58,7 +58,7 @@ resource "google_dns_record_set" "psc_dns_record" {
 resource "clickhouse_service" "service" {
   count = (var.clickhouse_provision_service && var.clickhouse_provision_service) ? 1 : 0
 
-  name           = "MyService"
+  name           = var.clickhouse_service_name
   cloud_provider = "gcp"
   region         = var.clickhouse_region
   idle_scaling   = true

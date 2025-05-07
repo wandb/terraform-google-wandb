@@ -246,6 +246,8 @@ module "clickhouse" {
   clickhouse_region                        = var.clickhouse_region
   clickhouse_provision_service             = var.clickhouse_provision_service
 
+  clickhouse_service_name = coalesce(var.clickhouse_service_name, "managed-${var.subdomain}")
+
   labels = var.labels
 }
 

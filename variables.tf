@@ -565,6 +565,12 @@ variable "clickhouse_provision_service" {
   default     = false
 }
 
+variable "clickhouse_service_name" {
+  type        = string
+  description = "ClickHouse Service Name"
+  default     = ""
+}
+
 variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"

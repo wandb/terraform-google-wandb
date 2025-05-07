@@ -42,6 +42,12 @@ variable "clickhouse_provision_service" {
   default     = false
 }
 
+variable "clickhouse_service_name" {
+  type        = string
+  description = "ClickHouse Service Name"
+  default     = ""
+}
+
 variable "labels" {
   type        = map(string)
   description = "Labels to apply to all resources."
