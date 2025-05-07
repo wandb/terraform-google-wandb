@@ -235,7 +235,7 @@ module "redis" {
   depends_on        = [module.project_factory_project_services, module.kms_default_sql]
 }
 
-module "mod_clickhouse" {
+module "clickhouse" {
   count     = var.clickhouse_private_endpoint_service_name != "" ? 1 : 0
   source    = "./modules/clickhouse"
   network   = local.network.id
