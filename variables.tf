@@ -402,7 +402,7 @@ variable "gke_release_channel" {
 variable "gke_min_version" {
   description = "The GKE version for the cluster. If not set, the default version for the selected release channel will be used."
   type        = string
-  default     = "-"
+  default     = ""
 }
 
 variable "gke_cluster_labels" {
