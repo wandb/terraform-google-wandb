@@ -42,6 +42,12 @@ variable "clickhouse_provision_service" {
   default     = false
 }
 
+variable "clickhouse_allow_destroy" {
+  description = "Set to true to allow destroying protected resources"
+  type        = bool
+  default     = false
+}
+
 variable "labels" {
   type        = map(string)
   description = "Labels to apply to all resources."
