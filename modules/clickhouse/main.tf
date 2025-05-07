@@ -113,6 +113,6 @@ resource "clickhouse_service" "service" {
 #}
 
 resource "clickhouse_service_private_endpoints_attachment" "service_attachment" {
-  private_endpoint_ids = [psc_connection_id]
-  service_id = clickhouse_service.service.id
+  private_endpoint_ids = [google_compute_forwarding_rule.psc_forward_rule.psc_connection_id]
+  service_id = clickhouse_service.service[0].id
 }
