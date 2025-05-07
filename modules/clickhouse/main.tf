@@ -61,13 +61,13 @@ resource "clickhouse_service" "service" {
   region         = var.clickhouse_region
   idle_scaling   = true
 
-#  ip_access = [
-#    {
-#      source      = "192.168.2.63"
-#      description = "Test IP"
-#    }
-#  ]
-#
+  ip_access = [
+    {
+      source      = "192.168.2.63"
+      description = "Test IP"
+    }
+  ]
+
   min_total_memory_gb  = 24
   max_total_memory_gb  = 360
   idle_timeout_minutes = 5
