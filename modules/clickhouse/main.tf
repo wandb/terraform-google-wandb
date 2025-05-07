@@ -56,8 +56,8 @@ resource "google_dns_record_set" "psc_dns_record" {
 }
 
 resource "clickhouse_service" "service" {
-  name           = "My Service"
-  cloud_provider = "google"
+  name           = "MyService"
+  cloud_provider = "gcp"
   region         = var.clickhouse_region
   idle_scaling   = true
 
