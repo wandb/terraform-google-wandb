@@ -78,8 +78,6 @@ resource "clickhouse_service" "service" {
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes = [
-      all,
-    ]
+    ignore_changes = all
   }
 }
