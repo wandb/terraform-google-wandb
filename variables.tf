@@ -565,12 +565,6 @@ variable "clickhouse_provision_service" {
   default     = false
 }
 
-variable "clickhouse_allow_destroy" {
-  description = "Set to true to allow destroying protected resources"
-  type        = bool
-  default     = false
-}
-
 variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"

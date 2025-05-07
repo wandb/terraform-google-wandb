@@ -245,11 +245,6 @@ module "clickhouse" {
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
   clickhouse_provision_service             = var.clickhouse_provision_service
-  clickhouse_allow_destroy                 = var.clickhouse_allow_destroy
-
-  # providers = {
-  #   clickhouse = clickhouse
-  # }
 
   labels = var.labels
 }
