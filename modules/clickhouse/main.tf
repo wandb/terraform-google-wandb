@@ -65,8 +65,8 @@ resource "clickhouse_service" "service" {
 
   ip_access = [
     {
-      source      = "192.168.2.63"
-      description = "Test IP"
+      source      = "34.75.179.217"
+      description = "Dagster / Analytics"
     }
   ]
 
@@ -75,6 +75,10 @@ resource "clickhouse_service" "service" {
   idle_timeout_minutes = 5
 
   password_hash  = "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=" # base64 encoded sha256 hash of "test"
+
+  transparent_data_encryption = {
+    enabled = true
+  }
 
   lifecycle {
     prevent_destroy = true
