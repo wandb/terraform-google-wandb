@@ -91,3 +91,28 @@ resource "clickhouse_service" "service" {
     ]
   }
 }
+
+#resource "clickhouse_service_private_endpoints_attachment" "attachment" {
+#  private_endpoint_ids = [
+#    clickhouse_private_endpoint_registration.endpoint.id
+#  ]
+#  service_id = clickhouse_service.svc.id
+#}
+
+# ---
+
+#resource "aws_vpc_endpoint" "pl_vpc_foo" {
+#  vpc_id            = aws_vpc.vpc.id
+#  service_name      = clickhouse_service.svc1.endpoint_config.endpoint_service_id
+#  ...
+#}
+
+#resource "clickhouse_service_private_endpoints_attachment" "red_attachment" {
+#  private_endpoint_ids = [aws_vpc_endpoint.pl_vpc_foo.id]
+#  service_id = clickhouse_service.aws_red.id
+#}
+
+resource "clickhouse_service_private_endpoints_attachment" "service_attachment" {
+  private_endpoint_ids = [psc_connection_id]
+  service_id = clickhouse_service.service.id
+}
