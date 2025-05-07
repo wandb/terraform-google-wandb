@@ -56,6 +56,8 @@ resource "google_dns_record_set" "psc_dns_record" {
 }
 
 resource "clickhouse_service" "service" {
+  count = (var.clickhouse_provision && var.clickhouse_provision) ? 1 : 0
+
   name           = "MyService"
   cloud_provider = "gcp"
   region         = var.clickhouse_region

@@ -244,6 +244,7 @@ module "clickhouse" {
   clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
+  clickhouse_provision_service             = var.clickhouse_provision_service
 
   # providers = {
   #   clickhouse = clickhouse

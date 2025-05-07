@@ -559,6 +559,12 @@ variable "clickhouse_token_secret" {
   default     = ""
 }
 
+variable "clickhouse_provision_service" {
+  type        = bool
+  description = "Provision ClickHouse service"
+  default     = false
+}
+
 variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"
