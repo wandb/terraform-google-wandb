@@ -571,6 +571,12 @@ variable "clickhouse_service_name" {
   default     = ""
 }
 
+variable "clickhouse_num_replicas" {
+  type        = number
+  description = "ClickHouse Number of Replicas"
+  default     = 3
+}
+
 variable "clickhouse_subnetwork_cidr" {
   default     = "10.50.0.0/24"
   description = "ClickHouse private service connect subnetwork"

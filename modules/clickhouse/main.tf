@@ -61,20 +61,21 @@ resource "clickhouse_service" "service" {
   name           = var.clickhouse_service_name
   cloud_provider = "gcp"
   region         = var.clickhouse_region
-  idle_scaling   = true
 
   ip_access = [
     {
-      source      = "34.75.179.217"
+      source      = "34.75.179.217" # TODO: do not hardcode
       description = "Dagster / Analytics"
     }
   ]
 
   min_replica_memory_gb  = 16
   max_replica_memory_gb  = 16
-  idle_timeout_minutes = 5
+  idle_scaling           = true
+  idle_timeout_minutes   = 720 # 12 hours * 60 minutes/hour
 
-  password_hash  = "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=" # base64 encoded sha256 hash of "test"
+  num_replicas   = var.clickhouse_num_replicas
+  password_hash  = "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=" # TODO: pass this in, base64 encoded sha256 hash of "test"
 
   transparent_data_encryption = {
     enabled = true

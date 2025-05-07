@@ -245,7 +245,9 @@ module "clickhouse" {
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
   clickhouse_provision_service             = var.clickhouse_provision_service
+  clickhouse_num_replicas                  = var.clickhouse_num_replicas
 
+  # TODO: move to internal
   clickhouse_service_name = coalesce(var.clickhouse_service_name, "managed-${var.subdomain}")
 
   labels = var.labels
