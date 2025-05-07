@@ -116,3 +116,25 @@ resource "clickhouse_service_private_endpoints_attachment" "service_attachment" 
   private_endpoint_ids = [google_compute_forwarding_rule.psc_forward_rule.psc_connection_id]
   service_id = clickhouse_service.service[0].id
 }
+
+#
+# Requires 'query_api_endpoints' to be enabled in the service.
+resource "clickhouse_user" "john" {
+  service_id           = clickhouse_service.service[0].id
+  name                 = "john"
+  password_sha256_hash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" # sha256 of 'test'
+}
+
+# Requires 'query_api_endpoints' to be enabled in the service.
+resource "clickhouse_role" "writer" {
+  service_id           = clickhouse_service.service.id
+  name                 = "writer"
+}
+
+# Requires 'query_api_endpoints' to be enabled in the service.
+resource "clickhouse_grant_role" "writer_to_john" {
+  service_id        = clickhouse_service.service[0].id
+  role_name         = clickhouse_role.writer.name
+  grantee_user_name = clickhouse_user.john.name
+  admin_option      = false
+}
