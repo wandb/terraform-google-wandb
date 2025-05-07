@@ -55,6 +55,9 @@ resource "google_dns_record_set" "psc_dns_record" {
   ttl          = 3600
 }
 
+data "clickhouse_api_key_id" "self" {
+}
+
 resource "clickhouse_service" "service" {
   count = (var.clickhouse_provision_service && var.clickhouse_provision_service) ? 1 : 0
 
@@ -68,6 +71,17 @@ resource "clickhouse_service" "service" {
       description = "Dagster / Analytics"
     }
   ]
+
+  # Required in order to create 'clickhouse_user', 'clickhouse_role' and 'clickhouse_grant*' resources below.
+  query_api_endpoints = {
+    api_key_ids = [
+      data.clickhouse_api_key_id.self.id,
+    ]
+    roles = [
+      "sql_console_admin"
+    ]
+    allowed_origins = null
+  }
 
   min_replica_memory_gb  = 16
   max_replica_memory_gb  = 16
