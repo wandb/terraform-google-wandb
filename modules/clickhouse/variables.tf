@@ -36,6 +36,24 @@ variable "clickhouse_region" {
   }
 }
 
+variable "clickhouse_provision_service" {
+  type        = bool
+  description = "Provision ClickHouse service"
+  default     = false
+}
+
+variable "clickhouse_service_name" {
+  type        = string
+  description = "ClickHouse Service Name"
+  default     = ""
+}
+
+variable "clickhouse_num_replicas" {
+  type        = number
+  description = "ClickHouse Number of Replicas"
+  default     = 3
+}
+
 variable "labels" {
   type        = map(string)
   description = "Labels to apply to all resources."
