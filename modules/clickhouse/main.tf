@@ -146,9 +146,9 @@ resource "clickhouse_service" "service" {
 #}
 
 # Requires 'query_api_endpoints' to be enabled in the service.
-resource "clickhouse_grant_role" "writer_to_john" {
-  service_id        = clickhouse_service.service[0].id
-  role_name         = clickhouse_role.writer.name
-  grantee_user_name = clickhouse_user.john.name
-  admin_option      = false
-}
+#resource "clickhouse_grant_role" "writer_to_john" {
+#  service_id        = clickhouse_service.service[0].id
+#  role_name         = clickhouse_role.writer.name
+#  grantee_user_name = clickhouse_user.john.name
+#  admin_option      = false
+#}
