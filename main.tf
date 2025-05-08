@@ -146,6 +146,8 @@ module "app_gke" {
   disk_size_gb               = var.gke_node_disk_size_gb
   labels                     = merge(var.labels, { cache_size = var.cache_size }, var.gke_cluster_labels)
   enable_private_gke_nodes   = var.enable_private_gke_nodes
+  release_channel            = var.gke_release_channel
+  gke_min_version            = var.gke_min_version
 }
 
 module "cloud_nat" {

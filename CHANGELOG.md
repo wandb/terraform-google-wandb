@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.5.1](https://github.com/wandb/terraform-google-wandb/compare/v10.5.0...v10.5.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* Using - as a version is not valid despite the GKE docs saying it is ([#245](https://github.com/wandb/terraform-google-wandb/issues/245)) ([4e616ed](https://github.com/wandb/terraform-google-wandb/commit/4e616eda9feee74ff4f857cb1c16c2da0f1791ea))
+
+## [10.5.0](https://github.com/wandb/terraform-google-wandb/compare/v10.4.0...v10.5.0) (2025-05-07)
+
+
+### Features
+
+* allow the configuration of release channel and min version for gke clusters ([#244](https://github.com/wandb/terraform-google-wandb/issues/244)) ([5e56b9c](https://github.com/wandb/terraform-google-wandb/commit/5e56b9c64068bd671c6223f757a16ddf74f39efd))
+
 ## [10.4.0](https://github.com/wandb/terraform-google-wandb/compare/v10.3.3...v10.4.0) (2025-04-28)
 
 

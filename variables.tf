@@ -393,6 +393,18 @@ variable "gke_node_disk_size_gb" {
   default     = "100"
 }
 
+variable "gke_release_channel" {
+  description = "The release channel for the GKE cluster. Can be one of `RAPID`, `REGULAR`, or `STABLE`."
+  type        = string
+  default     = "STABLE"
+}
+
+variable "gke_min_version" {
+  description = "The GKE version for the cluster. If not set, the default version for the selected release channel will be used."
+  type        = string
+  default     = ""
+}
+
 variable "gke_cluster_labels" {
   description = "A map of GCP labels to apply to all resources managed by the GKE cluster"
   type        = map(string)

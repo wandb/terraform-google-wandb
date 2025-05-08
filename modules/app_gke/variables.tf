@@ -82,3 +82,15 @@ variable "deletion_protection" {
   type        = bool
   default     = true
 }
+
+variable "release_channel" {
+    description = "The release channel for the GKE cluster. Can be one of `RAPID`, `REGULAR`, or `STABLE`."
+    type        = string
+    default     = "STABLE"
+}
+
+variable "gke_min_version" {
+    description = "The GKE version for the cluster. If not set, the default version for the selected release channel will be used."
+    type        = string
+    default     = ""
+}
