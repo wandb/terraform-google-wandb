@@ -73,15 +73,15 @@ resource "clickhouse_service" "service" {
   ]
 
   # Required in order to create 'clickhouse_user', 'clickhouse_role' and 'clickhouse_grant*' resources below.
-  query_api_endpoints = {
-    api_key_ids = [
-      data.clickhouse_api_key_id.self.id,
-    ]
-    roles = [
-      "sql_console_admin"
-    ]
-    allowed_origins = null
-  }
+  #query_api_endpoints = {
+  #  api_key_ids = [
+  #    data.clickhouse_api_key_id.self.id,
+  #  ]
+  #  roles = [
+  #    "sql_console_admin"
+  #  ]
+  #  allowed_origins = null
+  #}
 
   min_replica_memory_gb  = 16
   max_replica_memory_gb  = 16
@@ -126,24 +126,24 @@ resource "clickhouse_service" "service" {
 #  service_id = clickhouse_service.aws_red.id
 #}
 
-resource "clickhouse_service_private_endpoints_attachment" "service_attachment" {
-  private_endpoint_ids = [google_compute_forwarding_rule.psc_forward_rule.psc_connection_id]
-  service_id = clickhouse_service.service[0].id
-}
+#resource "clickhouse_service_private_endpoints_attachment" "service_attachment" {
+#  private_endpoint_ids = [google_compute_forwarding_rule.psc_forward_rule.psc_connection_id]
+#  service_id = clickhouse_service.service[0].id
+#}
 
 #
 # Requires 'query_api_endpoints' to be enabled in the service.
-resource "clickhouse_user" "john" {
-  service_id           = clickhouse_service.service[0].id
-  name                 = "john"
-  password_sha256_hash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" # sha256 of 'test'
-}
+#resource "clickhouse_user" "john" {
+#  service_id           = clickhouse_service.service[0].id
+#  name                 = "john"
+#  password_sha256_hash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" # sha256 of 'test'
+#}
 
-# Requires 'query_api_endpoints' to be enabled in the service.
-resource "clickhouse_role" "writer" {
-  service_id           = clickhouse_service.service.id
-  name                 = "writer"
-}
+## Requires 'query_api_endpoints' to be enabled in the service.
+#resource "clickhouse_role" "writer" {
+#  service_id           = clickhouse_service.service.id
+#  name                 = "writer"
+#}
 
 # Requires 'query_api_endpoints' to be enabled in the service.
 resource "clickhouse_grant_role" "writer_to_john" {
