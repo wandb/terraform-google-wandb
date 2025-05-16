@@ -78,6 +78,7 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
+| <a name="requirement_clickhouse"></a> [clickhouse](#requirement\_clickhouse) | 3.1.2 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.30 |
 | <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
@@ -136,9 +137,15 @@ resources that lack official modules.
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_bucket_path"></a> [bucket\_path](#input\_bucket\_path) | path of where to store data for the instance-level bucket | `string` | `""` | no |
 | <a name="input_cache_size"></a> [cache\_size](#input\_cache\_size) | Size of the redis cache, when use\_ctrlplane\_redis is true. These values map to preset sizes in the bitnami helm chart. | `string` | `"nano"` | no |
+| <a name="input_clickhouse_num_replicas"></a> [clickhouse\_num\_replicas](#input\_clickhouse\_num\_replicas) | ClickHouse Number of Replicas | `number` | `3` | no |
+| <a name="input_clickhouse_org_id"></a> [clickhouse\_org\_id](#input\_clickhouse\_org\_id) | ClickHouse Cloud Org ID | `string` | `""` | no |
 | <a name="input_clickhouse_private_endpoint_service_name"></a> [clickhouse\_private\_endpoint\_service\_name](#input\_clickhouse\_private\_endpoint\_service\_name) | ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud). | `string` | `""` | no |
+| <a name="input_clickhouse_provision_service"></a> [clickhouse\_provision\_service](#input\_clickhouse\_provision\_service) | Provision ClickHouse service | `bool` | `false` | no |
 | <a name="input_clickhouse_region"></a> [clickhouse\_region](#input\_clickhouse\_region) | ClickHouse region (us-east1, us-central1, etc). | `string` | `""` | no |
+| <a name="input_clickhouse_service_name"></a> [clickhouse\_service\_name](#input\_clickhouse\_service\_name) | ClickHouse Service Name | `string` | `""` | no |
 | <a name="input_clickhouse_subnetwork_cidr"></a> [clickhouse\_subnetwork\_cidr](#input\_clickhouse\_subnetwork\_cidr) | ClickHouse private service connect subnetwork | `string` | `"10.50.0.0/24"` | no |
+| <a name="input_clickhouse_token_key"></a> [clickhouse\_token\_key](#input\_clickhouse\_token\_key) | ClickHouse Cloud Token Key | `string` | `""` | no |
+| <a name="input_clickhouse_token_secret"></a> [clickhouse\_token\_secret](#input\_clickhouse\_token\_secret) | ClickHouse Cloud Token Secret | `string` | `""` | no |
 | <a name="input_controller_image_tag"></a> [controller\_image\_tag](#input\_controller\_image\_tag) | Tag of the controller image to deploy | `string` | `"1.17.0"` | no |
 | <a name="input_create_bigtable"></a> [create\_bigtable](#input\_create\_bigtable) | Boolean indicating whether to provision a bigtable instance (true) or not (false). | `bool` | `false` | no |
 | <a name="input_create_private_link"></a> [create\_private\_link](#input\_create\_private\_link) | Whether to create a private link service. | `bool` | `false` | no |

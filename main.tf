@@ -45,6 +45,12 @@ locals {
   redis_memory_size_gb  = coalesce(var.redis_memory_size_gb, local.deployment_size[var.size].cache)
 }
 
+provider "clickhouse" {
+  organization_id = var.clickhouse_org_id
+  token_key       = var.clickhouse_token_key
+  token_secret    = var.clickhouse_token_secret
+}
+
 module "service_accounts" {
   source                   = "./modules/service_accounts"
   namespace                = var.namespace
@@ -240,6 +246,11 @@ module "clickhouse" {
   clickhouse_reserved_ip_range             = var.clickhouse_subnetwork_cidr
   clickhouse_private_endpoint_service_name = var.clickhouse_private_endpoint_service_name
   clickhouse_region                        = var.clickhouse_region
+  clickhouse_provision_service             = var.clickhouse_provision_service
+  clickhouse_num_replicas                  = var.clickhouse_num_replicas
+
+  # TODO: move to internal
+  clickhouse_service_name = coalesce(var.clickhouse_service_name, "managed-${var.subdomain}")
 
   labels = var.labels
 }
