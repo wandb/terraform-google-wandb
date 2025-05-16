@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.5.2](https://github.com/wandb/terraform-google-wandb/compare/v10.5.1...v10.5.2) (2025-05-16)
+
+
+### Bug Fixes
+
+* Bump max node sizes to ensure reliability as we increase HA deployments ([#248](https://github.com/wandb/terraform-google-wandb/issues/248)) ([6081117](https://github.com/wandb/terraform-google-wandb/commit/608111775ccb6930760d8ca1fae34af9cec0adb7))
+
 ### [10.5.1](https://github.com/wandb/terraform-google-wandb/compare/v10.5.0...v10.5.1) (2025-05-07)
 
 
