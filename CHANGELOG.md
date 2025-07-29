@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.5.4](https://github.com/wandb/terraform-google-wandb/compare/v10.5.3...v10.5.4) (2025-07-29)
+
+
+### Bug Fixes
+
+* Increase instance sizes on all sizes up to large ([#250](https://github.com/wandb/terraform-google-wandb/issues/250)) ([9021d4b](https://github.com/wandb/terraform-google-wandb/commit/9021d4b496d2406c02d39a842a730f9bf9e2cb87))
+
 ### [10.5.3](https://github.com/wandb/terraform-google-wandb/compare/v10.5.2...v10.5.3) (2025-07-03)
 
 
