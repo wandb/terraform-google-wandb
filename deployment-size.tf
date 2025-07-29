@@ -5,28 +5,28 @@ locals {
       db             = "db-n1-highmem-2",
       min_node_count = 2,
       max_node_count = 8,
-      node_instance  = "n2-highmem-4"
+      node_instance  = "n2-highmem-8"
       cache          = "6"
     },
     medium = {
       db             = "db-n1-highmem-4",
       min_node_count = 2,
       max_node_count = 8,
-      node_instance  = "n2-highmem-4"
+      node_instance  = "n2-highmem-16"
       cache          = "6"
     },
     large = {
       db             = "db-n1-highmem-8",
       min_node_count = 3,
       max_node_count = 8,
-      node_instance  = "n2-highmem-8"
+      node_instance  = "n2-highmem-16"
       cache          = "13"
     },
     xlarge = {
       db             = "db-n1-highmem-16",
       min_node_count = 3,
       max_node_count = 8,
-      node_instance  = "n2-highmem-8"
+      node_instance  = "n2-highmem-16"
       cache          = "13"
     },
     xxlarge = {
