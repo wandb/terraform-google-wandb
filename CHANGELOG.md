@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.5.5](https://github.com/wandb/terraform-google-wandb/compare/v10.5.4...v10.5.5) (2025-08-27)
+
+
+### Bug Fixes
+
+* Switch NLB NAT to dynamic port allocation ([#251](https://github.com/wandb/terraform-google-wandb/issues/251)) ([e51c344](https://github.com/wandb/terraform-google-wandb/commit/e51c344e6f4b6c65bac203b8a348638eb563d7dd))
+
 ### [10.5.4](https://github.com/wandb/terraform-google-wandb/compare/v10.5.3...v10.5.4) (2025-07-29)
 
 
