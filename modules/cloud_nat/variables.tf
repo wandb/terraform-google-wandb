@@ -13,13 +13,13 @@ variable "proxy_nat" {
 }
 
 variable "proxy_nat_min_ports_per_vm" {
-  description = "Minimum number of ports to allocate per VM for the Load Balancer Proxy NAT"
+  description = "Minimum number of ports to allocate per VM for the Load Balancer Proxy NAT."
   type        = number
   default     = 64
 }
 
 variable "proxy_nat_max_ports_per_vm" {
-  description = "Maximum number of ports to allocate per VM for the Load Balancer Proxy NAT"
+  description = "Maximum number of ports to allocate per VM for the Load Balancer Proxy NAT."
   type        = number
   default     = 65536
 }
