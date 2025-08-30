@@ -15,6 +15,14 @@ resource "google_service_account" "main" {
   description  = "Service Account used by Weights & Biases."
 }
 
+resource "google_service_account_iam_member" "main" {
+  for_each = var.kms_gcs_sa_list
+
+  service_account_id = google_service_account.main.id
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${local.project_id}.svc.id.goog[default/${each.value}]"
+}
+
 locals {
   sa_member  = "serviceAccount:${google_service_account.main.email}"
   project_id = data.google_client_config.current.project
@@ -61,7 +69,6 @@ resource "google_project_iam_member" "secretmanager_admin" {
   member  = local.sa_member
   role    = "roles/secretmanager.admin"
 }
-
 
 ####### service account for kms and gcs
 resource "google_service_account" "kms_gcs_sa" {
