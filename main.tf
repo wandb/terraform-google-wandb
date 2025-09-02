@@ -138,7 +138,7 @@ module "app_gke" {
   max_node_count             = local.max_node_count
   min_node_count             = local.min_node_count
   disk_size_gb               = var.gke_node_disk_size_gb
-  labels                     = merge(var.labels, { cache_size = var.cache_size }, var.gke_cluster_labels)
+  labels                     = merge(var.labels, { size = var.size }, var.gke_cluster_labels)
   enable_private_gke_nodes   = var.enable_private_gke_nodes
   release_channel            = var.gke_release_channel
   gke_min_version            = var.gke_min_version
@@ -335,6 +335,11 @@ locals {
   ctrlplane_redis_params = {
     master = "gorilla"
   }
+  chainguard_redis_host = "redis.redis-cg.svc.cluster.local"
+  chainguard_redis_port = "26379"
+  chainguard_redis_params = {
+    master = "gorilla"
+  }
 
   spec = {
     values = {
@@ -390,7 +395,14 @@ locals {
           caCert   = ""
           params   = local.ctrlplane_redis_params
           external = true
-          } : var.use_external_redis ? {
+          } : var.use_chainguard_redis ? {
+          host     = local.chainguard_redis_host
+          password = ""
+          port     = local.chainguard_redis_port
+          caCert   = ""
+          params   = local.chainguard_redis_params
+          external = true
+        } : var.use_external_redis ? {
           host     = var.external_redis_host
           password = ""
           port     = var.external_redis_port
