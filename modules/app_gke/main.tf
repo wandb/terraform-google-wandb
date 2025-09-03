@@ -66,6 +66,9 @@ resource "random_pet" "node_pool" {
   keepers = {
     machine_type = var.machine_type
   }
+  lifecycle {
+    ignore_changes = [keepers]
+  }
 }
 
 resource "google_container_node_pool" "default" {
