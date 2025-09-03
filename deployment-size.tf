@@ -18,27 +18,27 @@ locals {
       root_volume_size = 100
     },
     large = {
-      db             = "db-n1-highmem-8",
-      min_node_count = 3,
-      max_node_count = 8,
-      node_instance  = "n2-highmem-16"
-      cache          = "13"
+      db               = "db-n1-highmem-8",
+      min_node_count   = 3,
+      max_node_count   = 8,
+      node_instance    = "n2-highmem-16"
+      cache            = "13"
       root_volume_size = 256
     },
     xlarge = {
-      db             = "db-n1-highmem-16",
-      min_node_count = 3,
-      max_node_count = 8,
-      node_instance  = "n2-highmem-16"
-      cache          = "13"
+      db               = "db-n1-highmem-16",
+      min_node_count   = 3,
+      max_node_count   = 8,
+      node_instance    = "n2-highmem-16"
+      cache            = "13"
       root_volume_size = 256
     },
     xxlarge = {
-      db             = "db-n1-highmem-32",
-      min_node_count = 3,
-      max_node_count = 8,
-      node_instance  = "n2-highmem-16"
-      cache          = "26"
+      db               = "db-n1-highmem-32",
+      min_node_count   = 3,
+      max_node_count   = 8,
+      node_instance    = "n2-highmem-16"
+      cache            = "26"
       root_volume_size = 256
     }
   }
