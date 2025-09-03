@@ -44,6 +44,9 @@ resource "google_compute_router_nat" "nat_lb_proxy" {
   name                               = "${var.namespace}-cloud-nat-lb-proxy"
   router                             = google_compute_router.this.name
   region                             = google_compute_router.this.region
+  enable_dynamic_port_allocation     = var.proxy_nat_enable_dynamic_port_allocation
+  min_ports_per_vm                   = var.proxy_nat_min_ports_per_vm
+  max_ports_per_vm                   = var.proxy_nat_max_ports_per_vm
   nat_ip_allocate_option             = "MANUAL_ONLY"
   nat_ips                            = google_compute_address.nat_lb_proxy_address[0].*.self_link
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
