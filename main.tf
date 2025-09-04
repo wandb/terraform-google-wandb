@@ -138,7 +138,7 @@ module "app_gke" {
   max_node_count             = local.max_node_count
   min_node_count             = local.min_node_count
   disk_size_gb               = var.gke_node_disk_size_gb
-  labels                     = merge(var.labels, { cache_size = var.cache_size }, var.gke_cluster_labels)
+  labels                     = merge(var.labels, var.gke_cluster_labels)
   enable_private_gke_nodes   = var.enable_private_gke_nodes
   release_channel            = var.gke_release_channel
   gke_min_version            = var.gke_min_version
@@ -335,6 +335,11 @@ locals {
   ctrlplane_redis_params = {
     master = "gorilla"
   }
+  chainguard_redis_host = "redis.redis-cg.svc.cluster.local"
+  chainguard_redis_port = "26379"
+  chainguard_redis_params = {
+    master = "gorilla"
+  }
 
   spec = {
     values = {
@@ -389,6 +394,13 @@ locals {
           port     = local.ctrlplane_redis_port
           caCert   = ""
           params   = local.ctrlplane_redis_params
+          external = true
+          } : var.use_chainguard_redis ? {
+          host     = local.chainguard_redis_host
+          password = ""
+          port     = local.chainguard_redis_port
+          caCert   = ""
+          params   = local.chainguard_redis_params
           external = true
           } : var.use_external_redis ? {
           host     = var.external_redis_host
@@ -617,6 +629,21 @@ module "private_link" {
   labels = var.labels
 
   depends_on = [module.wandb]
+}
+
+resource "null_resource" "use_redis_validation" {
+  triggers = {
+    use_ctrlplane_redis  = var.use_ctrlplane_redis
+    use_chainguard_redis = var.use_chainguard_redis
+    use_external_redis   = var.use_external_redis
+  }
+
+  lifecycle {
+    precondition {
+      condition     = (var.use_ctrlplane_redis ? 1 : 0) + (var.use_chainguard_redis ? 1 : 0) + (var.use_external_redis ? 1 : 0) <= 1
+      error_message = "Enable at most one of: use_ctrlplane_redis, use_chainguard_redis, use_external_redis."
+    }
+  }
 }
 
 moved {
