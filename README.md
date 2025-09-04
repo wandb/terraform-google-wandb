@@ -82,6 +82,7 @@ resources that lack official modules.
 | <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 5.30 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.10 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.23 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.0 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | 0.11.2 |
 
 ## Providers
@@ -89,6 +90,7 @@ resources that lack official modules.
 | Name | Version |
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | ~> 5.30 |
+| <a name="provider_null"></a> [null](#provider\_null) | ~> 3.0 |
 
 ## Modules
 
