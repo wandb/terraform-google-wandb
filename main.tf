@@ -402,7 +402,7 @@ locals {
           caCert   = ""
           params   = local.chainguard_redis_params
           external = true
-        } : var.use_external_redis ? {
+          } : var.use_external_redis ? {
           host     = var.external_redis_host
           password = ""
           port     = var.external_redis_port
