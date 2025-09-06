@@ -82,6 +82,7 @@ resource "google_sql_database_instance" "default" {
     ip_configuration {
       ipv4_enabled    = false
       private_network = var.network_connection.network
+      ssl_mode        = var.force_ssl ? "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" : "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
       require_ssl     = var.force_ssl
     }
 
