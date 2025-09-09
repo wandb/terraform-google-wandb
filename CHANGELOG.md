@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.6.0](https://github.com/wandb/terraform-google-wandb/compare/v10.5.5...v10.6.0) (2025-09-04)
+
+
+### Features
+
+* Add option for chainguard redis ([#253](https://github.com/wandb/terraform-google-wandb/issues/253)) ([37c3966](https://github.com/wandb/terraform-google-wandb/commit/37c3966654160583254f001bedc3856b16611141))
+
 ### [10.5.5](https://github.com/wandb/terraform-google-wandb/compare/v10.5.4...v10.5.5) (2025-08-27)
 
 
