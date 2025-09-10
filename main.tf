@@ -43,6 +43,7 @@ locals {
   min_node_count        = coalesce(var.gke_min_node_count, local.deployment_size[var.size].min_node_count)
   database_machine_type = coalesce(var.database_machine_type, local.deployment_size[var.size].db)
   redis_memory_size_gb  = coalesce(var.redis_memory_size_gb, local.deployment_size[var.size].cache)
+  root_volume_size      = coalesce(var.gke_node_disk_size_gb, local.deployment_size[var.size].root_volume_size)
 }
 
 module "service_accounts" {
@@ -137,7 +138,7 @@ module "app_gke" {
   depends_on                 = [module.project_factory_project_services]
   max_node_count             = local.max_node_count
   min_node_count             = local.min_node_count
-  disk_size_gb               = var.gke_node_disk_size_gb
+  disk_size_gb               = local.root_volume_size
   labels                     = merge(var.labels, var.gke_cluster_labels)
   enable_private_gke_nodes   = var.enable_private_gke_nodes
   release_channel            = var.gke_release_channel
