@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.7.0](https://github.com/wandb/terraform-google-wandb/compare/v10.6.0...v10.7.0) (2025-09-10)
+
+
+### Features
+
+* Add adjustable root volumes sizes and defaults by deployment size ([#252](https://github.com/wandb/terraform-google-wandb/issues/252)) ([c1734a0](https://github.com/wandb/terraform-google-wandb/commit/c1734a088c674a1caef0450fe419eef7c4901654))
+
 ## [10.6.0](https://github.com/wandb/terraform-google-wandb/compare/v10.5.5...v10.6.0) (2025-09-04)
 
 
