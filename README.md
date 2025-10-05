@@ -99,6 +99,7 @@ resources that lack official modules.
 | <a name="module_app_gke"></a> [app\_gke](#module\_app\_gke) | ./modules/app_gke | n/a |
 | <a name="module_app_lb"></a> [app\_lb](#module\_app\_lb) | ./modules/app_lb | n/a |
 | <a name="module_bigtable"></a> [bigtable](#module\_bigtable) | ./modules/bigtable | n/a |
+| <a name="module_bufstream"></a> [bufstream](#module\_bufstream) | ./modules/bufstream | n/a |
 | <a name="module_clickhouse"></a> [clickhouse](#module\_clickhouse) | ./modules/clickhouse | n/a |
 | <a name="module_cloud_nat"></a> [cloud\_nat](#module\_cloud\_nat) | ./modules/cloud_nat | n/a |
 | <a name="module_database"></a> [database](#module\_database) | ./modules/database | n/a |
@@ -137,6 +138,7 @@ resources that lack official modules.
 | <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket (US, EU, ASIA) | `string` | `"US"` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_bucket_path"></a> [bucket\_path](#input\_bucket\_path) | path of where to store data for the instance-level bucket | `string` | `""` | no |
+| <a name="input_bufstream"></a> [bufstream](#input\_bufstream) | Configuration for Bufstream storage and service account. When enabled, provisions a GCS bucket and service account with workload identity for Bufstream. | <pre>object({<br/>    enabled         = bool<br/>    namespace       = optional(string, "bufstream")<br/>    service_account = optional(string, "bufstream-service-account")<br/>  })</pre> | <pre>{<br/>  "enabled": false<br/>}</pre> | no |
 | <a name="input_clickhouse_private_endpoint_service_name"></a> [clickhouse\_private\_endpoint\_service\_name](#input\_clickhouse\_private\_endpoint\_service\_name) | ClickHouse private endpoint 'Service name' (ends in -clickhouse-cloud). | `string` | `""` | no |
 | <a name="input_clickhouse_region"></a> [clickhouse\_region](#input\_clickhouse\_region) | ClickHouse region (us-east1, us-central1, etc). | `string` | `""` | no |
 | <a name="input_clickhouse_subnetwork_cidr"></a> [clickhouse\_subnetwork\_cidr](#input\_clickhouse\_subnetwork\_cidr) | ClickHouse private service connect subnetwork | `string` | `"10.50.0.0/24"` | no |
@@ -217,6 +219,8 @@ resources that lack official modules.
 | <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of google bucket. |
 | <a name="output_bucket_path"></a> [bucket\_path](#output\_bucket\_path) | path of where to store data for the instance-level bucket |
 | <a name="output_bucket_queue_name"></a> [bucket\_queue\_name](#output\_bucket\_queue\_name) | Pubsub queue created for google bucket file upload events. |
+| <a name="output_bufstream_bucket_name"></a> [bufstream\_bucket\_name](#output\_bufstream\_bucket\_name) | The name of the Bufstream storage bucket |
+| <a name="output_bufstream_service_account_email"></a> [bufstream\_service\_account\_email](#output\_bufstream\_service\_account\_email) | The email of the Bufstream service account |
 | <a name="output_clickhouse_private_endpoint_id"></a> [clickhouse\_private\_endpoint\_id](#output\_clickhouse\_private\_endpoint\_id) | ClickHouse Private endpoint Endpoint ID to secure access inside VPC |
 | <a name="output_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#output\_cluster\_ca\_certificate) | Certificate of the kubernetes (GKE) cluster. |
 | <a name="output_cluster_client_certificate"></a> [cluster\_client\_certificate](#output\_cluster\_client\_certificate) | n/a |
