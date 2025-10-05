@@ -245,6 +245,19 @@ module "clickhouse" {
   labels = var.labels
 }
 
+module "bufstream" {
+  count  = var.bufstream.enabled ? 1 : 0
+  source = "./modules/bufstream"
+
+  namespace                 = var.namespace
+  region                    = data.google_client_config.current.region
+  project_id                = local.project_id
+  cluster_name              = "${var.namespace}-cluster"
+  bufstream_namespace       = var.bufstream.namespace
+  bufstream_service_account = var.bufstream.service_account
+  labels                    = var.labels
+}
+
 locals {
   redis_certificate       = var.create_redis ? module.redis[0].ca_cert : null
   redis_connection_string = var.create_redis ? "redis://:${module.redis[0].auth_string}@${module.redis[0].connection_string}?tls=true&ttlInSeconds=604800&caCertPath=/etc/ssl/certs/server_ca.pem" : null

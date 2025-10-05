@@ -118,3 +118,13 @@ output "wandb_spec" {
   value     = local.spec
   sensitive = true
 }
+
+output "bufstream_bucket_name" {
+  description = "The name of the Bufstream storage bucket"
+  value       = var.bufstream.enabled ? module.bufstream[0].bucket_name : null
+}
+
+output "bufstream_service_account_email" {
+  description = "The email of the Bufstream service account"
+  value       = var.bufstream.enabled ? module.bufstream[0].service_account_email : null
+}
