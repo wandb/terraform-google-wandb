@@ -15,7 +15,7 @@ variable "project_id" {
 
 variable "cluster_name" {
   type        = string
-  description = "The cluster name for labeling"
+  description = "The GKE cluster name for labeling"
 }
 
 variable "k8s_namespace" {

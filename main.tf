@@ -252,7 +252,7 @@ module "bufstream" {
   namespace           = var.namespace
   region              = data.google_client_config.current.region
   project_id          = local.project_id
-  cluster_name        = "${var.namespace}-cluster"
+  cluster_name        = module.app_gke.cluster_name
   k8s_namespace       = var.bufstream.namespace
   k8s_service_account = var.bufstream.service_account
   labels              = var.labels
