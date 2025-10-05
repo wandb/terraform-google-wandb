@@ -249,13 +249,13 @@ module "bufstream" {
   count  = var.bufstream.enabled ? 1 : 0
   source = "./modules/bufstream"
 
-  namespace                 = var.namespace
-  region                    = data.google_client_config.current.region
-  project_id                = local.project_id
-  cluster_name              = "${var.namespace}-cluster"
-  bufstream_namespace       = var.bufstream.namespace
-  bufstream_service_account = var.bufstream.service_account
-  labels                    = var.labels
+  namespace           = var.namespace
+  region              = data.google_client_config.current.region
+  project_id          = local.project_id
+  cluster_name        = "${var.namespace}-cluster"
+  k8s_namespace       = var.bufstream.namespace
+  k8s_service_account = var.bufstream.service_account
+  labels              = var.labels
 }
 
 locals {

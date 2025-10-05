@@ -18,12 +18,12 @@ variable "cluster_name" {
   description = "The cluster name for labeling"
 }
 
-variable "bufstream_namespace" {
+variable "k8s_namespace" {
   type        = string
   description = "The Kubernetes namespace where Bufstream will run"
 }
 
-variable "bufstream_service_account" {
+variable "k8s_service_account" {
   type        = string
   description = "The Kubernetes service account name for Bufstream"
 }

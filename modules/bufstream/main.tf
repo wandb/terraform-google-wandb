@@ -21,7 +21,7 @@ resource "google_service_account" "bufstream" {
 resource "google_service_account_iam_member" "bufstream_workload_identity" {
   service_account_id = google_service_account.bufstream.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "serviceAccount:${var.project_id}.svc.id.goog[${var.bufstream_namespace}/${var.bufstream_service_account}]"
+  member             = "serviceAccount:${var.project_id}.svc.id.goog[${var.k8s_namespace}/${var.k8s_service_account}]"
 }
 
 resource "google_storage_bucket_iam_member" "bufstream_bucket_admin" {
