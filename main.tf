@@ -256,6 +256,7 @@ module "bufstream" {
   k8s_namespace       = var.bufstream.namespace
   k8s_service_account = var.bufstream.service_account
   labels              = var.labels
+  deletion_protection = var.deletion_protection
 }
 
 locals {

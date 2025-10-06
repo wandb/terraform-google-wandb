@@ -1,7 +1,7 @@
 resource "google_storage_bucket" "bufstream" {
   name          = "${substr(var.namespace, 0, 20)}-bufstream"
   location      = var.region
-  force_destroy = true
+  force_destroy = !var.deletion_protection
 
   uniform_bucket_level_access = true
 
