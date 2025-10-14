@@ -560,3 +560,9 @@ variable "enable_private_gke_nodes" {
   default     = false
   description = "Enable private nodes for the GKE cluster. When set to true, nodes will not have public IPs, and Cloud NAT with a static public IP will be used for egress traffic. Ensure sufficient quota for static IPs in the specified region."
 }
+
+variable "wandb_namespace" {
+  type        = string
+  description = "The Kubernetes namespace where the W&B Helm chart will be installed"
+  default     = "default"
+}

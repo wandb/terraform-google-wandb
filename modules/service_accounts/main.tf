@@ -189,7 +189,7 @@ resource "google_project_iam_member" "k8s_weave_worker_auth_secret_accessor" {
 resource "kubernetes_secret" "weave_worker_auth" {
   metadata {
     name      = "weave-worker-auth"
-    namespace = "default"
+    namespace = var.wandb_namespace
   }
 
   string_data = {

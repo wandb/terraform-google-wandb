@@ -56,6 +56,7 @@ module "service_accounts" {
   enable_stackdriver       = var.enable_stackdriver
   depends_on               = [module.project_factory_project_services]
   skip_bucket_admin_role   = var.skip_bucket_admin_role
+  wandb_namespace          = var.wandb_namespace
 }
 
 locals {
