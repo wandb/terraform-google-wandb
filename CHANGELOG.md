@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.8.0](https://github.com/wandb/terraform-google-wandb/compare/v10.7.0...v10.8.0) (2025-10-14)
+
+
+### Features
+
+* Add Weave worker authentication for GCP deployments ([#255](https://github.com/wandb/terraform-google-wandb/issues/255)) ([b9e077e](https://github.com/wandb/terraform-google-wandb/commit/b9e077ea455686606dc9c0f8b83b1e9d21363a43))
+
 ## [10.7.0](https://github.com/wandb/terraform-google-wandb/compare/v10.6.0...v10.7.0) (2025-09-10)
 
 
