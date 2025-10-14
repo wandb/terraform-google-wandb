@@ -264,22 +264,6 @@ variable "create_pubsub" {
 }
 
 ##########################################
-# Bufstream
-##########################################
-
-variable "bufstream" {
-  type = object({
-    enabled         = bool
-    namespace       = optional(string, "bufstream")
-    service_account = optional(string, "bufstream-service-account")
-  })
-  description = "Configuration for Bufstream storage and service account. When enabled, provisions a GCS bucket and service account with workload identity for Bufstream."
-  default = {
-    enabled = false
-  }
-}
-
-##########################################
 # Redis                                  #
 ##########################################
 variable "create_redis" {

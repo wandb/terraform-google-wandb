@@ -192,7 +192,7 @@ resource "kubernetes_secret" "weave_worker_auth" {
     namespace = "default"
   }
 
-  data = {
+  string_data = {
     key = random_password.weave_worker_auth.result
   }
 }
