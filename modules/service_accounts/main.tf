@@ -153,3 +153,46 @@ resource "google_service_account_iam_member" "stackdriver_binding" {
   role               = "roles/iam.workloadIdentityUser"
   member             = "serviceAccount:${local.project_id}.svc.id.goog[default/${var.stackdriver_sa_name}]"
 }
+
+# Weave worker -> Gorilla auth token
+
+resource "random_password" "weave_worker_auth" {
+  length  = 32
+  special = true
+}
+
+resource "google_secret_manager_secret" "weave_worker_auth" {
+  secret_id = "${var.namespace}-weave-worker-auth"
+  project   = local.project_id
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "weave_worker_auth" {
+  secret      = google_secret_manager_secret.weave_worker_auth.id
+  secret_data = random_password.weave_worker_auth.result
+}
+
+resource "google_project_iam_member" "k8s_weave_worker_auth_secret_accessor" {
+  project = local.project_id
+  role    = "roles/secretmanager.secretAccessor"
+  member  = local.sa_member
+
+  condition {
+    title      = "Weave worker auth secret scoping"
+    expression = "resource.name.startsWith(\"projects/${data.google_project.project.number}/secrets/${google_secret_manager_secret.weave_worker_auth.secret_id}\")"
+  }
+}
+
+resource "kubernetes_secret" "weave_worker_auth" {
+  metadata {
+    name      = "weave-worker-auth"
+    namespace = var.wandb_namespace
+  }
+
+  string_data = {
+    key = random_password.weave_worker_auth.result
+  }
+}

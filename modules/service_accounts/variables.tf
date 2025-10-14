@@ -32,3 +32,9 @@ variable "skip_bucket_admin_role" {
   description = "Flag to indicate whether to skip the bucket policy creation."
   type        = bool
 }
+
+variable "wandb_namespace" {
+  type        = string
+  description = "The Kubernetes namespace where the W&B Helm chart will be installed"
+  default     = "default"
+}
