@@ -23,14 +23,13 @@ resource "helm_release" "secrets_store_csi_driver" {
 }
 
 # Install GCP Secrets Manager Provider for Secrets Store CSI Driver
-# NOTE: GCP provider doesn't have a published Helm repository, so we fetch and apply the YAML manifest
-data "http" "gcp_provider_manifest" {
-  url = "https://raw.githubusercontent.com/GoogleCloudPlatform/secrets-store-csi-driver-provider-gcp/v${var.secrets_store_csi_driver_provider_gcp_version}/deploy/provider-gcp-plugin.yaml"
-}
-
+# NOTE: Manifest is stored locally to ensure deterministic deployments
 locals {
+  gcp_provider_manifest_path = "${path.module}/manifests/provider-gcp-plugin-v${var.secrets_store_csi_driver_provider_gcp_version}.yaml"
+  gcp_provider_manifest_body = file(local.gcp_provider_manifest_path)
+
   gcp_provider_manifests = [
-    for manifest in split("---", data.http.gcp_provider_manifest.response_body) :
+    for manifest in split("---", local.gcp_provider_manifest_body) :
     manifest
     if trimspace(manifest) != "" && can(yamldecode(manifest))
   ]
