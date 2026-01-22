@@ -193,6 +193,6 @@ resource "kubernetes_secret" "weave_worker_auth" {
   }
 
   data = {
-    key = base64encode(random_password.weave_worker_auth.result)
+    key = random_password.weave_worker_auth.result
   }
 }
