@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.8.1](https://github.com/wandb/terraform-google-wandb/compare/v10.8.0...v10.8.1) (2026-01-22)
+
+
+### Bug Fixes
+
+* Fix Kubernetes secret resource configuration ([#258](https://github.com/wandb/terraform-google-wandb/issues/258)) ([981b05e](https://github.com/wandb/terraform-google-wandb/commit/981b05ebbc7bce04ef867b204a7635757375a0f7))
+
 ## [10.8.0](https://github.com/wandb/terraform-google-wandb/compare/v10.7.0...v10.8.0) (2025-10-14)
 
 
