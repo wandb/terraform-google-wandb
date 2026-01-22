@@ -192,7 +192,7 @@ resource "kubernetes_secret" "weave_worker_auth" {
     namespace = var.wandb_namespace
   }
 
-  string_data = {
-    key = random_password.weave_worker_auth.result
+  data = {
+    key = base64encode(random_password.weave_worker_auth.result)
   }
 }
