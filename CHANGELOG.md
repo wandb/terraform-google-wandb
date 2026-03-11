@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [10.8.2](https://github.com/wandb/terraform-google-wandb/compare/v10.8.1...v10.8.2) (2026-03-11)
+
+
+### Bug Fixes
+
+* Add ssl_mode along with legacy require_ssl ([#259](https://github.com/wandb/terraform-google-wandb/issues/259)) ([fb379d9](https://github.com/wandb/terraform-google-wandb/commit/fb379d9a9f6fbc2f23d34c80d9a218d58125bf1f))
+
 ### [10.8.1](https://github.com/wandb/terraform-google-wandb/compare/v10.8.0...v10.8.1) (2026-01-22)
 
 
