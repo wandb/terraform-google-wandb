@@ -129,6 +129,7 @@ locals {
 module "app_gke" {
   source                     = "./modules/app_gke"
   namespace                  = var.namespace
+  k8s_namespace              = "default"
   machine_type               = local.gke_machine_type
   network                    = local.network
   subnetwork                 = local.subnetwork
@@ -524,6 +525,30 @@ locals {
           name        = null
           annotations = {}
         }
+      }
+
+      weave-trace-worker = {
+        serviceAccount = {
+          annotations = {
+            "iam.gke.io/gcp-service-account" = module.app_gke.weave_worker_service_account_email
+          }
+        }
+        secretsStore = {
+          enabled = true
+        }
+      }
+
+      secretsStore = {
+        enabled  = true
+        provider = "gcp"
+        secrets = [
+          {
+            name            = "weave-worker-auth"
+            cloudSecretName = module.app_gke.weave_worker_auth_secret_name
+            k8sSecretName   = "weave-worker-auth"
+            k8sSecretKey    = "key"
+          }
+        ]
       }
 
       executor = {
