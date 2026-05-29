@@ -7,12 +7,18 @@ on:
 
 env:
   GOOGLE_SERVICE_ACCOUNT: "terraform-google-testing@playground-111.iam.gserviceaccount.com"
+  # SECENG-2427: GitHub OIDC WIF provider in playground-111. Prerequisite, see PR body.
+  GCP_WORKLOAD_IDENTITY_PROVIDER: "projects/27586067691/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
   TF_TOKEN_app_terraform_io: ${{ secrets.TFE_TOKEN }}
 
 jobs:
   public-dns-with-cloud-dns:
     name: Public DNS with Cloud DNS
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
 
     defaults:
       run:
@@ -58,7 +64,8 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: "${{ secrets.GOOGLE_TESTING_SA_CREDENTIALS }}"
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
