@@ -42,6 +42,7 @@ locals {
     "slow_query_log"             = "on"
     "sort_buffer_size"           = var.sort_buffer_size
     "skip_show_database"         = "on"
+    "max_binlog_size"            = "1073741824"
   }
   database_flags = merge(local.default_flags, var.database_flags)
 }
