@@ -94,3 +94,21 @@ variable "gke_min_version" {
   type        = string
   default     = ""
 }
+
+variable "k8s_namespace" {
+  type        = string
+  description = "The Kubernetes namespace where W&B resources will be deployed"
+  default     = "default"
+}
+
+variable "secrets_store_csi_driver_version" {
+  type        = string
+  description = "The version of the Secrets Store CSI Driver Helm chart to install."
+  default     = "1.4.7"
+}
+
+variable "secrets_store_csi_driver_provider_gcp_version" {
+  type        = string
+  description = "The version of the GCP Secrets Manager Provider for Secrets Store CSI Driver Helm chart to install."
+  default     = "1.9.0"
+}

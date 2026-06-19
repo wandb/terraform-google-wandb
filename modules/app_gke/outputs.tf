@@ -38,3 +38,13 @@ output "mig_instance_group_id" {
 output "location" {
   value = google_container_cluster.default.location
 }
+
+output "weave_worker_auth_secret_name" {
+  value       = "${google_secret_manager_secret.weave_worker_auth.name}/versions/latest"
+  description = "The full GCP resource path of the Google Secret Manager secret containing the weave worker authentication token"
+}
+
+output "weave_worker_service_account_email" {
+  value       = google_service_account.weave_worker.email
+  description = "The email of the GCP service account used by weave workers"
+}
