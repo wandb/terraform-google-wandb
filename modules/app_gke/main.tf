@@ -137,3 +137,63 @@ resource "google_container_node_pool" "default" {
     create_before_destroy = true
   }
 }
+
+module "secrets_store" {
+  source = "./secrets_store"
+
+  secrets_store_csi_driver_version              = var.secrets_store_csi_driver_version
+  secrets_store_csi_driver_provider_gcp_version = var.secrets_store_csi_driver_provider_gcp_version
+
+  depends_on = [
+    google_container_cluster.default,
+    google_container_node_pool.default
+  ]
+}
+
+# Weave worker authentication token
+resource "random_password" "weave_worker_auth" {
+  length  = 32
+  special = false
+}
+
+# Google Secret Manager secret for weave worker authentication
+resource "google_secret_manager_secret" "weave_worker_auth" {
+  secret_id = "${var.namespace}-weave-worker-auth"
+
+  replication {
+    auto {}
+  }
+
+  labels = var.labels
+}
+
+resource "google_secret_manager_secret_version" "weave_worker_auth" {
+  secret      = google_secret_manager_secret.weave_worker_auth.id
+  secret_data = random_password.weave_worker_auth.result
+}
+
+# Service account for weave workers with Workload Identity
+resource "google_service_account" "weave_worker" {
+  # GCP service account IDs have a 30 character limit
+  # -weave-wkr = 10 chars, so truncate namespace to 20 chars
+  account_id   = "${substr(var.namespace, 0, 20)}-weave-wkr"
+  display_name = "Service Account for W&B Weave Workers"
+  description  = "Used by weave-trace-worker pods"
+}
+
+# Grant the service account access to read the secret
+resource "google_secret_manager_secret_iam_member" "weave_worker_secret_accessor" {
+  secret_id = google_secret_manager_secret.weave_worker_auth.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.weave_worker.email}"
+}
+
+# Workload Identity binding - allows Kubernetes service account to impersonate GCP service account
+resource "google_service_account_iam_member" "weave_worker_workload_identity" {
+  service_account_id = google_service_account.weave_worker.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${local.project_id}.svc.id.goog[${var.k8s_namespace}/wandb-weave-trace-worker]"
+}
+
+# NOTE: The Kubernetes secrets are now created by the Secrets Store CSI Driver
+# via the SecretProviderClass defined in the operator-wandb Helm chart.
