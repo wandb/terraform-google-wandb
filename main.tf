@@ -106,6 +106,8 @@ module "storage" {
   bucket_crypto_key = local.default_bucket_key
   crypto_key        = var.use_internal_queue ? null : module.kms[0].crypto_key
 
+  public_access_prevention = var.public_access_prevention
+
   deletion_protection = var.deletion_protection
   depends_on          = [module.project_factory_project_services, module.kms_default_bucket]
 }

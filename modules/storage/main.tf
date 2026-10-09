@@ -7,6 +7,8 @@ module "bucket" {
   service_account     = var.service_account
   deletion_protection = var.deletion_protection
   crypto_key          = var.bucket_crypto_key
+
+  public_access_prevention = var.public_access_prevention
 }
 
 module "pubsub" {

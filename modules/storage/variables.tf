@@ -47,3 +47,13 @@ variable "project_id" {
   default     = null
   description = "The project ID to deploy to. If unset, the provider's default project is used."
 }
+
+variable "public_access_prevention" {
+  type        = string
+  default     = "enforced"
+  description = "Public access prevention for the bucket: `enforced` or `inherited`. Null leaves it unmanaged."
+  validation {
+    condition     = contains(["inherited", "enforced"], coalesce(var.public_access_prevention, "inherited"))
+    error_message = "public_access_prevention must be null, \"inherited\" or \"enforced\"."
+  }
+}
