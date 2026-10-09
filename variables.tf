@@ -344,6 +344,16 @@ variable "bucket_location" {
   default     = "US"
 }
 
+variable "public_access_prevention" {
+  type        = string
+  default     = null
+  description = "Public access prevention for the default file storage bucket (`inherited` or `enforced`). When null, the attribute is left unmanaged."
+  validation {
+    condition     = contains(["inherited", "enforced"], coalesce(var.public_access_prevention, "inherited"))
+    error_message = "public_access_prevention must be null, \"inherited\" or \"enforced\"."
+  }
+}
+
 variable "skip_bucket_admin_role" {
   type        = bool
   description = "Flag to indicate whether to skip the bucket policy creation."

@@ -36,3 +36,13 @@ variable "crypto_key" {
   default     = null
   description = "Key used to encrypt and decrypt pubsub."
 }
+
+variable "public_access_prevention" {
+  type        = string
+  default     = null
+  description = "Public access prevention for the bucket (`inherited` or `enforced`). When null, the attribute is left unmanaged."
+  validation {
+    condition     = contains(["inherited", "enforced"], coalesce(var.public_access_prevention, "inherited"))
+    error_message = "public_access_prevention must be null, \"inherited\" or \"enforced\"."
+  }
+}

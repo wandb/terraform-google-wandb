@@ -14,6 +14,7 @@ resource "google_storage_bucket" "file_storage" {
   project  = var.project_id
 
   uniform_bucket_level_access = true
+  public_access_prevention    = var.public_access_prevention
   force_destroy               = !var.deletion_protection
 
   labels = var.labels
