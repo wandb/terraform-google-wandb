@@ -445,15 +445,31 @@ variable "bucket_default_encryption" {
 }
 
 variable "db_kms_key_id" {
-  description = "ID of the customer-provided SQL KMS key."
+  description = "ID of the customer-provided SQL KMS key, in the form `projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<key>`."
   type        = string
   default     = null
+
+  validation {
+    condition     = var.db_kms_key_id == null || can(regex("^projects/[^/\\s]+/locations/[^/\\s]+/keyRings/[^/\\s]+/cryptoKeys/[^/\\s]+$", var.db_kms_key_id))
+    error_message = "db_kms_key_id must be a full key ID: projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<key>."
+  }
 }
 
 variable "bucket_kms_key_id" {
-  description = "ID of the customer-provided bucket KMS key."
+  description = "ID of the customer-provided bucket KMS key, in the form `projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<key>`."
   type        = string
   default     = null
+
+  validation {
+    condition     = var.bucket_kms_key_id == null || can(regex("^projects/[^/\\s]+/locations/[^/\\s]+/keyRings/[^/\\s]+/cryptoKeys/[^/\\s]+$", var.bucket_kms_key_id))
+    error_message = "bucket_kms_key_id must be a full key ID: projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<key>."
+  }
+}
+
+variable "verify_customer_kms_keys" {
+  description = "If true, look up `db_kms_key_id` and `bucket_kms_key_id` at plan time so a missing or misspelled key fails the plan before any resources are replaced. Requires `cloudkms.cryptoKeys.get` (for example `roles/cloudkms.viewer`) on each customer key for the identity running Terraform."
+  type        = bool
+  default     = false
 }
 
 variable "size" {
