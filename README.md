@@ -120,6 +120,8 @@ resources that lack official modules.
 | Name | Type |
 |------|------|
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
+| [google_kms_crypto_key.customer_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/kms_crypto_key) | data source |
+| [google_kms_crypto_key.customer_sql](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/kms_crypto_key) | data source |
 
 ## Inputs
 
@@ -133,7 +135,7 @@ resources that lack official modules.
 | <a name="input_bigtable_min_nodes"></a> [bigtable\_min\_nodes](#input\_bigtable\_min\_nodes) | The minimum number of nodes for the Bigtable cluster. | `number` | `1` | no |
 | <a name="input_bigtable_storage_type"></a> [bigtable\_storage\_type](#input\_bigtable\_storage\_type) | The storage type for the Bigtable cluster. | `string` | `"SSD"` | no |
 | <a name="input_bucket_default_encryption"></a> [bucket\_default\_encryption](#input\_bucket\_default\_encryption) | Boolean to determine if a default bucket encryption key should be used. If true, a default key will be created. Takes precedence over `bucket_kms_key_id`. | `bool` | `false` | no |
-| <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key. | `string` | `null` | no |
+| <a name="input_bucket_kms_key_id"></a> [bucket\_kms\_key\_id](#input\_bucket\_kms\_key\_id) | ID of the customer-provided bucket KMS key, in the form `projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<key>`. | `string` | `null` | no |
 | <a name="input_bucket_location"></a> [bucket\_location](#input\_bucket\_location) | Location of the bucket (US, EU, ASIA) | `string` | `"US"` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Use an existing bucket. | `string` | `""` | no |
 | <a name="input_bucket_path"></a> [bucket\_path](#input\_bucket\_path) | path of where to store data for the instance-level bucket | `string` | `""` | no |
@@ -152,7 +154,7 @@ resources that lack official modules.
 | <a name="input_database_machine_type"></a> [database\_machine\_type](#input\_database\_machine\_type) | Specifies the machine type to be allocated for the database. Defaults to null and value from deployment-size.tf is used | `string` | `null` | no |
 | <a name="input_database_sort_buffer_size"></a> [database\_sort\_buffer\_size](#input\_database\_sort\_buffer\_size) | Specifies the sort\_buffer\_size value to set for the database | `number` | `67108864` | no |
 | <a name="input_database_version"></a> [database\_version](#input\_database\_version) | Version for MySQL | `string` | `"MYSQL_8_0_31"` | no |
-| <a name="input_db_kms_key_id"></a> [db\_kms\_key\_id](#input\_db\_kms\_key\_id) | ID of the customer-provided SQL KMS key. | `string` | `null` | no |
+| <a name="input_db_kms_key_id"></a> [db\_kms\_key\_id](#input\_db\_kms\_key\_id) | ID of the customer-provided SQL KMS key, in the form `projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<key>`. | `string` | `null` | no |
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | If the instance should have deletion protection enabled. The database / Bucket can't be deleted when this value is set to `true`. | `bool` | `true` | no |
 | <a name="input_disable_code_saving"></a> [disable\_code\_saving](#input\_disable\_code\_saving) | Boolean indicating if code saving is disabled | `bool` | `false` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain for accessing the Weights & Biases UI. | `string` | `null` | no |
@@ -205,6 +207,7 @@ resources that lack official modules.
 | <a name="input_use_ctrlplane_redis"></a> [use\_ctrlplane\_redis](#input\_use\_ctrlplane\_redis) | Whether redis is deployed in the cluster via ctrlplane | `bool` | `false` | no |
 | <a name="input_use_external_redis"></a> [use\_external\_redis](#input\_use\_external\_redis) | Boolean indicating whether to use the redis instance created externally | `bool` | `false` | no |
 | <a name="input_use_internal_queue"></a> [use\_internal\_queue](#input\_use\_internal\_queue) | Uses an internal redis queue instead of using google pubsub. | `bool` | `false` | no |
+| <a name="input_verify_customer_kms_keys"></a> [verify\_customer\_kms\_keys](#input\_verify\_customer\_kms\_keys) | If true, look up `db_kms_key_id` and `bucket_kms_key_id` at plan time so a missing or misspelled key fails the plan before any resources are replaced. Requires `cloudkms.cryptoKeys.get` (for example `roles/cloudkms.viewer`) on each customer key for the identity running Terraform. | `bool` | `false` | no |
 | <a name="input_wandb_image"></a> [wandb\_image](#input\_wandb\_image) | Docker repository of to pull the wandb image from. | `string` | `"wandb/local"` | no |
 | <a name="input_wandb_namespace"></a> [wandb\_namespace](#input\_wandb\_namespace) | The Kubernetes namespace where the W&B Helm chart will be installed | `string` | `"default"` | no |
 | <a name="input_wandb_version"></a> [wandb\_version](#input\_wandb\_version) | The version of Weights & Biases local to deploy. | `string` | `"latest"` | no |
